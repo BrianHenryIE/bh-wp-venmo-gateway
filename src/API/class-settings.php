@@ -81,26 +81,39 @@ class Settings implements Settings_Interface, IMAP_Reconcile_Settings_Interface,
 	/**
 	 * TODO: Move this to the library.
 	 *
+	 * TODO: autocomplete="off"
+	 * $value['custom_attributes'] as $attribute => $attribute_value
+	 * $value['custom_attributes'] as 'autocomplete' => 'off'
+	 * 'custom_attributes' => array( 'autocomplete' => 'off' )
+	 *
+	 * @see \WC_Admin_Settings::output_fields()
+	 *
 	 * @return array
 	 */
 	private function imap_reconcile_fields() {
 
 		$form_fields = array(
 			'email_server'                 => array(
-				'title'       => __( 'Email server', 'bh-wc-venmo-gateway' ),
-				'type'        => 'text',
-				'description' => __( 'IMAP server or IP address.', 'bh-wc-venmo-gateway' ),
-				'desc_tip'    => true,
+				'title'             => __( 'Email server', 'bh-wc-venmo-gateway' ),
+				'type'              => 'text',
+				'description'       => __( 'IMAP server or IP address.', 'bh-wc-venmo-gateway' ),
+				'desc_tip'          => true,
+                'custom_attributes' => array( 'autocomplete' => 'off', 'data-lpignore'=>'true', 'data-form-type'=>'text' ),
+				'id'                => 'email_server',
 			),
 			'email_username'               => array(
-				'title'       => __( 'Email username', 'bh-wc-venmo-gateway' ),
-				'type'        => 'text',
-				'description' => __( 'Login username for email address payment receipts are mailed to.', 'bh-wc-venmo-gateway' ),
-				'desc_tip'    => true,
+				'title'             => __( 'Email username', 'bh-wc-venmo-gateway' ),
+				'type'              => 'text',
+				'description'       => __( 'Login username for email address payment receipts are mailed to.', 'bh-wc-venmo-gateway' ),
+				'desc_tip'          => true,
+				'custom_attributes' => array( 'autocomplete' => 'off', 'data-lpignore'=>'true' ),
+				'id'                => 'email_username',
 			),
 			'email_password'               => array(
-				'title' => __( 'Email account password', 'bh-wc-venmo-gateway' ),
-				'type'  => 'password',
+				'title'             => __( 'Email account password', 'bh-wc-venmo-gateway' ),
+				'type'              => 'password',
+                'custom_attributes' => array( 'autocomplete' => 'off', 'data-lpignore'=>'true' ),
+				'id'                => 'email_password',
 			),
 
 			'after_reconcile_email_action' => array(
