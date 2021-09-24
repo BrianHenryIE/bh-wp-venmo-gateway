@@ -6,10 +6,11 @@ parameters:
         - src/strauss/*
     bootstrapFiles:
         - src/autoload.php
-        - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
-        - %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
-        #- %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
     scanDirectories:
         - src/strauss
         - wp-content/plugins
         - vendor/wp-cli
+    ignoreErrors:
+        - '#LoggerInterface\|null#'
+        - '#apply_filters invoked with#'

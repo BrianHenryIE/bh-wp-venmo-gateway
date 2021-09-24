@@ -12,27 +12,6 @@ Requires php-imap
 
 `wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time; wp cron event run bh_wc_venmo_gateway_check_for_payment_emails`
 
-```
-<?php
-/**
- * Plugin Name:       Second Venmo Gateway
- */
-
-use BH_WC_Venmo_Gateway\woocommerce\Venmo_Gateway;
-
-add_filter( 'woocommerce_payment_gateways', function($gateways ) {
-
-    $gateways[] = new class() extends Venmo_Gateway {
-      public function __construct()
-      {
-          $this->id = 'second-venmo-gateway';
-          parent::__construct();
-      }
-    };
-
-    return $gateways;
-});
-```
 
 
 ## Contributing
