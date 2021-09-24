@@ -22,7 +22,7 @@ class Thank_You {
 	 * @param mixed  $order_id
 	 * @return string
 	 */
-	public function print_instructions( $thank_you_text, $order_id ) {
+	public function print_instructions( $thank_you_text, $order_id ): string {
 
 		$order = wc_get_order( $order_id );
 
