@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file for WP_Mock.
  *
- * @package           BrianHenryIE\WC_Venmo_Gateway
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 WP_Mock::setUsePatchwork( true );

@@ -10,7 +10,7 @@ use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Cron
  *
  * Class Cron_Unit_Test
- * @package BrianHenryIE\WC_Venmo_Gateway\Includes
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 class Cron_Unit_Test extends Unit_Testcase {
 

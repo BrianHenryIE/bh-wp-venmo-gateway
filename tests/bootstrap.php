@@ -1,6 +1,6 @@
 <?php
 /**
- * @package           BrianHenryIE\WC_Venmo_Gateway
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 $GLOBALS['project_root_dir']   = $project_root_dir  = dirname( __DIR__, 1 );

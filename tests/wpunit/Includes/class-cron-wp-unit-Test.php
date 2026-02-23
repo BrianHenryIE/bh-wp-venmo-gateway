@@ -2,8 +2,7 @@
 /**
  * Tests for I18n. Tests load_plugin_textdomain.
  *
- * @package BrianHenryIE\WC_Venmo_Gateway
- * @author  Brian Henry <BrianHenryIE@gmail.com>
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;

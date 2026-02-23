@@ -12,7 +12,7 @@ use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Deactivator
  *
  * Class Deactivator_Unit_Test
- * @package BrianHenryIE\WC_Venmo_Gateway\Includes
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 class Deactivator_Unit_Test extends Unit_Testcase {
 

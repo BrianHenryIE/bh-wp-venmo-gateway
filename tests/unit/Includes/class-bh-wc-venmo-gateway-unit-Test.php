@@ -1,8 +1,7 @@
 <?php
 /**
  *
- * @package BrianHenryIE\WC_Venmo_Gateway
- * @author  Brian Henry <BrianHenryIE@gmail.com>
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
@@ -18,7 +17,7 @@ use WP_Mock\Matcher\AnyInstance;
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks
  *
  * Class BH_WC_Venmo_Gateway_Unit_Test
- * @package BrianHenryIE\WC_Venmo_Gateway\Includes
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 

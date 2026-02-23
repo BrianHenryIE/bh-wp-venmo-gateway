@@ -2,14 +2,12 @@
 /**
  * Class Plugin_Test. Tests the root plugin setup.
  *
- * @package BrianHenryIE\WC_Venmo_Gateway
- * @author     Brian Henry <BrianHenryIE@gmail.com>
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway;
 
 use BrianHenryIE\WC_Venmo_Gateway\API\API;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks;
 
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.

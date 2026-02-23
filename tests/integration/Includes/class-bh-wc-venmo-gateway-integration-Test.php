@@ -2,8 +2,7 @@
 /**
  * Tests for BrianHenryIE\WC_Venmo_Gateway main setup class. Tests the actions are correctly added.
  *
- * @package BrianHenryIE\WC_Venmo_Gateway
- * @author  Brian Henry <BrianHenryIE@gmail.com>
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
