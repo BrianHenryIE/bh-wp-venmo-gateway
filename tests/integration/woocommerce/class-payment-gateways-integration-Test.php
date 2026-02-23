@@ -2,7 +2,9 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
-class Payment_Gateways_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
+use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+
+class Payment_Gateways_Integration_Test extends WPUnit_Testcase {
 
 	/**
 	 * Let's run the function WooCommerce uses to poll for gateways and see is our gateway there.
