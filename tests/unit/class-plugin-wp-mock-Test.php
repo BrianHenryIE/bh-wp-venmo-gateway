@@ -26,7 +26,7 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 		 */
 		$this->markTestSkipped( 'Need to @runInSeparateProcess' );
 
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+		$plugin_root_dir = dirname( __DIR__, 2 ) . '/includes';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',
@@ -62,7 +62,7 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 		 * @see https://github.com/Codeception/Codeception/issues/3568
 		 */
 		$this->markTestSkipped( 'Need to @runInSeparateProcess' );
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+		$plugin_root_dir = dirname( __DIR__, 2 ) . '/includes';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',

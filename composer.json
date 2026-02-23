@@ -73,7 +73,7 @@
     },
     "autoload": {
         "classmap": [
-            "src"
+            "includes"
         ]
     },
     "autoload-dev": {

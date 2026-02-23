@@ -36,5 +36,5 @@ require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
 Autoloader::generate(
 	'BrianHenryIE\WC_Venmo_Gateway',
-	__DIR__ . '/src',
+	__DIR__ . '/includes',
 )->register();

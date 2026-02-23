@@ -15,7 +15,7 @@ use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
 return RectorConfig::configure()
 	->withPaths(
 		array(
-			__DIR__ . '/src',
+			__DIR__ . '/includes',
 			__DIR__ . '/development-plugin',
 			__DIR__ . '/tests/integration',
 			__DIR__ . '/tests/unit',
@@ -24,9 +24,8 @@ return RectorConfig::configure()
 	)
 	->withSkip(
 		array(
-			__DIR__ . '/src/vendor',
-			__DIR__ . '/src/vendor-prefixed',
-			__DIR__ . '/src/strauss',
+			__DIR__ . '/vendor',
+			__DIR__ . '/vendor-prefixed',
 		)
 	)
 	->withSkip(
