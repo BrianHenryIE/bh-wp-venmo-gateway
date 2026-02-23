@@ -78,7 +78,7 @@ class Thank_You {
 		}
 
 		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
-		$store_venmo_username = $order->get_meta( Venmo_Gateway::DESTINATION_VENMO_USERNAME_META_KEY );
+		$store_venmo_username    = $order->get_meta( Venmo_Gateway::DESTINATION_VENMO_USERNAME_META_KEY );
 
 		// Thank you. Your order has been received.
 
@@ -110,9 +110,9 @@ class Thank_You {
 		$instructions .= '</a>';
 		$instructions .= '</div>';
 
-		$instructions .= "<div>";
+		$instructions .= '<div>';
 		$instructions .= "<a href=\"https://venmo.com/{$store_venmo_username}\">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>";
-		$instructions .= "</div>";
+		$instructions .= '</div>';
 
 		$instructions .= '</div>';
 
