@@ -18,20 +18,9 @@ use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
 
 
 class Cron {
-
 	use LoggerAwareTrait;
 
 	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'bh_wc_venmo_gateway_check_for_payment_emails';
-
-	/**
-	 * @var Settings_Interface
-	 */
-	protected Settings_Interface $settings;
-
-	/**
-	 * @var API_Interface
-	 */
-	protected API_Interface $api;
 
 	/**
 	 * Cron_Jobs constructor.
@@ -40,11 +29,12 @@ class Cron {
 	 * @param Settings_Interface $settings
 	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
-
-		$this->logger   = $logger;
-		$this->settings = $settings;
-		$this->api      = $api;
+	public function __construct(
+		protected API_Interface $api,
+		protected Settings_Interface $settings,
+		LoggerInterface $logger
+	) {
+		$this->logger = $logger;
 	}
 
 	/**

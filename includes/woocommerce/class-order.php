@@ -9,13 +9,12 @@ use WC_Order;
 use WC_Payment_Gateways;
 
 class Order {
-
 	use LoggerAwareTrait;
 
-	protected Settings_Interface $settings;
-
-	public function __construct( $settings, $logger ) {
-		$this->settings = $settings;
+	public function __construct(
+		protected Settings_Interface $settings,
+		$logger
+	) {
 		$this->setLogger( $logger );
 	}
 

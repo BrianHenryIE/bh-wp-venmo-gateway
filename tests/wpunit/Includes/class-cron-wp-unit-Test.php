@@ -30,8 +30,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 		$settings_mock = $this->makeEmpty(
 			Settings_Interface::class,
 			array(
-				'get_plugin_slug'           => function () {
-					return ''; },
+				'get_plugin_slug'           => fn() => '',
 				'get_plugin_version'        => '123',
 				'is_imap_reconcile_enabled' => true,
 			)

@@ -119,11 +119,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 
 		$woo_settings = get_option( $settings_id, array() );
 
-		if ( isset( $woo_settings[ $setting ] ) ) {
-			return $woo_settings[ $setting ];
-		}
-
-		return false;
+		return $woo_settings[ $setting ] ?? false;
 	}
 
 
@@ -150,26 +146,12 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 			$mailboxes[] = new class( $gateway_id, $email_imap_server, $email_account_username, $email_account_password, $action ) implements Mailbox_Settings_Interface {
 				use Mailbox_Settings_Defaults_Trait;
 
-				protected string $gateway_id;
-
 				protected Account_Credentials_Interface $credentials;
 
-				protected string $action;
-
-				public function __construct( string $gateway_id, $email_imap_server, $email_account_username, $email_account_password, $action ) {
-					$this->gateway_id = $gateway_id;
-					$this->action     = $action;
-
+				public function __construct( protected string $gateway_id, $email_imap_server, $email_account_username, $email_account_password, protected string $action ) {
 					$imap_credentials = new class($email_imap_server, $email_account_username, $email_account_password) implements IMAP_Credentials_Interface {
 
-						protected string $email_imap_server;
-						protected string $email_account_username;
-						protected string $email_account_password;
-
-						public function __construct( $email_imap_server, $email_account_username, $email_account_password ) {
-							$this->email_imap_server      = $email_imap_server;
-							$this->email_account_username = $email_account_username;
-							$this->email_account_password = $email_account_password;
+						public function __construct( protected string $email_imap_server, protected string $email_account_username, protected string $email_account_password ) {
 						}
 
 						public function get_email_imap_server(): string {

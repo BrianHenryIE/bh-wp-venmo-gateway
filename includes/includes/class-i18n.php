@@ -37,7 +37,7 @@ class I18n {
 		load_plugin_textdomain(
 			'bh-wc-venmo-gateway',
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/Languages/'
+			dirname( plugin_basename( __FILE__ ), 2 ) . '/Languages/'
 		);
 	}
 }

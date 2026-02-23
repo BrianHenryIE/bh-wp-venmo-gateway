@@ -11,28 +11,16 @@ class API implements API_Interface {
 	use LoggerAwareTrait;
 
 	/**
-	 * The plugin settings.
-	 *
-	 * @var Settings_Interface
-	 */
-	protected Settings_Interface $settings;
-
-	/**
-	 * Instance of IMAP_Reconcile library to fetch emails and match with unpaid orders.
-	 *
-	 * @var BH_WC_Order_Email_Reconcile
-	 */
-	protected BH_WC_Order_Email_Reconcile $reconciler;
-
-	/**
-	 * @param BH_WC_Order_Email_Reconcile $reconciler
-	 * @param Settings_Interface          $settings
+	 * @param BH_WC_Order_Email_Reconcile $reconciler Instance of IMAP_Reconcile library to fetch emails and match with unpaid orders.
+	 * @param Settings_Interface          $settings The plugin settings.
 	 * @param LoggerInterface             $logger
 	 */
-	public function __construct( BH_WC_Order_Email_Reconcile $reconciler, Settings_Interface $settings, LoggerInterface $logger ) {
-		$this->logger     = $logger;
-		$this->settings   = $settings;
-		$this->reconciler = $reconciler;
+	public function __construct(
+		protected BH_WC_Order_Email_Reconcile $reconciler,
+		protected Settings_Interface $settings,
+		LoggerInterface $logger
+	) {
+		$this->logger = $logger;
 	}
 
 	/**

@@ -15,6 +15,6 @@ class Payment_Gateways_Unit_Test extends Unit_Testcase {
 
 		$result = $sut->add_to_woocommerce( array() );
 
-		$this->assertContains( 'BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway', $result );
+		$this->assertContains( \BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway::class, $result );
 	}
 }
