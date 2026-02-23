@@ -6,7 +6,11 @@
     "test": "tests"
   },
   "scripts": {
-    "wp-env": "wp-env start"
+    "wp-env": "wp-env start",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "lint:css": "wp-scripts lint-style"
   },
   "keywords": [],
   "author": "BrianHenryIE",
@@ -20,6 +24,8 @@
     "@types/node": "^20.0",
     "@types/react": "^18.3",
     "@types/react-dom": "^18.3",
-    "@types/wordpress__block-editor": "^15.0"
+    "@types/wordpress__block-editor": "^15.0",
+    "@wordpress/scripts": "^30.0",
+    "@woocommerce/dependency-extraction-webpack-plugin": "^2.2"
   }
 }

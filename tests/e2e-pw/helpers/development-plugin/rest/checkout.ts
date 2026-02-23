@@ -33,7 +33,7 @@ async function setCheckoutPageContent( postContent: string ) {
 export async function useBlocksCheckout() {
 	const contentPath = path.join(
 		__dirname,
-		'../../../_wp-env/setup/blocks-checkout-post-content.txt'
+		'../../../../_wp-env/blocks-checkout-post-content.txt'
 	);
 	const postContent = fs.readFileSync( contentPath, 'utf8' );
 	await setCheckoutPageContent( postContent );

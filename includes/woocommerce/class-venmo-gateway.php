@@ -62,8 +62,11 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// Save the wp-admin configuration form options.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
-		// Save the Venmo username to the order meta as the order is created.
+		// Save the Venmo username to the order meta as the order is created (shortcode checkout).
 		add_action( 'woocommerce_checkout_create_order', array( $this, 'save_order_payment_type_meta_data' ), 10, 2 );
+
+		// Save the Venmo username for blocks checkout (Store API).
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'save_blocks_checkout_meta_data' ) );
 
 		$this->enabled = ( 'yes' === $this->enabled & $this->is_configured() ) ? 'yes' : 'no';
 	}
@@ -162,6 +165,58 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$customer_venmo_username = esc_attr( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] );
 
 		// TODO: Add to the WP User's account meta too.
+		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
+
+		$destination_venmo_username = $this->get_option( 'venmo_username' );
+		$order->add_meta_data( self::DESTINATION_VENMO_USERNAME_META_KEY, $destination_venmo_username, true );
+
+		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$destination_venmo_username}." );
+
+		$order->save();
+	}
+
+	/**
+	 * Save the Venmo username from the blocks checkout (Store API).
+	 *
+	 * The blocks checkout sends payment method data via the Store API, which makes it
+	 * available in the request body. This hook fires after the order is processed.
+	 *
+	 * @hooked woocommerce_store_api_checkout_order_processed
+	 *
+	 * @param WC_Order $order The WooCommerce order.
+	 */
+	public function save_blocks_checkout_meta_data( WC_Order $order ): void {
+
+		if ( $order->get_payment_method() !== $this->id ) {
+			return;
+		}
+
+		// Already saved by the shortcode checkout hook.
+		if ( $order->meta_exists( self::CUSTOMER_VENMO_USERNAME_META_KEY ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$request_body = file_get_contents( 'php://input' );
+		if ( ! $request_body ) {
+			return;
+		}
+
+		$request_data = json_decode( $request_body, true );
+		$payment_data = $request_data['payment_data'] ?? array();
+
+		$customer_venmo_username = '';
+		foreach ( $payment_data as $item ) {
+			if ( isset( $item['key'] ) && self::CUSTOMER_VENMO_USERNAME_META_KEY === $item['key'] ) {
+				$customer_venmo_username = sanitize_text_field( $item['value'] );
+				break;
+			}
+		}
+
+		if ( empty( $customer_venmo_username ) ) {
+			return;
+		}
+
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
 
 		$destination_venmo_username = $this->get_option( 'venmo_username' );

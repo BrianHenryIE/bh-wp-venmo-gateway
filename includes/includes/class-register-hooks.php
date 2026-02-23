@@ -15,10 +15,13 @@ use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\Admin\Admin;
 use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Email;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Order;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Thank_You;
+use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
 class Register_Hooks {
 
@@ -96,6 +99,19 @@ class Register_Hooks {
 		$thank_you = new Thank_You();
 		// Display payment instructions on thank you page.
 		add_filter( 'woocommerce_thankyou_order_received_text', array( $thank_you, 'print_instructions' ), 10, 2 );
+
+		// Register Venmo gateway with WooCommerce Blocks checkout.
+		add_action(
+			'woocommerce_blocks_payment_method_type_registration',
+			function ( PaymentMethodRegistry $payment_method_registry ): void {
+				$gateways = \WC_Payment_Gateways::instance()->payment_gateways();
+				if ( isset( $gateways['venmo'] ) && $gateways['venmo'] instanceof Venmo_Gateway ) {
+					$payment_method_registry->register(
+						new Venmo_Gateway_Blocks_Checkout_Support( $gateways['venmo'] )
+					);
+				}
+			}
+		);
 
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
