@@ -14,7 +14,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
 /**
  * Class Develop_Test
  */
-class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestCase {
+class BH_WC_Venmo_Gateway_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
 
 	/**
 	 * Verify action to call load textdomain is added.
@@ -47,7 +47,6 @@ class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestC
 		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
 
 		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
-
 	}
 
 
@@ -83,7 +82,6 @@ class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestC
 		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
 
 		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
-
 	}
 
 
@@ -120,7 +118,6 @@ class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestC
 		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
 
 		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
-
 	}
 
 
@@ -156,6 +153,5 @@ class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestC
 		$this->assertNotNull( $hooked_method, "No methods on an instance of $class_type hooked to $action_name" );
 
 		$this->assertEquals( $method_name, $hooked_method, "Unexpected method name for $class_type class hooked to $action_name" );
-
 	}
 }

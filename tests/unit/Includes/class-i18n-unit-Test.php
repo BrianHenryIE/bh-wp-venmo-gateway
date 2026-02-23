@@ -2,20 +2,12 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+
 /**
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\I18n
  */
-class I18n_Unit_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
-
-	// This is required for `'times' => 1` to be verified.
-	protected function _tearDown() {
-		parent::_tearDown();
-		\WP_Mock::tearDown();
-	}
+class I18n_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * Verify load_plugin_textdomain is correctly called.

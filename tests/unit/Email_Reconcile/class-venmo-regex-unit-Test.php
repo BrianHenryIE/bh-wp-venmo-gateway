@@ -32,7 +32,6 @@ EOD;
 		preg_match( $patterns->get_amount_regex(), $str, $output );
 
 		$this->assertEquals( 71.24, $output[1] );
-
 	}
 
 	public function test_amount_2() {
@@ -58,7 +57,6 @@ EOD;
 		preg_match( $patterns->get_amount_regex(), $str, $output );
 
 		$this->assertEquals( 14.99, $output[1] );
-
 	}
 
 
@@ -87,8 +85,5 @@ EOD;
 		preg_match( $patterns->get_amount_regex(), $str, $output );
 
 		$this->assertEquals( 94.97, $output[1] );
-
 	}
-
-
 }

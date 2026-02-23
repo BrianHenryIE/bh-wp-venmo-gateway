@@ -1,0 +1,19 @@
+{
+  "name": "bh-wc-venmo-gateway",
+  "version": "1.0.0",
+  "description": "Receive Venmo payments on your WooCommerce store. Reconciles payments via email.",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "wp-env": "wp-env start"
+  },
+  "keywords": [],
+  "author": "BrianHenryIE",
+  "license": "GPL-2.0+",
+  "devDependencies": {
+    "@wordpress/env": "^10.39.0",
+    "@playwright/test": "^1.38.1",
+    "@wordpress/e2e-test-utils-playwright": "^0.11.0"
+  }
+}

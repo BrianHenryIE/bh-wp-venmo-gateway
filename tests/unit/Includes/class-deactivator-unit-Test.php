@@ -5,6 +5,8 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+
 /**
  *
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Deactivator
@@ -12,13 +14,7 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
  * Class Deactivator_Unit_Test
  * @package BrianHenryIE\WC_Venmo_Gateway\Includes
  */
-class Deactivator_Unit_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		parent::_before();
-
-		\WP_Mock::setUp();
-	}
+class Deactivator_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * @see wp_clear_scheduled_hook()
@@ -34,7 +30,6 @@ class Deactivator_Unit_Test extends \Codeception\Test\Unit {
 		);
 
 		Deactivator::deactivate();
-
 	}
 
 	public function _after() {
@@ -42,5 +37,4 @@ class Deactivator_Unit_Test extends \Codeception\Test\Unit {
 
 		\WP_Mock::tearDown();
 	}
-
 }

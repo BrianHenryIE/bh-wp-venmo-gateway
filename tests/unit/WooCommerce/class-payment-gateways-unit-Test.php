@@ -2,16 +2,9 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
-class Payment_Gateways_Unit_Test extends \Codeception\Test\Unit {
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
 
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
-	}
+class Payment_Gateways_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * All it needs to do is add the classname to WooCommerce's filter so it can be instantiated later.
@@ -23,7 +16,5 @@ class Payment_Gateways_Unit_Test extends \Codeception\Test\Unit {
 		$result = $sut->add_to_woocommerce( array() );
 
 		$this->assertContains( 'BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway', $result );
-
 	}
-
 }

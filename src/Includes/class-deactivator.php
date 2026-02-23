@@ -33,7 +33,5 @@ class Deactivator {
 	public static function deactivate(): void {
 
 		wp_clear_scheduled_hook( Cron::CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK );
-
 	}
-
 }

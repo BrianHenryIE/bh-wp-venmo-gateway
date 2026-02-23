@@ -14,7 +14,7 @@ use BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway;
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.
  */
-class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestCase {
+class BH_WC_Venmo_Gateway_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
 
 	/**
 	 * Test the main plugin object is added to PHP's GLOBALS and that it is the correct class.
@@ -25,5 +25,4 @@ class BH_WC_Venmo_Gateway_Integration_Test extends \Codeception\TestCase\WPTestC
 
 		$this->assertInstanceOf( API::class, $GLOBALS['bh_wc_venmo_gateway'] );
 	}
-
 }

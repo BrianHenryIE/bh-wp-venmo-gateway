@@ -18,17 +18,15 @@ extensions:
         - Codeception\Command\GenerateWPXMLRPC
 params:
     - .env.testing
-    - .env.secret
 coverage:
     enabled: true
     include:
         - src/*
     exclude:
-        - src/strauss/*
         - /*/index.php
         - /*/*.txt
         - src/autoload.php
-        - src/autoload-classmap.php
         - /*/*.css
         - /*/*.js
+        - src/strauss/*
 bootstrap: bootstrap.php

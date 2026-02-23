@@ -13,8 +13,8 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
+use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
+use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
 
 
 class Cron {
@@ -80,5 +80,4 @@ class Cron {
 
 		$this->api->check_for_payment_emails();
 	}
-
 }

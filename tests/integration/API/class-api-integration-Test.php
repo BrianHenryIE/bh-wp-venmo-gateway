@@ -6,7 +6,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\API\IMAP_Mailbox_Settings_In
 use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\IMAP_Reconcile;
 use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\Logger;
 
-class API_Integration_Test extends \Codeception\TestCase\WPTestCase {
+class API_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
 
 	public function test_live() {
 

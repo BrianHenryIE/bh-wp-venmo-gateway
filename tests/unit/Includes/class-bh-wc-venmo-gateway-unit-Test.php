@@ -10,7 +10,7 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 use BrianHenryIE\WC_Venmo_Gateway\Admin\Plugins_Page;
 use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-use Psr\Log\NullLogger;
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
@@ -20,17 +20,7 @@ use WP_Mock\Matcher\AnyInstance;
  * Class BH_WC_Venmo_Gateway_Unit_Test
  * @package BrianHenryIE\WC_Venmo_Gateway\Includes
  */
-class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
-
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
-	}
+class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway::set_locale
@@ -49,9 +39,8 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
 			)
 		);
-		$logger   = new NullLogger();
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
+		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
 	}
 
 	/**
@@ -76,9 +65,8 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
 			)
 		);
-		$logger   = new NullLogger();
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
+		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
 	}
 
 	/**
@@ -100,9 +88,7 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
 			)
 		);
-		$logger   = new NullLogger();
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
+		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
 	}
-
 }

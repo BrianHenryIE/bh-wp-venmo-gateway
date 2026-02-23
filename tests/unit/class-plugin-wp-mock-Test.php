@@ -13,16 +13,7 @@ use BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway;
 /**
  * Class Plugin_WP_Mock_Test
  */
-class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
-	}
+class Plugin_WP_Mock_Test extends Unit_Testcase {
 	/**
 	 * Verifies the plugin initialization.
 	 */
@@ -58,7 +49,6 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 		$this->assertArrayHasKey( 'bh_wc_venmo_gateway', $GLOBALS );
 
 		$this->assertInstanceOf( BrianHenryIE\WC_Venmo_Gateway::class, $GLOBALS['bh_wc_venmo_gateway'] );
-
 	}
 
 
@@ -99,7 +89,5 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 		ob_end_clean();
 
 		$this->assertEmpty( $printed_output );
-
 	}
-
 }

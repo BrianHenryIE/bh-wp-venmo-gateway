@@ -10,13 +10,13 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-use Psr\Log\NullLogger;
+use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
 
 /**
  *
  * @see Cron
  */
-class Cron_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
+class Cron_WP_Unit_Test extends WPUnit_Testcase {
 
 	/**
 	 * Happy path, adds cron job if it doesn't already exist.
@@ -39,14 +39,13 @@ class Cron_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 
 		$api_mock = $this->makeEmpty( API_Interface::class );
 
-		$cron = new Cron( $api_mock, $settings_mock, new NullLogger() );
+		$cron = new Cron( $api_mock, $settings_mock, $this->logger );
 
 		$this->assertFalse( wp_next_scheduled( $cron_name ) );
 
 		$cron->add_cron_jon();
 
 		$this->assertNotFalse( wp_next_scheduled( Cron::CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK ) );
-
 	}
 
 
@@ -70,14 +69,13 @@ class Cron_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 
 		$api_mock = $this->makeEmpty( API_Interface::class );
 
-		$cron = new Cron( $api_mock, $settings_mock, new NullLogger() );
+		$cron = new Cron( $api_mock, $settings_mock, $this->logger );
 
 		$this->assertFalse( wp_next_scheduled( $cron_name ) );
 
 		$cron->add_cron_jon();
 
 		$this->assertFalse( wp_next_scheduled( $cron_name ) );
-
 	}
 
 
@@ -104,7 +102,7 @@ class Cron_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 
 		$api_mock = $this->makeEmpty( API_Interface::class );
 
-		$cron = new Cron( $api_mock, $settings_mock, new NullLogger() );
+		$cron = new Cron( $api_mock, $settings_mock, $this->logger );
 
 		// Check is the test primed.
 		$this->assertNotFalse( wp_next_scheduled( $cron_name ) );
@@ -112,8 +110,5 @@ class Cron_WP_Unit_Test extends \Codeception\TestCase\WPTestCase {
 		$cron->add_cron_jon();
 
 		$this->assertFalse( wp_next_scheduled( $cron_name ) );
-
 	}
-
-
 }

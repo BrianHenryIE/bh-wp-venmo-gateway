@@ -7,22 +7,12 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+
 /**
  * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\Includes\Activator
  */
-class Activator_Unit_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		parent::_before();
-
-		\WP_Mock::setUp();
-	}
-
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
-	}
+class Activator_Unit_Test extends Unit_Testcase {
 
 	/**
 	 *
@@ -40,6 +30,5 @@ class Activator_Unit_Test extends \Codeception\Test\Unit {
 		);
 
 		Activator::activate();
-
 	}
 }

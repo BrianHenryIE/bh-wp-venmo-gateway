@@ -34,5 +34,4 @@ class Activator {
 
 		update_option( 'bh-wc-venmo-gateway-last-activated-time', time() );
 	}
-
 }

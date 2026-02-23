@@ -18,7 +18,7 @@ use BrianHenryIE\WC_Venmo_Gateway\Admin\Plugins_Page;
 use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\Admin\Admin;
-use Psr\Log\LoggerInterface;
+use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Email;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Order;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
@@ -78,7 +78,6 @@ class BH_WC_Venmo_Gateway {
 
 		$this->define_woocommerce_hooks();
 		$this->define_cron_hooks();
-
 	}
 
 	/**
@@ -94,7 +93,6 @@ class BH_WC_Venmo_Gateway {
 		$plugin_i18n = new I18n();
 
 		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
-
 	}
 
 	/**
@@ -142,7 +140,6 @@ class BH_WC_Venmo_Gateway {
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
-
 	}
 
 	/**
@@ -156,6 +153,5 @@ class BH_WC_Venmo_Gateway {
 
 		// Hook the function that the cron job will run.
 		add_action( Cron::CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK, array( $cron, 'check_for_payment_emails' ) );
-
 	}
 }

@@ -4,8 +4,7 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-
-use Psr\Log\NullLogger;
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
 
 /**
  * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Cron
@@ -13,16 +12,7 @@ use Psr\Log\NullLogger;
  * Class Cron_Unit_Test
  * @package BrianHenryIE\WC_Venmo_Gateway\Includes
  */
-class Cron_Unit_Test extends \Codeception\Test\Unit {
-
-	protected function _before() {
-		\WP_Mock::setUp();
-	}
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
-	}
+class Cron_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * Check when the cron's check_for_payment_emails function is called, i.e.
@@ -43,9 +33,8 @@ class Cron_Unit_Test extends \Codeception\Test\Unit {
 			array( 'check_for_payment_emails' => \Codeception\Stub\Expected::once() )
 		);
 
-		$cron = new Cron( $api_mock, $settings_mock, new NullLogger() );
+		$cron = new Cron( $api_mock, $settings_mock, $this->logger );
 
 		$cron->check_for_payment_emails();
-
 	}
 }
