@@ -2,8 +2,14 @@ COMPOSER_MEMORY_LIMIT=-1 composer update -W --ignore-platform-req=ext-imap
 
 
 
-
-
+```
+composer install;
+npm install;
+npm run build;
+npx playwright install;
+npx wp-env start --xdebug;
+BASEURL=http://localhost:8888 npx playwright test --ui &;
+```
 
 ## Contributing
 

@@ -16,7 +16,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 	public $id = 'venmo';
 
-	const CUSTOMER_VENMO_USERNAME_META_KEY    = '_customer-venmo-username';
+	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
+
+	// The meta key to save to individual orders.
 	const DESTINATION_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
 
 	/**
@@ -187,8 +189,19 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			return array();
 		}
 
-		$destination_venmo_account = $this->get_option( self::DESTINATION_VENMO_USERNAME_META_KEY );
-		$order->update_status( 'on-hold', "Awaiting Venmo payment to <a target=\"_blank\" href=\"https://venmo.com/\${$destination_venmo_account}\">{$destination_venmo_account}</a>." );
+		$customer_venmo_account    = $order->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+		$destination_venmo_account = $order->get_meta( self::DESTINATION_VENMO_USERNAME_META_KEY, true );
+
+		$note = sprintf(
+			'Awaiting Venmo payment of %s from <a target="_blank" href="https://venmo.com/%s\">@%s</a> to <a target="_blank" href="https://venmo.com/%s\">@%s</a>.',
+			$order->get_formatted_order_total(),
+			$customer_venmo_account,
+			$customer_venmo_account,
+			$destination_venmo_account,
+			$destination_venmo_account,
+		);
+
+		$order->update_status( 'on-hold', $note );
 
 		// Reduce stock levels
 		wc_reduce_stock_levels( $order_id );

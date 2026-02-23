@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { defineConfig, devices } from '@playwright/test';
-import path from 'path';
+import * as path from 'path';
 
 /**
  * Read environment variables from file.
@@ -26,7 +26,7 @@ const STORAGE_STATE_PATH =
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig( {
-  testDir: './tests/e2e-pw',
+  testDir: './tests/e2e-pw/specs',
   testIgnore: '**/helpers-tests/**',
   globalSetup: require.resolve( './tests/e2e-pw/global-setup.ts' ),
   /* Run tests in files in parallel */
@@ -42,7 +42,7 @@ export default defineConfig( {
   // https://playwright.dev/docs/test-timeouts
   // timeout is 30 seconds by default
   // expect.timeout is 5 seconds by default
-  timeout: 60_000,
+  timeout: 15_000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */

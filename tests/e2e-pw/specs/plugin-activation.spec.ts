@@ -4,7 +4,7 @@
  * Verifies the plugin is active and visible on the plugins page.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import {loginAsAdmin} from "./helpers/ui/login";
+import {loginAsAdmin} from "../helpers/general/ui/login";
 
 test.describe( 'Plugin activation', () => {
 	test( 'plugin is listed on the plugins page', async ( { admin, page } ) => {
