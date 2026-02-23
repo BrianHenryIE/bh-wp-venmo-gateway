@@ -19,14 +19,6 @@ interface Settings_Interface {
 	public function is_imap_reconcile_enabled(): bool;
 
 	/**
-	 * @param string $gateway_id
-	 *
-	 * @return array[]
-	 */
-	public function get_form_fields( string $gateway_id ): array;
-
-
-	/**
 	 * Returns the ids for all instances of Venmo Gateway registered with WooCommerce.
 	 *
 	 * @return string[]

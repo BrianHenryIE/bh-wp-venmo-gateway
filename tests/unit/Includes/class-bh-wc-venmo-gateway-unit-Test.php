@@ -42,12 +42,14 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( I18n::class ), 'load_plugin_textdomain' )
 		);
 
-
-		$api = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class, array(
-			'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php'
-		));
-		$logger = new NullLogger();
+		$api      = $this->makeEmpty( API_Interface::class );
+		$settings = $this->makeEmpty(
+			Settings_Interface::class,
+			array(
+				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
+			)
+		);
+		$logger   = new NullLogger();
 
 		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
 	}
@@ -67,12 +69,14 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( Plugins_Page::class ), 'add_orders_action_link' )
 		);
 
-
-		$api = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class, array(
-			'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php'
-		));
-		$logger = new NullLogger();
+		$api      = $this->makeEmpty( API_Interface::class );
+		$settings = $this->makeEmpty(
+			Settings_Interface::class,
+			array(
+				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
+			)
+		);
+		$logger   = new NullLogger();
 
 		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
 	}
@@ -89,12 +93,14 @@ class BH_WC_Venmo_Gateway_Unit_Test extends \Codeception\Test\Unit {
 			2
 		);
 
-
-		$api = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class, array(
-			'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php'
-		));
-		$logger = new NullLogger();
+		$api      = $this->makeEmpty( API_Interface::class );
+		$settings = $this->makeEmpty(
+			Settings_Interface::class,
+			array(
+				'get_plugin_basename' => 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php',
+			)
+		);
+		$logger   = new NullLogger();
 
 		new BH_WC_Venmo_Gateway( $api, $settings, $logger );
 	}

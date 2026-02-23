@@ -2,6 +2,7 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
+use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use WC_Order;
@@ -74,7 +75,43 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	public function init_form_fields(): void {
 
-		$this->form_fields = $this->plugin_settings->get_form_fields( $this->id );
+		$venmo_username_description = '';
+
+		$form_fields = array(
+			'enabled'        => array(
+				'title'   => __( 'Enable/Disable', 'bh-wc-venmo-gateway' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable This Gateway', 'bh-wc-venmo-gateway' ),
+				'default' => 'yes',
+			),
+			'title'          => array(
+				'title'       => __( 'Title', 'bh-wc-venmo-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'This controls the title which the user sees during checkout.', 'bh-wc-venmo-gateway' ),
+				'default'     => _x( 'Venmo', 'Method description here', 'bh-wc-venmo-gateway' ),
+				'desc_tip'    => true,
+			),
+			'description'    => array(
+				'title'       => __( 'Description', 'bh-wc-venmo-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'Payment method description that the customer will see on your checkout.', 'bh-wc-venmo-gateway' ) . " {$venmo_username_description}",
+				'default'     => 'Use the Venmo app to pay for your order.',
+				'desc_tip'    => true,
+			),
+			'venmo_username' => array(
+				'title'       => __( 'Venmo Username', 'bh-wc-venmo-gateway' ),
+				'type'        => 'text',
+				'description' => __( 'The venmo username whose account the customer will be instructed to pay.', 'bh-wc-venmo-gateway' ),
+				'desc_tip'    => false,
+			),
+		);
+
+		// TODO: Display on settings page  (/add a link to show) what it will look like for the customer.
+
+		$credentials_fields = new Credentials_Settings_Fields();
+		$form_fields        = $credentials_fields->append_imap_reconcile_fields( $form_fields );
+
+		$this->form_fields = $form_fields;
 
 	}
 

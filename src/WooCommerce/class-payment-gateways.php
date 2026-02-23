@@ -25,7 +25,7 @@ class Payment_Gateways {
 	 *
 	 * @return string[]
 	 **/
-	function add_to_woocommerce( array $gateways ): array {
+	public function add_to_woocommerce( array $gateways ): array {
 
 		$gateways[] = Venmo_Gateway::class;
 
@@ -108,30 +108,8 @@ class Payment_Gateways {
 	 * @return array<string|WC_Payment_Gateway>
 	 */
 	public function filter_to_only_venmo_gateways( array $gateways ): array {
+		return $gateways;
 
-		if ( ! isset( $_GET['page'] ) || 'wc-settings' !== $_GET['page']
-			|| ! isset( $_GET['tab'] ) || 'checkout' !== $_GET['tab']
-			|| ! isset( $_GET['class'] ) || 'bh-wc-venmo-gateway' !== $_GET['class'] ) {
-
-			return $gateways;
-		}
-
-		$venmo_gateways = array();
-		foreach ( $gateways as $gateway ) {
-
-			if ( is_string( $gateway ) && class_exists( $gateway ) ) {
-				$gateway_instance = new $gateway();
-				if ( $gateway_instance instanceof Venmo_Gateway ) {
-					$venmo_gateways[] = $gateway;
-					continue;
-				}
-			}
-			if ( $gateway instanceof Venmo_Gateway ) {
-				$venmo_gateways[] = $gateway;
-			}
-		}
-
-		return $venmo_gateways;
 	}
 
 

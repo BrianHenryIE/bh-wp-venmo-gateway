@@ -2,8 +2,33 @@
 
 # BH WC Venmo Gateway
 
+https://help.venmo.com/cs/articles/personal-qr-codes-on-venmo-faq-vhel316
+
+venmo://paycharge?txn=pay&recipients=~MYUSERNAME~&note=~PRE-FILLEDCOMMENT~&amount=~PREFILLEDAMOUNT~
+
+https://account.venmo.com/pay?recipients=%40friend-username&amount=25.50&note=For%20lunch&txn=charge
+
+PAY:
+https://account.venmo.com/pay?audience=[AUDIENCE]&amount=[AMOUNT]&note=[NOTES]&recipients=%2C[USERNAME]&txn=pay
+
+REQUEST:
+https://account.venmo.com/pay?audience=[AUDIENCE]&amount=[AMOUNT]&note=[NOTES]&recipients=%2C[USERNAME]&txn=charge
+
+VARIABLES:
+[AUDIENCE] = Can be either: "private, friends, public"
+[AMOUNT] = Needs to be in format "00.00"
+[NOTES] = Needs to be in HTML "%20 for spaces"
+[USERNAME] = Username to pay/request no @ sign.
+
+EXAMPLE (Request $2.00 from '@Username with note "Note here":
+https://account.venmo.com/pay?audience=private&amount=2.00&note=Note%20here&recipients=%2CUsername&txn=charge
+
 Requires php-imap
 
+TODO:
+
+* check venmo username is not blank at checkout
+* people like payment confirmation emails. Maybe WooCommerce has a native one.
 
 `wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time`
 

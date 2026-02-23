@@ -28,12 +28,12 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 	 */
 	public function test_plugin_include() {
 
-        /**
-         * @runInSeparateProcess
-         * @see https://github.com/lucatume/wp-browser/issues/410
-         * @see https://github.com/Codeception/Codeception/issues/3568
-         */
-	    $this->markTestSkipped('Need to @runInSeparateProcess');
+		/**
+		 * @runInSeparateProcess
+		 * @see https://github.com/lucatume/wp-browser/issues/410
+		 * @see https://github.com/Codeception/Codeception/issues/3568
+		 */
+		$this->markTestSkipped( 'Need to @runInSeparateProcess' );
 
 		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
@@ -66,12 +66,12 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 	 * Verifies the plugin does not output anything to screen.
 	 */
 	public function test_plugin_include_no_output() {
-        /**
-         * @runInSeparateProcess
-         * @see https://github.com/lucatume/wp-browser/issues/410
-         * @see https://github.com/Codeception/Codeception/issues/3568
-         */
-        $this->markTestSkipped('Need to @runInSeparateProcess');
+		/**
+		 * @runInSeparateProcess
+		 * @see https://github.com/lucatume/wp-browser/issues/410
+		 * @see https://github.com/Codeception/Codeception/issues/3568
+		 */
+		$this->markTestSkipped( 'Need to @runInSeparateProcess' );
 		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
 
 		\WP_Mock::userFunction(

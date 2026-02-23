@@ -1,7 +1,7 @@
-<?php 
+<?php
 
-class PluginsPageCest
-{
+class PluginsPageCest {
+
 
 	/**
 	 * Login and navigate to plugins.php.
@@ -31,7 +31,7 @@ class PluginsPageCest
 	 */
 	public function testPluginDescriptionHasBeenSet( AcceptanceTester $I ) {
 
-		$default_plugin_description = "This is a short description of what the plugin does.";
+		$default_plugin_description = 'This is a short description of what the plugin does.';
 
 		$I->cantSee( $default_plugin_description );
 	}

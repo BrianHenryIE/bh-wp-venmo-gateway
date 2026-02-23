@@ -1,21 +1,20 @@
-<?php 
+<?php
 
-class AdminOrderPageCest
-{
+class AdminOrderPageCest {
+
 
 	/**
 	 * When an order is created, the admin UI should show the Venmo username.
-     *
+	 *
 	 * @param AcceptanceTester $I
 	 */
 	public function testPluginDescriptionHasBeenSet( AcceptanceTester $I ) {
 
 		return;
 
+		$I->loginAsAdmin();
 
-        $I->loginAsAdmin();
-
-        $I->canSee( 'venmo_username' );
+		$I->canSee( 'venmo_username' );
 
 	}
 

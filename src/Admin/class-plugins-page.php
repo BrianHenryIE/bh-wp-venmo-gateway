@@ -35,23 +35,7 @@ class Plugins_Page {
 			return $links_array;
 		}
 
-		$payment_gateways = WC_Payment_Gateways::instance()->payment_gateways();
-		$venmo_gateways   = array();
-		foreach ( $payment_gateways as $gateway ) {
-			if ( $gateway instanceof Venmo_Gateway ) {
-				$venmo_gateways[] = $gateway;
-			}
-		}
-
-		if ( 1 === count( $venmo_gateways ) ) {
-			// If there is only one Venmo gateway instance, link directly to it.
-			$section = '&section=' . $venmo_gateways[0]->id;
-		} else {
-			// If there is more than one, link to the WooCommerce / Settings / Payments page filtered to the class type.
-			$section = '&class=bh-wc-venmo-gateway';
-		}
-
-		$setting_link   = admin_url( "admin.php?page=wc-settings&tab=checkout{$section}" );
+		$setting_link   = admin_url( "admin.php?page=wc-settings&tab=checkout&section=venmo" );
 		$plugin_links   = array();
 		$plugin_links[] = '<a href="' . $setting_link . '">' . __( 'Settings', 'bh-wc-venmo-gateway' ) . '</a>';
 

@@ -2,7 +2,7 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\IMAP_Reconcile;
+use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\API\API as BH_WC_Order_Email_Reconcile;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
@@ -20,19 +20,19 @@ class API implements API_Interface {
 	/**
 	 * Instance of IMAP_Reconcile library to fetch emails and match with unpaid orders.
 	 *
-	 * @var IMAP_Reconcile
+	 * @var BH_WC_Order_Email_Reconcile
 	 */
-	protected IMAP_Reconcile $imap;
+	protected BH_WC_Order_Email_Reconcile $reconciler;
 
 	/**
-	 * @param IMAP_Reconcile     $imap
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
+	 * @param BH_WC_Order_Email_Reconcile $reconciler
+	 * @param Settings_Interface          $settings
+	 * @param LoggerInterface             $logger
 	 */
-	public function __construct( IMAP_Reconcile $imap, Settings_Interface $settings, LoggerInterface $logger ) {
-		$this->logger   = $logger;
-		$this->settings = $settings;
-		$this->imap     = $imap;
+	public function __construct( BH_WC_Order_Email_Reconcile $reconciler, Settings_Interface $settings, LoggerInterface $logger ) {
+		$this->logger     = $logger;
+		$this->settings   = $settings;
+		$this->reconciler = $reconciler;
 	}
 
 	/**
@@ -43,6 +43,6 @@ class API implements API_Interface {
 	 */
 	public function check_for_payment_emails( $since = null ): void {
 
-		$this->imap->check_for_payment_emails( $since );
+		// $this->imap->check_for_payment_emails( $since );
 	}
 }

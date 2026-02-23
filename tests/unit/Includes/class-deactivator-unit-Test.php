@@ -28,11 +28,11 @@ class Deactivator_Unit_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'wp_clear_scheduled_hook',
 			array(
-				'args'   => array( 'bh_wc_venmo_gateway_check_for_payment_emails' ),
+				'args'  => array( 'bh_wc_venmo_gateway_check_for_payment_emails' ),
 				'times' => 1,
 			)
 		);
-		
+
 		Deactivator::deactivate();
 
 	}

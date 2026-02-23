@@ -110,7 +110,7 @@ class BH_WC_Venmo_Gateway {
 		add_action( 'admin_init', array( $admin, 'add_setup_notice' ) );
 
 		$plugins_page    = new Plugins_Page();
-		$plugin_basename = "{$this->settings->get_plugin_basename()}";
+		$plugin_basename = $this->settings->get_plugin_basename();
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_settings_action_link' ) );
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_orders_action_link' ) );
 	}

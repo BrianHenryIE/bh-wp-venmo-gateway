@@ -8,11 +8,7 @@
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
 /**
- *
- * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Activator
- *
- * Class Activator_Unit_Test
- * @package BrianHenryIE\WC_Venmo_Gateway\Includes
+ * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\Includes\Activator
  */
 class Activator_Unit_Test extends \Codeception\Test\Unit {
 
@@ -35,9 +31,9 @@ class Activator_Unit_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'update_option',
 			array(
-				'args'   => array(
+				'args'  => array(
 					'bh-wc-venmo-gateway-last-activated-time',
-					\WP_Mock\Functions::type( 'int' )
+					\WP_Mock\Functions::type( 'int' ),
 				),
 				'times' => 1,
 			)

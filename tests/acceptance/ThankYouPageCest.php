@@ -6,23 +6,19 @@
 
 // QR?
 
-class ThankYouPageCest
-{
+class ThankYouPageCest {
+
 
 	/**
 	 *
-     *
+	 *
 	 * @param AcceptanceTester $I
 	 */
 	public function testInstructionsOnThankYouPage( AcceptanceTester $I ) {
 
+		// Place order
 
-	    // Place order
-
-
-//        $I->canSee( 'Please pay using Venmo' );
-
-
+		// $I->canSee( 'Please pay using Venmo' );
 	}
 
 }

@@ -2,9 +2,11 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\API\IMAP_Extract_Settings_Interface;
+use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;
+use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
 
-class Pattern_2 implements IMAP_Extract_Settings_Interface {
+class Pattern_2 implements Email_Extract_Settings_Interface {
+	use Email_Extract_Settings_Helper_Trait;
 
 	/**
 	 * The customer's email address is not in the Venmo email!

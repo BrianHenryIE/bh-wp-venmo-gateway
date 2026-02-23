@@ -29,11 +29,11 @@ class I18n_Unit_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'load_plugin_textdomain',
 			array(
-				'args'   => array(
+				'args' => array(
 					'bh-wc-venmo-gateway',
 					false,
 					$plugin_root_dir . '/Languages/',
-				)
+				),
 			)
 		);
 	}
