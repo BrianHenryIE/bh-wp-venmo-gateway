@@ -26,7 +26,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$this->plugin_id = "{$this->plugin_settings->get_plugin_slug()}_";
 
-		$this->icon = plugins_url( 'WooCommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$this->icon = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 
 		$this->has_fields = true;
 

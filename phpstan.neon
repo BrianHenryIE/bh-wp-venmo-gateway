@@ -1,22 +1,29 @@
 parameters:
     level: 8
     paths:
-        - src
+        - includes
+        - bh-wc-venmo-gateway.php
+        - autoload.php
+        - uninstall.php
+        - tests
+#        - development-plugin
     excludePaths:
-        - src/strauss/*
+        - vendor-prefixed
     bootstrapFiles:
         - phpstanbootstrap.php
-        - src/autoload.php
+        - autoload.php
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
         - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
         - vendor/php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
         - vendor/wp-cli/wp-cli/php/class-wp-cli-command.php
     scanDirectories:
-        - src/strauss
-        - wp-content/plugins
+        - vendor-prefixed
+#        - wp-content/plugins/...
+        - wp-content/plugins/woocommerce
         - vendor/wp-cli
     scanFiles:
         - vendor/antecedent/patchwork/Patchwork.php
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#LoggerInterface\|null#'
         - '#apply_filters invoked with#'

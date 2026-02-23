@@ -1,0 +1,17 @@
+/CONTRIBUTING.md
+/README.md
+/codeception.dist.yml
+/composer.lock
+/dist-archive
+/phpcs.xml
+/phpstan.neon
+/phpstanbootstrap.php
+/playwright.config.ts
+/rector.php
+/scratch
+/tests
+/vendor
+/wordpress
+/wp-cli.yml
+/wp-content
+/node-modules

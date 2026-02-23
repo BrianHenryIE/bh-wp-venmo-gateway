@@ -12,8 +12,9 @@
   "author": "BrianHenryIE",
   "license": "GPL-2.0+",
   "devDependencies": {
-    "@wordpress/env": "^10.39.0",
-    "@playwright/test": "^1.38.1",
-    "@wordpress/e2e-test-utils-playwright": "^0.11.0"
+    "@wordpress/env": "^11.0",
+    "@playwright/test": "^1.58",
+    "@wordpress/e2e-test-utils-playwright": "^1.40",
+    "dotenv": "^17.3"
   }
 }
