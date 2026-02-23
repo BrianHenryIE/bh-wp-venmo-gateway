@@ -1,6 +1,8 @@
 <?php
 /**
  * Add the payment gateway to WooCommerce's list of gateways.
+ *
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package brianhenryie/bh-wc-venmo-gateway
+ */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\API;
 

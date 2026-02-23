@@ -1,6 +1,8 @@
 <?php
 /**
  * Instructions shown on the Thank You page immediately after the order is created.
+ *
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;

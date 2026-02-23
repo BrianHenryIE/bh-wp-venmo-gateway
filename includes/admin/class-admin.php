@@ -1,6 +1,8 @@
 <?php
 /**
  * Display an admin notice inviting the user to configure the plugin. Stops displaying after a week.
+ *
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Admin;
@@ -16,7 +18,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
  *
  * Class Admin
  *
- * @package BrianHenryIE\WC_Venmo_Gateway\Admin
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 class Admin {
 

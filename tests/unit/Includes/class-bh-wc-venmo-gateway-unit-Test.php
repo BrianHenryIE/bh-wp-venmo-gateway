@@ -15,7 +15,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
- * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway
+ * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks
  *
  * Class BH_WC_Venmo_Gateway_Unit_Test
  * @package BrianHenryIE\WC_Venmo_Gateway\Includes
@@ -23,7 +23,7 @@ use WP_Mock\Matcher\AnyInstance;
 class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 
 	/**
-	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway::set_locale
+	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks::set_locale
 	 */
 	public function test_set_locale_hooked() {
 
@@ -40,11 +40,11 @@ class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 			)
 		);
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
+		new Register_Hooks( $api, $settings, $this->logger );
 	}
 
 	/**
-	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway::define_admin_hooks
+	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks::define_admin_hooks
 	 */
 	public function test_admin_hooks() {
 
@@ -66,11 +66,11 @@ class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 			)
 		);
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
+		new Register_Hooks( $api, $settings, $this->logger );
 	}
 
 	/**
-	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway::define_woocommerce_hooks
+	 * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks::define_woocommerce_hooks
 	 */
 	public function test_woocommerce_hooks() {
 
@@ -89,6 +89,6 @@ class BH_WC_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 			)
 		);
 
-		new BH_WC_Venmo_Gateway( $api, $settings, $this->logger );
+		new Register_Hooks( $api, $settings, $this->logger );
 	}
 }

@@ -9,7 +9,7 @@
 namespace BrianHenryIE\WC_Venmo_Gateway;
 
 use BrianHenryIE\WC_Venmo_Gateway\API\API;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway;
+use BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks;
 
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.

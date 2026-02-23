@@ -33,7 +33,7 @@ use BrianHenryIE\WC_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\Logger;
 use BrianHenryIE\WC_Venmo_Gateway\Includes\Activator;
 use BrianHenryIE\WC_Venmo_Gateway\Includes\Deactivator;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway;
+use BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -72,7 +72,7 @@ function instantiate_bh_wc_venmo_gateway(): API {
 
 	$api = new API( $order_email_reconcile, $settings, $logger );
 
-	$plugin = new BH_WC_Venmo_Gateway( $api, $settings, $logger );
+	$plugin = new Register_Hooks( $api, $settings, $logger );
 
 	return $api;
 }

@@ -8,7 +8,7 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway;
 
-use BrianHenryIE\WC_Venmo_Gateway\Includes\BH_WC_Venmo_Gateway;
+use BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks;
 
 /**
  * Class Plugin_WP_Mock_Test

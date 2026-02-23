@@ -4,8 +4,7 @@
  * Adds a "Settings" link
  * Adds an "Orders" link when Filter WooCommerce Orders by Payment Method plugin is installed.
  *
- * @link
- * @since      1.1.0
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Admin;

@@ -5,11 +5,7 @@
  * A class definition that includes attributes and functions used across both the
  * frontend-facing side of the site and the admin area.
  *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    BrianHenryIE\WC_Venmo_Gateway
- * @subpackage BrianHenryIE\WC_Venmo_Gateway/includes
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
@@ -24,36 +20,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Order;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Thank_You;
 
-/**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * frontend-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.0.0
- * @package    BrianHenryIE\WC_Venmo_Gateway
- * @subpackage BrianHenryIE\WC_Venmo_Gateway/includes
- * @author     Brian Henry <BrianHenryIE@gmail.com>
- */
-class BH_WC_Venmo_Gateway {
-
-	/**
-	 * @var LoggerInterface
-	 */
-	protected $logger;
-
-	/**
-	 * @var Settings_Interface
-	 */
-	protected $settings;
-
-	/**
-	 * @var API_Interface
-	 */
-	protected $api;
+class Register_Hooks {
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -65,17 +32,14 @@ class BH_WC_Venmo_Gateway {
 	 * @param API_Interface      $api
 	 * @param Settings_Interface $settings
 	 * @param LoggerInterface    $logger
-	 * @since    1.0.0
 	 */
-	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
-
-		$this->logger   = $logger;
-		$this->settings = $settings;
-		$this->api      = $api;
-
+	public function __construct(
+		protected API_Interface $api,
+		protected Settings_Interface $settings,
+		protected LoggerInterface $logger
+	) {
 		$this->set_locale();
 		$this->define_admin_hooks();
-
 		$this->define_woocommerce_hooks();
 		$this->define_cron_hooks();
 	}
@@ -85,8 +49,6 @@ class BH_WC_Venmo_Gateway {
 	 *
 	 * Uses the i18n class in order to set the domain and to register the hook
 	 * with WordPress.
-	 *
-	 * @since    1.0.0
 	 */
 	protected function set_locale(): void {
 
@@ -98,8 +60,6 @@ class BH_WC_Venmo_Gateway {
 	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
-	 *
-	 * @since    1.0.0
 	 */
 	protected function define_admin_hooks(): void {
 

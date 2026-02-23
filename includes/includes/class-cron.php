@@ -1,12 +1,8 @@
 <?php
 /**
- * The admin-specific functionality of the plugin.
  *
- * @link       example.com
- * @since      1.0.0
  *
- * @package    BrianHenryIE\WC_Venmo_Gateway
- * @subpackage BrianHenryIE\WC_Venmo_Gateway/admin
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
