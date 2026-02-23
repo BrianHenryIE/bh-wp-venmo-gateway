@@ -93,3 +93,4 @@ patches.lock.json
 
 # Behat
 /tests/features/cache/
+artifacts/storage-states/admin.json

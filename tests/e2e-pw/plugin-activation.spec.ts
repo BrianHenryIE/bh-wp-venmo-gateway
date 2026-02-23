@@ -4,13 +4,17 @@
  * Verifies the plugin is active and visible on the plugins page.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import {loginAsAdmin} from "./helpers/ui/login";
 
 test.describe( 'Plugin activation', () => {
 	test( 'plugin is listed on the plugins page', async ( { admin, page } ) => {
+
+		await loginAsAdmin(page);
+
 		await admin.visitAdminPage( 'plugins.php' );
 
 		// Check the plugin row exists
-		const pluginRow = page.locator( 'tr[data-slug="bh-wc-venmo-gateway"]' );
+		const pluginRow = page.locator( 'tr[data-plugin="bh-wc-venmo-gateway/bh-wc-venmo-gateway.php"]' );
 		await expect( pluginRow ).toBeVisible();
 
 		// Verify it's active (has "Deactivate" link)
