@@ -9,11 +9,12 @@ namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WC_Venmo_Gateway\Admin\Admin;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
+use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
 
 /**
  * Class Develop_Test
  */
-class BH_WC_Venmo_Gateway_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
+class BH_WC_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 
 	/**
 	 * Verify action to call load textdomain is added.

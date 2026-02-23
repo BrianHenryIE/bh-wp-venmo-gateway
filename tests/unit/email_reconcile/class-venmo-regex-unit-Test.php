@@ -2,7 +2,9 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\API;
 
-class Venmo_Regex_Unit_Test extends \Codeception\Test\Unit {
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+
+class Venmo_Regex_Unit_Test extends Unit_Testcase {
 
 	public function test_amount_1() {
 
@@ -13,15 +15,15 @@ class Venmo_Regex_Unit_Test extends \Codeception\Test\Unit {
             <img style="vertical-align: -1px;" src=https://s3.amazonaws.com/venmo/audience/private.png alt="private"/>
 
             <!-- amount -->
-            
-                
+
+
                 <div style="float:right; text-align: right;">
                     <div>$71.24</div>
                     <div>Fee - $1.45</div>
                     <div style="color:#009200;">+ $69.79</div>
                 </div>
-                
-            
+
+
         </td>
 EOD;
 
@@ -71,11 +73,11 @@ EOD;
             <img style="vertical-align: -1px;" src=https://s3.amazonaws.com/venmo/audience/private.png alt="private"/>
 
             <!-- amount -->
-            
-                
+
+
                 <span style="color:#009200;float:right;">+ $94.97</span>
-                
-            
+
+
         </td>
 EOD;
 		$str = preg_replace( '/\s+/', ' ', $str );

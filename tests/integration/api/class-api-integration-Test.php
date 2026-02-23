@@ -5,8 +5,9 @@ namespace BrianHenryIE\WC_Venmo_Gateway\API;
 use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\API\IMAP_Mailbox_Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\WC_IMAP_Reconcile\IMAP_Reconcile;
 use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\Logger;
+use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
 
-class API_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
+class API_Integration_Test extends WPUnit_Testcase {
 
 	public function test_live() {
 

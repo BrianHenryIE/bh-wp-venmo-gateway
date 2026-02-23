@@ -2,12 +2,13 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\API;
 
+use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
 use Codeception\Stub\Expected;
 
 /**
  * @coversDefaultClass  \BrianHenryIE\WC_Venmo_Gateway\API
  */
-class API_Unit_Test extends \Codeception\Test\Unit {
+class API_Unit_Test extends Unit_Testcase {
 
 	public function test_happy_simple_api() {
 

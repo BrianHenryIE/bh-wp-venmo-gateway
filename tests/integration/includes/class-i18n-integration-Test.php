@@ -7,12 +7,14 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+
 /**
  * Class BrianHenryIE\WC_Venmo_Gateway_Test
  *
  * @see I18n
  */
-class I18n_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
+class I18n_Integration_Test extends WPUnit_Testcase {
 
 	/**
 	 * AFAICT, this will fail until a translation has been added.

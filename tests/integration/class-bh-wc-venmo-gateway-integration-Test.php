@@ -12,7 +12,8 @@ use BrianHenryIE\WC_Venmo_Gateway\API\API;
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.
  */
-class BH_WC_Venmo_Gateway_Integration_Test extends \BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase {
+class BH_WC_Venmo_Gateway_Integration_Test extends WPUnit_Testcase
+{
 
 	/**
 	 * Test the main plugin object is added to PHP's GLOBALS and that it is the correct class.
