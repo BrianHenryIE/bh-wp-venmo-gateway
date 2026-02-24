@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.0.0
+
+* Add blocks checkout support
+
 ~v15 now.
 
 ### 2.2.0
