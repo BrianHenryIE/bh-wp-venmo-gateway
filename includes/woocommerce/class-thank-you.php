@@ -84,24 +84,38 @@ class Thank_You {
 
 		$instructions = '<br/>';
 
-		$venmo_url = "https://venmo.com/{$store_venmo_username}";
+		// TODO: use an enum.
+		$audiences    = array( 'private', 'friends', 'public' );
+		$audience     = 'private';
+		$url_audience = in_array( $audience, $audiences, true ) ?: 'private';
 
-		$instructions .= "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"{$venmo_url}\">@{$store_venmo_username}</a></p>";
+		/**
+		 * https://account.venmo.com/pay?audience=[AUDIENCE]&amount=[AMOUNT]&note=[NOTES]&recipients=%2C[USERNAME]&txn=charge
+		 */
+		$venmo_url = sprintf(
+			'https://account.venmo.com/pay?audience=%s&amount=%s&note=%s&recipients=%%2C%s&txn=charge',
+			$url_audience,
+			rawurlencode( $order->get_total() ),
+			rawurlencode( 'order id: ' . $order->get_id() ),
+			rawurlencode( $store_venmo_username )
+		);
 
-		$instructions .= "<p>Please include the order number – <b>{$order->get_id()}</b> – in the order note.</p>";
+		$instructions .= "<p>Please send payment of <b>{$order->get_formatted_order_total()}</b> via Venmo to <b><a href=\"{$venmo_url}\">@{$store_venmo_username}</b></a></p>";
+
+		$instructions .= "<p>Please include the order number – <b>{$order->get_id()}</b> – in the message.</p>";
 		// $instructions .= "<p>* Pay the precise amount – <b>{$order->get_formatted_order_total()}</b> – so the payment can be automatically matched to the order.";
 
 		$instructions .= '<div style="text-align: center;">';
 
 		$instructions   .= '<div>';
-		$instructions   .= "<a href=\"https://venmo.com/{$store_venmo_username}\">";
+		$instructions   .= "<a href=\"{$venmo_url}\">";
 		$venmo_image_url = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$instructions   .= "<img src=\"{$venmo_image_url}\" />";
 		$instructions   .= '</a>';
 		$instructions   .= '</div>';
 
 		$instructions .= '<div>';
-		$instructions .= "<a href=\"https://venmo.com/{$store_venmo_username}\">";
+		$instructions .= "<a href=\"{$venmo_url}\">";
 		// Reduce the paddding around the QR code.
 		$qr_options    = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
@@ -111,7 +125,7 @@ class Thank_You {
 		$instructions .= '</div>';
 
 		$instructions .= '<div>';
-		$instructions .= "<a href=\"https://venmo.com/{$store_venmo_username}\">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>";
+		$instructions .= "<a href=\"{$venmo_url}\">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>";
 		$instructions .= '</div>';
 
 		$instructions .= '</div>';
