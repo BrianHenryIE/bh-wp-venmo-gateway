@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.0.1
+
+* Fix: QR code opens 
+
 ### 3.0.0
 
 * Add blocks checkout support
