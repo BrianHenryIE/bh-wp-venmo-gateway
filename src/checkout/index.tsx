@@ -49,8 +49,12 @@ interface PaymentMethodContentProps {
 }
 
 const settings: VenmoGatewaySettings = getSetting( 'venmo_data', {} );
-const defaultLabel = __( 'Venmo', 'bh-wc-venmo-gateway' );
-const label = decodeEntities( settings.title || '' ) || defaultLabel;
+
+var label = '';
+const settingsTitle: string = decodeEntities( settings.title || '' );
+if(settingsTitle !== '' && settingsTitle !== 'Venmo' && settingsTitle !== 'venmo' ) {
+	label = settingsTitle;
+}
 
 /**
  * Content component — shows description and Venmo username input.
@@ -134,7 +138,7 @@ const VenmoLabel: React.FC< PaymentMethodLabelProps > = ( { components } ) => {
 					style={ { height: '24px' } }
 				/>
 			) }
-			{/*<PaymentMethodLabel text={ label } />*/}
+			<PaymentMethodLabel text={ label } />
 		</div>
 	);
 };
