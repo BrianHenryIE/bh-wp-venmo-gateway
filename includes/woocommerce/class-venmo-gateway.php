@@ -56,7 +56,14 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title       = $this->get_option( 'title' );
+		$this->title =
+			in_array(
+				$this->get_option( 'title' ),
+				array( 'Venmo', 'venmo' ),
+				true
+			)
+			? '' : $this->get_option( 'title' );
+
 		$this->description = $this->get_option( 'description' );
 
 		// Save the wp-admin configuration form options.
