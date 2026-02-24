@@ -43,7 +43,7 @@ class Thank_You {
 	protected function is_thank_you_order_confirmation_page(): bool {
 
 		return isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) &&
-			str_contains( $_SERVER['REQUEST_URI'], '/order-received/' );
+			str_contains( sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/order-received/' );
 	}
 
 	/**
