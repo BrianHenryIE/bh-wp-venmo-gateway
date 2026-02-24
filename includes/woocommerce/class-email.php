@@ -38,21 +38,21 @@ class Email {
 			return;
 		}
 
-		$venmo_username = $payment_gateway_instance->get_option( 'venmo_username' );
+		$store_venmo_username = $payment_gateway_instance->get_option( 'store_venmo_username' );
 
-		if ( empty( $venmo_username ) ) {
+		if ( empty( $store_venmo_username ) ) {
 			return;
 		}
 
 		// Your order has been received.
 
-		$instructions = "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"https://venmo.com/{$venmo_username}\">@{$venmo_username}</a></p>";
+		$instructions = "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"https://venmo.com/{$store_venmo_username}\">@{$store_venmo_username}</a></p>";
 
 		$instructions .= "<p>* Enter the order number – <b>{$order->get_id()}</b> – and nothing else in the order note.</p>";
 
 		$instructions .= "<p>* Please pay the precise amount – <b>{$order->get_formatted_order_total()}</b> – so the payment can be automatically matched to the order.";
 
-		$instructions .= "<p><a href=\"https://venmo.com/{$venmo_username}\">Open Venmo</a></p>";
+		$instructions .= "<p><a href=\"https://venmo.com/{$store_venmo_username}\">Open Venmo</a></p>";
 
 		// TODO: QR code.
 

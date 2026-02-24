@@ -29,7 +29,7 @@ fi
 
 # Enable Venmo gateway with a test username.
 echo "Configuring Venmo payment gateway..."
-wp option set woocommerce_venmo_settings '{"enabled":"yes","title":"Venmo","description":"Pay with Venmo","venmo_username":"testvendor"}' --format=json 2>/dev/null || true
+wp option set woocommerce_venmo_settings '{"enabled":"yes","title":"Venmo","description":"Pay with Venmo","store_venmo_username":"testvendor"}' --format=json 2>/dev/null || true
 
 # Create a simple product for checkout testing.
 if ! wp post list --post_type=product --field=post_title 2>/dev/null | grep -q "Test Product"; then

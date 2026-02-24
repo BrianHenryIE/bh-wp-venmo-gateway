@@ -19,7 +19,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 
 	// The meta key to save to individual orders.
-	const DESTINATION_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
+	const STORE_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
 
 	/**
 	 * @var Settings_Interface
@@ -77,7 +77,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function is_configured(): bool {
-		return ! empty( $this->get_option( 'venmo_username' ) );
+		return ! empty( $this->get_option( 'store_venmo_username' ) );
 	}
 
 	/**
@@ -85,30 +85,30 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	public function init_form_fields(): void {
 
-		$venmo_username_description = '';
+		$store_venmo_username_description = '';
 
 		$form_fields = array(
-			'enabled'        => array(
+			'enabled'              => array(
 				'title'   => __( 'Enable/Disable', 'bh-wc-venmo-gateway' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable This Gateway', 'bh-wc-venmo-gateway' ),
 				'default' => 'yes',
 			),
-			'title'          => array(
+			'title'                => array(
 				'title'       => __( 'Title', 'bh-wc-venmo-gateway' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'bh-wc-venmo-gateway' ),
 				'default'     => _x( 'Venmo', 'Method description here', 'bh-wc-venmo-gateway' ),
 				'desc_tip'    => true,
 			),
-			'description'    => array(
+			'description'          => array(
 				'title'       => __( 'Description', 'bh-wc-venmo-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'Payment method description that the customer will see on your checkout.', 'bh-wc-venmo-gateway' ) . " {$venmo_username_description}",
+				'description' => __( 'Payment method description that the customer will see on your checkout.', 'bh-wc-venmo-gateway' ) . " {$store_venmo_username_description}",
 				'default'     => 'Use the Venmo app to pay for your order.',
 				'desc_tip'    => true,
 			),
-			'venmo_username' => array(
+			'store_venmo_username' => array(
 				'title'       => __( 'Venmo Username', 'bh-wc-venmo-gateway' ),
 				'type'        => 'text',
 				'description' => __( 'The venmo username whose account the customer will be instructed to pay.', 'bh-wc-venmo-gateway' ),
@@ -167,10 +167,10 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// TODO: Add to the WP User's account meta too.
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
 
-		$destination_venmo_username = $this->get_option( 'venmo_username' );
-		$order->add_meta_data( self::DESTINATION_VENMO_USERNAME_META_KEY, $destination_venmo_username, true );
+		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
-		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$destination_venmo_username}." );
+		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$store_venmo_username}." );
 
 		$order->save();
 	}
@@ -219,10 +219,10 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
 
-		$destination_venmo_username = $this->get_option( 'venmo_username' );
-		$order->add_meta_data( self::DESTINATION_VENMO_USERNAME_META_KEY, $destination_venmo_username, true );
+		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
-		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$destination_venmo_username}." );
+		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$store_venmo_username}." );
 
 		$order->save();
 	}
@@ -245,7 +245,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		}
 
 		$customer_venmo_account    = $order->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
-		$destination_venmo_account = $order->get_meta( self::DESTINATION_VENMO_USERNAME_META_KEY, true );
+		$destination_venmo_account = $order->get_meta( self::STORE_VENMO_USERNAME_META_KEY, true );
 
 		$note = sprintf(
 			'Awaiting Venmo payment of %s from <a target="_blank" href="https://venmo.com/%s\">@%s</a> to <a target="_blank" href="https://venmo.com/%s\">@%s</a>.',
@@ -304,11 +304,11 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$title = $this->title;
 
 		if ( function_exists( 'get_current_screen' ) ) {
-			$destination_venmo_username = $this->get_option( 'venmo_username' );
-			$screen                     = get_current_screen();
+			$store_venmo_username = $this->get_option( 'store_venmo_username' );
+			$screen               = get_current_screen();
 
-			if ( ! empty( $destination_venmo_username ) && 'shop_order' === $screen->id ) {
-				$title = "Venmo: @{$destination_venmo_username}";
+			if ( ! empty( $store_venmo_username ) && 'shop_order' === $screen->id ) {
+				$title = "Venmo: @{$store_venmo_username}";
 			}
 		}
 
@@ -331,11 +331,11 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$method_description = $this->method_description;
 
-		$destination_venmo_username = $this->get_option( 'venmo_username' );
+		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 
-		if ( ! empty( $destination_venmo_username ) ) {
+		if ( ! empty( $store_venmo_username ) ) {
 
-			$method_description = "Prompts the customer for their Venmo @username and instructs them to send payment to: <a href=\"https://venmo.com/{$destination_venmo_username}\">@{$destination_venmo_username}</a>";
+			$method_description = "Prompts the customer for their Venmo @username and instructs them to send payment to: <a href=\"https://venmo.com/{$store_venmo_username}\">@{$store_venmo_username}</a>";
 		}
 		return apply_filters( 'woocommerce_gateway_method_description', $method_description, $this );
 	}

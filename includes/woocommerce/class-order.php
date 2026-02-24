@@ -103,8 +103,8 @@ class Order {
 			return $formatted_address;
 		}
 
-		$venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
-		$address        = 'Venmo: ' . $venmo_username;
+		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
+		$address                 = 'Venmo: ' . $customer_venmo_username;
 
 		return $address;
 	}

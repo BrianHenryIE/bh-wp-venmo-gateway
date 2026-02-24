@@ -52,17 +52,17 @@ class Payment_Gateways {
 			return $method_title;
 		}
 
-		$username = $payment_gateway->get_option( 'venmo_username' );
+		$store_venmo_username = $payment_gateway->get_option( 'store_venmo_username' );
 
-		if ( empty( $username ) ) {
+		if ( empty( $store_venmo_username ) ) {
 			return $method_title;
 		}
 
 		// Don't format it on the gateway's page itself.
 		if ( isset( $_GET['tab'] ) && 'checkout' === $_GET['tab'] && ! isset( $_GET['section'] ) ) {
-			return "{$method_title} – <i>{$username}</i>";
+			return "{$method_title} – <i>{$store_venmo_username}</i>";
 		} else {
-			return "{$method_title} – {$username}";
+			return "{$method_title} – {$store_venmo_username}";
 		}
 	}
 
@@ -84,7 +84,7 @@ class Payment_Gateways {
 			return $value;
 		}
 
-		$destination_account_username = $order->get_meta( Venmo_Gateway::DESTINATION_VENMO_USERNAME_META_KEY );
+		$destination_account_username = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
 
 		if ( empty( $destination_account_username ) ) {
 			return $value;
