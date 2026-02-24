@@ -12,9 +12,10 @@ import { useShortcodeCheckout } from '../helpers/development-plugin/rest/checkou
 import { testConfig } from '../test-config';
 import { setDefaultCustomerAddresses } from "../helpers/development-plugin/ajax/wc-cart";
 import { addProductToCartByName } from "../helpers/general/ui/wc-cart";
+import { setVenmoUsername } from '../helpers/venmo/rest/wc-payment-gateway';
 
-const CUSTOMER_VENMO_USERNAME = 'customer_janesmith_venmo';
-const STORE_VENMO_USERNAME = 'brianhenryie';
+const CUSTOMER_VENMO_USERNAME = 'brianhenryie';
+const STORE_VENMO_USERNAME = 'sackavs';
 
 test.describe( 'Venmo checkout (shortcode)', () => {
 
@@ -31,6 +32,9 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	test.beforeEach( async ( { page } ) => {
 		// Delete all cookies so user is logged out and cart is empty
 		await page.context().clearCookies();
+
+		// Set the store's Venmo username.
+		await setVenmoUsername( STORE_VENMO_USERNAME );
 
 		// Set the billing+shipping details via API.
 		await setDefaultCustomerAddresses(page);
@@ -156,7 +160,6 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		const orderNotes = page.locator( '#woocommerce-order-notes' );
 		await expect( orderNotes ).toContainText( 'Awaiting Venmo payment' );
 		await expect( orderNotes ).toContainText( 'from @' + CUSTOMER_VENMO_USERNAME );
-		// TODO: expose the gateway's configured username in REST and implement this test.
 		await expect( orderNotes ).toContainText( 'to @' + STORE_VENMO_USERNAME );
 	} );
 } );

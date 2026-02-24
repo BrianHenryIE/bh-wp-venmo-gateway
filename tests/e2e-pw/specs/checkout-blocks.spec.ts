@@ -11,9 +11,10 @@ import {useBlocksCheckout, useShortcodeCheckout} from "../helpers/development-pl
 import {setDefaultCustomerAddresses} from "../helpers/development-plugin/ajax/wc-cart";
 import {addProductToCartByName} from "../helpers/general/ui/wc-cart";
 import {testConfig} from "../test-config";
+import { setVenmoUsername } from '../helpers/venmo/rest/wc-payment-gateway';
 
-const CUSTOMER_VENMO_USERNAME = 'customer_janesmith_venmo';
-const STORE_VENMO_USERNAME = 'brianhenryie';
+const CUSTOMER_VENMO_USERNAME = 'brianhenryie';
+const STORE_VENMO_USERNAME = 'sackavs';
 
 test.describe( 'Venmo checkout (blocks)', () => {
 
@@ -30,6 +31,9 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	test.beforeEach( async ( { page } ) => {
 		// Delete all cookies so user is logged out and cart is empty
 		await page.context().clearCookies();
+
+		// Set the store's Venmo username.
+		await setVenmoUsername( STORE_VENMO_USERNAME );
 
 		// Set the billing+shipping details via API.
 		await setDefaultCustomerAddresses(page);

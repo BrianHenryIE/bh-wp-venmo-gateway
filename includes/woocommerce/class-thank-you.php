@@ -57,7 +57,7 @@ class Thank_You {
 	 * @param mixed  $order_id
 	 * @return string
 	 */
-	public function print_instructions( $thank_you_text, $order_id ): string {
+	public function print_instructions( string $thank_you_text, ?WC_Order $order_id = null ): string {
 
 		$order = wc_get_order( $order_id );
 
@@ -84,20 +84,14 @@ class Thank_You {
 
 		$instructions = '<br/>';
 
-		// TODO: use an enum.
-		$audiences    = array( 'private', 'friends', 'public' );
-		$audience     = 'private';
-		$url_audience = in_array( $audience, $audiences, true ) ?: 'private';
-
 		/**
-		 * https://account.venmo.com/pay?audience=[AUDIENCE]&amount=[AMOUNT]&note=[NOTES]&recipients=%2C[USERNAME]&txn=charge
+		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
 		 */
 		$venmo_url = sprintf(
-			'https://account.venmo.com/pay?audience=%s&amount=%s&note=%s&recipients=%%2C%s&txn=charge',
-			$url_audience,
+			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
+			rawurlencode( $store_venmo_username ),
 			rawurlencode( $order->get_total() ),
-			rawurlencode( 'order id: ' . $order->get_id() ),
-			rawurlencode( $store_venmo_username )
+			rawurlencode( $order->get_id() )
 		);
 
 		$instructions .= "<p>Please send payment of <b>{$order->get_formatted_order_total()}</b> via Venmo to <b><a href=\"{$venmo_url}\">@{$store_venmo_username}</b></a></p>";
