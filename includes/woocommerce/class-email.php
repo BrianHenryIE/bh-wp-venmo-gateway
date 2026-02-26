@@ -6,6 +6,7 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
+use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
 use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QRCode;
 use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
@@ -40,7 +41,7 @@ class Email {
 			return;
 		}
 
-		$store_venmo_username = $payment_gateway_instance->get_option( 'store_venmo_username' );
+		$store_venmo_username = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
 
 		if ( empty( $store_venmo_username ) ) {
 			return;
@@ -52,6 +53,7 @@ class Email {
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
+			protected string $outputType = QROutputInterface::GDIMAGE_PNG;
 		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );

@@ -28,18 +28,18 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 *
 	 * @return string
 	 */
-public function get_plugin_slug(): string {
-	return 'bh-wc-venmo-gateway';
-}
+	public function get_plugin_slug(): string {
+		return 'bh-wc-venmo-gateway';
+	}
 
 	/**
 	 * TODO: Add to WooCommerce settings.
 	 *
 	 * @return string
 	 */
-public function get_log_level(): string {
-	return LogLevel::DEBUG;
-}
+	public function get_log_level(): string {
+		return LogLevel::DEBUG;
+	}
 
 
 
@@ -51,12 +51,12 @@ public function get_log_level(): string {
 	 *
 	 * @return bool
 	 */
-public function is_imap_reconcile_enabled(): bool {
-	return true;
-}
+	public function is_imap_reconcile_enabled(): bool {
+		return true;
+	}
 
-public function get_plugin_version(): string {
-	return '3.1.3;
+	public function get_plugin_version(): string {
+		return '3.1.3';
 	}
 
 	/**
@@ -94,15 +94,15 @@ public function get_plugin_version(): string {
 
 	/**
 	 * Name for the emails' custom post type, e . g . 'My Plugin Emails' .
-	*
-	* trait will automatically convert this to 'my-plugin-emails' and 'my_plugin_emails' where appropriate,
-	* using `sanitize_title` and additionally `str_replace('-','_'...)` respectively .
-	*
-	* Should usually be one cpt per plugin . But there can be more than one mailbox per plugin .
-	* This should be hard - coded, and not derived from user input( e . g . mailbox name ) .
-	*
-	* Max . length 20 characters .
-	* /
+	 *
+	 * trait will automatically convert this to 'my-plugin-emails' and 'my_plugin_emails' where appropriate,
+	 * using `sanitize_title` and additionally `str_replace('-','_'...)` respectively .
+	 *
+	 * Should usually be one cpt per plugin . But there can be more than one mailbox per plugin .
+	 * This should be hard - coded, and not derived from user input( e . g . mailbox name ) .
+	 *
+	 * Max . length 20 characters .
+	 */
 	public function get_cpt_friendly_name(): string {
 		return 'Venmo Payment Emails';
 	}
