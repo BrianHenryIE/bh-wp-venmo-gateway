@@ -263,8 +263,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		);
 
 		$note = sprintf(
-			'Awaiting Venmo payment of %s from <a target="_blank" href="https://venmo.com/%s">@%s</a> to <a target="_blank" href="%s">@%s</a>.',
-			$order->get_formatted_order_total(),
+			'Awaiting Venmo payment of $%s from <a target="_blank" href="https://venmo.com/%s">@%s</a> to <a target="_blank" href="%s">@%s</a>.',
+			$order->get_total(),
 			$customer_venmo_account,
 			$customer_venmo_account,
 			$venmo_payment_url,

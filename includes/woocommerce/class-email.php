@@ -64,9 +64,9 @@ class Email {
 
 		// Your order has been received.
 
-		$instructions = "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
+		$instructions = "<p>Please send payment of \${$order->get_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
 
-		$instructions .= "<p>Please pay the precise amount – <b>{$order->get_formatted_order_total()}</b> and include the order number – <b>{$order->get_id()}</b> in the note.</p>";
+		$instructions .= "<p>Please pay the precise amount – <b> \${$order->get_total()}</b> and include the order number – <b>{$order->get_id()}</b> in the note.</p>";
 
 		// Venmo logo image.
 		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img src=\"{$venmo_image_url}\" /></a></p>";

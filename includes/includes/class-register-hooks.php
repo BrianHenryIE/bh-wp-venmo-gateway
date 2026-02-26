@@ -16,6 +16,7 @@ use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\Admin\Admin;
 use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Admin_Order_UI;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Email;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Order;
 use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
@@ -90,6 +91,9 @@ class Register_Hooks {
 		add_filter( 'woocommerce_order_get_payment_method_title', array( $payment_gateways, 'format_method_title' ), 10, 2 );
 
 		add_filter( 'woocommerce_payment_gateways', array( $payment_gateways, 'filter_to_only_venmo_gateways' ), 100 );
+
+		$admin_order_ui = new Admin_Order_UI();
+		add_action( 'add_meta_boxes', array( $admin_order_ui, 'add_venmo_payment_metabox' ) );
 
 		$admin_order_page = new Order( $this->settings, $this->logger );
 		// On admin order screen, show the Venmo username in place of the billing address.

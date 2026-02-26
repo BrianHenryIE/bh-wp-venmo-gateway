@@ -98,12 +98,12 @@ class Thank_You {
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
 
-		$order_formatted_total = $order->get_formatted_order_total();
+		$order_total = " \${$order->get_total()}";
 
 		$instructions = <<<EOD
 <br/>
 
-<p>Please send payment of <b>{$order_formatted_total}</b> via Venmo to <b><a href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
+<p>Please send payment of <b>{$order_total}</b> via Venmo to <b><a href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
 
 <p>Please write "<b>order {$order_id}</b>" in the note.</p>
 
@@ -124,7 +124,7 @@ class Thank_You {
 	</div>
 
 	<div>
-		<a href="{$venmo_payment_url}">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>
+		<a href="{$venmo_payment_url}">\${$order->get_total()} to @{$store_venmo_username}</a>
 	</div>
 
 </div>
