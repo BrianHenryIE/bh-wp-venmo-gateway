@@ -35,38 +35,6 @@ class Payment_Gateways {
 	}
 
 	/**
-	 * Add the destination venmo username to the admin ui gateway title, for the case of multiple instances.
-	 *
-	 * TODO: The <i> are showing on the individual gateway settings page: /wp-admin/admin.php?page=wc-settings&tab=checkout&section=venmo
-	 *
-	 * @hooked woocommerce_gateway_method_title
-	 *
-	 * @param string             $method_title
-	 * @param WC_Payment_Gateway $payment_gateway
-	 *
-	 * @return string
-	 */
-	public function format_admin_gateway_name( string $method_title, WC_Payment_Gateway $payment_gateway ): string {
-
-		if ( ! ( $payment_gateway instanceof Venmo_Gateway ) ) {
-			return $method_title;
-		}
-
-		$store_venmo_username = $payment_gateway->get_option( 'store_venmo_username' );
-
-		if ( empty( $store_venmo_username ) ) {
-			return $method_title;
-		}
-
-		// Don't format it on the gateway's page itself.
-		if ( isset( $_GET['tab'] ) && 'checkout' === $_GET['tab'] && ! isset( $_GET['section'] ) ) {
-			return "{$method_title} – <i>{$store_venmo_username}</i>";
-		} else {
-			return "{$method_title} – {$store_venmo_username}";
-		}
-	}
-
-	/**
 	 * On the admin side, add the destination Venmo username where appropriate.
 	 *
 	 * @hooked woocommerce_order_get_payment_method_title

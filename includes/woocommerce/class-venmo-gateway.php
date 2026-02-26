@@ -16,6 +16,15 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 	public $id = 'venmo';
 
+	/**
+	 * This is overwritten to add the destination account username.
+	 *
+	 * @see Payment_Gateways::format_admin_gateway_name()
+	 */
+	public $method_title = 'Venmo';
+
+	public $title = 'Venmo';
+
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 
 	// The meta key to save to individual orders.
@@ -41,13 +50,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		/**
 		 * This is overwritten to add the destination account username.
 		 *
-		 * @see Payment_Gateways::format_admin_gateway_name()
-		 */
-		$this->method_title = 'Venmo';
-
-		/**
-		 * This is overwritten to add the destination account username.
-		 *
 		 * @see Venmo_Gateway::get_method_description()
 		 */
 		$this->method_description = 'Prompts the customer for their Venmo @username and instructs them to send payment the specified account.';
@@ -55,15 +57,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// Load the settings.
 		$this->init_form_fields();
 		$this->init_settings();
-
-		// Define user set variables.
-		$this->title =
-			in_array(
-				$this->get_option( 'title' ),
-				array( 'Venmo', 'venmo' ),
-				true
-			)
-			? '' : $this->get_option( 'title' );
 
 		$this->description = $this->get_option( 'description' );
 
@@ -299,7 +292,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		);
 	}
 
-
 	/**
 	 * Output the gateway settings screen.
 	 *
@@ -331,11 +323,31 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$title = $this->title;
 
-		if ( function_exists( 'get_current_screen' ) ) {
-			$store_venmo_username = $this->get_option( 'store_venmo_username' );
-			$screen               = get_current_screen();
+		/**
+		 * Hide the title "Venmo" or "venmo" at the checkout so only the logo image is displayed.
+		 */
+		if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+			$title = in_array( $title, array( 'Venmo', 'venmo' ), true )
+				? ''
+				: $title;
+		}
 
-			if ( ! empty( $store_venmo_username ) && 'shop_order' === $screen->id ) {
+		/**
+		 * In admin order UI, show the username associated with the gateway.
+		 * wp-admin/admin.php?page=wc-orders&action=edit&id=128
+		 *
+		 * TODO: This should really pull fom the order object iself, not the gateway. This block of code is in the wrong class.
+		 *
+		 * Order #128 details
+		 * Payment via Venmo: @brianhenryie. Customer IP: 192.168.1.2
+		 */
+		if ( function_exists( 'get_current_screen' ) ) {
+			global $pagenow;
+			global $plugin_page;
+
+			$store_venmo_username = $this->get_option( 'store_venmo_username' );
+
+			if ( ! empty( $store_venmo_username ) && 'admin.php' === $pagenow && 'wc-orders' === $plugin_page ) {
 				$title = "Venmo: @{$store_venmo_username}";
 			}
 		}
@@ -343,6 +355,38 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		return apply_filters( 'woocommerce_gateway_title', $title, $this->id );
 	}
 
+	/**
+	 * Add the destination venmo username to the admin ui gateway title (particularly to distinguish multiple instances).
+	 *
+	 * TODO: The <i> are showing on the individual gateway settings page: /wp-admin/admin.php?page=wc-settings&tab=checkout&section=venmo
+	 *
+	 * @return string
+	 */
+	public function get_method_title() {
+		$method_title = $this->method_title;
+
+		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+
+		if ( empty( $store_venmo_username ) ) {
+			return $method_title;
+		}
+
+		// Don't format it on the gateway's page itself.
+		if ( isset( $_GET['tab'] ) && 'checkout' === $_GET['tab'] && ! isset( $_GET['section'] ) ) {
+			$method_title = "{$method_title} – <i>{$store_venmo_username}</i>";
+		} else {
+			$method_title = "{$method_title} – {$store_venmo_username}";
+		}
+
+		/**
+		 * Filter the method title.
+		 *
+		 * @param string $title Method title.
+		 * @param WC_Payment_Gateway $this Payment gateway instance.
+		 * @return string
+		 */
+		return apply_filters( 'woocommerce_gateway_method_title', $method_title, $this );
+	}
 
 	/**
 	 * Return the description for admin screens.

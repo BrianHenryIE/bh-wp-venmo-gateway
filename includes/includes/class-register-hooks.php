@@ -85,8 +85,6 @@ class Register_Hooks {
 		$payment_gateways = new Payment_Gateways();
 		// Register the payment gateway with WooCommerce.
 		add_filter( 'woocommerce_payment_gateways', array( $payment_gateways, 'add_to_woocommerce' ) );
-		// In admin UI, show the username associated with the gateway.
-		add_filter( 'woocommerce_gateway_method_title', array( $payment_gateways, 'format_admin_gateway_name' ), 10, 2 );
 
 		add_filter( 'woocommerce_order_get_payment_method_title', array( $payment_gateways, 'format_method_title' ), 10, 2 );
 
