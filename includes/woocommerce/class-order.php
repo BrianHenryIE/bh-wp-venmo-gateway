@@ -23,7 +23,7 @@ class Order {
 	}
 
 	/**
-	 * When an order is  created (set to on-hold), schedule to check for emails in five mintues.
+	 * When an order is  created (set to on-hold), schedule to check for emails in five minutes.
 	 *
 	 * @hooked woocommerce_order_status_changed
 	 *
