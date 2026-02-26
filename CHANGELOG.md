@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.2
+
+* Use `venmo://` URL for QR code 
+
 ### 3.1.1
 
 * Use different URL for QR code vs anchor link 

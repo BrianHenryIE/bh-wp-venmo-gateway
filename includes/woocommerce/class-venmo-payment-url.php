@@ -31,6 +31,16 @@ class Venmo_Payment_Url {
 			$order->get_date_created()->format( 'U.123456' ) // '1753234807.228478',
 		);
 
+		/**
+		 * venmo://paycharge?txn=pay&recipients=~MYUSERNAME~&note=~PRE-FILLEDCOMMENT~&amount=~PREFILLEDAMOUNT~
+		 */
+		$venmo_payment_url = sprintf(
+			'venmo://paycharge?txn=pay&recipients=%s&note=%s&amount=%s',
+			$this->store_venmo_username,
+			rawurlencode( 'order ' . $order->get_id() ),
+			rawurlencode( $order->get_total() ),
+		);
+
 		return $venmo_payment_url;
 	}
 
