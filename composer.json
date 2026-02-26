@@ -67,8 +67,9 @@
         "wp-cli/dist-archive-command": "*",
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
-        "wpackagist-plugin/woocommerce": ">=10.5",
+        "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
         "wpackagist-plugin/query-monitor": "*",
+        "wpackagist-plugin/woocommerce": ">=10.5",
         "wpackagist-theme/twentytwenty": "*"
     },
     "autoload": {

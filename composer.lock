@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e064e379fa0dafd985f52f14aeb5dc2c",
+    "content-hash": "2613157ecc82f49d1abf136e0a5cb930",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -12963,6 +12963,24 @@
                 }
             ],
             "time": "2025-11-25T12:08:04+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/checkout-fees-for-woocommerce",
+            "version": "2.19.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/checkout-fees-for-woocommerce/",
+                "reference": "tags/2.19.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/checkout-fees-for-woocommerce.2.19.0.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/checkout-fees-for-woocommerce/"
         },
         {
             "name": "wpackagist-plugin/query-monitor",
