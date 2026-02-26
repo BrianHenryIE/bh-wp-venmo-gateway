@@ -6,6 +6,8 @@
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
+use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QRCode;
+use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
 use WC_Payment_Gateways;
 
@@ -44,15 +46,35 @@ class Email {
 			return;
 		}
 
+		/**
+		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
+		 */
+		$venmo_payment_url = sprintf(
+			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
+			rawurlencode( $store_venmo_username ),
+			rawurlencode( $order->get_total() ),
+			rawurlencode( 'order ' . $order->get_id() )
+		);
+
+		$qr_options          = new class() extends QROptions {
+			protected int $quietzoneSize = 1;
+		};
+		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
+
 		// Your order has been received.
 
-		$instructions = "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"https://venmo.com/{$store_venmo_username}\">@{$store_venmo_username}</a></p>";
+		$instructions = "<p>Please send payment of {$order->get_formatted_order_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
 
-		$instructions .= "<p>* Enter the order number – <b>{$order->get_id()}</b> – and nothing else in the order note.</p>";
+		$instructions .= "<p>Please pay the precise amount – <b>{$order->get_formatted_order_total()}</b> and include the order number – <b>{$order->get_id()}</b> in the note.</p>";
 
-		$instructions .= "<p>* Please pay the precise amount – <b>{$order->get_formatted_order_total()}</b> – so the payment can be automatically matched to the order.";
+		// Venmo logo image.
+		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img src=\"{$venmo_image_url}\" /></a></p>";
 
-		$instructions .= "<p><a href=\"https://venmo.com/{$store_venmo_username}\">Open Venmo</a></p>";
+		// QR Code.
+		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img style=\"display:block; max-width: 90vw; max-height: 500px;\" src=\"{$qr_code_data_base64}\" alt=\"Payment QR code\" /></a></p>";
+
+		$instructions .= "<p><a href=\"{$venmo_payment_url}\">Open Venmo</a></p>";
 
 		// TODO: QR code.
 
