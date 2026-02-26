@@ -41,26 +41,21 @@ class Email {
 		}
 
 		$store_venmo_username = $payment_gateway_instance->get_option( 'store_venmo_username' );
+		$store_venmo_uuid     = $payment_gateway_instance->get_option( 'store_venmo_uuid' );
 
 		if ( empty( $store_venmo_username ) ) {
 			return;
 		}
 
-		/**
-		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
-		 */
-		$venmo_payment_url = sprintf(
-			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
-			rawurlencode( $store_venmo_username ),
-			rawurlencode( $order->get_total() ),
-			rawurlencode( 'order ' . $order->get_id() )
-		);
+		$payment_url_helper   = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
+		$venmo_payment_url    = $payment_url_helper->get_browser_url( $order );
+		$venmo_payment_qr_url = $payment_url_helper->get_qr_url( $order );
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
 		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
+		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
 
 		// Your order has been received.
 

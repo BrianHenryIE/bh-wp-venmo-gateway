@@ -79,52 +79,45 @@ class Thank_You {
 
 		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
 		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
+		$store_venmo_uuid        = $order->get_meta( Venmo_Gateway::STORE_VENMO_UUID_META_KEY );
 
 		$order_id = $order->get_id();
 
-		/**
-		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
-		 */
-		$venmo_payment_url = sprintf(
-			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
-			rawurlencode( $store_venmo_username ),
-			rawurlencode( $order->get_total() ),
-			rawurlencode( 'order ' . $order_id )
-		);
+		$payment_url_helper   = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
+		$venmo_payment_qr_url = $payment_url_helper->get_qr_url( $order );
+		$venmo_payment_url    = $payment_url_helper->get_browser_url( $order );
 
-		$qr_options          = new class() extends QROptions {
+		$qr_options           = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
 		};
-		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
+		$venmo_logo_image_url = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$qr_code_data_base64  = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
 
 		$order_total = " \${$order->get_total()}";
 
 		$instructions = <<<EOD
 <br/>
 
-<p>Please send payment of <b>{$order_total}</b> via Venmo to <b><a href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
+<p>Please send payment of <b>{$order_total}</b> via Venmo to <b><a target="_blank" href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
 
-<p>Please write "<b>order {$order_id}</b>" in the note.</p>
-
-<!-- <p>* Pay the precise amount – <b>x</b> – so the payment can be automatically matched to the order.-->
+<p>Please pay the precise amount and include "<b>order {$order_id}</b>" in the note.</p>
 
 <div style="text-align: center;">
 
 	<div>
-		<a href="{$venmo_payment_url}">
-			<img src="{$venmo_image_url}" />
+		<a target="_blank" href="{$venmo_payment_url}">
+			<img src="{$venmo_logo_image_url}" />
 		</a>
 	</div>
 
 	<div>
-		<a href="$venmo_payment_url}">
+		<a target="_blank" href="{$venmo_payment_url}">
 			<img style="display:block; max-width: 90vw; max-height: 500px;" src="{$qr_code_data_base64}" alt="Payment QR code" />
 		</a>
 	</div>
 
 	<div>
-		<a href="{$venmo_payment_url}">\${$order->get_total()} to @{$store_venmo_username}</a>
+		<a target="_blank" href="{$venmo_payment_url}">\${$order->get_total()} to @{$store_venmo_username}</a>
 	</div>
 
 </div>

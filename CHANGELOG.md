@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.1
+
+* Use different URL for QR code vs anchor link 
+
 ### 3.1.0
 
 * Add QR code to admin order UI.

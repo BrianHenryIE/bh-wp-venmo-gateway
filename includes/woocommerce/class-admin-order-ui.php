@@ -65,35 +65,24 @@ class Admin_Order_UI {
 
 		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
 		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
+		$store_venmo_uuid        = $order->get_meta( Venmo_Gateway::STORE_VENMO_UUID_META_KEY );
+
+		$venmo_user_uuid = 'b30b21d4-aa4a-4b1d-be4d-a9136b376d21';
 
 		if ( empty( $store_venmo_username ) ) {
 			echo '<p>' . esc_html__( 'No store Venmo username recorded for this order.', 'bh-wc-venmo-gateway' ) . '</p>';
 			return;
 		}
 
-		$order_id = $order->get_id();
-
-		/**
-		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
-		 */
-		$venmo_payment_url = sprintf(
-			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
-			rawurlencode( $store_venmo_username ),
-			rawurlencode( $order->get_total() ),
-			rawurlencode( 'order ' . $order_id )
-		);
-
-		$venmo_payment_url_display = sprintf(
-			'<span>https://venmo.com/</span><span>%s?</span><span>txn=pay&</span><span>amount=%s&</span><span>note=%s</span>',
-			rawurlencode( $store_venmo_username ),
-			rawurlencode( $order->get_total() ),
-			rawurlencode( 'order ' . $order_id )
-		);
+		$payment_url_helper        = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
+		$venmo_payment_qr_url      = $payment_url_helper->get_qr_url( $order );
+		$venmo_payment_url         = $payment_url_helper->get_browser_url( $order );
+		$venmo_payment_url_display = $payment_url_helper->get_html( $order );
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
 		};
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
+		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$order_total         = "\${$order->get_total()}";
 
