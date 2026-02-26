@@ -156,6 +156,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Save the Venmo username as the order is created.
 	 *
+	 * @see woocommerce_checkout_update_order_meta
+	 *
 	 * @hooked woocommerce_checkout_create_order
 	 * @see WC_Checkout::create_order()
 	 * @see WC_Checkout::get_posted_data()
@@ -176,8 +178,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
-
-		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$store_venmo_username}." );
 
 		$order->save();
 	}
@@ -229,8 +229,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
-		$order->add_order_note( "Customer Venmo username: {$customer_venmo_username} <br/>sent to pay: {$store_venmo_username}." );
-
 		$order->save();
 	}
 
@@ -254,12 +252,22 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$customer_venmo_account    = $order->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
 		$destination_venmo_account = $order->get_meta( self::STORE_VENMO_USERNAME_META_KEY, true );
 
+		/**
+		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
+		 */
+		$venmo_payment_url = sprintf(
+			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
+			rawurlencode( $destination_venmo_account ),
+			rawurlencode( $order->get_total() ),
+			rawurlencode( 'order ' . $order_id )
+		);
+
 		$note = sprintf(
-			'Awaiting Venmo payment of %s from <a target="_blank" href="https://venmo.com/%s\">@%s</a> to <a target="_blank" href="https://venmo.com/%s\">@%s</a>.',
+			'Awaiting Venmo payment of %s from <a target="_blank" href="https://venmo.com/%s">@%s</a> to <a target="_blank" href="%s">@%s</a>.',
 			$order->get_formatted_order_total(),
 			$customer_venmo_account,
 			$customer_venmo_account,
-			$destination_venmo_account,
+			$venmo_payment_url,
 			$destination_venmo_account,
 		);
 

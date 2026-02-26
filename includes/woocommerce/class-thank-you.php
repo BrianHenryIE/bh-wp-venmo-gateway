@@ -85,7 +85,7 @@ class Thank_You {
 		/**
 		 * Template: `https://venmo.com/{username}?txn=pay&amount={amount}&note={note}`.
 		 */
-		$venmo_url = sprintf(
+		$venmo_payment_url = sprintf(
 			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
 			rawurlencode( $store_venmo_username ),
 			rawurlencode( $order->get_total() ),
@@ -96,14 +96,14 @@ class Thank_You {
 			protected int $quietzoneSize = 1;
 		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_url );
+		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_url );
 
 		$order_formatted_total = $order->get_formatted_order_total();
 
 		$instructions = <<<EOD
 <br/>
 
-<p>Please send payment of <b>{$order_formatted_total}</b> via Venmo to <b><a href="{$venmo_url}">@{$store_venmo_username}</b></a>.</p>
+<p>Please send payment of <b>{$order_formatted_total}</b> via Venmo to <b><a href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
 
 <p>Please write "<b>order {$order_id}</b>" in the note.</p>
 
@@ -112,19 +112,19 @@ class Thank_You {
 <div style="text-align: center;">
 
 	<div>
-		<a href="{$venmo_url}">
+		<a href="{$venmo_payment_url}">
 			<img src="{$venmo_image_url}" />
 		</a>
 	</div>
 
 	<div>
-		<a href="$venmo_url}">
+		<a href="$venmo_payment_url}">
 			<img style="display:block; max-width: 90vw; max-height: 500px;" src="{$qr_code_data_base64}" alt="Payment QR code" />
 		</a>
 	</div>
 
 	<div>
-		<a href="{$venmo_url}">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>
+		<a href="{$venmo_payment_url}">{$order->get_formatted_order_total()} to @{$store_venmo_username}</a>
 	</div>
 
 </div>

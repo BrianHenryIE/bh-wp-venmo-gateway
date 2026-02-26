@@ -1,5 +1,10 @@
 # Changelog
 
+### 3.1.0
+
+* Add QR code to admin order UI.
+* Hide the word Venmo/i at the checkout – use the image, but allow customising the text.
+
 ### 3.0.1
 
 * Fix: QR code opens 
