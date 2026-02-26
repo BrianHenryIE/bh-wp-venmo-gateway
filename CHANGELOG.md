@@ -1,5 +1,10 @@
 # Changelog
 
+### 3.1.3
+
+* Fix: title not displaying in admin
+* Fix: QR code in email
+
 ### 3.1.2
 
 * Use `venmo://` URL for QR code 

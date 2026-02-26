@@ -38,5 +38,28 @@ TODO:
 `wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time; wp cron event run bh_wc_venmo_gateway_check_for_payment_emails`
 
 
+## Venmo Transaction Fees
+
+https://help.venmo.com/cs/articles/business-profile-transaction-fees-vhel221
+
+> The seller transaction fee is a standard rate of 1.9% + $0.10 of the payment total
+
+Plugin: [Payment Gateway Based Fees and Discounts for WooCommerce](https://wordpress.org/plugins/checkout-fees-for-woocommerce/)
+
+`wp plugin install checkout-fees-for-woocommerce`
+
+`wp-admin/admin.php?page=wc-settings&tab=alg_checkout_fees&section=pgbf-venmo`
+
+```
+wp option update alg_gateways_fees_enabled_venmo "yes"
+
+wp option update alg_gateways_fees_text_venmo "Venmo fixed fee"
+wp option update alg_gateways_fees_type_venmo "fixed"
+wp option update alg_gateways_fees_value_venmo "0.10"
+
+wp option update alg_gateways_fees_text_2_venmo "Venmo percentage fee"
+wp option update alg_gateways_fees_type_2_venmo "percent"
+wp option update alg_gateways_fees_value_2_venmo "1.9"
+```
 
 # Acknowledgements
