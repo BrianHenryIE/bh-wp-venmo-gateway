@@ -70,6 +70,7 @@
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
         "wpackagist-plugin/query-monitor": "*",
         "wpackagist-plugin/woocommerce": ">=10.5",
+        "wpackagist-plugin/wp-mail-debugger": "^1.1",
         "wpackagist-theme/twentytwenty": "*"
     },
     "autoload": {
