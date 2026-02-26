@@ -29,7 +29,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 	// The meta key to save to individual orders.
 	const STORE_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
-	const STORE_VENMO_UUID_META_KEY     = '_destination-account-venmo-uuid';
 
 	/**
 	 * @var Settings_Interface
@@ -115,12 +114,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'The venmo username whose account the customer will be instructed to pay.', 'bh-wc-venmo-gateway' ),
 				'desc_tip'    => false,
 			),
-			'store_venmo_uuid'     => array(
-				'title'       => __( 'Venmo UUID', 'bh-wc-venmo-gateway' ),
-				'type'        => 'text',
-				'description' => __( 'The venmo uuid required for the payment link.', 'bh-wc-venmo-gateway' ),
-				'desc_tip'    => false,
-			),
 		);
 
 		// TODO: Display on settings page  (/add a link to show) what it will look like for the customer.
@@ -179,9 +172,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
-		$store_venmo_uuid = $this->get_option( 'store_venmo_uuid' );
-		$order->add_meta_data( self::STORE_VENMO_UUID_META_KEY, $store_venmo_uuid, true );
-
 		$order->save();
 	}
 
@@ -231,9 +221,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
-
-		$store_venmo_uuid = $this->get_option( 'store_venmo_uuid' );
-		$order->add_meta_data( self::STORE_VENMO_UUID_META_KEY, $store_venmo_uuid, true );
 
 		$order->save();
 	}

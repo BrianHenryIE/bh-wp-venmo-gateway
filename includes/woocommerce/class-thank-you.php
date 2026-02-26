@@ -79,13 +79,12 @@ class Thank_You {
 
 		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
 		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
-		$store_venmo_uuid        = $order->get_meta( Venmo_Gateway::STORE_VENMO_UUID_META_KEY );
 
 		$order_id = $order->get_id();
 
-		$payment_url_helper   = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
-		$venmo_payment_qr_url = $payment_url_helper->get_qr_url( $order );
-		$venmo_payment_url    = $payment_url_helper->get_browser_url( $order );
+		$payment_url_helper   = new Venmo_Payment_Url( $order );
+		$venmo_payment_qr_url = $payment_url_helper->get_qr_url();
+		$venmo_payment_url    = $payment_url_helper->get_browser_url();
 
 		$qr_options           = new class() extends QROptions {
 			protected int $quietzoneSize = 1;

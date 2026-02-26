@@ -41,15 +41,14 @@ class Email {
 		}
 
 		$store_venmo_username = $payment_gateway_instance->get_option( 'store_venmo_username' );
-		$store_venmo_uuid     = $payment_gateway_instance->get_option( 'store_venmo_uuid' );
 
 		if ( empty( $store_venmo_username ) ) {
 			return;
 		}
 
-		$payment_url_helper   = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
-		$venmo_payment_url    = $payment_url_helper->get_browser_url( $order );
-		$venmo_payment_qr_url = $payment_url_helper->get_qr_url( $order );
+		$payment_url_helper   = new Venmo_Payment_Url( $order );
+		$venmo_payment_url    = $payment_url_helper->get_browser_url();
+		$venmo_payment_qr_url = $payment_url_helper->get_qr_url();
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
@@ -67,11 +66,9 @@ class Email {
 		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img src=\"{$venmo_image_url}\" /></a></p>";
 
 		// QR Code.
-		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img style=\"display:block; max-width: 90vw; max-height: 500px;\" src=\"{$qr_code_data_base64}\" alt=\"Payment QR code\" /></a></p>";
+		$instructions .= "<p><a href=\"{$venmo_payment_qr_url}\"><img style=\"display:block; max-width: 90vw; max-height: 500px;\" src=\"{$qr_code_data_base64}\" alt=\"Payment QR code\" /></a></p>";
 
 		$instructions .= "<p><a href=\"{$venmo_payment_url}\">Open Venmo</a></p>";
-
-		// TODO: QR code.
 
 		// TODO: escape output.
 		if ( $instructions && ! $sent_to_admin && $order->has_status( 'on-hold' ) ) {

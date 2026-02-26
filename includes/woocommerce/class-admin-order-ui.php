@@ -65,19 +65,16 @@ class Admin_Order_UI {
 
 		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
 		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
-		$store_venmo_uuid        = $order->get_meta( Venmo_Gateway::STORE_VENMO_UUID_META_KEY );
-
-		$venmo_user_uuid = 'b30b21d4-aa4a-4b1d-be4d-a9136b376d21';
 
 		if ( empty( $store_venmo_username ) ) {
 			echo '<p>' . esc_html__( 'No store Venmo username recorded for this order.', 'bh-wc-venmo-gateway' ) . '</p>';
 			return;
 		}
 
-		$payment_url_helper        = new Venmo_Payment_Url( $store_venmo_username, $store_venmo_uuid );
-		$venmo_payment_qr_url      = $payment_url_helper->get_qr_url( $order );
-		$venmo_payment_url         = $payment_url_helper->get_browser_url( $order );
-		$venmo_payment_url_display = $payment_url_helper->get_html( $order );
+		$payment_url_helper        = new Venmo_Payment_Url( $order );
+		$venmo_payment_qr_url      = $payment_url_helper->get_qr_url();
+		$venmo_payment_url         = $payment_url_helper->get_browser_url();
+		$venmo_payment_url_display = $payment_url_helper->get_html();
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
