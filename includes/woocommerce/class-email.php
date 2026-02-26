@@ -1,6 +1,11 @@
 <?php
 /**
+ * Add instructions to the customer on-hold email.
  *
+ * Inline images do not display in gmail. Potential fix at:
+ * @see https://gist.github.com/thomasfw/5df1a041fd8f9c939ef9d88d887ce023
+ * @see https://stackoverflow.com/questions/9110091/base64-encoded-images-in-email-signatures/9110164#9110164
+ * 
  * @package brianhenryie/bh-wc-venmo-gateway
  */
 
@@ -12,9 +17,13 @@ use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
 use WC_Payment_Gateways;
 
+/**
+ * @see wp-content/plugins/woocommerce/templates/emails/email-order-details.php
+ * @see wp-content/plugins/woocommerce/templates/emails/plain/email-order-details.php
+ */
 class Email {
 
-	// TODO: Don't send order received email unless the order has not been paid in 60 minutes.
+	// TODO: Delay the email so it only sends if they do not pay immediately.
 
 	/**
 	 * Adds instructions to the order confirmation emails.
@@ -53,7 +62,7 @@ class Email {
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
-			protected string $outputType = QROutputInterface::GDIMAGE_PNG;
+			protected string $outputType = QROutputInterface::GDIMAGE_JPG;
 		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );

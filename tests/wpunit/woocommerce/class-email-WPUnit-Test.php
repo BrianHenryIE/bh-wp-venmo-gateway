@@ -1,6 +1,6 @@
 <?php
 /**
- * The SVG image was not displaying in Gmail – it must be jpg or png.
+ * The SVG image was not displaying in Gmail.
  *
  * @see https://www.codegenes.net/blog/is-there-a-trick-to-display-svg-images-in-gmail/
  *
