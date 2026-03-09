@@ -22,6 +22,9 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
  */
 class Admin {
 
+	/**
+	 * I don't really like this, but I guess it's composition over inheritance.
+	 */
 	protected Notices $notices;
 
 	/**

@@ -3,6 +3,8 @@
  * Loads all required classes
  *
  * Uses classmap, PSR4 & Alley_Interactive autoloader
+ *
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway;

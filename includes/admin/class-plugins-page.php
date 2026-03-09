@@ -14,7 +14,7 @@ use WC_Payment_Gateway;
 use WC_Payment_Gateways;
 
 /**
- *
+ * Checks are the relevant plugins (WooCommerce, the filter one) present before adding links.
  */
 class Plugins_Page {
 

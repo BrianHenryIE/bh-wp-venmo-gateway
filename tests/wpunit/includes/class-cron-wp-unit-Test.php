@@ -12,8 +12,7 @@ use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
 
 /**
- *
- * @see Cron
+ * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\Includes\Cron
  */
 class Cron_WP_Unit_Test extends WPUnit_Testcase {
 

@@ -13,7 +13,7 @@ class WPUnit_Testcase extends WPTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		// Use the Strauss-prefixed logger interface for this project
+		// Use the Strauss-prefixed logger interface for this project.
 		$this->logger = new class() extends ColorLogger implements LoggerInterface {
 		};
 	}

@@ -25,7 +25,7 @@ class Venmo_Gateway_WPUnit_Test extends WPUnit_Testcase {
 		$order->add_meta_data( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, 'sackavs', true );
 		$order_id = $order->save();
 
-		// ACT
+		// ACT.
 		$sut->process_payment( $order_id );
 
 		$order = wc_get_order( $order );

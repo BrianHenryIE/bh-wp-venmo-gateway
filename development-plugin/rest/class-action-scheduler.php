@@ -113,6 +113,11 @@ class Action_Scheduler {
 
 		return new WP_REST_Response(
 			array(
+				/**
+				 * If there is a more appropriate way of printing an array, let me know.
+				 *
+				 * @phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+				 */
 				'message' => 'Action Scheduler search results for: ' . str_replace( array( "\r", "\n", "\t" ), '', print_r( $search, true ) ),
 				'count'   => count( $results ),
 				'data'    => $results,

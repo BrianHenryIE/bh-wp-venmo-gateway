@@ -1,6 +1,8 @@
 <?php
 /**
  * Cron job should be deleted when the plugin is deactivated.
+ *
+ * @package brianhenryie/bh-wc-venmo-gateway
  */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
@@ -30,11 +32,5 @@ class Deactivator_Unit_Test extends Unit_Testcase {
 		);
 
 		Deactivator::deactivate();
-	}
-
-	public function _after() {
-		parent::_after();
-
-		\WP_Mock::tearDown();
 	}
 }

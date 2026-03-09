@@ -3,9 +3,10 @@
  * Add instructions to the customer on-hold email.
  *
  * Inline images do not display in gmail. Potential fix at:
+ *
  * @see https://gist.github.com/thomasfw/5df1a041fd8f9c939ef9d88d887ce023
  * @see https://stackoverflow.com/questions/9110091/base64-encoded-images-in-email-signatures/9110164#9110164
- * 
+ *
  * @package brianhenryie/bh-wc-venmo-gateway
  */
 

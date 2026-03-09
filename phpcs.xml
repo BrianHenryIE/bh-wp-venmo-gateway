@@ -152,4 +152,9 @@
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
+    <!-- Run wild in the development pluing  -->
+    <rule ref="WordPress.Security.NonceVerification.Recommended">
+        <exclude-pattern>*/development-plugin/*</exclude-pattern>
+    </rule>
+
 </ruleset>

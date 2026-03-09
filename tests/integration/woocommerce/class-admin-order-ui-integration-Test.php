@@ -114,8 +114,8 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 			rawurlencode( 'order ' . $order_id )
 		);
 
-		// Expected : <a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">
-		// Actual: <a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">
+		// Expected: `<a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">`.
+		// Actual: `<a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">`.
 		$this->assertStringContainsString( $expected_url, $output );
 	}
 

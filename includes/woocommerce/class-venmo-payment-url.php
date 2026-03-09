@@ -1,15 +1,31 @@
 <?php
+/**
+ * Generate URLs/HREFs releveant to the order's payment username.
+ *
+ * @package brianhenryie/bh-wc-venmo-gateeway
+ */
 
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
 use WC_Order;
 
+/**
+ * Mostly just some `sprintf()` functions
+ */
 class Venmo_Payment_Url {
 
-	private string $store_venmo_username;
+	/**
+	 * The payment address for the order.
+	 */
+	protected string $store_venmo_username;
 
+	/**
+	 * Given an order, provide functions for URLs relevant to its payments.
+	 *
+	 * @param WC_Order $order The order, presuming a STORE_VENMO_USERNAME_META_KEY.
+	 */
 	public function __construct(
-		protected \WC_Order $order
+		protected WC_Order $order
 	) {
 		$this->store_venmo_username = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
 	}

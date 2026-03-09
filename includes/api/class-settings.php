@@ -239,18 +239,24 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 
 	/**
 	 * Tell the IMAP reconcile how to find the customers' Venmo usernames.
-	 *
-	 * @return string
 	 */
 	public function get_customer_payment_id_meta_key(): ?string {
 		return Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY;
 	}
 
+	/**
+	 * Used on the logs page to show a nice name.
+	 */
 	public function get_plugin_name(): string {
 		return 'Venmo Gateway';
 	}
 
+	/**
+	 * Used in the logs library; used for `plugins.php` links.
+	 */
 	public function get_plugin_basename(): string {
-		return defined( 'BH_WC_VENMO_GATEWAY_BASENAME' ) ? BH_WC_VENMO_GATEWAY_BASENAME : 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php';
+		return defined( 'BH_WC_VENMO_GATEWAY_BASENAME' )
+			? constant( 'BH_WC_VENMO_GATEWAY_BASENAME' )
+			: 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php';
 	}
 }
