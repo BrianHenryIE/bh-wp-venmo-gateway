@@ -50,6 +50,8 @@ else
     echo "Sample products already imported."
 fi
 
-
+# Trying to disable "Welcome to Woo!" – "Skip guided setup"
+# wp-admin/admin.php?page=wc-admin&path=%2Fsetup-wizard
+wp user meta update 1 wp_persisted_preferences '{"core":{"isComplementaryAreaVisible":true},"core\/edit-post":{"welcomeGuide":false},"_modified":"2026-01-29T22:58:19.661Z"}' --format=json
 
 wp option set woocommerce_coming_soon no
