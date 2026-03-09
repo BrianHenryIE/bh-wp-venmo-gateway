@@ -4,6 +4,7 @@
 
 https://help.venmo.com/cs/articles/personal-qr-codes-on-venmo-faq-vhel316
 
+// https://www.reddit.com/r/venmo/comments/1bfvx71/anyone_else_notice_that_venmo_deep_links_are_no/
 venmo://paycharge?txn=pay&recipients=~MYUSERNAME~&note=~PRE-FILLEDCOMMENT~&amount=~PREFILLEDAMOUNT~
 
 https://account.venmo.com/pay?recipients=%40friend-username&amount=25.50&note=For%20lunch&txn=charge
@@ -25,10 +26,22 @@ https://account.venmo.com/pay?audience=private&amount=2.00&note=Note%20here&reci
 
 Requires php-imap / ext-imap
 
+
+https://developer.paypal.com/braintree/in-person/guides/paypal-and-venmo-qrc/
+https://developer.paypal.com/docs/multiparty/checkout/pay-with-venmo/
+
+
+Someone else will always have done it first:
+* https://github.com/search?q=venmo%20qr&type=repositories
+* https://github.com/mmqn/venmo-qr-code-generator/blob/fc4a2d8c9d3f5a79b3eacc59638ace896a74d7d2/src/App.jsx#L21
+
+
 TODO:
 
 * check venmo username is not blank at checkout
 * people like payment confirmation emails. Maybe WooCommerce has a native one.
+
+What does  /checkout/order-pay/ look like? I think when an order is on-hold that's maybe not avaiable.
 
 `wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time`
 
