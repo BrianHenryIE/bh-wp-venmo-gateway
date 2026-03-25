@@ -90,14 +90,19 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 	/**
 	 * Returns data made available to the payment methods script via `getSetting('venmo_data')`.
 	 *
-	 * @return array{title:string, description:string, supports:array<string>, venmo_icon_url:string}
+	 * @return array{title:string, description:string, supports:array<string>, venmo_icon_url:string, saved_venmo_username:string}
 	 */
 	public function get_payment_method_data(): array {
+		// Get saved Venmo username for auto-fill.
+		$customer_id          = get_current_user_id();
+		$saved_venmo_username = $this->gateway->get_saved_venmo_username( $customer_id );
+
 		return array(
-			'title'          => $this->get_setting( 'title' ),
-			'description'    => $this->get_setting( 'description' ),
-			'supports'       => array_filter( $this->gateway->supports, array( $this->gateway, 'supports' ) ),
-			'venmo_icon_url' => $this->gateway->icon,
+			'title'                => $this->get_setting( 'title' ),
+			'description'          => $this->get_setting( 'description' ),
+			'supports'             => array_filter( $this->gateway->supports, array( $this->gateway, 'supports' ) ),
+			'venmo_icon_url'       => $this->gateway->icon,
+			'saved_venmo_username' => $saved_venmo_username,
 		);
 	}
 }

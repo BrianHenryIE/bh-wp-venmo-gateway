@@ -14,13 +14,14 @@ import { registerPaymentMethod } from '@woocommerce/blocks-registry';
 import { getSetting } from '@woocommerce/settings';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __ } from '@wordpress/i18n';
-import { useState, useCallback, useEffect } from '@wordpress/element';
+import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
 
 interface VenmoGatewaySettings {
 	title?: string;
 	description?: string;
 	supports?: string[];
 	venmo_icon_url?: string;
+	saved_venmo_username?: string;
 }
 
 interface PaymentMethodLabelProps {
@@ -63,8 +64,20 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 	eventRegistration,
 	emitResponse,
 } ) => {
-	const [ venmoUsername, setVenmoUsername ] = useState( '' );
+	// Initialize with saved username from settings
+	const [ venmoUsername, setVenmoUsername ] = useState( settings.saved_venmo_username || '' );
 	const { onPaymentSetup } = eventRegistration;
+	const inputRef = useRef< HTMLInputElement >( null );
+
+	// Auto-focus the input when component mounts (Venmo is selected)
+	useEffect( () => {
+		const timer = setTimeout( () => {
+			if ( inputRef.current ) {
+				inputRef.current.focus();
+			}
+		}, 100 );
+		return () => clearTimeout( timer );
+	}, [] );
 
 	const onUsernameChange = useCallback(
 		( e: React.ChangeEvent< HTMLInputElement > ) => {
@@ -76,6 +89,12 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 	useEffect( () => {
 		const unsubscribe = onPaymentSetup( () => {
 			if ( ! venmoUsername.trim() ) {
+				// Focus the field on validation error
+				setTimeout( () => {
+					if ( inputRef.current ) {
+						inputRef.current.focus();
+					}
+				}, 100 );
 				return {
 					type: emitResponse.responseTypes.ERROR,
 					message: __(
@@ -116,6 +135,7 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 					placeholder={ __( 'Venmo username', 'bh-wc-venmo-gateway' ) }
 					maxLength={ 255 }
 					required
+					ref={ inputRef }
 					className="wc-block-components-text-input"
 					aria-label={ __( 'Venmo username', 'bh-wc-venmo-gateway' ) }
 				/>

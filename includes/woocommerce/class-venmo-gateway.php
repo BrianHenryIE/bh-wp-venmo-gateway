@@ -133,7 +133,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// This just prints the description.
 		parent::payment_fields();
 
-		$value = null; // TODO Try pre-populate the user's email address or Venmo if they have paid in the past.
+		// Pre-populate with saved Venmo username
+		$customer_id = get_current_user_id();
+		$value       = $this->get_saved_venmo_username( $customer_id );
 
 		woocommerce_form_field(
 			self::CUSTOMER_VENMO_USERNAME_META_KEY,
@@ -142,8 +144,27 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 				'placeholder' => 'Venmo username',
 				'maxlength'   => 255,
 				'required'    => true,
-			)
+			),
+			$value
 		);
+
+		// Add JavaScript for focusing the field when Venmo is selected
+		$this->add_checkout_focus_script();
+	}
+
+	/**
+	 * Server-side validation for the Venmo username field.
+	 *
+	 * @return bool True if validation passes.
+	 */
+	public function validate_fields(): bool {
+		// @phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) || empty( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) ) {
+			wc_add_notice( __( 'Please enter your Venmo username.', 'bh-wc-venmo-gateway' ), 'error' );
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -166,8 +187,17 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$customer_venmo_username = esc_attr( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] );
 
-		// TODO: Add to the WP User's account meta too.
+		// Save Venmo username to order meta.
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
+
+		// Save Venmo username to customer usermeta if logged in.
+		$customer_id = $order->get_customer_id();
+		if ( $customer_id > 0 ) {
+			update_user_meta( $customer_id, self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username );
+		} else {
+			// Save Venmo username to cookie for guest users.
+			$this->set_venmo_username_cookie( $customer_venmo_username );
+		}
 
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
@@ -217,7 +247,17 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 
+		// Save Venmo username to order meta.
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
+
+		// Save Venmo username to customer usermeta if logged in.
+		$customer_id = $order->get_customer_id();
+		if ( $customer_id > 0 ) {
+			update_user_meta( $customer_id, self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username );
+		} else {
+			// Save Venmo username to cookie for guest users.
+			$this->set_venmo_username_cookie( $customer_venmo_username );
+		}
 
 		$store_venmo_username = $this->get_option( 'store_venmo_username' );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
@@ -397,5 +437,95 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			$method_description = "Prompts the customer for their Venmo @username and instructs them to send payment to: <a href=\"https://venmo.com/{$store_venmo_username}\">@{$store_venmo_username}</a>";
 		}
 		return apply_filters( 'woocommerce_gateway_method_description', $method_description, $this );
+	}
+
+	/**
+	 * Set a cookie with the Venmo username for guest users.
+	 *
+	 * @param string $venmo_username The Venmo username to save.
+	 */
+	protected function set_venmo_username_cookie( string $venmo_username ): void {
+		if ( ! headers_sent() && ! empty( $venmo_username ) ) {
+			$expiry = time() + ( YEAR_IN_SECONDS ); // 1 year expiry
+			setcookie( 'venmo_username', $venmo_username, $expiry, '/', '', is_ssl(), true );
+		}
+	}
+
+	/**
+	 * Get the saved Venmo username from various sources.
+	 *
+	 * @param int|null $customer_id Optional customer ID.
+	 * @return string The saved Venmo username or empty string.
+	 */
+	public function get_saved_venmo_username( ?int $customer_id = null ): string {
+		// Try user meta if logged in
+		if ( $customer_id > 0 ) {
+			$username = get_user_meta( $customer_id, self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+			if ( ! empty( $username ) ) {
+				return $username;
+			}
+		}
+
+		// Try cookie for guests
+		if ( isset( $_COOKIE['venmo_username'] ) && ! empty( $_COOKIE['venmo_username'] ) ) {
+			return sanitize_text_field( $_COOKIE['venmo_username'] );
+		}
+
+		// Fallback to previous order meta (if logged in)
+		if ( $customer_id > 0 ) {
+			$orders = wc_get_orders(
+				array(
+					'customer_id'    => $customer_id,
+					'payment_method' => $this->id,
+					'limit'          => 1,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+				)
+			);
+
+			if ( ! empty( $orders ) && $orders[0] instanceof WC_Order ) {
+				$username = $orders[0]->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+				if ( ! empty( $username ) ) {
+					return $username;
+				}
+			}
+		}
+
+		return '';
+	}
+
+	/**
+	 * Add JavaScript for focusing the Venmo username field when needed.
+	 */
+	protected function add_checkout_focus_script(): void {
+		?>
+		<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			// Focus username field when Venmo payment method is selected
+			$(document.body).on('change', 'input[name="payment_method"]', function() {
+				if ($(this).val() === 'venmo') {
+					$('#<?php echo esc_js( self::CUSTOMER_VENMO_USERNAME_META_KEY ); ?>').focus();
+				}
+			});
+
+			// If Venmo is already selected on page load, focus the field
+			if ($('input[name="payment_method"]:checked').val() === 'venmo') {
+				setTimeout(function() {
+					$('#<?php echo esc_js( self::CUSTOMER_VENMO_USERNAME_META_KEY ); ?>').focus();
+				}, 100);
+			}
+
+			// Focus username field on validation error
+			$(document.body).on('checkout_error', function() {
+				if ($('input[name="payment_method"]:checked').val() === 'venmo') {
+					var $usernameField = $('#<?php echo esc_js( self::CUSTOMER_VENMO_USERNAME_META_KEY ); ?>');
+					if ($usernameField.length && $usernameField.val() === '') {
+						$usernameField.focus();
+					}
+				}
+			});
+		});
+		</script>
+		<?php
 	}
 }
