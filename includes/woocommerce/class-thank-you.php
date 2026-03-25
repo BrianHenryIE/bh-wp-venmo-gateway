@@ -97,6 +97,8 @@ class Thank_You {
 		$instructions = <<<EOD
 <br/>
 
+<p><strong>Payment from @{$customer_venmo_username} to @{$store_venmo_username}</strong></p>
+
 <p>Please send payment of <b>{$order_total}</b> via Venmo to <b><a target="_blank" href="{$venmo_payment_url}">@{$store_venmo_username}</b></a>.</p>
 
 <p>Please pay the precise amount and include "<b>order {$order_id}</b>" in the note.</p>

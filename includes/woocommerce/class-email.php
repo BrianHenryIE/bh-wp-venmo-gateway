@@ -51,7 +51,8 @@ class Email {
 			return;
 		}
 
-		$store_venmo_username = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
+		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
+		$customer_venmo_username = $order->get_meta( Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY );
 
 		if ( empty( $store_venmo_username ) ) {
 			return;
@@ -70,7 +71,14 @@ class Email {
 
 		// Your order has been received.
 
-		$instructions = "<p>Please send payment of \${$order->get_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
+		$instructions = '';
+
+		// Show from/to usernames if customer username is available
+		if ( ! empty( $customer_venmo_username ) ) {
+			$instructions .= "<p><strong>Payment from @{$customer_venmo_username} to @{$store_venmo_username}</strong></p>";
+		}
+
+		$instructions .= "<p>Please send payment of \${$order->get_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
 
 		$instructions .= "<p>Please pay the precise amount – <b> \${$order->get_total()}</b> and include the order number – <b>{$order->get_id()}</b> in the note.</p>";
 
