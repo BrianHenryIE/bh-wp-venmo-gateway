@@ -1,0 +1,11 @@
+
+
+* The venmo username should be saved to the customer object
+* When not logged in, it should be saved into some cookie
+* Either way, it should attempt to auto-fill at checkout based on previous transactions
+* Selecting venmo as a payment option should immediately focus the username field
+* If the username is not filled when Place order is clicked, it already displays an error, but should also focus the username field
+* Where the order received screen says "Payment: Venmo" should have the from and to usernames
+* Similarly, those usernames should be in all emails related to orders placed with Venmo
+
+
