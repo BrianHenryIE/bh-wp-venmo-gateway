@@ -1,5 +1,12 @@
 # Changelog
 
+### 3.2.0 – April 2026
+
+* Save and autofill customer Venmo username
+* Display customer and store Venmo usernames on Thank You page and in emails
+* Improve "required*" explantation: "This is required to reconcile payments."
+* Attempt to use inline PNGs/JPGs in emails (unfortunately Gmail doesn't display inline images)
+
 ### 3.1.3
 
 * Fix: title not displaying in admin
