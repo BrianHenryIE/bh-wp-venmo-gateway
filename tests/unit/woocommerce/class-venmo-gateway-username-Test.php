@@ -67,7 +67,7 @@ class Venmo_Gateway_Username_Test extends Unit_TestCase {
 
 		\WP_Mock::userFunction( 'get_user_meta' )
 			->once()
-			->with( 0, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true )
+			->with( 123, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true )
 			->andReturn( '' );
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
@@ -77,7 +77,7 @@ class Venmo_Gateway_Username_Test extends Unit_TestCase {
 
 		$_COOKIE['venmo_username'] = 'cookie-username';
 
-		$result = $gateway->get_saved_venmo_username( 0 );
+		$result = $gateway->get_saved_venmo_username( 123 );
 
 		$this->assertEquals( 'cookie-username', $result );
 
@@ -94,11 +94,11 @@ class Venmo_Gateway_Username_Test extends Unit_TestCase {
 
 		\WP_Mock::userFunction( 'get_user_meta' )
 			->once()
-			->andReturn( '' );
+			->andReturn( 'val' );
 
-		$result = $gateway->get_saved_venmo_username( 0 );
+		$result = $gateway->get_saved_venmo_username( 123 );
 
-		$this->assertEquals( '', $result );
+		$this->assertEquals( 'val', $result );
 	}
 
 	/**
@@ -227,6 +227,15 @@ class Venmo_Gateway_Username_Test extends Unit_TestCase {
 
 		// headers_sent() is a PHP built-in, will return true in test context
 		// so set_venmo_username_cookie won't actually call setcookie
+
+		\Patchwork\redefine(
+			'constant',
+			function ( string $constant_name ) {
+				return 'YEAR_IN_SECONDS' === $constant_name
+					? 60 * 60 * 365
+					: \Patchwork\relay( func_get_args() );
+			}
+		);
 
 		$data = array( 'payment_method' => 'venmo' );
 		$gateway->save_order_payment_type_meta_data( $order, $data );
