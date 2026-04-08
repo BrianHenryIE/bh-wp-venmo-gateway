@@ -27,7 +27,7 @@
     },
     "repositories": [
         {
-            "url": "https://github.com/WordPress/wordpress-develop",
+            "url": "https://github.com/WordPress/wordpress-develop.git",
             "type": "git"
         },
         {
@@ -99,7 +99,21 @@
             "classmap_prefix": "BH_WC_Venmo_Gateway_",
             "exclude_from_copy": {
                 "file_patterns": [
-                    "~psr/log/Psr/Log/Test.*~"
+                    "~psr/log/Psr/Log/Test.*~",
+                    "~^([^/]+/){2}wp-content~",
+                    "~^([^/]+/){2}scratch~",
+                    "~^([^/]+/){2}imap.so~",
+                    "~^([^/]+/){2}tests~",
+                    "~^([^/]+/){2}test-plugin~",
+                    "~^([^/]+/){2}codeception.dist.yml~",
+                    "~^([^/]+/){2}composer.lock~",
+                    "~^([^/]+/){2}phpcs.xml~",
+                    "~^([^/]+/){2}phpunit.xml~",
+                    "~^([^/]+/){2}.*.neon~",
+                    "~^([^/]+/){2}package.json~",
+                    "~^([^/]+/){2}package-lock.json~",
+                    "~^([^/]+/){2}wp-cli.yml~",
+                    "~^([^/]+/){2}\\..*~"
                 ]
             },
             "namespace_replacement_patterns": {
@@ -153,6 +167,9 @@
         ],
         "create-plugin-archive": [
             "wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
+        ],
+        "github-actions":  [
+            "act -P ubuntu-latest=shivammathur/node:latest"
         ]
     }
 }
