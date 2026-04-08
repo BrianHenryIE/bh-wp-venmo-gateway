@@ -29,8 +29,8 @@ class Action_Scheduler {
 	 * Add hooks to register the REST endpoints.
 	 */
 	public function register_hooks(): void {
-		add_action( 'rest_api_init', $this->register_action_scheduler_search( ... ) );
-		add_action( 'rest_api_init', $this->register_action_scheduler_delete( ... ) );
+		add_action( 'rest_api_init', array( $this, 'register_action_scheduler_search' ) );
+		add_action( 'rest_api_init', array( $this, 'register_action_scheduler_delete' ) );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Action_Scheduler {
 			'/action_scheduler/search',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => $this->action_scheduler_search( ... ),
+				'callback'            => array( $this, 'action_scheduler_search' ),
 				'permission_callback' => '__return_true',
 			)
 		);
@@ -139,7 +139,7 @@ class Action_Scheduler {
 			'/action_scheduler/(?P<id>[\d]+)',
 			array(
 				'methods'             => WP_REST_Server::DELETABLE,
-				'callback'            => $this->action_scheduler_delete( ... ),
+				'callback'            => array( $this, 'action_scheduler_delete' ),
 				'permission_callback' => '__return_true',
 			)
 		);
