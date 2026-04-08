@@ -10,6 +10,7 @@
 namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
 
 use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType;
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 
 /**
  * Blocks checkout support for the Venmo payment gateway.
@@ -41,6 +42,8 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 
 	/**
 	 * Initializes the payment method type.
+	 *
+	 * @used-by IntegrationRegistry::initialize()
 	 */
 	public function initialize(): void {
 		$this->settings = $this->gateway->settings;
@@ -49,7 +52,7 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 	/**
 	 * Returns if this payment method should be active.
 	 *
-	 * @return bool
+	 * @used-by PaymentMethodRegistry::get_all_active_registered()
 	 */
 	public function is_active(): bool {
 		return $this->gateway->is_available();
@@ -57,6 +60,8 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 
 	/**
 	 * Returns an array of script handles to be registered for this payment method.
+	 *
+	 * @used-by PaymentMethodRegistry::get_all_active_payment_method_script_dependencies()
 	 *
 	 * @return array<string>
 	 */
@@ -89,6 +94,8 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 
 	/**
 	 * Returns data made available to the payment methods script via `getSetting('venmo_data')`.
+	 *
+	 * @used-by PaymentMethodRegistry::get_all_registered_script_data()
 	 *
 	 * @return array{title:string, description:string, supports:array<string>, venmo_icon_url:string, saved_venmo_username:string}
 	 */
