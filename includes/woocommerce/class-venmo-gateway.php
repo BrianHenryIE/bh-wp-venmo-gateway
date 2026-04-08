@@ -446,7 +446,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	protected function set_venmo_username_cookie( string $venmo_username ): void {
 		if ( ! headers_sent() && ! empty( $venmo_username ) ) {
-			$expiry = time() + ( YEAR_IN_SECONDS ); // 1 year expiry
+			$expiry = time() + ( constant( 'YEAR_IN_SECONDS' ) ); // 1 year expiry
 			setcookie( 'venmo_username', $venmo_username, $expiry, '/', '', is_ssl(), true );
 		}
 	}
