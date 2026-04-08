@@ -48,7 +48,7 @@ class Payment_Gateways {
 	 */
 	public function format_method_title( $value, WC_Order $order ) {
 
-		if ( $value !== 'Venmo' || ! is_admin() ) {
+		if ( 'Venmo' !== $value || ! is_admin() ) {
 			return $value;
 		}
 
