@@ -64,7 +64,7 @@ class Email {
 
 		$qr_options          = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
-			protected string $outputType = QROutputInterface::GDIMAGE_JPG;
+			protected string $outputType = QROutputInterface::GDIMAGE_PNG;
 		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
