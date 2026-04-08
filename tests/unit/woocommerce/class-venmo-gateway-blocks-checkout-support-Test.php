@@ -36,8 +36,7 @@ class Venmo_Gateway_Blocks_Checkout_Support_Test extends Unit_TestCase {
 			'description' => 'Pay with Venmo',
 		);
 
-		$support           = new Venmo_Gateway_Blocks_Checkout_Support( $gateway );
-
+		$support = new Venmo_Gateway_Blocks_Checkout_Support( $gateway );
 
 		$data = $support->get_payment_method_data();
 
