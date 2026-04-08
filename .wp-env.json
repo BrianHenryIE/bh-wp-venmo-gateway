@@ -23,5 +23,5 @@
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
     "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger"
   },
-  "phpVersion": "8.1"
+  "phpVersion": "8.0"
 }
