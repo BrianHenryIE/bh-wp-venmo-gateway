@@ -8,6 +8,7 @@
 /dist-archive
 /node_modules
 /package-lock.json
+/patchwork.json
 /phpcs.xml
 /phpstan.neon
 /phpstanbootstrap.php
