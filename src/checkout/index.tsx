@@ -125,7 +125,7 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 			<div className="bh-wc-venmo-gateway-username-field">
 				<label htmlFor="venmo-username-input">
 					{ __( 'Enter your Venmo username:', 'bh-wc-venmo-gateway' ) }
-					<abbr className="required" title="required">*</abbr>
+					<abbr className="required" title="This is required to reconcile payments.">*</abbr>
 				</label>
 				<input
 					id="venmo-username-input"
@@ -177,7 +177,7 @@ const VenmoEdit: React.FC = () => {
 			<div className="bh-wc-venmo-gateway-username-field">
 				<label htmlFor="venmo-username-input-preview">
 					{ __( 'Enter your Venmo username:', 'bh-wc-venmo-gateway' ) }
-					<abbr className="required" title="required">*</abbr>
+					<abbr className="required" title="This is required to reconcile payments.">*</abbr>
 				</label>
 				<input
 					id="venmo-username-input-preview"
