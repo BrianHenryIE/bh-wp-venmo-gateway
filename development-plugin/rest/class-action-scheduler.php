@@ -2,10 +2,10 @@
 /**
  * Search and delete functions for Action Scheduler.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Rest;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
 
 use ActionScheduler;
 use ActionScheduler_Abstract_RecurringSchedule;

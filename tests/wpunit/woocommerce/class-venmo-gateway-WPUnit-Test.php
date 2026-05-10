@@ -1,16 +1,16 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 use WC_Order;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway
  */
 class Venmo_Gateway_WPUnit_Test extends WPUnit_Testcase {
 

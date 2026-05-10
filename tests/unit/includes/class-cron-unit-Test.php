@@ -1,16 +1,16 @@
 <?php
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 
 /**
- * @covers \BrianHenryIE\WC_Venmo_Gateway\Includes\Cron
+ * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Cron
  *
  * Class Cron_Unit_Test
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 class Cron_Unit_Test extends Unit_Testcase {
 

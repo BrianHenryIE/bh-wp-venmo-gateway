@@ -16,13 +16,13 @@ BASEURL=http://localhost:8888 npx playwright test --ui &;
 Clone this repo, open PhpStorm, then run `composer install` to install the dependencies.
 
 ```
-git clone https://github.com/brianhenryie/bh-wc-venmo-gateway.git;
-cd bh-wc-venmo-gateway;
+git clone https://github.com/brianhenryie/bh-wp-venmo-gateway.git;
+cd bh-wp-venmo-gateway;
 open -a PhpStorm ./;
 composer install;
 ```
 
-For integration and acceptance tests, a local webserver must be running with `localhost:8080/bh-wc-venmo-gateway/` pointing at the root of the repo. MySQL must also be running locally – with two databases set up with:
+For integration and acceptance tests, a local webserver must be running with `localhost:8080/bh-wp-venmo-gateway/` pointing at the root of the repo. MySQL must also be running locally – with two databases set up with:
 
 ```
 mysql_username="root"
@@ -51,7 +51,7 @@ mysql -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME < tests/_data/dump
  ```
 
 ```
-wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time
+wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time
 ```
 
 ### WordPress Coding Standards

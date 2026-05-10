@@ -7,14 +7,14 @@
  * @see https://gist.github.com/thomasfw/5df1a041fd8f9c939ef9d88d887ce023
  * @see https://stackoverflow.com/questions/9110091/base64-encoded-images-in-email-signatures/9110164#9110164
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
 use WC_Payment_Gateways;
 
@@ -66,7 +66,7 @@ class Email {
 			protected int $quietzoneSize = 1;
 			protected string $outputType = QROutputInterface::GDIMAGE_PNG;
 		};
-		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
 
 		// Your order has been received.

@@ -2,13 +2,13 @@
 /**
  * Adds a metabox to the WooCommerce admin order screen showing Venmo payment information.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
 use WC_Payment_Gateways;
 use WP_Post;
@@ -26,8 +26,8 @@ class Admin_Order_UI {
 	public function add_venmo_payment_metabox(): void {
 		foreach ( array( 'shop_order', 'woocommerce_page_wc-orders' ) as $screen ) {
 			add_meta_box(
-				'bh-wc-venmo-payment',
-				__( 'Venmo Payment', 'bh-wc-venmo-gateway' ),
+				'bh-wp-venmo-payment',
+				__( 'Venmo Payment', 'bh-wp-venmo-gateway' ),
 				array( $this, 'render_venmo_payment_metabox' ),
 				$screen,
 				'side',
@@ -67,7 +67,7 @@ class Admin_Order_UI {
 		$store_venmo_username    = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
 
 		if ( empty( $store_venmo_username ) ) {
-			echo '<p>' . esc_html__( 'No store Venmo username recorded for this order.', 'bh-wc-venmo-gateway' ) . '</p>';
+			echo '<p>' . esc_html__( 'No store Venmo username recorded for this order.', 'bh-wp-venmo-gateway' ) . '</p>';
 			return;
 		}
 
@@ -80,7 +80,7 @@ class Admin_Order_UI {
 			protected int $quietzoneSize = 1;
 		};
 		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
-		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 		$order_total         = "\${$order->get_total()}";
 
 		?>
@@ -93,7 +93,7 @@ class Admin_Order_UI {
 					<?php
 					printf(
 						/* translators: %s: customer Venmo username */
-						esc_html__( '@%s', 'bh-wc-venmo-gateway' ),
+						esc_html__( '@%s', 'bh-wp-venmo-gateway' ),
 						esc_html( $customer_venmo_username )
 					);
 					?>
@@ -106,7 +106,7 @@ class Admin_Order_UI {
 				printf(
 					wp_kses(
 						/* translators: 1: formatted order total, 2: store Venmo payment URL, 3: store Venmo username */
-						__( 'Send <strong>%1$s</strong> to <a href="%2$s">@%3$s</a>', 'bh-wc-venmo-gateway' ),
+						__( 'Send <strong>%1$s</strong> to <a href="%2$s">@%3$s</a>', 'bh-wp-venmo-gateway' ),
 						array(
 							'strong' => array(),
 							'a'      => array( 'href' => array() ),
@@ -129,7 +129,7 @@ class Admin_Order_UI {
 				<a href="<?php echo esc_url( $venmo_payment_url ); ?>">
 					<img
 						src="<?php echo esc_attr( $qr_code_data_base64 ); ?>"
-						alt="<?php esc_attr_e( 'Venmo payment QR code', 'bh-wc-venmo-gateway' ); ?>"
+						alt="<?php esc_attr_e( 'Venmo payment QR code', 'bh-wp-venmo-gateway' ); ?>"
 						style="max-width: 100%; height: auto;"
 					/>
 				</a>

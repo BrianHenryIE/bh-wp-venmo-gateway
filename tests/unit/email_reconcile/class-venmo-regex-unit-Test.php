@@ -1,8 +1,8 @@
 <?php
 
-namespace BrianHenryIE\WC_Venmo_Gateway\API;
+namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 
 class Venmo_Regex_Unit_Test extends Unit_Testcase {
 

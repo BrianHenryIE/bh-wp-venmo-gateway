@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\Cron;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
 use WC_Order;
 use WC_Payment_Gateways;
 

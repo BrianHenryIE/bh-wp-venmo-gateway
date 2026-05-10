@@ -1,8 +1,8 @@
 <?php
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 class Payment_Gateways_Integration_Test extends WPUnit_Testcase {
 

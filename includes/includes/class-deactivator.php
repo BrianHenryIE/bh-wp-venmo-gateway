@@ -2,10 +2,10 @@
 /**
  * Fired during plugin deactivation
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 /**
  * Fired during plugin deactivation.

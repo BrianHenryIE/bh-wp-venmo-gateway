@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\WooCommerce\Credentials_Settings_Fields;
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings;
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\WooCommerce\Credentials_Settings_Fields;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use WC_Order;
 use WC_Payment_Gateway;
 
@@ -42,7 +42,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// Is this a good or bad idea?
 		$this->plugin_id = "{$this->plugin_settings->get_plugin_slug()}_";
 
-		$this->icon = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$this->icon = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 
 		$this->has_fields = true;
 
@@ -89,29 +89,29 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$form_fields = array(
 			'enabled'              => array(
-				'title'   => __( 'Enable/Disable', 'bh-wc-venmo-gateway' ),
+				'title'   => __( 'Enable/Disable', 'bh-wp-venmo-gateway' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable This Gateway', 'bh-wc-venmo-gateway' ),
+				'label'   => __( 'Enable This Gateway', 'bh-wp-venmo-gateway' ),
 				'default' => 'yes',
 			),
 			'title'                => array(
-				'title'       => __( 'Title', 'bh-wc-venmo-gateway' ),
+				'title'       => __( 'Title', 'bh-wp-venmo-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'bh-wc-venmo-gateway' ),
-				'default'     => _x( 'Venmo', 'Method description here', 'bh-wc-venmo-gateway' ),
+				'description' => __( 'This controls the title which the user sees during checkout.', 'bh-wp-venmo-gateway' ),
+				'default'     => _x( 'Venmo', 'Method description here', 'bh-wp-venmo-gateway' ),
 				'desc_tip'    => true,
 			),
 			'description'          => array(
-				'title'       => __( 'Description', 'bh-wc-venmo-gateway' ),
+				'title'       => __( 'Description', 'bh-wp-venmo-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'Payment method description that the customer will see on your checkout.', 'bh-wc-venmo-gateway' ) . " {$store_venmo_username_description}",
+				'description' => __( 'Payment method description that the customer will see on your checkout.', 'bh-wp-venmo-gateway' ) . " {$store_venmo_username_description}",
 				'default'     => 'Use the Venmo app to pay for your order.',
 				'desc_tip'    => true,
 			),
 			'store_venmo_username' => array(
-				'title'       => __( 'Venmo Username', 'bh-wc-venmo-gateway' ),
+				'title'       => __( 'Venmo Username', 'bh-wp-venmo-gateway' ),
 				'type'        => 'text',
-				'description' => __( 'The venmo username whose account the customer will be instructed to pay.', 'bh-wc-venmo-gateway' ),
+				'description' => __( 'The venmo username whose account the customer will be instructed to pay.', 'bh-wp-venmo-gateway' ),
 				'desc_tip'    => false,
 			),
 		);
@@ -160,7 +160,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	public function validate_fields(): bool {
 		// @phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) || empty( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) ) {
-			wc_add_notice( __( 'Please enter your Venmo username.', 'bh-wc-venmo-gateway' ), 'error' );
+			wc_add_notice( __( 'Please enter your Venmo username.', 'bh-wp-venmo-gateway' ), 'error' );
 			return false;
 		}
 

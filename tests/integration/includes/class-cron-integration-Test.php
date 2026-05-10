@@ -1,12 +1,12 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 /**
  *

@@ -1,6 +1,6 @@
-[![WordPress tested 5.5](https://img.shields.io/badge/WordPress-v5.5%20tested-0073aa.svg)](https://wordpress.org/plugins/bh-wc-venmo-gateway) [![PHPCS WPCS](https://img.shields.io/badge/PHPCS-WordPress%20Coding%20Standards-8892BF.svg)](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) [![PHPUnit ](.github/coverage.svg)](https://brianhenryie.github.io/plugin_slug/)
+[![WordPress tested 5.5](https://img.shields.io/badge/WordPress-v5.5%20tested-0073aa.svg)](https://wordpress.org/plugins/bh-wp-venmo-gateway) [![PHPCS WPCS](https://img.shields.io/badge/PHPCS-WordPress%20Coding%20Standards-8892BF.svg)](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) [![PHPUnit ](.github/coverage.svg)](https://brianhenryie.github.io/plugin_slug/)
 
-# BH WC Venmo Gateway
+# BH WP Venmo Gateway
 
 https://help.venmo.com/cs/articles/personal-qr-codes-on-venmo-faq-vhel316
 
@@ -43,12 +43,12 @@ TODO:
 
 What does  /checkout/order-pay/ look like? I think when an order is on-hold that's maybe not avaiable.
 
-`wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time`
+`wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time`
 
-`wp cron event run bh_wc_venmo_gateway_check_for_payment_emails`
+`wp cron event run bh_wp_venmo_gateway_check_for_payment_emails`
 
 
-`wp option delete bh-wc-venmo-gateway-last-imap-reconcile-run-time; wp cron event run bh_wc_venmo_gateway_check_for_payment_emails`
+`wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time; wp cron event run bh_wp_venmo_gateway_check_for_payment_emails`
 
 
 ## Venmo Transaction Fees

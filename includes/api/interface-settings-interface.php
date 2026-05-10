@@ -1,9 +1,9 @@
 <?php
 /**
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\API;
+namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
 interface Settings_Interface {
 

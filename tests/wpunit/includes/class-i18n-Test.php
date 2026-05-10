@@ -2,12 +2,12 @@
 /**
  * Tests for I18n. Tests load_plugin_textdomain.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 /**
  * Class I18n_Test
@@ -43,6 +43,6 @@ class I18n_Test extends WPUnit_Testcase {
 		$i18n->load_plugin_textdomain();
 
 		$this->assertTrue( $called, 'plugin_locale filter not called within load_plugin_textdomain() suggesting it has not been set by the plugin.' );
-		$this->assertEquals( 'bh-wc-venmo-gateway', $actual_domain );
+		$this->assertEquals( 'bh-wp-venmo-gateway', $actual_domain );
 	}
 }

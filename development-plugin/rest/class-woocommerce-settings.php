@@ -2,10 +2,10 @@
 /**
  * Add additional settings (`woocommerce_checkout_page_id`) to  `/wp-json/wp/v2/settings`.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Rest;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
 
 /**
  * A bit hacky – modify `global $wp_registered_settings` before it is used.

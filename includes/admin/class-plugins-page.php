@@ -4,12 +4,12 @@
  * Adds a "Settings" link
  * Adds an "Orders" link when Filter WooCommerce Orders by Payment Method plugin is installed.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Admin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
 
-use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway;
 use WC_Payment_Gateway;
 use WC_Payment_Gateways;
 
@@ -36,7 +36,7 @@ class Plugins_Page {
 
 		$setting_link   = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=venmo' );
 		$plugin_links   = array();
-		$plugin_links[] = '<a href="' . $setting_link . '">' . __( 'Settings', 'bh-wc-venmo-gateway' ) . '</a>';
+		$plugin_links[] = '<a href="' . $setting_link . '">' . __( 'Settings', 'bh-wp-venmo-gateway' ) . '</a>';
 
 		return array_merge( $plugin_links, $links_array );
 	}
@@ -68,7 +68,7 @@ class Plugins_Page {
 			);
 
 			$orders_link    = add_query_arg( $params, admin_url( 'edit.php' ) );
-			$plugin_links[] = '<a href="' . $orders_link . '">' . __( 'Orders', 'bh-wc-venmo-gateway' ) . '</a>';
+			$plugin_links[] = '<a href="' . $orders_link . '">' . __( 'Orders', 'bh-wp-venmo-gateway' ) . '</a>';
 		}
 
 		return array_merge( $plugin_links, $links_array );

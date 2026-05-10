@@ -4,17 +4,17 @@
  *
  * @see https://www.codegenes.net/blog/is-there-a-trick-to-display-svg-images-in-gmail/
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 use WC_Order;
 use WC_Payment_Gateways;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Email
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Email
  */
 class Email_WPUnit_Test extends WPUnit_Testcase {
 

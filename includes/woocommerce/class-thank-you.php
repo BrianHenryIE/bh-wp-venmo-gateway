@@ -2,13 +2,13 @@
 /**
  * Instructions shown on the Thank You page immediately after the order is created.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WC_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
 use WC_Order;
 use WC_Payment_Gateways;
 
@@ -89,7 +89,7 @@ class Thank_You {
 		$qr_options           = new class() extends QROptions {
 			protected int $quietzoneSize = 1;
 		};
-		$venmo_logo_image_url = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$venmo_logo_image_url = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 		$qr_code_data_base64  = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
 
 		$order_total = " \${$order->get_total()}";

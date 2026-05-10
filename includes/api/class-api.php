@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\API;
+namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\API\API as BH_WC_Order_Email_Reconcile;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\API\API as BH_WC_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 
 class API implements API_Interface {
 

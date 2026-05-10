@@ -9,10 +9,10 @@
  *
  * @see https://github.com/WordPress/gutenberg/issues/20569
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
 
 use Exception;
 

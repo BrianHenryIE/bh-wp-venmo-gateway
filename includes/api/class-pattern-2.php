@@ -1,12 +1,12 @@
 <?php
 /**
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\API;
+namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
 
 class Pattern_2 implements Email_Extract_Settings_Interface {
 	use Email_Extract_Settings_Helper_Trait;

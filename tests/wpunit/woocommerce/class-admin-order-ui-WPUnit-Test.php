@@ -2,17 +2,17 @@
 /**
  * WP unit tests for the Admin_Order_UI metabox.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 use WC_Order;
 use WC_Payment_Gateways;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Admin_Order_UI
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Admin_Order_UI
  */
 class Admin_Order_UI_WPUnit_Test extends WPUnit_Testcase {
 
@@ -25,7 +25,7 @@ class Admin_Order_UI_WPUnit_Test extends WPUnit_Testcase {
 		$sut = new Admin_Order_UI();
 		$sut->add_venmo_payment_metabox();
 
-		$this->assertArrayHasKey( 'bh-wc-venmo-payment', $wp_meta_boxes['shop_order']['side']['high'] );
+		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['shop_order']['side']['high'] );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Admin_Order_UI_WPUnit_Test extends WPUnit_Testcase {
 		$sut = new Admin_Order_UI();
 		$sut->add_venmo_payment_metabox();
 
-		$this->assertArrayHasKey( 'bh-wc-venmo-payment', $wp_meta_boxes['woocommerce_page_wc-orders']['side']['high'] );
+		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['woocommerce_page_wc-orders']['side']['high'] );
 	}
 
 	/**

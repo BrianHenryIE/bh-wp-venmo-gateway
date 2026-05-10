@@ -2,10 +2,10 @@
 /**
  * Fired during plugin activation
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 /**
  * Fired during plugin activation.
@@ -19,6 +19,6 @@ class Activator {
 	 */
 	public static function activate(): void {
 
-		update_option( 'bh-wc-venmo-gateway-last-activated-time', time() );
+		update_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
 	}
 }

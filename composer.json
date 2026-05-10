@@ -1,5 +1,5 @@
 {
-    "name": "brianhenryie/bh-wc-venmo-gateway",
+    "name": "brianhenryie/bh-wp-venmo-gateway",
     "description": "Receive Venmo payments on your WooCommerce store. Reconciles payments via email.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
@@ -80,7 +80,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "BrianHenryIE\\WC_Venmo_Gateway\\": [
+            "BrianHenryIE\\WP_Venmo_Gateway\\": [
                 "tests/unit",
                 "tests/wpunit",
                 "tests/integration"
@@ -95,8 +95,8 @@
     },
     "extra": {
         "strauss": {
-            "namespace_prefix": "BrianHenryIE\\WC_Venmo_Gateway\\",
-            "classmap_prefix": "BH_WC_Venmo_Gateway_",
+            "namespace_prefix": "BrianHenryIE\\WP_Venmo_Gateway\\",
+            "classmap_prefix": "BH_WP_Venmo_Gateway_",
             "exclude_from_copy": {
                 "file_patterns": [
                     "~psr/log/Psr/Log/Test.*~",
@@ -117,7 +117,7 @@
                 ]
             },
             "namespace_replacement_patterns": {
-                "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WC_Venmo_Gateway\\\\$1"
+                "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
             }
         },
         "google/apiclient-services": [

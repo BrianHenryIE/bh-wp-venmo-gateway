@@ -6,16 +6,16 @@
  * validate_fields() methods, as well as the usermeta saving in
  * save_order_payment_type_meta_data().
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
-use BrianHenryIE\WC_Venmo_Gateway\Unit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 use WC_Order;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway
  */
 class Venmo_Gateway_Username_Test extends Unit_TestCase {
 

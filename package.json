@@ -1,5 +1,5 @@
 {
-  "name": "bh-wc-venmo-gateway",
+  "name": "bh-wp-venmo-gateway",
   "version": "1.0.0",
   "description": "Receive Venmo payments on your WooCommerce store. Reconciles payments via email.",
   "directories": {

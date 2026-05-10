@@ -2,21 +2,21 @@
 /**
  *
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 
 
 class Cron {
 	use LoggerAwareTrait;
 
-	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'bh_wc_venmo_gateway_check_for_payment_emails';
+	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'bh_wp_venmo_gateway_check_for_payment_emails';
 
 	/**
 	 * Cron_Jobs constructor.

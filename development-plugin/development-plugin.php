@@ -2,20 +2,20 @@
 /**
  * Plugin Name:       Venmo Gateway Development Plugin
  * Description:       Convenience, demo and test helper functions.
- * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-venmo-gateway/
+ * Plugin URI:        http://github.com/BrianHenryIE/bh-wp-venmo-gateway/
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
 
-use BrianHenryIE\WC_Venmo_Gateway\Alley_Interactive\Autoloader\Autoloader;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Admin\WooCommerce;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Admin\WooCommerce_Order;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Rest\Action_Scheduler;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Rest\Themes;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Ajax\WooCommerce_Customer;
-use BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Rest\WooCommerce_Settings;
+use BrianHenryIE\WP_Venmo_Gateway\Alley_Interactive\Autoloader\Autoloader;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce_Order;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Action_Scheduler;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Themes;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Ajax\WooCommerce_Customer;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\WooCommerce_Settings;
 
 /**
  * TODO check for stray requests: exchange rate query seems to be happening too frequently.
@@ -26,12 +26,12 @@ if ( ! defined( 'WPINC' ) ) {
 	return;
 }
 
-if ( ! is_plugin_active( 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' ) ) {
+if ( ! is_plugin_active( 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' ) ) {
 	return;
 }
 
 Autoloader::generate(
-	'BrianHenryIE\\WC_Venmo_Gateway\\Development_Plugin',
+	'BrianHenryIE\\WP_Venmo_Gateway\\Development_Plugin',
 	__DIR__,
 )->register();
 

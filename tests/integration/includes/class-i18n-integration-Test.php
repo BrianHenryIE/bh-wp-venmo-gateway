@@ -2,15 +2,15 @@
 /**
  * Tests for I18n. Tests load_plugin_textdomain.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 /**
- * Class BrianHenryIE\WC_Venmo_Gateway_Test
+ * Class BrianHenryIE\WP_Venmo_Gateway_Test
  *
  * @see I18n
  */
@@ -31,6 +31,6 @@ class I18n_Integration_Test extends WPUnit_Testcase {
 		$this->assertTrue( file_exists( $plugin_root_dir . '/languages/' ), '/languages/ folder does not exist.' );
 
 		// Seems to fail because there are no translations to load.
-		$this->assertTrue( is_textdomain_loaded( 'bh-wc-venmo-gateway' ), 'i18n text domain not loaded.' );
+		$this->assertTrue( is_textdomain_loaded( 'bh-wp-venmo-gateway' ), 'i18n text domain not loaded.' );
 	}
 }

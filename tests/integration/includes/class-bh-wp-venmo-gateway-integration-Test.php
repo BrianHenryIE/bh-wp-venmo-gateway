@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for BrianHenryIE\WC_Venmo_Gateway main setup class. Tests the actions are correctly added.
+ * Tests for BrianHenryIE\WP_Venmo_Gateway main setup class. Tests the actions are correctly added.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Includes;
+namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
-use BrianHenryIE\WC_Venmo_Gateway\Admin\Admin;
-use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Payment_Gateways;
-use BrianHenryIE\WC_Venmo_Gateway\WPUnit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
+use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Payment_Gateways;
+use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 /**
  * Class Develop_Test
  */
-class BH_WC_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
+class BH_WP_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 
 	/**
 	 * Verify action to call load textdomain is added.
@@ -127,7 +127,7 @@ class BH_WC_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 	 */
 	public function test_cron_action_check_for_payment_emails() {
 
-		$action_name       = 'bh_wc_venmo_gateway_check_for_payment_emails';
+		$action_name       = 'bh_wp_venmo_gateway_check_for_payment_emails';
 		$expected_priority = 10;
 		$class_type        = Cron::class;
 		$method_name       = 'check_for_payment_emails';

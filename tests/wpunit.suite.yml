@@ -15,7 +15,7 @@ modules:
             tablePrefix: "%TEST_TABLE_PREFIX%"
             domain: "%TEST_SITE_WP_DOMAIN%"
             adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
-            title: "bh-wc-venmo-gateway"
+            title: "bh-wp-venmo-gateway"
             plugins: ["woocommerce/woocommerce.php"]
             activatePlugins: []
             WP_CONTENT_DIR: wp-content

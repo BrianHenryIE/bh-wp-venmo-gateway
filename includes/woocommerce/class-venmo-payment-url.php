@@ -2,10 +2,10 @@
 /**
  * Generate URLs/HREFs releveant to the order's payment username.
  *
- * @package brianhenryie/bh-wc-venmo-gateeway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
 use WC_Order;
 

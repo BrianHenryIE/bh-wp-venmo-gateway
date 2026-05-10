@@ -1,9 +1,9 @@
 <?php
 
-namespace BrianHenryIE\WC_Venmo_Gateway;
+namespace BrianHenryIE\WP_Venmo_Gateway;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LoggerInterface;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Codeception\Test\Unit;
 use WP_Mock;
 use function Patchwork\restoreAll;

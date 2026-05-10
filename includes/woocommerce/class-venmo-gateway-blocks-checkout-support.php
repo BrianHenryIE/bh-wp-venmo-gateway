@@ -4,10 +4,10 @@
  *
  * Registers the gateway script and exposes settings data to the frontend.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
 
 use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
@@ -67,9 +67,9 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 	 */
 	public function get_payment_method_script_handles(): array {
 
-		$handle = 'bh-wc-venmo-gateway-blocks-checkout';
+		$handle = 'bh-wp-venmo-gateway-blocks-checkout';
 
-		$script_asset_path = WP_PLUGIN_DIR . '/bh-wc-venmo-gateway/build/checkout/index.asset.php';
+		$script_asset_path = WP_PLUGIN_DIR . '/bh-wp-venmo-gateway/build/checkout/index.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
 			? require $script_asset_path
 			: array(
@@ -77,7 +77,7 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 				'version'      => '1.0.0',
 			);
 
-		$script_url = plugins_url( 'build/checkout/index.js', WP_PLUGIN_DIR . '/bh-wc-venmo-gateway/bh-wc-venmo-gateway.php' );
+		$script_url = plugins_url( 'build/checkout/index.js', WP_PLUGIN_DIR . '/bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 
 		wp_register_script(
 			$handle,
@@ -87,7 +87,7 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 			true
 		);
 
-		wp_set_script_translations( $handle, 'bh-wc-venmo-gateway' );
+		wp_set_script_translations( $handle, 'bh-wp-venmo-gateway' );
 
 		return array( $handle );
 	}

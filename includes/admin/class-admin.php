@@ -2,13 +2,13 @@
 /**
  * Display an admin notice inviting the user to configure the plugin. Stops displaying after a week.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Admin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
 
-use BrianHenryIE\WC_Venmo_Gateway\WPTRT\AdminNotices\Notices;
-use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\WPTRT\AdminNotices\Notices;
+use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway;
 
 /**
  * Checks that:
@@ -18,7 +18,7 @@ use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
  *
  * Class Admin
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 class Admin {
 
@@ -59,7 +59,7 @@ class Admin {
 			return;
 		}
 
-		$last_activated = get_option( 'bh-wc-venmo-gateway-last-activated-time', time() );
+		$last_activated = get_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
 
 		// If last activation was longer than a week ago, return.
 		if ( $last_activated < time() - WEEK_IN_SECONDS ) {
@@ -89,12 +89,12 @@ class Admin {
 			$section = '&section=' . $venmo_gateways[0]->id;
 		} else {
 			// If there is more than one, link to the WooCommerce / Settings / Payments page filtered to the class type.
-			$section = '&class=bh-wc-venmo-gateway';
+			$section = '&class=bh-wp-venmo-gateway';
 		}
 
 		$setting_link = admin_url( "admin.php?page=wc-settings&tab=checkout{$section}" );
 
-		$id      = 'bh-wc-venmo-gateway-activation-configuration';
+		$id      = 'bh-wp-venmo-gateway-activation-configuration';
 		$title   = '';
 		$message = "Venmo Gateway needs to be configured. Please <a href=\"{$setting_link}\">visit the settings page</a> to enter the destination Venmo @username for payments to be sent.";
 

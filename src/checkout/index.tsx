@@ -4,7 +4,7 @@
  * Registers the Venmo payment method with the WooCommerce Blocks checkout,
  * including a text input for the customer's Venmo username.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
 /**
@@ -99,7 +99,7 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 					type: emitResponse.responseTypes.ERROR,
 					message: __(
 						'Please enter your Venmo username.',
-						'bh-wc-venmo-gateway'
+						'bh-wp-venmo-gateway'
 					),
 				};
 			}
@@ -116,15 +116,15 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 	}, [ venmoUsername, onPaymentSetup, emitResponse.responseTypes ] );
 
 	return (
-		<div className="bh-wc-venmo-gateway-blocks-checkout">
+		<div className="bh-wp-venmo-gateway-blocks-checkout">
 			{ settings.description && (
 				<p className="wc-block-components-checkout-step__description">
 					{ decodeEntities( settings.description ) }
 				</p>
 			) }
-			<div className="bh-wc-venmo-gateway-username-field">
+			<div className="bh-wp-venmo-gateway-username-field">
 				<label htmlFor="venmo-username-input">
-					{ __( 'Enter your Venmo username:', 'bh-wc-venmo-gateway' ) }
+					{ __( 'Enter your Venmo username:', 'bh-wp-venmo-gateway' ) }
 					<abbr className="required" title="This is required to reconcile payments.">*</abbr>
 				</label>
 				<input
@@ -132,12 +132,12 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 					type="text"
 					value={ venmoUsername }
 					onChange={ onUsernameChange }
-					placeholder={ __( 'Venmo username', 'bh-wc-venmo-gateway' ) }
+					placeholder={ __( 'Venmo username', 'bh-wp-venmo-gateway' ) }
 					maxLength={ 255 }
 					required
 					ref={ inputRef }
 					className="wc-block-components-text-input"
-					aria-label={ __( 'Venmo username', 'bh-wc-venmo-gateway' ) }
+					aria-label={ __( 'Venmo username', 'bh-wp-venmo-gateway' ) }
 				/>
 			</div>
 		</div>
@@ -168,21 +168,21 @@ const VenmoLabel: React.FC< PaymentMethodLabelProps > = ( { components } ) => {
  */
 const VenmoEdit: React.FC = () => {
 	return (
-		<div className="bh-wc-venmo-gateway-blocks-checkout">
+		<div className="bh-wp-venmo-gateway-blocks-checkout">
 			{ settings.description && (
 				<p className="wc-block-components-checkout-step__description">
 					{ decodeEntities( settings.description || '' ) }
 				</p>
 			) }
-			<div className="bh-wc-venmo-gateway-username-field">
+			<div className="bh-wp-venmo-gateway-username-field">
 				<label htmlFor="venmo-username-input-preview">
-					{ __( 'Enter your Venmo username:', 'bh-wc-venmo-gateway' ) }
+					{ __( 'Enter your Venmo username:', 'bh-wp-venmo-gateway' ) }
 					<abbr className="required" title="This is required to reconcile payments.">*</abbr>
 				</label>
 				<input
 					id="venmo-username-input-preview"
 					type="text"
-					placeholder={ __( 'Venmo username', 'bh-wc-venmo-gateway' ) }
+					placeholder={ __( 'Venmo username', 'bh-wp-venmo-gateway' ) }
 					disabled
 					className="wc-block-components-text-input"
 				/>

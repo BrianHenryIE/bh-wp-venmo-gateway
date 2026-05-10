@@ -1,21 +1,21 @@
 <?php
 /**
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\API;
+namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WooCommerce\Venmo_Gateway;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Mailboxes\Account_Credentials_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Mailboxes\API\Ddeboer_Imap\IMAP_Credentials_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Interface;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Defaults_Trait;
-use BrianHenryIE\WC_Venmo_Gateway\Psr\Log\LogLevel;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Account_Credentials_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\API\Ddeboer_Imap\IMAP_Credentials_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Defaults_Trait;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
 class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface, WooCommerce_Logger_Settings_Interface {
@@ -29,7 +29,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 * @return string
 	 */
 	public function get_plugin_slug(): string {
-		return 'bh-wc-venmo-gateway';
+		return 'bh-wp-venmo-gateway';
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	}
 
 	public function get_plugin_version(): string {
-		return '3.2.0';
+		return '4.0.0';
 	}
 
 	/**
@@ -115,7 +115,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 */
 	protected function get_woo_settings( $gateway_id, string $setting ) {
 
-		$settings_id = "bh-wc-venmo-gateway_{$gateway_id}_settings";
+		$settings_id = "bh-wp-venmo-gateway_{$gateway_id}_settings";
 
 		$woo_settings = get_option( $settings_id, array() );
 
@@ -255,8 +255,8 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 * Used in the logs library; used for `plugins.php` links.
 	 */
 	public function get_plugin_basename(): string {
-		return defined( 'BH_WC_VENMO_GATEWAY_BASENAME' )
-			? constant( 'BH_WC_VENMO_GATEWAY_BASENAME' )
-			: 'bh-wc-venmo-gateway/bh-wc-venmo-gateway.php';
+		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' )
+			? constant( 'BH_WP_VENMO_GATEWAY_BASENAME' )
+			: 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php';
 	}
 }

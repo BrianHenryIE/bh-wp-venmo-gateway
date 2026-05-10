@@ -2,10 +2,10 @@
 /**
  * Admin UI hooks to stop the WooCommerce setup wizard.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Admin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin;
 
 use Automattic\WooCommerce\Internal\Admin\Onboarding\OnboardingProfile;
 

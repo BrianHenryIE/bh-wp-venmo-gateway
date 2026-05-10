@@ -2,10 +2,10 @@
 /**
  * Add a link in the admin order UI to the customer order (thank you/order received) page.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway\Development_Plugin\Admin;
+namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin;
 
 use WC_Order;
 

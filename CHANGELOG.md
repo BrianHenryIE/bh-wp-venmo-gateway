@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.0.0 – April 2026
+
+* Rename to BH WP Venmo Gateway
+
 ### 3.2.0 – April 2026
 
 * Save and autofill customer Venmo username

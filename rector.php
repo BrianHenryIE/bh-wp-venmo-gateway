@@ -2,7 +2,7 @@
 /**
  * Rector rules to automatically refactor code to modern syntax.
  *
- * @package brianhenryie/bh-wc-venmo-gateway
+ * @package brianhenryie/bh-wp-venmo-gateway
  */
 
 declare(strict_types=1);

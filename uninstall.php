@@ -21,7 +21,7 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    BrianHenryIE\WC_Venmo_Gateway
+ * @package    BrianHenryIE\WP_Venmo_Gateway
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -30,4 +30,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 
-delete_option( 'bh-wc-venmo-gateway-last-activated-time' );
+delete_option( 'bh-wp-venmo-gateway-last-activated-time' );
