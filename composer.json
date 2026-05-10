@@ -68,6 +68,7 @@
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
+        "wpackagist-plugin/give": "^4.14",
         "wpackagist-plugin/query-monitor": "*",
         "wpackagist-plugin/woocommerce": ">=10.5",
         "wpackagist-plugin/wp-mail-debugger": "^1.1",

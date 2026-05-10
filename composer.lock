@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "842235f6c149c923f1c496c850dd6839",
+    "content-hash": "07f2eb0744200963e034652baa39639c",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -13093,6 +13093,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/checkout-fees-for-woocommerce/"
+        },
+        {
+            "name": "wpackagist-plugin/give",
+            "version": "4.14.6",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/give/",
+                "reference": "tags/4.14.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/give.4.14.6.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/give/"
         },
         {
             "name": "wpackagist-plugin/query-monitor",

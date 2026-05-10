@@ -19,6 +19,7 @@
     "../setup": "./tests/_wp-env",
     "wp-content/plugins/checkout-fees-for-woocommerce": "./wp-content/plugins/checkout-fees-for-woocommerce",
     "wp-content/plugins/development-plugin": "./development-plugin",
+    "wp-content/plugins/give": "./wp-content/plugins/give",
     "wp-content/plugins/query-monitor": "./wp-content/plugins/query-monitor",
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
     "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger"
