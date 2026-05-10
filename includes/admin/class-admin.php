@@ -59,6 +59,9 @@ class Admin {
 			return;
 		}
 
+		/**
+		 * TODO: update with underscored option name.
+		 */
 		$last_activated = get_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
 
 		// If last activation was longer than a week ago, return.
