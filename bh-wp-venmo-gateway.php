@@ -9,7 +9,7 @@
  *
  * @link              http://BrianHenryIE.com
  * @since             1.0.0
- * @package           BrianHenryIE\WC_Venmo_Gateway
+ * @package           BrianHenryIE\WP_Venmo_Gateway
  *
  * @wordpress-plugin
  * Plugin Name:       Venmo Gateway
@@ -25,15 +25,15 @@
  * Domain Path:       /languages
  */
 
-namespace BrianHenryIE\WC_Venmo_Gateway;
+namespace BrianHenryIE\WP_Venmo_Gateway;
 
-use BrianHenryIE\WC_Venmo_Gateway\WC_Order_Email_Reconcile\BH_WC_Order_Email_Reconcile;
-use BrianHenryIE\WC_Venmo_Gateway\API\API;
-use BrianHenryIE\WC_Venmo_Gateway\API\Settings;
-use BrianHenryIE\WC_Venmo_Gateway\WP_Logger\Logger;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\Activator;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\Deactivator;
-use BrianHenryIE\WC_Venmo_Gateway\Includes\Register_Hooks;
+use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\BH_WC_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\API\API;
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger;
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Activator;
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Deactivator;
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -47,8 +47,8 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BH_WC_VENMO_GATEWAY_VERSION', '3.2.0' );
-define( 'BH_WC_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
+define( 'BH_WP_VENMO_GATEWAY_VERSION', '3.2.0' );
+define( 'BH_WP_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
 
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
@@ -63,7 +63,7 @@ register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) 
  *
  * @since    1.0.0
  */
-function instantiate_bh_wc_venmo_gateway(): API {
+function instantiate_bh_wp_venmo_gateway(): API {
 
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
@@ -77,5 +77,5 @@ function instantiate_bh_wc_venmo_gateway(): API {
 	return $api;
 }
 
-/** @var API $GLOBALS['bh_wc_venmo_gateway'] */
-$GLOBALS['bh_wc_venmo_gateway'] = instantiate_bh_wc_venmo_gateway();
+/** @var API $GLOBALS['bh_wp_venmo_gateway'] */
+$GLOBALS['bh_wp_venmo_gateway'] = instantiate_bh_wp_venmo_gateway();
