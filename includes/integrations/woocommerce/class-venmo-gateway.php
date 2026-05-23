@@ -4,7 +4,7 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;

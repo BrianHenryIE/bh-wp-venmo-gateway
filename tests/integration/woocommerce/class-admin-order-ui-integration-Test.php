@@ -8,13 +8,13 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 use WC_Order;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Admin_Order_UI
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI
  */
 class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 

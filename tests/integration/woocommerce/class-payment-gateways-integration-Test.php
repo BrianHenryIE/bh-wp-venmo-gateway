@@ -1,6 +1,6 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 

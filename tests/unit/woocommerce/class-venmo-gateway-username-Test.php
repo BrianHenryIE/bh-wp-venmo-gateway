@@ -9,13 +9,13 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 use WC_Order;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway
+ * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway
  */
 class Venmo_Gateway_Username_Test extends Unit_TestCase {
 

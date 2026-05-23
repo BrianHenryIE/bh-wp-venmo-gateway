@@ -16,13 +16,13 @@ use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Admin_Order_UI;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Email;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Order;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Payment_Gateways;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Thank_You;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
 class Register_Hooks {
 

@@ -5,7 +5,7 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use WC_Order;
 use WC_Payment_Gateway;

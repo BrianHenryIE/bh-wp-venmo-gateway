@@ -4,7 +4,7 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
