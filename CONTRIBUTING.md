@@ -1,54 +1,12 @@
-COMPOSER_MEMORY_LIMIT=-1 composer update -W --ignore-platform-req=ext-imap
-
-
 
 ```
-composer install;
+COMPOSER_MEMORY_LIMIT=-1 composer update -W --ignore-platform-req=ext-imap;
 npm install;
 npm run build;
 npx playwright install;
 npx wp-env start --xdebug;
 BASEURL=http://localhost:8888 npx playwright test --ui &;
 ```
-
-## Contributing
-
-Clone this repo, open PhpStorm, then run `composer install` to install the dependencies.
-
-```
-git clone https://github.com/brianhenryie/bh-wp-venmo-gateway.git;
-cd bh-wp-venmo-gateway;
-open -a PhpStorm ./;
-composer install;
-```
-
-For integration and acceptance tests, a local webserver must be running with `localhost:8080/bh-wp-venmo-gateway/` pointing at the root of the repo. MySQL must also be running locally – with two databases set up with:
-
-```
-mysql_username="root"
-mysql_password="secret"
-
-# export PATH=${PATH}:/usr/local/mysql/bin
-
-# Make .env available 
-# To bash:
-# export $(grep -v '^#' .env.testing | xargs)
-# To zsh:
-# source .env.testing
-
-# Create the database user:
-# MySQL
-# mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED WITH mysql_native_password BY '"$TEST_DB_PASSWORD"';";
-# or MariaDB
-# mysql -u $mysql_username -p$mysql_password -e "CREATE USER '"$TEST_DB_USER"'@'%' IDENTIFIED BY '"$TEST_DB_PASSWORD"';";
-
-# Create the databases:
-mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
-mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
-
-# Import the acceptance database:
-mysql -u $mysql_username -p$mysql_password $TEST_SITE_DB_NAME < tests/_data/dump.sql 
- ```
 
 ```
 wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time
