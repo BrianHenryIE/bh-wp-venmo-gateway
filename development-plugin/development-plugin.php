@@ -35,6 +35,8 @@ Autoloader::generate(
 	__DIR__,
 )->register();
 
+// `wp-env` symlink mappings fixes.
+new Mappings()->register_hooks();
 
 // Authentication helpers.
 ( new Authentication() )->register_hooks();
