@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb2436fa97435262a1a0d1ee5f5c91de",
+    "content-hash": "9356db242721ecec38a735fe39bc22e9",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -233,7 +233,7 @@
             "dist": {
                 "type": "path",
                 "url": "../bh-wp-mailboxes",
-                "reference": "fab936c431dadb744d2e90599aff4dc3e4f3e967"
+                "reference": "9950148eb3b09dbaa10e9717136aa9997c3c717f"
             },
             "require": {
                 "directorytree/imapengine": "^1.24",
@@ -353,7 +353,7 @@
             "dist": {
                 "type": "path",
                 "url": "../bh-wp-order-email-reconcile",
-                "reference": "0fc75b387341600efe91010708ad7284c3964218"
+                "reference": "7e5ae004f64c0149845d63f89c3d47bc7f73d1c4"
             },
             "require": {
                 "brianhenryie/bh-wp-mailboxes": "dev-master",
