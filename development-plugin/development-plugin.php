@@ -35,8 +35,6 @@ Autoloader::generate(
 	__DIR__,
 )->register();
 
-// `wp-env` fixes.
-( new WP_Env() )->register_hooks();
 
 // Authentication helpers.
 ( new Authentication() )->register_hooks();
