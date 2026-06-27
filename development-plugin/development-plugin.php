@@ -17,11 +17,6 @@ use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Themes;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Ajax\WooCommerce_Customer;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\WooCommerce_Settings;
 
-/**
- * TODO check for stray requests: exchange rate query seems to be happening too frequently.
- * https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD
- */
-
 if ( ! defined( 'WPINC' ) ) {
 	return;
 }
