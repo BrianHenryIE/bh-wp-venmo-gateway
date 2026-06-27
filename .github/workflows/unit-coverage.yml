@@ -63,14 +63,15 @@ jobs:
         with:
           env-file: .env.testing
 
-      - name: Install sponge
-        run: sudo apt-get install moreutils
-
       # TODO: merge master into this branch and run tests against what master will become, not just the isolated branch.
       # NB: how would that affect tj-actions/changed-files?
 
       - name: Install PHP dependencies
         run: composer install --verbose
+
+      - name: Install php-codecoverage-markdown for markdown report generation
+        if: ${{ matrix.php == env.COVERAGE_PHP_VERSION }}
+        run: composer require brianhenryie/php-codecoverage-markdown --dev --with-all-dependencies
 
       - name: Install JS dependencies
         run: npm install
