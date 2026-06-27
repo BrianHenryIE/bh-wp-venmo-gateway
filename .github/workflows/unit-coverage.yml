@@ -66,7 +66,25 @@ jobs:
       # TODO: merge master into this branch and run tests against what master will become, not just the isolated branch.
       # NB: how would that affect tj-actions/changed-files?
 
+      # Local repository references will always fail in CI. Remove them and let's hope the requirements are already up to date on Packagist.
+      - name: Remove local repository references
+        run: |
+          jq '
+            ([.repositories[] | select(.type=="path") | .only[]]) as $paths
+            | .repositories |= with_entries(select(.value.type != "path"))
+            | .require |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end))
+            | (.["require-dev"] |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end)))
+          ' composer.json > composer.json.tmp
+          mv composer.json.tmp composer.json
+
+      # TODO: on merge to main, the workflow should commit the updated composer.json.
+
       - name: Install PHP dependencies
+        if: ${{ github.event_name == 'pull_request' }}
+        run: composer update --verbose
+
+      - name: Install PHP dependencies
+        if: ${{ github.event_name != 'pull_request' }}
         run: composer install --verbose
 
       - name: Install php-codecoverage-markdown for markdown report generation
