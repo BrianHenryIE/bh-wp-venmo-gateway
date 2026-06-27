@@ -22,7 +22,10 @@
     "wp-content/plugins/give": "./wp-content/plugins/give",
     "wp-content/plugins/query-monitor": "./wp-content/plugins/query-monitor",
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
-    "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger"
+    "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger",
+    "wp-content/uploads/bh-wp-mailboxes": "../bh-wp-mailboxes",
+    "wp-content/uploads/bh-wp-order-email-reconcile": "../bh-wp-order-email-reconcile"
   },
-  "phpVersion": "8.0"
+  "phpVersion": "8.4",
+  "core": "WordPress/WordPress#7.0"
 }
