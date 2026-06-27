@@ -49,6 +49,7 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  */
 define( 'BH_WP_VENMO_GATEWAY_VERSION', '3.2.0' );
 define( 'BH_WP_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
+define( 'BH_WP_VENMO_GATEWAY_FILE', __FILE__ );
 
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
