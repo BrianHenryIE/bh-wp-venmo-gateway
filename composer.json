@@ -1,6 +1,6 @@
 {
     "name": "brianhenryie/bh-wp-venmo-gateway",
-    "description": "Receive Venmo payments on your WooCommerce store. Reconciles payments via email.",
+    "description": "Receive Venmo payments on your WordPress WooCommerce/Give site. Reconciles payments via email.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
@@ -20,7 +20,7 @@
             "cweagans/composer-patches": true
         },
         "platform": {
-            "php": "8.0"
+            "php": "8.4"
         },
         "process-timeout": 0,
         "sort-packages": true
@@ -28,7 +28,7 @@
     "repositories": {
         "wordpress/wordpress": {
             "type": "git",
-            "url": "https://github.com/WordPress/wordpress-develop.git",
+            "url": "https://github.com/WordPress/wordpress-develop",
             "only": [
                 "wordpress/wordpress"
             ]
@@ -57,19 +57,17 @@
         }
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.4",
         "ext-json": "*",
         "alleyinteractive/wordpress-autoloader": "*",
-        "brianhenryie/bh-wc-order-email-reconcile": "dev-master",
-        "brianhenryie/bh-wp-logger": "^0.2",
+        "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
+        "brianhenryie/bh-wp-logger": "^0.3.3",
         "chillerlan/php-qrcode": "^5.0"
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
-        "brianhenryie/php-codecoverage-markdown": "*",
-        "brianhenryie/strauss": "^0.26",
         "johnpbloch/wordpress": "*",
         "lucatume/wp-browser": "^4.5",
         "phpstan/extension-installer": "*",
@@ -77,8 +75,6 @@
         "rector/rector": "^2.3",
         "szepeviktor/phpstan-wordpress": "*",
         "wordpress/wordpress": ">=6.9",
-        "wp-cli/dist-archive-command": "*",
-        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
         "wpackagist-plugin/give": "^4",
@@ -114,7 +110,18 @@
             "exclude_from_copy": {
                 "file_patterns": [
                     "~psr/log/Psr/Log/Test.*~",
+                    "~^([^/]+/){2}node_modules~",
+                    "~^../([^/]+/){1}node_modules~",
+                    "~^([^/]+/){2}vendor~",
+                    "~^../([^/]+/){1}vendor~",
+                    "~^([^/]+/){2}.git~",
+                    "~^../([^/]+/){1}.git~",
+                    "~^([^/]+/){2}wordpress/~",
+                    "~^../([^/]+/){1}wordpress/~",
                     "~^([^/]+/){2}wp-content~",
+                    "~^../([^/]+/){1}wp-content~",
+                    "~^([^/]+/){2}bin~",
+                    "~^../([^/]+/){1}bin~",
                     "~^([^/]+/){2}scratch~",
                     "~^([^/]+/){2}imap.so~",
                     "~^([^/]+/){2}tests~",
@@ -133,23 +140,23 @@
             "namespace_replacement_patterns": {
                 "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
             }
-        },
-        "google/apiclient-services": [
-            "Gmail"
-        ]
+        }
     },
     "scripts": {
+        "prefix-namespaces": [
+            "sh -c 'test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar'",
+            "@php bin/strauss.phar --info"
+        ],
         "post-install-cmd": [
-            "strauss --info",
-            "@sync-composer-wpenv"
+            "@prefix-namespaces"
         ],
         "post-update-cmd": [
-            "strauss --info",
-            "@sync-composer-wpenv"
+            "@prefix-namespaces"
         ],
-        "sync-composer-wpenv": [
-            "for name in $(cat .wp-env.json | jq '.mappings | values[]' | sed -r 's/^\\\"|\\\"$//g'); do [ ! -d $name ] && [ ! -f $name ] && echo $name && jq 'del(.. | select(. ==\"'$name'\"))' .wp-env.json | sponge .wp-env.json || true; done",
-            "find wp-content/plugins -type d -depth 1 ! -type l | sort -h | jq -Rn '[inputs]' | jq 'reduce .[] as $item ({}; . + {$item:$item})' | jq '.[] |= \"./\\(.)\"' | jq '. | {mappings: .}' | jq --sort-keys -s '.[] * $existing[]' --slurpfile existing .wp-env.json | sponge .wp-env.json"
+        "post-autoload-dump": [
+            "@php bin/strauss.phar include-autoloader",
+            "php ./bin/sync-composer-wpenv.php",
+            "php ./bin/modify-autoload-patchwork.php"
         ],
         "test": [
             "codecept run unit",
