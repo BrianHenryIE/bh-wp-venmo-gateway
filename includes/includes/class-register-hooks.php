@@ -21,6 +21,8 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
@@ -45,6 +47,7 @@ class Register_Hooks {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_woocommerce_hooks();
+		$this->define_givewp_hooks();
 		$this->define_cron_hooks();
 	}
 
@@ -118,6 +121,19 @@ class Register_Hooks {
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
+	}
+
+	/**
+	 * Register the GiveWP payment gateway and settings.
+	 */
+	protected function define_givewp_hooks(): void {
+
+		$givewp = new GiveWP();
+		add_action( 'givewp_register_payment_gateway', array( $givewp, 'register_gateway' ) );
+
+		$gateway_settings = new GiveWP_Gateway_Settings();
+		add_filter( 'give_get_sections_gateways', array( $gateway_settings, 'register_sections' ) );
+		add_filter( 'give_get_settings_gateways', array( $gateway_settings, 'register_settings' ) );
 	}
 
 	/**
