@@ -5,8 +5,8 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Extract_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;

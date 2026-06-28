@@ -6,7 +6,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\WooCommerce\Credentials_Settings_Fields;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use WC_Order;

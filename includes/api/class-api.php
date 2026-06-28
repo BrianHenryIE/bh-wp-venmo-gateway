@@ -6,7 +6,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\API\API as BH_WC_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\API as BH_WP_Order_Email_Reconcile;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 
@@ -15,12 +15,12 @@ class API implements API_Interface {
 	use LoggerAwareTrait;
 
 	/**
-	 * @param BH_WC_Order_Email_Reconcile $reconciler Instance of IMAP_Reconcile library to fetch emails and match with unpaid orders.
+	 * @param BH_WP_Order_Email_Reconcile $reconciler Instance of IMAP_Reconcile library to fetch emails and match with unpaid orders.
 	 * @param Settings_Interface          $settings The plugin settings.
 	 * @param LoggerInterface             $logger
 	 */
 	public function __construct(
-		protected BH_WC_Order_Email_Reconcile $reconciler,
+		protected BH_WP_Order_Email_Reconcile $reconciler,
 		protected Settings_Interface $settings,
 		LoggerInterface $logger
 	) {

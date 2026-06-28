@@ -27,7 +27,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\BH_WC_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\BH_WP_Order_Email_Reconcile;
 use BrianHenryIE\WP_Venmo_Gateway\API\API;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger;
@@ -69,7 +69,7 @@ function instantiate_bh_wp_venmo_gateway(): API {
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
 
-	$order_email_reconcile = BH_WC_Order_Email_Reconcile::instance( $settings, $logger );
+	$order_email_reconcile = BH_WP_Order_Email_Reconcile::instance( $settings, $logger );
 
 	$api = new API( $order_email_reconcile, $settings, $logger );
 
