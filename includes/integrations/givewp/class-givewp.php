@@ -8,6 +8,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use Give\Framework\PaymentGateways\PaymentGatewayRegister;
+use Give\PaymentGateways\Actions\RegisterPaymentGateways;
 
 class GiveWP {
 
@@ -15,6 +16,7 @@ class GiveWP {
 	 * Register the Venmo payment gateway with GiveWP.
 	 *
 	 * @hooked givewp_register_payment_gateway
+	 * @see RegisterPaymentGateways::register3rdPartyPaymentGateways()
 	 *
 	 * @param PaymentGatewayRegister $register
 	 */
