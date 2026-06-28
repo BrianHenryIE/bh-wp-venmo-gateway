@@ -48,7 +48,10 @@ class Venmo_Gateway extends PaymentGateway {
 		$asset_file = plugin_dir_path( BH_WP_VENMO_GATEWAY_FILE ) . 'assets/givewp/venmo-gateway.asset.php';
 		$asset      = file_exists( $asset_file )
 			? require $asset_file
-			: array( 'dependencies' => array( 'react' ), 'version' => BH_WP_VENMO_GATEWAY_VERSION );
+			: array(
+				'dependencies' => array( 'react' ),
+				'version'      => BH_WP_VENMO_GATEWAY_VERSION,
+			);
 
 		wp_enqueue_script(
 			'bh-wp-venmo-gateway-givewp',
