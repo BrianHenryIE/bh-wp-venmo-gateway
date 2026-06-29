@@ -6,6 +6,9 @@
   "lifecycleScripts": {
     "afterStart": "bash 'tests/_wp-env/initialize-external.sh'"
   },
+  "plugins": [
+    "."
+  ],
   "mappings": {
     "../setup": "./tests/_wp-env",
     "wp-content/plugins/checkout-fees-for-woocommerce": "./wp-content/plugins/checkout-fees-for-woocommerce",
