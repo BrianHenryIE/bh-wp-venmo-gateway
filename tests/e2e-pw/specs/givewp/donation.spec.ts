@@ -129,7 +129,11 @@ test.describe( 'Venmo GiveWP donation – v3 Sequoia form', () => {
 		await frame.getByLabel( 'Email Address *' ).fill( 'test@example.com' );
 		await frame.locator( '#give-venmo-username' ).fill( CUSTOMER_VENMO_USERNAME );
 		await frame.getByRole( 'button', { name: 'Donate now' } ).click();
-		await expect( frame.getByText( 'Success!' ) ).toBeVisible( { timeout: 60_000 } );
+		// The donation is pending, so the receipt shows the Venmo payment link
+		// (not "Success!"). The v3 form's amount is $10 (its blocks.json default).
+		await expect(
+			frame.getByRole( 'link', { name: `Please pay $10 via Venmo to @${ STORE_VENMO_USERNAME }` } )
+		).toBeVisible( { timeout: 60_000 } );
 	} );
 
 	test( 'confirmation receipt shows the Venmo payment QR code', async ( { page } ) => {
@@ -140,21 +144,31 @@ test.describe( 'Venmo GiveWP donation – v3 Sequoia form', () => {
 		await frame.getByLabel( 'Email Address *' ).fill( 'test@example.com' );
 		await frame.locator( '#give-venmo-username' ).fill( CUSTOMER_VENMO_USERNAME );
 		await frame.getByRole( 'button', { name: 'Donate now' } ).click();
-		await expect( frame.getByText( 'Success!' ) ).toBeVisible( { timeout: 60_000 } );
 
-		// While pending, the QR code replaces the celebratory "thanks for your
-		// donation" heading. The receipt React app mounts a moment after "Success!".
+		// While pending the "Success!" badge is replaced with the Venmo payment
+		// link, and the QR code replaces the celebratory heading. The receipt React
+		// app mounts a moment after submit, so allow time. The v3 form amount is $10.
+		const payBadge = frame.getByRole( 'link', {
+			name: `Please pay $10 via Venmo to @${ STORE_VENMO_USERNAME }`,
+		} );
+		await expect( payBadge ).toBeVisible( { timeout: 60_000 } );
+		await expect( payBadge ).toHaveAttribute( 'href', /venmo\.com\/testvendor/ );
+
 		const qrImage = frame.locator( 'img[alt="Payment QR code"]' );
-		await expect( qrImage ).toBeVisible( { timeout: 15_000 } );
+		await expect( qrImage ).toBeVisible();
 		await expect( qrImage ).toHaveAttribute( 'src', /^data:image\// );
 
-		// The "Payment Pending" detail links to the Venmo payment. The v3 form's
-		// donation amount is $10 (set in its blocks.json default).
+		// The "Payment Pending" detail also links to the Venmo payment (exact text
+		// so it does not collide with the "Please pay …" badge link above).
 		await expect(
-			frame.getByText( `$10 via Venmo to @${ STORE_VENMO_USERNAME }` )
+			frame.getByRole( 'link', {
+				name: `$10 via Venmo to @${ STORE_VENMO_USERNAME }`,
+				exact: true,
+			} )
 		).toBeVisible();
 
-		// The pending receipt must not thank the donor as if payment is complete.
+		// The pending receipt must not claim success or thank the donor.
+		await expect( frame.getByText( 'Success!' ) ).toHaveCount( 0 );
 		await expect(
 			frame.getByText( 'thanks for your donation', { exact: false } )
 		).toHaveCount( 0 );

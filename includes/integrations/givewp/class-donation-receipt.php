@@ -16,6 +16,7 @@ namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
 use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
+use Give\Donations\Models\Donation;
 use Give\Framework\Receipts\DonationReceipt;
 use Give\Framework\Receipts\Properties\ReceiptDetail;
 
@@ -166,6 +167,90 @@ class Donation_Receipt {
 				$link
 			)
 		);
+	}
+
+	/**
+	 * Replace the v3 receipt's "Success!" badge with a Venmo payment link while the
+	 * donation is pending — a pending donation has not succeeded yet.
+	 *
+	 * "Success!" is a static string in GiveWP's React receipt component and cannot
+	 * be changed server-side, so a small script is printed on the receipt iframe
+	 * page that swaps the badge content once the React app has mounted.
+	 *
+	 * @hooked givewp_donation_confirmation_receipt_showing
+	 * @see \Give\DonationForms\Controllers\DonationConfirmationReceiptViewController::show()
+	 *
+	 * @param Donation $donation The donation whose receipt is being shown.
+	 */
+	public function replace_v3_success_badge( Donation $donation ): void {
+
+		if ( Venmo_Gateway::id() !== $donation->gatewayId ) {
+			return;
+		}
+
+		if ( ! $donation->status->isPending() ) {
+			return;
+		}
+
+		$store_username = give_get_meta( $donation->id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+
+		if ( empty( $store_username ) ) {
+			$store_username = give_get_option( 'venmo_store_username', '' );
+		}
+
+		if ( empty( $store_username ) ) {
+			return;
+		}
+
+		$amount = (string) give_donation_amount( $donation->id );
+
+		$data = array(
+			'url'   => $this->get_browser_url( $store_username, $amount, $donation->id ),
+			'label' => sprintf(
+				/* translators: 1: donation amount, 2: store Venmo username */
+				__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+				$amount,
+				$store_username
+			),
+		);
+
+		$handle = 'bh-wp-venmo-gateway-givewp-receipt';
+		wp_register_script( $handle, false, array(), BH_WP_VENMO_GATEWAY_VERSION, true );
+		wp_enqueue_script( $handle );
+		wp_add_inline_script(
+			$handle,
+			'window.bhWpVenmoReceipt = ' . wp_json_encode( $data ) . ';' . $this->get_badge_replacement_js()
+		);
+	}
+
+	/**
+	 * The client-side script that swaps the receipt's "Success!" badge for the
+	 * Venmo payment link. Re-applies on DOM changes so it survives the React app
+	 * mounting (and any re-render) within the first few seconds.
+	 */
+	private function get_badge_replacement_js(): string {
+		return <<<'JS'
+			( function () {
+				var data = window.bhWpVenmoReceipt || {};
+				function apply() {
+					var badge = document.querySelector( '.givewp-form-secure-badge' );
+					if ( ! badge || badge.querySelector( 'a[data-bh-venmo]' ) ) {
+						return;
+					}
+					badge.textContent = '';
+					var link = document.createElement( 'a' );
+					link.setAttribute( 'data-bh-venmo', '1' );
+					link.setAttribute( 'target', '_blank' );
+					link.href = data.url;
+					link.textContent = data.label;
+					badge.appendChild( link );
+				}
+				apply();
+				var observer = new MutationObserver( apply );
+				observer.observe( document.documentElement, { childList: true, subtree: true } );
+				setTimeout( function () { observer.disconnect(); }, 15000 );
+			} )();
+			JS;
 	}
 
 	/**

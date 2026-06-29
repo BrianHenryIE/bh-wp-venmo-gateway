@@ -141,8 +141,10 @@ class Register_Hooks {
 		// notice with Venmo payment instructions, and show the QR code.
 		add_filter( 'give_receipt_status_notice', array( $donation_receipt, 'customize_pending_notice' ), 10, 4 );
 		add_action( 'give_payment_receipt_before_table', array( $donation_receipt, 'print_qr_code' ), 10, 2 );
-		// Modern (v3/Sequoia) confirmation receipt: add the same QR code and instructions.
+		// Modern (v3/Sequoia) confirmation receipt: add the same QR code and instructions,
+		// and replace the "Success!" badge with a payment link while the donation is pending.
 		add_action( 'givewp_generate_confirmation_page_receipt_before_donation_total', array( $donation_receipt, 'add_v3_receipt_details' ) );
+		add_action( 'givewp_donation_confirmation_receipt_showing', array( $donation_receipt, 'replace_v3_success_badge' ) );
 	}
 
 	/**
