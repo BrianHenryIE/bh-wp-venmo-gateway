@@ -46,6 +46,38 @@ test.describe( 'Venmo GiveWP donation – legacy form', () => {
 		expect( page.url() ).not.toMatch( /donation-confirmation/ );
 	} );
 
+	// The donation-confirmation page cannot be loaded directly without the
+	// context of a fresh donation, so we must complete a real donation to reach
+	// it. The Venmo donation is `pending`, so the page shows the payment QR code.
+	test( 'donation confirmation page shows the Venmo payment QR code', async ( { page } ) => {
+		await page.goto( '/donate/' );
+		await page.fill( '#give-first', 'Test' );
+		await page.fill( '#give-last', 'Donor' );
+		await page.fill( '#give-email', 'test@example.com' );
+		await page.fill( '#give-venmo-username', CUSTOMER_VENMO_USERNAME );
+		await page.click( '#give-purchase-button' );
+		await page.waitForURL( /donation-confirmation/, { timeout: 60_000 } );
+
+		const qrImage = page.locator( 'img[alt="Payment QR code"]' );
+		await expect( qrImage ).toBeVisible();
+		// Confirm it is an actually-rendered inline QR, not a broken/empty src.
+		await expect( qrImage ).toHaveAttribute( 'src', /^data:image\// );
+
+		// The generic "currently processing" notice is replaced with Venmo
+		// instructions naming the amount ($25, set in initialize-internal.sh), and
+		// "$25 via Venmo to @testvendor" links to the Venmo payment URL.
+		await expect(
+			page.locator( 'text=Your donation is currently processing' )
+		).toHaveCount( 0 );
+
+		const payLink = page.getByRole( 'link', {
+			name: `$25 via Venmo to @${ STORE_VENMO_USERNAME }`,
+			exact: true,
+		} );
+		await expect( payLink ).toBeVisible();
+		await expect( payLink ).toHaveAttribute( 'href', /venmo\.com\/testvendor/ );
+	} );
+
 	test( 'donation shows pending status in admin', async ( { page, requestUtils } ) => {
 		await page.goto( '/donate/' );
 		await page.fill( '#give-first', 'Test' );

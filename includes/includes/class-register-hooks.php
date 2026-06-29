@@ -21,6 +21,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
@@ -134,6 +135,12 @@ class Register_Hooks {
 		$gateway_settings = new GiveWP_Gateway_Settings();
 		add_filter( 'give_get_sections_gateways', array( $gateway_settings, 'register_sections' ) );
 		add_filter( 'give_get_settings_gateways', array( $gateway_settings, 'register_settings' ) );
+
+		$donation_receipt = new GiveWP_Donation_Receipt();
+		// Replace the generic "currently processing" notice with Venmo payment instructions.
+		add_filter( 'give_receipt_status_notice', array( $donation_receipt, 'customize_pending_notice' ), 10, 4 );
+		// Show the Venmo payment QR code on the donation confirmation page.
+		add_action( 'give_payment_receipt_before_table', array( $donation_receipt, 'print_qr_code' ), 10, 2 );
 	}
 
 	/**
