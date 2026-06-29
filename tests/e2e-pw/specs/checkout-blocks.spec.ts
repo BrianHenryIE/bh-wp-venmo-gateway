@@ -7,7 +7,7 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { loginAsAdmin } from '../helpers/general/ui/login';
-import {useBlocksCheckout, useShortcodeCheckout} from "../helpers/development-plugin/rest/checkout";
+import { BLOCKS_CHECKOUT_PATH } from "../helpers/development-plugin/rest/checkout";
 import {setDefaultCustomerAddresses} from "../helpers/development-plugin/ajax/wc-cart";
 import {addProductToCartByName} from "../helpers/general/ui/wc-cart";
 import {testConfig} from "../test-config";
@@ -17,16 +17,6 @@ const CUSTOMER_VENMO_USERNAME = 'brianhenryie';
 const STORE_VENMO_USERNAME = 'sackavs';
 
 test.describe( 'Venmo checkout (blocks)', () => {
-
-	test.beforeAll( async ( { browser, requestUtils } ) => {
-		const page = await browser.newPage();
-
-		// Ensure the checkout page uses the shortcode.
-		await useBlocksCheckout();
-
-		// Delete all cookies so user is logged out and cart is empty
-		await page.context().clearCookies();
-	} );
 
 	test.beforeEach( async ( { page } ) => {
 		// Delete all cookies so user is logged out and cart is empty
@@ -45,7 +35,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	test( 'Venmo gateway appears in blocks checkout', async ( { page } ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 
 		// Wait for blocks checkout to load.
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
@@ -60,7 +50,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	test( 'Venmo username input appears when selected', async ( { page } ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		// Select Venmo.
@@ -83,7 +73,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	} ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		// Select Venmo payment method.
@@ -115,7 +105,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	} ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		// Select Venmo but don't fill username.
@@ -144,7 +134,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	} ) => {
 
 		// Go to checkout and fill everything.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		// Select Venmo and enter username.
@@ -173,7 +163,7 @@ test.describe( 'Venmo checkout (blocks)', () => {
 	} ) => {
 
 		// Go to checkout and complete order.
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		await page.click(

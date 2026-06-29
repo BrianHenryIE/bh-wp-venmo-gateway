@@ -27,6 +27,21 @@ if ! wp option get woocommerce_shop_page_id 2>/dev/null | grep -q '^[1-9]'; then
   wp wc --user=1 tool run install_pages 2>/dev/null || true
 fi
 
+# Dedicated checkout pages — one per checkout style — so the shortcode and blocks
+# E2E specs never mutate a shared page and can run in parallel. The default
+# /checkout/ page (woocommerce_checkout_page_id) is left untouched.
+SCRIPT_DIR="$(dirname "$0")"
+if ! wp post list --post_type=page --field=post_name 2>/dev/null | grep -qx "checkout-shortcode"; then
+  echo "Creating /checkout-shortcode/ page..."
+  wp post create --post_type=page --post_title="Checkout (Shortcode)" --post_name="checkout-shortcode" \
+    --post_status=publish --post_content="$(cat "$SCRIPT_DIR/shortcode-checkout-post-content.txt")" 2>/dev/null || true
+fi
+if ! wp post list --post_type=page --field=post_name 2>/dev/null | grep -qx "checkout-blocks"; then
+  echo "Creating /checkout-blocks/ page..."
+  wp post create --post_type=page --post_title="Checkout (Blocks)" --post_name="checkout-blocks" \
+    --post_status=publish --post_content="$(cat "$SCRIPT_DIR/blocks-checkout-post-content.txt")" 2>/dev/null || true
+fi
+
 # Enable Venmo gateway with a test username.
 echo "Configuring Venmo payment gateway..."
 wp option set woocommerce_venmo_settings '{"enabled":"yes","title":"Venmo","description":"Pay with Venmo","store_venmo_username":"testvendor"}' --format=json 2>/dev/null || true
@@ -37,17 +52,16 @@ if ! wp post list --post_type=product --field=post_title 2>/dev/null | grep -q "
   wp wc product create --user=1 --name="Test Product" --regular_price="19.99" --status=publish 2>/dev/null || true
 fi
 
-echo "Installing and activating the WordPress Importer plugin..."
-wp plugin install wordpress-importer --activate
-
-echo "Importing WooCommerce sample products..."
-wp option get sample_products_installed
-if [ $? -ne 0 ]; then
-    echo "Importing sample products..."
-    wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip
-    wp option add sample_products_installed 1
+# Import WooCommerce sample products (provides "Beanie", used by the E2E tests).
+# Guard on the product actually existing rather than an option flag, so the import
+# self-heals if the products are ever removed. Exact match so "Beanie with Logo"
+# does not satisfy it.
+if ! wp post list --post_type=product --field=post_title 2>/dev/null | grep -qx "Beanie"; then
+  echo "Installing WordPress Importer and importing WooCommerce sample products..."
+  wp plugin install wordpress-importer --activate
+  wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=skip
 else
-    echo "Sample products already imported."
+  echo "Sample products already imported."
 fi
 
 # Trying to disable "Welcome to Woo!" – "Skip guided setup"
@@ -60,8 +74,10 @@ wp option set woocommerce_coming_soon no
 
 echo "Configuring GiveWP Venmo gateway..."
 
-# Disable test mode — Venmo payments work the same in test or live mode.
-wp give test-mode off 2>/dev/null || true
+# Disable test mode — Venmo payments work the same in test or live mode, and the
+# v3 donations REST endpoint defaults to live mode (tests query without a mode).
+wp option patch update give_settings test_mode disabled 2>/dev/null || \
+  wp option patch insert give_settings test_mode disabled 2>/dev/null || true
 
 # Enable the Venmo gateway for legacy (v2) forms.
 wp option patch update give_settings gateways '{"venmo":"1"}' --format=json 2>/dev/null || \

@@ -7,7 +7,7 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { loginAsAdmin } from '../helpers/general/ui/login';
-import { useShortcodeCheckout } from '../helpers/development-plugin/rest/checkout';
+import { SHORTCODE_CHECKOUT_PATH } from '../helpers/development-plugin/rest/checkout';
 
 import { testConfig } from '../test-config';
 import { setDefaultCustomerAddresses } from "../helpers/development-plugin/ajax/wc-cart";
@@ -18,16 +18,6 @@ const CUSTOMER_VENMO_USERNAME = 'brianhenryie';
 const STORE_VENMO_USERNAME = 'sackavs';
 
 test.describe( 'Venmo checkout (shortcode)', () => {
-
-	test.beforeAll( async ( { browser, requestUtils } ) => {
-		const page = await browser.newPage();
-
-		// Ensure the checkout page uses the shortcode.
-		await useShortcodeCheckout();
-
-		// Delete all cookies so user is logged out and cart is empty
-		await page.context().clearCookies();
-	} );
 
 	test.beforeEach( async ( { page } ) => {
 		// Delete all cookies so user is logged out and cart is empty
@@ -46,7 +36,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	test( 'Venmo gateway is visible on checkout', async ( { page } ) => {
 
 		// Go to checkout
-		await page.goto( '/checkout/' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		// The Venmo payment method should be present.
 		const venmoLabel = page.locator( 'label[for="payment_method_venmo"]' );
@@ -56,7 +46,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	test( 'can place an order with Venmo', async ( { page } ) => {
 
 		// Go to checkout
-		await page.goto( '/checkout/' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		// Select Venmo gateway.
 		await page.click( 'label[for="payment_method_venmo"]' );
@@ -86,7 +76,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	} ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		// Select Venmo and fill username.
 		await page.click( 'label[for="payment_method_venmo"]' );
@@ -117,7 +107,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	test( 'Venmo username field is required', async ( { page } ) => {
 
 		// Go to checkout.
-		await page.goto( '/checkout/' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		// Select Venmo but DON'T fill in the username.
 		await page.click( 'label[for="payment_method_venmo"]' );
@@ -135,7 +125,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 	} ) => {
 
 		// Go to checkout and complete order.
-		await page.goto( '/checkout/' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		await page.click( 'label[for="payment_method_venmo"]' );
 		await page.fill( '#_customer-venmo-username', CUSTOMER_VENMO_USERNAME );

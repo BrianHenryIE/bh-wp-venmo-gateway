@@ -16,11 +16,15 @@ export async function login( user: { username: string; password: string }, page:
 		return;
 	}
 
-	await page.goto( '/wp-login.php', { waitUntil: 'networkidle' } );
+	await page.goto( '/wp-login.php', { waitUntil: 'domcontentloaded' } );
 	await page.fill( 'input[name="log"]', user.username );
 	await page.fill( 'input[name="pwd"]', user.password );
-	await page.locator( '#loginform' ).getByText( 'Log In' ).click();
-	await page.waitForLoadState( 'networkidle' );
+	// The submit triggers a navigation; wait for that rather than 'networkidle',
+	// which never settles on the WooCommerce my-account page (persistent requests).
+	await Promise.all( [
+		page.waitForLoadState( 'domcontentloaded' ),
+		page.locator( '#loginform' ).getByText( 'Log In' ).click(),
+	] );
 
 	expect( await isLoggedIn( page ) );
 }

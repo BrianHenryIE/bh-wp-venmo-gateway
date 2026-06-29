@@ -14,6 +14,14 @@ import {getPostContentRendered, setPageContent} from "../../general/rest/wp-post
 
 export type CheckoutType = 'blocks' | 'shortcode';
 
+/**
+ * Dedicated checkout pages — one per checkout style — created in
+ * initialize-internal.sh. Tests navigate to these instead of mutating the single
+ * shared /checkout/ page, so the shortcode and blocks specs can run in parallel.
+ */
+export const SHORTCODE_CHECKOUT_PATH = '/checkout-shortcode/';
+export const BLOCKS_CHECKOUT_PATH = '/checkout-blocks/';
+
 async function getCheckoutPostId(): Promise< number > {
 	// woocommerce_checkout_page_id
 	const postId = await getSetting( 'woocommerce_checkout_page_id' );
