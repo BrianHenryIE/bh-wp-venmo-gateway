@@ -132,6 +132,28 @@ test.describe( 'Venmo GiveWP donation – v3 Sequoia form', () => {
 		await expect( frame.getByText( 'Success!' ) ).toBeVisible( { timeout: 60_000 } );
 	} );
 
+	test( 'confirmation receipt shows the Venmo payment QR code', async ( { page } ) => {
+		await page.goto( '/donate-v3/' );
+		const frame = page.frameLocator( 'iframe' );
+		await frame.getByPlaceholder( 'John' ).fill( 'Test' );
+		await frame.getByPlaceholder( 'Doe' ).fill( 'Donor' );
+		await frame.getByLabel( 'Email Address *' ).fill( 'test@example.com' );
+		await frame.locator( '#give-venmo-username' ).fill( CUSTOMER_VENMO_USERNAME );
+		await frame.getByRole( 'button', { name: 'Donate now' } ).click();
+		await expect( frame.getByText( 'Success!' ) ).toBeVisible( { timeout: 60_000 } );
+
+		// The receipt (rendered inside the iframe) shows the QR code and the
+		// Venmo payment instruction, the same as the legacy confirmation page.
+		// The receipt React app mounts a moment after "Success!", so allow time.
+		const qrImage = frame.locator( 'img[alt="Payment QR code"]' );
+		await expect( qrImage ).toBeVisible( { timeout: 15_000 } );
+		await expect( qrImage ).toHaveAttribute( 'src', /^data:image\// );
+		// The v3 form's donation amount is $10 (set in its blocks.json default).
+		await expect(
+			frame.getByText( `$10 via Venmo to @${ STORE_VENMO_USERNAME }` )
+		).toBeVisible();
+	} );
+
 	test( 'Venmo username field is required', async ( { page } ) => {
 		await page.goto( '/donate-v3/' );
 		const frame = page.frameLocator( 'iframe' );

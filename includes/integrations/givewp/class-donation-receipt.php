@@ -14,7 +14,10 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
 use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
+use Give\Framework\Receipts\DonationReceipt;
+use Give\Framework\Receipts\Properties\ReceiptDetail;
 
 /**
  * Adds the Venmo payment QR code to the GiveWP donation confirmation receipt.
@@ -82,6 +85,93 @@ class Donation_Receipt {
 		);
 
 		return str_replace( $placeholder, $link, $notice );
+	}
+
+	/**
+	 * Add the Venmo payment instructions and QR code to the v3 (Sequoia) donation
+	 * confirmation receipt.
+	 *
+	 * The v3 receipt is a React app fed server-side data; gateways contribute by
+	 * adding {@see ReceiptDetail}s to the {@see DonationReceipt}. Detail values are
+	 * rendered through Interweave, so the QR `<img>` (and link) are parsed as HTML.
+	 *
+	 * @hooked givewp_generate_confirmation_page_receipt_before_donation_total
+	 * @see \Give\Framework\Receipts\Actions\GenerateConfirmationPageReceipt
+	 *
+	 * @param DonationReceipt $receipt The receipt being built (modified in place).
+	 */
+	public function add_v3_receipt_details( DonationReceipt $receipt ): void {
+
+		$donation = $receipt->donation;
+
+		if ( Venmo_Gateway::id() !== $donation->gatewayId ) {
+			return;
+		}
+
+		// Only prompt for payment while the donation is awaiting it.
+		if ( ! $donation->status->isPending() ) {
+			return;
+		}
+
+		$store_username = give_get_meta( $donation->id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+
+		if ( empty( $store_username ) ) {
+			$store_username = give_get_option( 'venmo_store_username', '' );
+		}
+
+		if ( empty( $store_username ) ) {
+			return;
+		}
+
+		$amount      = (string) give_donation_amount( $donation->id );
+		$browser_url = $this->get_browser_url( $store_username, $amount, $donation->id );
+
+		$link = sprintf(
+			'<a target="_blank" href="%s">%s</a>',
+			esc_url( $browser_url ),
+			esc_html(
+				sprintf(
+					/* translators: 1: donation amount, 2: store Venmo username */
+					__( '$%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+					$amount,
+					$store_username
+				)
+			)
+		);
+
+		$receipt->donationDetails->addDetail(
+			new ReceiptDetail(
+				__( 'Payment Pending', 'bh-wp-venmo-gateway' ),
+				sprintf(
+					/* translators: %s: the linked "$25 via Venmo to @username" call to action */
+					__( 'Please send your donation of %s.', 'bh-wp-venmo-gateway' ),
+					$link
+				)
+			)
+		);
+
+		// PNG (not the SVG default): the v3 receipt renders detail values through
+		// Interweave, which strips the `style` attribute. A raster PNG carries its
+		// own intrinsic dimensions, so the QR is visible without inline CSS; an SVG
+		// without width/height would collapse to 0×0.
+		$qr_code_data_uri = ( new QR_Code() )->get_data_uri(
+			$this->get_qr_deep_link( $store_username, $amount, $donation->id ),
+			QROutputInterface::GDIMAGE_PNG
+		);
+
+		$qr_html = sprintf(
+			'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
+			esc_url( $browser_url ),
+			esc_attr( $qr_code_data_uri ),
+			esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
+		);
+
+		$receipt->donationDetails->addDetail(
+			new ReceiptDetail(
+				__( 'Scan to pay', 'bh-wp-venmo-gateway' ),
+				$qr_html
+			)
+		);
 	}
 
 	/**

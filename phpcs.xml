@@ -116,6 +116,15 @@
     <rule ref="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
+    <!-- Third-party GiveWP API object properties are camelCase and cannot be renamed. -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName">
+        <properties>
+            <property name="allowed_custom_properties" type="array">
+                <element value="gatewayId"/>
+                <element value="donationDetails"/>
+            </property>
+        </properties>
+    </rule>
     <rule ref="WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>

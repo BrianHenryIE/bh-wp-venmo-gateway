@@ -137,10 +137,12 @@ class Register_Hooks {
 		add_filter( 'give_get_settings_gateways', array( $gateway_settings, 'register_settings' ) );
 
 		$donation_receipt = new GiveWP_Donation_Receipt();
-		// Replace the generic "currently processing" notice with Venmo payment instructions.
+		// Legacy (v2) confirmation page: replace the generic "currently processing"
+		// notice with Venmo payment instructions, and show the QR code.
 		add_filter( 'give_receipt_status_notice', array( $donation_receipt, 'customize_pending_notice' ), 10, 4 );
-		// Show the Venmo payment QR code on the donation confirmation page.
 		add_action( 'give_payment_receipt_before_table', array( $donation_receipt, 'print_qr_code' ), 10, 2 );
+		// Modern (v3/Sequoia) confirmation receipt: add the same QR code and instructions.
+		add_action( 'givewp_generate_confirmation_page_receipt_before_donation_total', array( $donation_receipt, 'add_v3_receipt_details' ) );
 	}
 
 	/**
