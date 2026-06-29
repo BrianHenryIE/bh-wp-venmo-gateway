@@ -88,12 +88,15 @@ class Donation_Receipt {
 	}
 
 	/**
-	 * Add the Venmo payment instructions and QR code to the v3 (Sequoia) donation
-	 * confirmation receipt.
+	 * Replace the v3 (Sequoia) confirmation receipt heading with the Venmo payment
+	 * QR code, and add a "Payment Pending" detail linking to the Venmo payment.
 	 *
-	 * The v3 receipt is a React app fed server-side data; gateways contribute by
-	 * adding {@see ReceiptDetail}s to the {@see DonationReceipt}. Detail values are
-	 * rendered through Interweave, so the QR `<img>` (and link) are parsed as HTML.
+	 * While the donation is pending, the celebratory "Hey {name}, thanks for your
+	 * donation!" heading is misleading, so it is replaced with the QR code the donor
+	 * scans to pay. The v3 receipt is a React app fed server-side data: the heading
+	 * and detail values are rendered through Interweave, so the QR `<img>` and the
+	 * payment link are parsed as HTML. This hook runs after the heading is set, so
+	 * overwriting it here takes effect.
 	 *
 	 * @hooked givewp_generate_confirmation_page_receipt_before_donation_total
 	 * @see \Give\Framework\Receipts\Actions\GenerateConfirmationPageReceipt
@@ -126,6 +129,24 @@ class Donation_Receipt {
 		$amount      = (string) give_donation_amount( $donation->id );
 		$browser_url = $this->get_browser_url( $store_username, $amount, $donation->id );
 
+		// Replace the heading with the QR code. PNG (not the SVG default): the v3
+		// receipt renders content through Interweave, which strips the `style`
+		// attribute. A raster PNG carries its own intrinsic dimensions, so the QR is
+		// visible without inline CSS; an SVG without width/height would collapse to 0×0.
+		$qr_code_data_uri = ( new QR_Code() )->get_data_uri(
+			$this->get_qr_deep_link( $store_username, $amount, $donation->id ),
+			QROutputInterface::GDIMAGE_PNG
+		);
+
+		$qr_html = sprintf(
+			'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
+			esc_url( $browser_url ),
+			esc_attr( $qr_code_data_uri ),
+			esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
+		);
+
+		$receipt->settings->addSetting( 'heading', $qr_html );
+
 		$link = sprintf(
 			'<a target="_blank" href="%s">%s</a>',
 			esc_url( $browser_url ),
@@ -142,34 +163,7 @@ class Donation_Receipt {
 		$receipt->donationDetails->addDetail(
 			new ReceiptDetail(
 				__( 'Payment Pending', 'bh-wp-venmo-gateway' ),
-				sprintf(
-					/* translators: %s: the linked "$25 via Venmo to @username" call to action */
-					__( 'Please send your donation of %s.', 'bh-wp-venmo-gateway' ),
-					$link
-				)
-			)
-		);
-
-		// PNG (not the SVG default): the v3 receipt renders detail values through
-		// Interweave, which strips the `style` attribute. A raster PNG carries its
-		// own intrinsic dimensions, so the QR is visible without inline CSS; an SVG
-		// without width/height would collapse to 0×0.
-		$qr_code_data_uri = ( new QR_Code() )->get_data_uri(
-			$this->get_qr_deep_link( $store_username, $amount, $donation->id ),
-			QROutputInterface::GDIMAGE_PNG
-		);
-
-		$qr_html = sprintf(
-			'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
-			esc_url( $browser_url ),
-			esc_attr( $qr_code_data_uri ),
-			esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
-		);
-
-		$receipt->donationDetails->addDetail(
-			new ReceiptDetail(
-				__( 'Scan to pay', 'bh-wp-venmo-gateway' ),
-				$qr_html
+				$link
 			)
 		);
 	}
