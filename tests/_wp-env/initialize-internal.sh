@@ -95,13 +95,19 @@ wp option patch update give_settings venmo_store_username 'testvendor' 2>/dev/nu
 wp give test-demonstration-page 2>/dev/null || true
 
 # Create legacy (v2) form and /donate/ page.
+#
+# Note: plugins may write log lines to stdout on every WP load (e.g. a PSR-3
+# logger debug message), which pollutes WP-CLI `--porcelain`/`echo` output. Pipe
+# captured IDs through `grep -oE '^[0-9]+$' | tail -n1` to keep only the numeric
+# post ID; otherwise the noise ends up inside the `[give_form id="…"]` shortcode
+# and the donation form fails to render.
 if ! wp post list --post_type=page --post_status=publish --field=post_name 2>/dev/null | grep -q "^donate$"; then
   echo "Creating GiveWP legacy donation form..."
   LEGACY_FORM_ID=$(wp post create \
     --post_type=give_forms \
     --post_title="Test Donation Form (Legacy)" \
     --post_status=publish \
-    --porcelain 2>/dev/null)
+    --porcelain 2>/dev/null | grep -oE '^[0-9]+$' | tail -n1)
   if [ -n "$LEGACY_FORM_ID" ]; then
     wp post meta set "$LEGACY_FORM_ID" _give_price_option        'set'
     wp post meta set "$LEGACY_FORM_ID" _give_set_price           '25.00'
@@ -144,7 +150,7 @@ if ! wp post list --post_type=page --post_status=publish --field=post_name 2>/de
     give()->form_meta->update_meta($formId, "formBuilderSettings", $settingsJson);
     give()->form_meta->update_meta($formId, "formBuilderFields",   $blocksJson);
     echo $formId;
-  ' 2>/dev/null)
+  ' 2>/dev/null | grep -oE '^[0-9]+$' | tail -n1)
   if [ -n "$V3_FORM_ID" ]; then
     wp post create \
       --post_type=page --post_title="Donate V3" --post_name="donate-v3" --post_status=publish \

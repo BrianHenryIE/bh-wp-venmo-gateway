@@ -19,8 +19,11 @@ use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
 class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface, WooCommerce_Logger_Settings_Interface {
-	use BH_WP_Mailboxes_Settings_Defaults_Trait;
-	use Logger_Settings_Trait;
+	use BH_WP_Mailboxes_Settings_Defaults_Trait, Logger_Settings_Trait {
+		BH_WP_Mailboxes_Settings_Defaults_Trait::get_cli_base insteadof Logger_Settings_Trait;
+		BH_WP_Mailboxes_Settings_Defaults_Trait::get_cli_base as mailboxes_cli_base;
+		Logger_Settings_Trait::get_cli_base as logger_cli_base;
+	}
 
 	/**
 	 * @see Logger_Settings_Interface
@@ -93,18 +96,31 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 
 
 	/**
-	 * Name for the emails' custom post type, e . g . 'My Plugin Emails' .
+	 * Name for the emails' custom post type, e.g. 'My Plugin Emails'.
 	 *
-	 * trait will automatically convert this to 'my-plugin-emails' and 'my_plugin_emails' where appropriate,
-	 * using `sanitize_title` and additionally `str_replace('-','_'...)` respectively .
+	 * The trait converts this to 'venmo-payment-emails' / 'venmo_payment_emails' where appropriate,
+	 * using `sanitize_title` and additionally `str_replace('-','_'...)` respectively.
 	 *
-	 * Should usually be one cpt per plugin . But there can be more than one mailbox per plugin .
-	 * This should be hard - coded, and not derived from user input( e . g . mailbox name ) .
+	 * Should usually be one cpt per plugin. But there can be more than one mailbox per plugin.
+	 * This should be hard-coded, and not derived from user input (e.g. mailbox name).
 	 *
-	 * Max . length 20 characters .
+	 * Max. length 20 characters.
+	 *
+	 * @see BH_WP_Mailboxes_Settings_Interface::get_emails_cpt_friendly_name()
 	 */
-	public function get_cpt_friendly_name(): string {
+	public function get_emails_cpt_friendly_name(): string {
 		return 'Venmo Payment Emails';
+	}
+
+	/**
+	 * Display name for the email-accounts custom post type.
+	 *
+	 * Max. length 20 characters.
+	 *
+	 * @see BH_WP_Mailboxes_Settings_Interface::get_email_accounts_cpt_friendly_name()
+	 */
+	public function get_email_accounts_cpt_friendly_name(): string {
+		return 'Venmo Email Accounts';
 	}
 
 	/**

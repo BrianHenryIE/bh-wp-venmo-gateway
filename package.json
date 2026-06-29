@@ -10,7 +10,10 @@
     "build": "wp-scripts build",
     "start": "wp-scripts start",
     "lint:js": "wp-scripts lint-js",
-    "lint:css": "wp-scripts lint-style"
+    "lint:css": "wp-scripts lint-style",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
   },
   "keywords": [],
   "author": "BrianHenryIE",
