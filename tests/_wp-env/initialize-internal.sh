@@ -79,9 +79,10 @@ echo "Configuring GiveWP Venmo gateway..."
 wp option patch update give_settings test_mode disabled 2>/dev/null || \
   wp option patch insert give_settings test_mode disabled 2>/dev/null || true
 
-# Enable the Venmo gateway for legacy (v2) forms.
-wp option patch update give_settings gateways '{"venmo":"1"}' --format=json 2>/dev/null || \
-  wp option patch insert give_settings gateways '{"venmo":"1"}' --format=json 2>/dev/null || true
+# Note: the legacy (v2) `gateways` setting is enabled LAST (end of this section).
+# Booting GiveWP during the steps below (`wp give …`, the v3-form `wp eval`)
+# repopulates `gateways` with its defaults (manual, offline) and discards any
+# value patched here, so setting it now would have no effect.
 
 # Enable the Venmo gateway for modern (v3) forms — uses a separate setting.
 wp option patch update give_settings gateways_v3 '{"venmo":"1"}' --format=json 2>/dev/null || \
@@ -159,3 +160,11 @@ if ! wp post list --post_type=page --post_status=publish --field=post_name 2>/de
     echo "V3 form ID: $V3_FORM_ID"
   fi
 fi
+
+# Make Venmo the only enabled legacy (v2) gateway, LAST — after every step above
+# that boots GiveWP and repopulates `gateways` with its defaults (manual,
+# offline). With Venmo the sole enabled gateway, the legacy /donate/ form
+# auto-selects it and renders #give-venmo-gateway-fields, which the GiveWP legacy
+# donation.spec.ts expects.
+echo "Enabling Venmo as the only legacy (v2) GiveWP gateway..."
+wp eval '$s = get_option("give_settings"); $s["gateways"] = ["venmo" => "1"]; $s["default_gateway"] = "venmo"; update_option("give_settings", $s);'
