@@ -19,6 +19,9 @@ class Activator {
 	 */
 	public static function activate(): void {
 
-		update_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
+		update_option( 'bh_wp_venmo_gateway_first_activated_time', time() );
+
+		delete_option( 'bh-wp-venmo-gateway-last-activated-time' );
+		update_option( 'bh_wp_venmo_gateway_last_activated_time', time() );
 	}
 }

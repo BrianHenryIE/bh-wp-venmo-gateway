@@ -8,6 +8,7 @@
 * [x] GiveWP: http://localhost:8888/donate-v3/ It should not say "Hey Brian, thanks for your donation!" whil donation is pending. Instead, display the payment QR code there. Remove the lower "Scan to pay" QR code. Change "Payment Pending Please send your donation of $10 via Venmo to @testvendor." to just "Payment Pending $10 via Venmo to @testvendor."   
 * [x] GiveWP: http://localhost:8888/donate-v3/ Should not say "Success" while payment is pending, instead it should say ~"Please pay $25 via Venmo to @testvendor" which should be a href the same as the QR code
 * [x] GiveWP: Donations list page `/wp-admin/edit.php?post_type=give_forms&page=give-payment-history` should have a "mark paid" link underneath "pending" in the Status column for Venmo donations which opens a popup asking for the venmo username they paid with, transaction id, and datepicker with current date selected, timepicker with no preselected time, all fields optional.
+* [ ] GiveWP: "new view" needs the "mark paid" button added.
 * [x] GiveWP: After a donation is marked paid via the donations list page modal, there should be an admin notice displaying the details and linking to the single donation view (so admins know which item the just updated)
 * [x] GiveWP: the top of the settings page should say the last time there was a donation via Venmo complete / pending / abandoned
 
