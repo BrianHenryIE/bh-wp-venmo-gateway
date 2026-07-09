@@ -26,6 +26,19 @@
         "sort-packages": true
     },
     "repositories": {
+        "brianhenryie/strauss": {
+            "type": "package",
+            "package": {
+                "name": "brianhenryie/strauss",
+                "version": "0.28.0",
+                "dist": {
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.0/strauss.phar",
+                    "type": "phar"
+                },
+                "installation-source": "dist",
+                "bin": "bin/strauss"
+            }
+        },
         "wordpress/wordpress": {
             "type": "git",
             "url": "https://github.com/WordPress/wordpress-develop",
@@ -66,6 +79,7 @@
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
+        "brianhenryie/strauss": "0.28.0",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
         "johnpbloch/wordpress": "*",
@@ -144,8 +158,7 @@
     },
     "scripts": {
         "prefix-namespaces": [
-            "sh -c 'test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar'",
-            "@php bin/strauss.phar --info"
+            "php -d memory_limit=1G vendor/bin/strauss --info"
         ],
         "post-install-cmd": [
             "@prefix-namespaces"
@@ -154,7 +167,7 @@
             "@prefix-namespaces"
         ],
         "post-autoload-dump": [
-            "@php bin/strauss.phar include-autoloader",
+            "vendor/bin/strauss include-autoloader",
             "php ./bin/sync-composer-wpenv.php",
             "php ./bin/modify-autoload-patchwork.php"
         ],
