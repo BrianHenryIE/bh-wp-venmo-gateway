@@ -69,7 +69,7 @@ function instantiate_bh_wp_venmo_gateway(): API {
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
 
-	$order_email_reconcile = BH_WP_Order_Email_Reconcile::instance( $settings, $logger );
+	$order_email_reconcile = BH_WP_Order_Email_Reconcile::make( $settings, $logger );
 
 	$api = new API( $order_email_reconcile, $settings, $logger );
 
