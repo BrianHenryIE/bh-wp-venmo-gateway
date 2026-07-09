@@ -13,6 +13,8 @@ class Venmo_Gateway extends PaymentGateway {
 
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 	const STORE_VENMO_USERNAME_META_KEY    = '_destination-account-venmo-username';
+	const VENMO_TRANSACTION_ID_META_KEY    = '_venmo-transaction-id';
+	const VENMO_PAYMENT_DATE_META_KEY      = '_venmo-payment-date';
 
 	public static function id(): string {
 		return 'venmo';

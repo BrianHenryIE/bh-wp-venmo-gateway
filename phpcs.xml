@@ -125,6 +125,14 @@
             </property>
         </properties>
     </rule>
+    <!-- GiveWP registers these capabilities; they are not core WordPress caps. -->
+    <rule ref="WordPress.WP.Capabilities">
+        <properties>
+            <property name="custom_capabilities" type="array">
+                <element value="edit_give_payments"/>
+            </property>
+        </properties>
+    </rule>
     <rule ref="WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>

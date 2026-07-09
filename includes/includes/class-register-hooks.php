@@ -22,6 +22,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List as GiveWP_Donations_List;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
@@ -145,6 +146,14 @@ class Register_Hooks {
 		// and replace the "Success!" badge with a payment link while the donation is pending.
 		add_action( 'givewp_generate_confirmation_page_receipt_before_donation_total', array( $donation_receipt, 'add_v3_receipt_details' ) );
 		add_action( 'givewp_donation_confirmation_receipt_showing', array( $donation_receipt, 'replace_v3_success_badge' ) );
+
+		$donations_list = new GiveWP_Donations_List();
+		// Add a "Mark paid" link to pending Venmo donations in the list table's
+		// Status column, opening a modal that records the payment details.
+		add_filter( 'give_payments_table_column', array( $donations_list, 'add_mark_paid_link' ), 10, 3 );
+		add_action( 'admin_enqueue_scripts', array( $donations_list, 'enqueue_assets' ) );
+		add_action( 'admin_footer', array( $donations_list, 'render_modal' ) );
+		add_action( 'wp_ajax_' . GiveWP_Donations_List::AJAX_ACTION, array( $donations_list, 'ajax_mark_paid' ) );
 	}
 
 	/**
