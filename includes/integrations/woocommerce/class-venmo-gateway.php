@@ -25,6 +25,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 	public $title = 'Venmo';
 
+	// TODO: use all underscores. Requires an upgrade routine.
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 
 	// The meta key to save to individual orders.
