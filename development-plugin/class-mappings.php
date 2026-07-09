@@ -24,7 +24,6 @@ class Mappings {
 	/**
 	 * Partial fix for symlinks.
 	 *
-	 *
 	 * @hooked plugins_url
 	 */
 	public function plugins_url_fix( $url, $_path, $_plugin ) {

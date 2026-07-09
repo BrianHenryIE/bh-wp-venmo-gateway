@@ -8,6 +8,7 @@ parameters:
         - tests
 #        - development-plugin
     excludePaths:
+        - build
         - vendor-prefixed
     bootstrapFiles:
         - phpstanbootstrap.php
