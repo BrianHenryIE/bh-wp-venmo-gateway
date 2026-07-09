@@ -65,5 +65,18 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 				{ timeout: 30_000 }
 			)
 			.toBe( 'publish' );
+
+		// After the redirect, a success notice names the donation and its
+		// details, and links to the single donation view.
+		const notice = page.locator( '.notice-success', {
+			hasText: `Venmo donation #${ donationId } `,
+		} );
+		await expect( notice ).toBeVisible();
+		await expect( notice ).toContainText( 'marked paid' );
+		await expect( notice ).toContainText( '@brianhenryie' );
+		await expect( notice ).toContainText( '1234567890' );
+		await expect(
+			notice.getByRole( 'link', { name: 'View donation' } )
+		).toHaveAttribute( 'href', new RegExp( `view=view-payment-details.*id=${ donationId }` ) );
 	} );
 } );

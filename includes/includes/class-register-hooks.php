@@ -153,6 +153,7 @@ class Register_Hooks {
 		add_filter( 'give_payments_table_column', array( $donations_list, 'add_mark_paid_link' ), 10, 3 );
 		add_action( 'admin_enqueue_scripts', array( $donations_list, 'enqueue_assets' ) );
 		add_action( 'admin_footer', array( $donations_list, 'render_modal' ) );
+		add_action( 'admin_notices', array( $donations_list, 'admin_notice_marked_paid' ) );
 		add_action( 'wp_ajax_' . GiveWP_Donations_List::AJAX_ACTION, array( $donations_list, 'ajax_mark_paid' ) );
 	}
 

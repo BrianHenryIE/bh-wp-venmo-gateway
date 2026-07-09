@@ -198,6 +198,71 @@ class Donations_List {
 	}
 
 	/**
+	 * After a donation is marked paid (the modal redirects here with the id),
+	 * show a success notice with the recorded details and a link to the single
+	 * donation view so the admin knows which donation was updated.
+	 *
+	 * @hooked admin_notices
+	 * @see \do_action( 'admin_notices' )
+	 */
+	public function admin_notice_marked_paid(): void {
+		if ( ! $this->is_donations_list_page() || ! current_user_can( 'edit_give_payments' ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display of an id passed on redirect.
+		$donation_id = isset( $_GET['bh-venmo-marked-paid'] ) ? absint( wp_unslash( $_GET['bh-venmo-marked-paid'] ) ) : 0;
+
+		if ( 0 === $donation_id || Venmo_Gateway::id() !== give_get_payment_gateway( $donation_id ) ) {
+			return;
+		}
+
+		$view_url = add_query_arg(
+			'id',
+			$donation_id,
+			admin_url( 'edit.php?post_type=give_forms&page=give-payment-history&view=view-payment-details' )
+		);
+
+		$username       = (string) give_get_meta( $donation_id, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+		$transaction_id = (string) give_get_meta( $donation_id, Venmo_Gateway::VENMO_TRANSACTION_ID_META_KEY, true );
+		$payment_date   = (string) give_get_meta( $donation_id, Venmo_Gateway::VENMO_PAYMENT_DATE_META_KEY, true );
+
+		$details = array();
+		if ( '' !== $username ) {
+			/* translators: %s: Venmo @username */
+			$details[] = sprintf( __( 'paid by @%s', 'bh-wp-venmo-gateway' ), $username );
+		}
+		if ( '' !== $transaction_id ) {
+			/* translators: %s: Venmo transaction id */
+			$details[] = sprintf( __( 'transaction ID %s', 'bh-wp-venmo-gateway' ), $transaction_id );
+		}
+		if ( '' !== $payment_date ) {
+			/* translators: %s: payment date (and optional time) */
+			$details[] = sprintf( __( 'payment date %s', 'bh-wp-venmo-gateway' ), $payment_date );
+		}
+
+		$detail_text = empty( $details ) ? '' : ' — ' . implode( ', ', $details );
+
+		?>
+		<div class="notice notice-success is-dismissible">
+			<p>
+				<?php
+				printf(
+					/* translators: 1: donation id, 2: donation amount, 3: extra details (may be empty), 4: opening link tag, 5: closing link tag */
+					esc_html__( 'Venmo donation #%1$d (%2$s) marked paid%3$s. %4$sView donation%5$s', 'bh-wp-venmo-gateway' ),
+					absint( $donation_id ),
+					esc_html( give_donation_amount( $donation_id, true ) ),
+					esc_html( $detail_text ),
+					'<a href="' . esc_url( $view_url ) . '">',
+					'</a>'
+				);
+				?>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Compose the donation note recording how the payment was confirmed.
 	 *
 	 * @param string $venmo_username   The Venmo @username the donor paid with.

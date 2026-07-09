@@ -95,8 +95,14 @@
 			} )
 			.then( function ( result ) {
 				if ( result && result.success ) {
-					// Reload so the Status column re-renders as "Completed".
-					window.location.reload();
+					// Reload so the Status column re-renders as "Completed", and
+					// pass the id so the page shows a "marked paid" admin notice.
+					const url = new URL( window.location.href );
+					url.searchParams.set(
+						'bh-venmo-marked-paid',
+						result.data.donationId
+					);
+					window.location.assign( url.toString() );
 					return;
 				}
 				const message =
