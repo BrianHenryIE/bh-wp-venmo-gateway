@@ -13,6 +13,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Alley_Interactive\Autoloader\Autoloader;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce_Order;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Action_Scheduler;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Give_Donations;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Themes;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Ajax\WooCommerce_Customer;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\WooCommerce_Settings;
@@ -42,6 +43,7 @@ new Mappings()->register_hooks();
 
 // New REST endpoints.
 ( new Action_Scheduler() )->register_hooks();
+( new Give_Donations() )->register_hooks();
 ( new Themes() )->register_hooks();
 ( new WooCommerce_Customer() )->register_hooks();
 ( new WooCommerce_Settings() )->register_hooks();

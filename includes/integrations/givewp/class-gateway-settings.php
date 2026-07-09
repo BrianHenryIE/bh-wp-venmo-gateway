@@ -41,6 +41,7 @@ class Gateway_Settings {
 		$settings[] = array(
 			'id'   => 'give_title_venmo',
 			'type' => 'title',
+			'desc' => $this->get_last_donations_summary(),
 		);
 
 		$settings[] = array(
@@ -57,5 +58,49 @@ class Gateway_Settings {
 		);
 
 		return $settings;
+	}
+
+	/**
+	 * Build the "most recent Venmo donation" summary shown at the top of the
+	 * settings section: the date of the last completed, pending and abandoned
+	 * Venmo donation, or "Never" when there are none.
+	 */
+	private function get_last_donations_summary(): string {
+		$statuses = array(
+			'publish'   => __( 'Completed', 'bh-wp-venmo-gateway' ),
+			'pending'   => __( 'Pending', 'bh-wp-venmo-gateway' ),
+			'abandoned' => __( 'Abandoned', 'bh-wp-venmo-gateway' ),
+		);
+
+		$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+
+		$items = '';
+		foreach ( $statuses as $status => $label ) {
+			$payments = give_get_payments(
+				array(
+					'number'  => 1,
+					'gateway' => Venmo_Gateway::id(),
+					'status'  => $status,
+					'orderby' => 'date',
+					'order'   => 'DESC',
+				)
+			);
+
+			if ( empty( $payments ) ) {
+				$when = __( 'Never', 'bh-wp-venmo-gateway' );
+			} else {
+				// give_get_payments() returns WP_Post objects; the date is post_date.
+				$post_date = get_post_field( 'post_date', $payments[0]->ID );
+				$when      = date_i18n( $date_format, (int) strtotime( $post_date ) );
+			}
+
+			$items .= sprintf( '<li>%1$s: %2$s</li>', esc_html( $label ), esc_html( $when ) );
+		}
+
+		return sprintf(
+			'<div class="bh-venmo-last-donations"><strong>%1$s</strong><ul>%2$s</ul></div>',
+			esc_html__( 'Most recent Venmo donation', 'bh-wp-venmo-gateway' ),
+			$items
+		);
 	}
 }
