@@ -163,7 +163,7 @@ class Donation_Receipt {
 
 		$receipt->donationDetails->addDetail(
 			new ReceiptDetail(
-				__( 'Payment Pending', 'bh-wp-venmo-gateway' ),
+				__( 'Pending', 'bh-wp-venmo-gateway' ),
 				$link
 			)
 		);
