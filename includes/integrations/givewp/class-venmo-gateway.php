@@ -5,6 +5,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 use Give\Donations\Models\Donation;
 use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\PaymentGateway;
@@ -109,9 +110,9 @@ class Venmo_Gateway extends PaymentGateway {
 	public function createPayment( Donation $donation, $gatewayData ): PaymentPending {
 		// v3 forms pass data via beforeCreatePayment(); v2 via $_POST.
 		if ( isset( $gatewayData['venmoUsername'] ) ) {
-			$venmo_username = sanitize_text_field( $gatewayData['venmoUsername'] );
+			$venmo_username = Venmo_Username::sanitize( sanitize_text_field( $gatewayData['venmoUsername'] ) );
 		} elseif ( isset( $_POST['venmo_username'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$venmo_username = sanitize_text_field( wp_unslash( $_POST['venmo_username'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$venmo_username = Venmo_Username::sanitize( sanitize_text_field( wp_unslash( $_POST['venmo_username'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		} else {
 			$venmo_username = '';
 		}
@@ -120,7 +121,7 @@ class Venmo_Gateway extends PaymentGateway {
 			give_update_meta( $donation->id, self::CUSTOMER_VENMO_USERNAME_META_KEY, $venmo_username );
 		}
 
-		$store_username = give_get_option( 'venmo_store_username', '' );
+		$store_username = Venmo_Username::sanitize( give_get_option( 'venmo_store_username', '' ) );
 		if ( ! empty( $store_username ) ) {
 			give_update_meta( $donation->id, self::STORE_VENMO_USERNAME_META_KEY, $store_username );
 		}

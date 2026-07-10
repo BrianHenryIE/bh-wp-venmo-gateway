@@ -18,7 +18,8 @@
 		},
 
 		beforeCreatePayment: function () {
-			var username = currentVenmoUsername.trim();
+			// Strip any leading "@"; the username is stored and used as the bare handle.
+			var username = currentVenmoUsername.trim().replace( /^@+/, '' );
 			if ( ! username ) {
 				throw new Error( __( 'Please enter your Venmo username.', 'bh-wp-venmo-gateway' ) );
 			}

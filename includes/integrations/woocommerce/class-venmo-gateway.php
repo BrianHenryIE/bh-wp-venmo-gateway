@@ -9,6 +9,7 @@ namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 use WC_Order;
 use WC_Payment_Gateway;
 
@@ -186,7 +187,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 
-		$customer_venmo_username = esc_attr( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] );
+		$customer_venmo_username = Venmo_Username::sanitize( esc_attr( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) );
 
 		// Save Venmo username to order meta.
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
@@ -200,7 +201,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			$this->set_venmo_username_cookie( $customer_venmo_username );
 		}
 
-		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+		$store_venmo_username = Venmo_Username::sanitize( $this->get_option( 'store_venmo_username' ) );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
 		$order->save();
@@ -239,7 +240,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$customer_venmo_username = '';
 		foreach ( $payment_data as $item ) {
 			if ( isset( $item['key'] ) && self::CUSTOMER_VENMO_USERNAME_META_KEY === $item['key'] ) {
-				$customer_venmo_username = sanitize_text_field( $item['value'] );
+				$customer_venmo_username = Venmo_Username::sanitize( sanitize_text_field( $item['value'] ) );
 				break;
 			}
 		}
@@ -260,10 +261,25 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			$this->set_venmo_username_cookie( $customer_venmo_username );
 		}
 
-		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+		$store_venmo_username = Venmo_Username::sanitize( $this->get_option( 'store_venmo_username' ) );
 		$order->add_meta_data( self::STORE_VENMO_USERNAME_META_KEY, $store_venmo_username, true );
 
 		$order->save();
+	}
+
+	/**
+	 * Strip any leading "@" from the store Venmo username when the settings are saved.
+	 *
+	 * WooCommerce calls `validate_{$key}_field` for the `store_venmo_username` field
+	 * during `process_admin_options()`, so the value is stored as the bare handle.
+	 *
+	 * @see WC_Settings_API::get_field_value()
+	 *
+	 * @param string $key   The field key.
+	 * @param string $value The submitted value.
+	 */
+	public function validate_store_venmo_username_field( string $key, string $value ): string {
+		return Venmo_Username::sanitize( $this->validate_text_field( $key, $value ) );
 	}
 
 	/**
@@ -393,9 +409,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	public function get_method_title() {
 		$method_title = $this->method_title;
 
-		$store_venmo_username = $this->get_option( 'store_venmo_username' );
+		$store_venmo_username = Venmo_Username::for_display( $this->get_option( 'store_venmo_username' ) );
 
-		if ( empty( $store_venmo_username ) ) {
+		if ( '' === $store_venmo_username ) {
 			return $method_title;
 		}
 

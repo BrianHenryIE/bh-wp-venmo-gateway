@@ -152,4 +152,27 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		await expect( orderNotes ).toContainText( 'from @' + CUSTOMER_VENMO_USERNAME );
 		await expect( orderNotes ).toContainText( 'to @' + STORE_VENMO_USERNAME );
 	} );
+
+	test( 'a leading "@" in the username is stripped and displayed once', async ( {
+		page,
+	} ) => {
+
+		// Go to checkout and enter the username WITH a leading "@".
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
+		await page.click( 'label[for="payment_method_venmo"]' );
+		await page.fill( '#_customer-venmo-username', '@' + CUSTOMER_VENMO_USERNAME );
+		await page.click( '#place_order' );
+		await page.waitForURL( /order-received/, { timeout: 30000 } );
+
+		const orderId = page.url().match( /order-received\/(\d+)/ )![ 1 ];
+
+		// The stored username is the bare handle, so the order note shows a single
+		// "@" (not "@@") — proving the leading "@" was stripped on save.
+		await loginAsAdmin( page );
+		await page.goto( `/wp-admin/post.php?post=${ orderId }&action=edit` );
+
+		const orderNotes = page.locator( '#woocommerce-order-notes' );
+		await expect( orderNotes ).toContainText( 'from @' + CUSTOMER_VENMO_USERNAME );
+		await expect( orderNotes ).not.toContainText( '@@' + CUSTOMER_VENMO_USERNAME );
+	} );
 } );

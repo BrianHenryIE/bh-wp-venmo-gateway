@@ -136,6 +136,8 @@ class Register_Hooks {
 		$gateway_settings = new GiveWP_Gateway_Settings();
 		add_filter( 'give_get_sections_gateways', array( $gateway_settings, 'register_sections' ) );
 		add_filter( 'give_get_settings_gateways', array( $gateway_settings, 'register_settings' ) );
+		// Store the destination username as the bare handle (no leading "@").
+		add_filter( 'give_admin_settings_sanitize_option_venmo_store_username', array( $gateway_settings, 'sanitize_store_username' ) );
 
 		$donation_receipt = new GiveWP_Donation_Receipt();
 		// Legacy (v2) confirmation page: replace the generic "currently processing"

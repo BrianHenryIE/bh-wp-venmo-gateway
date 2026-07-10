@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+
 /**
  * Adds the "Mark paid" modal workflow to the legacy donations list table.
  */
@@ -167,6 +169,13 @@ class Donations_List {
 			);
 		}
 
+		if ( 'pending' !== give_get_payment_status( $donation_id ) ) {
+			wp_send_json_error(
+				array( 'message' => __( 'Only pending donations can be marked as paid.', 'bh-wp-venmo-gateway' ) ),
+				400
+			);
+		}
+
 		$venmo_username = isset( $_POST['venmo_username'] ) ? sanitize_text_field( wp_unslash( $_POST['venmo_username'] ) ) : '';
 		$transaction_id = isset( $_POST['transaction_id'] ) ? sanitize_text_field( wp_unslash( $_POST['transaction_id'] ) ) : '';
 		$payment_date   = isset( $_POST['payment_date'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_date'] ) ) : '';
@@ -176,7 +185,7 @@ class Donations_List {
 		$payment_datetime = trim( $payment_date . ' ' . $payment_time );
 
 		if ( '' !== $venmo_username ) {
-			give_update_meta( $donation_id, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, ltrim( $venmo_username, '@' ) );
+			give_update_meta( $donation_id, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, Venmo_Username::sanitize( $venmo_username ) );
 		}
 		if ( '' !== $transaction_id ) {
 			give_update_meta( $donation_id, Venmo_Gateway::VENMO_TRANSACTION_ID_META_KEY, $transaction_id );
@@ -223,7 +232,7 @@ class Donations_List {
 			admin_url( 'edit.php?post_type=give_forms&page=give-payment-history&view=view-payment-details' )
 		);
 
-		$username       = (string) give_get_meta( $donation_id, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+		$username       = Venmo_Username::sanitize( (string) give_get_meta( $donation_id, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true ) );
 		$transaction_id = (string) give_get_meta( $donation_id, Venmo_Gateway::VENMO_TRANSACTION_ID_META_KEY, true );
 		$payment_date   = (string) give_get_meta( $donation_id, Venmo_Gateway::VENMO_PAYMENT_DATE_META_KEY, true );
 
@@ -274,7 +283,7 @@ class Donations_List {
 
 		if ( '' !== $venmo_username ) {
 			/* translators: %s: Venmo @username */
-			$note .= ' ' . sprintf( __( 'Paid by @%s.', 'bh-wp-venmo-gateway' ), ltrim( $venmo_username, '@' ) );
+			$note .= ' ' . sprintf( __( 'Paid by @%s.', 'bh-wp-venmo-gateway' ), Venmo_Username::sanitize( $venmo_username ) );
 		}
 		if ( '' !== $transaction_id ) {
 			/* translators: %s: Venmo transaction id */

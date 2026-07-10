@@ -16,6 +16,7 @@ namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
 use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 use Give\Donations\Models\Donation;
 use Give\Framework\Receipts\DonationReceipt;
 use Give\Framework\Receipts\Properties\ReceiptDetail;
@@ -263,7 +264,7 @@ class Donation_Receipt {
 	private function get_browser_url( string $store_username, string $amount, int $donation_id ): string {
 		return sprintf(
 			'https://venmo.com/%s?txn=pay&amount=%s&note=%s',
-			rawurlencode( $store_username ),
+			rawurlencode( Venmo_Username::sanitize( $store_username ) ),
 			rawurlencode( $amount ),
 			rawurlencode( 'donation ' . $donation_id )
 		);
@@ -279,7 +280,7 @@ class Donation_Receipt {
 	private function get_qr_deep_link( string $store_username, string $amount, int $donation_id ): string {
 		return sprintf(
 			'venmo://paycharge?txn=pay&recipients=%s&note=%s&amount=%s',
-			$store_username,
+			Venmo_Username::sanitize( $store_username ),
 			rawurlencode( 'donation ' . $donation_id ),
 			rawurlencode( $amount )
 		);

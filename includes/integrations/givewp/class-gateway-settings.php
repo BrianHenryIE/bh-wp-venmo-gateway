@@ -7,6 +7,8 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+
 /**
  * Registers the Venmo section and its fields on GiveWP's gateway settings tab.
  */
@@ -58,6 +60,19 @@ class Gateway_Settings {
 		);
 
 		return $settings;
+	}
+
+	/**
+	 * Strip any leading "@" from the store username when the setting is saved.
+	 *
+	 * @hooked give_admin_settings_sanitize_option_venmo_store_username
+	 * @see \Give_Admin_Settings::save()
+	 *
+	 * @param mixed $value The sanitized value about to be saved.
+	 * @return string The bare Venmo username.
+	 */
+	public function sanitize_store_username( $value ): string {
+		return Venmo_Username::sanitize( (string) $value );
 	}
 
 	/**

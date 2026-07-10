@@ -12,7 +12,7 @@
 * [x] GiveWP: After a donation is marked paid via the donations list page modal, there should be an admin notice displaying the details and linking to the single donation view (so admins know which item the just updated)
 * [x] GiveWP: the top of the settings page should say the last time there was a donation via Venmo complete / pending / abandoned
 
-* [ ] When a Venmo username is entered, on the settings page, donation page, WooCommerce checkout, sanitize it so it always has a leading "@" (strip leading @ and add leading @)
+* [x] When a Venmo username is entered, on the settings page, donation page, WooCommerce checkout, sanitize it so it always has a leading "@" (stored as the bare handle with the leading "@" stripped; displayed with a leading "@" added)
 
 * [ ] GiveWP: "Venmo" should be displayed as "Venmo - @payment_address" around the admin UI.
 

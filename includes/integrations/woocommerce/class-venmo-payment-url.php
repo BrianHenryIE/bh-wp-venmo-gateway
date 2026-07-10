@@ -7,6 +7,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
+use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 use WC_Order;
 
 /**
@@ -27,7 +28,7 @@ class Venmo_Payment_Url {
 	public function __construct(
 		protected WC_Order $order
 	) {
-		$this->store_venmo_username = $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY );
+		$this->store_venmo_username = Venmo_Username::sanitize( $order->get_meta( Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY ) );
 	}
 
 	/**
