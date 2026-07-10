@@ -24,7 +24,7 @@ class Activator_Unit_Test extends Unit_Testcase {
 			'update_option',
 			array(
 				'args'  => array(
-					'bh-wp-venmo-gateway-last-activated-time',
+					'bh_wp_venmo_gateway_activated_time',
 					\WP_Mock\Functions::type( 'int' ),
 				),
 				'times' => 1,
