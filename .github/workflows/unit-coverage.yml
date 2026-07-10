@@ -99,7 +99,7 @@ jobs:
 
       - name: Install php-codecoverage-markdown for markdown report generation
         if: ${{ matrix.php == env.COVERAGE_PHP_VERSION }}
-        run: composer require brianhenryie/php-codecoverage-markdown --dev --with-all-dependencies
+        run: composer require brianhenryie/php-codecoverage-markdown --dev --with-all-dependencies --no-scripts
 
       - name: Install JS dependencies
         run: npm install
