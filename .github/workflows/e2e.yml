@@ -26,8 +26,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: 'npm'
+
+      - name: Install PHP dependencies
+        if: ${{ github.event_name == 'pull_request' }}
+        run: composer update --verbose
+
+      - name: Install PHP dependencies
+        if: ${{ github.event_name != 'pull_request' }}
+        run: composer install --verbose
 
       - name: Install dependencies
         run: npm ci
@@ -35,8 +43,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Build assets
+        run: npm run build
+
       - name: Start wp-env
-        run: npm run wp-env
+        run: npx wp-env start
 
       - name: Wait for WordPress to be ready
         run: |
@@ -53,14 +64,12 @@ jobs:
       - name: Activate plugins
         run: |
           # Activate the plugin on development environment (port 8888)
-          npx wp-env run cli -- wp plugin activate bh-wp-venmo-gateway
+          npx wp-env run cli -- wp plugin activate woocommerce bh-wp-venmo-gateway
           # List plugins to verify activation
           npx wp-env run cli -- wp plugin list
           # Set up permalinks for REST API
           npx wp-env run cli -- wp rewrite structure '/%year%/%monthnum%/%postname%/' --hard
-          # Also activate on tests environment (port 8889) for completeness
-          npx wp-env run tests-cli -- wp plugin activate bh-wp-venmo-gateway
-          npx wp-env run tests-cli -- wp rewrite structure '/%year%/%monthnum%/%postname%/' --hard
+          npx wp-env run cli -- wp rewrite flush
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=github
@@ -72,7 +81,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: playwright-report/
+          path: tests/_output/playwright-report/
           retention-days: 30
 
       - name: Upload test results
@@ -80,5 +89,5 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: test-results
-          path: test-results/
+          path: tests/_output/playwright-results/
           retention-days: 30
