@@ -15,6 +15,14 @@ if ( ! defined( 'WC_ABSPATH' ) ) {
 	define( 'WC_ABSPATH', codecept_root_dir( 'wp-content/plugins/woocommerce/' ) );
 }
 
+// GiveWP's Composer autoloader, so the GiveWP integration classes (which extend
+// Give\Framework\PaymentGateways\PaymentGateway and type-hint Give models) can be
+// loaded in unit tests. It only registers the classloader and defines functions.
+$give_autoload = codecept_root_dir( 'wp-content/plugins/give/vendor/autoload.php' );
+if ( file_exists( $give_autoload ) ) {
+	require_once $give_autoload;
+}
+
 
 $class_map = array(
 	'WC_Order'            => 'wp-content/plugins/woocommerce/includes/class-wc-order.php',
