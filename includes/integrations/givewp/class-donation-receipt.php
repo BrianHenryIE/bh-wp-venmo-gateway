@@ -51,9 +51,9 @@ class Donation_Receipt {
 			return $notice;
 		}
 
-		$store_username = give_get_meta( $donation_id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+		$store_username = $this->get_store_username( $donation_id );
 
-		if ( empty( $store_username ) ) {
+		if ( '' === $store_username ) {
 			return $notice;
 		}
 
@@ -118,13 +118,9 @@ class Donation_Receipt {
 			return;
 		}
 
-		$store_username = give_get_meta( $donation->id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+		$store_username = $this->get_store_username( $donation->id );
 
-		if ( empty( $store_username ) ) {
-			$store_username = give_get_option( 'venmo_store_username', '' );
-		}
-
-		if ( empty( $store_username ) ) {
+		if ( '' === $store_username ) {
 			return;
 		}
 
@@ -193,13 +189,9 @@ class Donation_Receipt {
 			return;
 		}
 
-		$store_username = give_get_meta( $donation->id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+		$store_username = $this->get_store_username( $donation->id );
 
-		if ( empty( $store_username ) ) {
-			$store_username = give_get_option( 'venmo_store_username', '' );
-		}
-
-		if ( empty( $store_username ) ) {
+		if ( '' === $store_username ) {
 			return;
 		}
 
@@ -252,6 +244,27 @@ class Donation_Receipt {
 				setTimeout( function () { observer.disconnect(); }, 15000 );
 			} )();
 			JS;
+	}
+
+	/**
+	 * The destination Venmo @username for a donation: the value recorded against the
+	 * donation, falling back to the site-wide `venmo_store_username` setting. Empty
+	 * when neither is set.
+	 *
+	 * All four receipt methods resolve the store username the same way through this
+	 * helper, so a donation created before the setting was configured behaves
+	 * identically across the legacy and v3 receipts.
+	 *
+	 * @param int $donation_id The donation ID.
+	 */
+	private function get_store_username( int $donation_id ): string {
+		$store_username = (string) give_get_meta( $donation_id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+
+		if ( '' === $store_username ) {
+			$store_username = (string) give_get_option( 'venmo_store_username', '' );
+		}
+
+		return $store_username;
 	}
 
 	/**
@@ -314,9 +327,9 @@ class Donation_Receipt {
 			return;
 		}
 
-		$store_username = give_get_meta( $donation_id, Venmo_Gateway::STORE_VENMO_USERNAME_META_KEY, true );
+		$store_username = $this->get_store_username( $donation_id );
 
-		if ( empty( $store_username ) ) {
+		if ( '' === $store_username ) {
 			return;
 		}
 
