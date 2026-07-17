@@ -5,6 +5,8 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
+declare(strict_types=1);
+
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use Give\Framework\PaymentGateways\PaymentGatewayRegister;

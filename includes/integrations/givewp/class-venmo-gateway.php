@@ -3,6 +3,8 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
+declare(strict_types=1);
+
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
