@@ -73,7 +73,6 @@ class Gateway_Settings {
 	 * @see \Give_Admin_Settings::save()
 	 *
 	 * @param mixed $value The sanitized value about to be saved.
-	 * @return string The bare Venmo username.
 	 */
 	public function sanitize_store_username( $value ): string {
 		return Venmo_Username::sanitize( (string) $value );
