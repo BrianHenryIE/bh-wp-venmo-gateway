@@ -20,6 +20,7 @@ class Gateway_Settings {
 	 * Add the "Venmo" section to GiveWP gateway settings tabs.
 	 *
 	 * @hooked give_get_sections_gateways
+	 * @see \Give_Settings_Page::get_sections()
 	 *
 	 * @param string[] $sections The existing gateway settings sections, keyed by section id.
 	 * @return string[]
@@ -33,6 +34,7 @@ class Gateway_Settings {
 	 * Add settings fields to the Venmo section.
 	 *
 	 * @hooked give_get_settings_gateways
+	 * @see \Give_Settings_Page::get_settings()
 	 *
 	 * @param array<int, array<string, mixed>> $settings The flat list of field definitions for the current section.
 	 * @return array<int, array<string, mixed>>
