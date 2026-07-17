@@ -21,6 +21,8 @@ use Override;
  */
 class Venmo_Gateway extends PaymentGateway {
 
+	const GATEWAY_ID = 'venmo';
+
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 	const STORE_VENMO_USERNAME_META_KEY    = '_destination-account-venmo-username';
 	const VENMO_TRANSACTION_ID_META_KEY    = '_venmo-transaction-id';
@@ -31,7 +33,7 @@ class Venmo_Gateway extends PaymentGateway {
 	 */
 	#[Override]
 	public static function id(): string {
-		return 'venmo';
+		return self::GATEWAY_ID;
 	}
 
 	/**
@@ -136,7 +138,7 @@ class Venmo_Gateway extends PaymentGateway {
 					printf(
 						/* translators: %s: Venmo username with @ prefix */
 						esc_html__( 'After submitting, please send payment to %s on Venmo.', 'bh-wp-venmo-gateway' ),
-						'<strong>@' . esc_html( $store_username ) . '</strong>'
+						'<strong>' . esc_html( Venmo_Username::for_display( $store_username ) ) . '</strong>'
 					);
 					?>
 				</p>
