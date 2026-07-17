@@ -196,7 +196,12 @@ class Donations_List {
 
 		give_insert_payment_note( $donation_id, $this->build_note( $venmo_username, $transaction_id, $payment_datetime ) );
 
-		give_update_payment_status( $donation_id, 'publish' );
+		if ( ! give_update_payment_status( $donation_id, 'publish' ) ) {
+			wp_send_json_error(
+				array( 'message' => __( 'The donation could not be marked as paid. Please try again.', 'bh-wp-venmo-gateway' ) ),
+				500
+			);
+		}
 
 		wp_send_json_success(
 			array(
