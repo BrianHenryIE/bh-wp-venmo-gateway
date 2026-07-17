@@ -3,13 +3,10 @@
     "WP_DEBUG_LOG": "/var/www/html/wp-content/debug.log",
     "WP_DEBUG_DISPLAY": false
   },
-  "mysqlPort": 33066,
+  "core": "WordPress/WordPress#7.0.1",
   "lifecycleScripts": {
     "afterStart": "bash 'tests/_wp-env/initialize-external.sh'"
   },
-  "plugins": [
-    "."
-  ],
   "mappings": {
     "../setup": "./tests/_wp-env",
     "wp-content/plugins/checkout-fees-for-woocommerce": "./wp-content/plugins/checkout-fees-for-woocommerce",
@@ -17,11 +14,12 @@
     "wp-content/plugins/give": "./wp-content/plugins/give",
     "wp-content/plugins/query-monitor": "./wp-content/plugins/query-monitor",
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
-    "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger",
-    "wp-content/uploads/bh-wp-mailboxes": "../bh-wp-mailboxes",
-    "wp-content/uploads/bh-wp-order-email-reconcile": "../bh-wp-order-email-reconcile"
+    "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger"
   },
+  "mysqlPort": 33066,
   "phpVersion": "8.4",
-  "core": "WordPress/WordPress#7.0.2",
+  "plugins": [
+    "."
+  ],
   "testsEnvironment": false
 }
