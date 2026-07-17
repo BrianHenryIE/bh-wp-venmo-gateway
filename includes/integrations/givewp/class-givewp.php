@@ -26,6 +26,14 @@ class GiveWP {
 	 * @param PaymentGatewayRegister $register GiveWP's gateway registrar.
 	 */
 	public function register_gateway( PaymentGatewayRegister $register ): void {
+		// A Venmo donation has nowhere to be sent without a destination @username:
+		// the donation would be created `pending` and the donor left on a confirmation
+		// page with no QR code or payment link. Only offer the gateway once the store
+		// username is configured (Donations > Settings > Payment Gateways > Venmo).
+		if ( '' === (string) give_get_option( 'venmo_store_username', '' ) ) {
+			return;
+		}
+
 		$register->registerGateway( Venmo_Gateway::class );
 	}
 }
