@@ -104,12 +104,16 @@ class Gateway_Settings {
 				)
 			);
 
-			if ( empty( $payments ) ) {
-				$when = __( 'Never', 'bh-wp-venmo-gateway' );
-			} else {
+			// Default to "Never"; only overwrite when there is a payment with a parseable date
+			// (an empty/corrupt post_date would otherwise render as the "1 January 1970" epoch).
+			$when = __( 'Never', 'bh-wp-venmo-gateway' );
+			if ( ! empty( $payments ) ) {
 				// give_get_payments() returns WP_Post objects; the date is post_date.
 				$post_date = get_post_field( 'post_date', $payments[0]->ID );
-				$when      = date_i18n( $date_format, (int) strtotime( is_string( $post_date ) ? $post_date : '' ) );
+				$timestamp = is_string( $post_date ) ? strtotime( $post_date ) : false;
+				if ( false !== $timestamp ) {
+					$when = date_i18n( $date_format, $timestamp );
+				}
 			}
 
 			$items .= sprintf( '<li>%1$s: %2$s</li>', esc_html( $label ), esc_html( $when ) );
