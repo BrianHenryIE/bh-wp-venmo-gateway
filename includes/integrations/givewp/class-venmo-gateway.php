@@ -77,7 +77,6 @@ class Venmo_Gateway extends PaymentGateway {
 	 * Enqueue JS gateway for GiveWP v3 forms.
 	 *
 	 * @see PaymentGateway::enqueueScript()
-	 * @hooked enqueueScript
 	 *
 	 * @param int $formId The form ID.
 	 */
