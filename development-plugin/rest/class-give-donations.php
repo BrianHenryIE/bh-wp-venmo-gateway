@@ -67,8 +67,14 @@ class Give_Donations {
 				'post_status'   => $status,
 				'post_date'     => $date,
 				'post_date_gmt' => get_gmt_from_date( $date ),
-			)
+			),
+			true
 		);
+
+		if ( is_wp_error( $donation_id ) || 0 === $donation_id ) {
+			$message = is_wp_error( $donation_id ) ? $donation_id->get_error_message() : 'Failed to insert donation.';
+			return new WP_REST_Response( array( 'error' => $message ), 500 );
+		}
 
 		give_update_meta( $donation_id, '_give_payment_gateway', $gateway );
 
