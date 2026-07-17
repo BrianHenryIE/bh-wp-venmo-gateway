@@ -91,7 +91,7 @@ class Donation_Receipt {
 
 	/**
 	 * Replace the v3 (Sequoia) confirmation receipt heading with the Venmo payment
-	 * QR code, and add a "Payment Pending" detail linking to the Venmo payment.
+	 * QR code, and add a "Pending" detail linking to the Venmo payment.
 	 *
 	 * While the donation is pending, the celebratory "Hey {name}, thanks for your
 	 * donation!" heading is misleading, so it is replaced with the QR code the donor
@@ -219,7 +219,7 @@ class Donation_Receipt {
 	/**
 	 * The client-side script that swaps the receipt's "Success!" badge for the
 	 * Venmo payment link. Re-applies on DOM changes so it survives the React app
-	 * mounting (and any re-render) within the first few seconds.
+	 * mounting (and any re-render) within ~15 seconds (see the observer timeout below).
 	 */
 	private function get_badge_replacement_js(): string {
 		return <<<'JS'
