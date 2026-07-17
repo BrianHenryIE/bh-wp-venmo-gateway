@@ -293,7 +293,7 @@ class Donation_Receipt {
 	private function get_qr_deep_link( string $store_username, string $amount, int $donation_id ): string {
 		return sprintf(
 			'venmo://paycharge?txn=pay&recipients=%s&note=%s&amount=%s',
-			Venmo_Username::sanitize( $store_username ),
+			rawurlencode( Venmo_Username::sanitize( $store_username ) ),
 			rawurlencode( 'donation ' . $donation_id ),
 			rawurlencode( $amount )
 		);
