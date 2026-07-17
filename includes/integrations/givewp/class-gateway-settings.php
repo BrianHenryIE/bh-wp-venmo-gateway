@@ -106,7 +106,7 @@ class Gateway_Settings {
 			} else {
 				// give_get_payments() returns WP_Post objects; the date is post_date.
 				$post_date = get_post_field( 'post_date', $payments[0]->ID );
-				$when      = date_i18n( $date_format, (int) strtotime( $post_date ) );
+				$when      = date_i18n( $date_format, (int) strtotime( is_string( $post_date ) ? $post_date : '' ) );
 			}
 
 			$items .= sprintf( '<li>%1$s: %2$s</li>', esc_html( $label ), esc_html( $when ) );

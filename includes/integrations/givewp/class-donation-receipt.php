@@ -294,8 +294,8 @@ class Donation_Receipt {
 	 * @hooked give_payment_receipt_before_table
 	 * @see /wp-content/plugins/give/templates/shortcode-receipt.php
 	 *
-	 * @param object $donation          The donation post object (has `->ID`).
-	 * @param array  $give_receipt_args The receipt shortcode arguments.
+	 * @param object               $donation          The donation post object (has `->ID`).
+	 * @param array<string, mixed> $give_receipt_args The receipt shortcode arguments.
 	 */
 	public function print_qr_code( object $donation, array $give_receipt_args ): void {
 

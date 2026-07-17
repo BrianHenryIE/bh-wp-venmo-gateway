@@ -13,6 +13,10 @@ parameters:
     bootstrapFiles:
         - phpstanbootstrap.php
         - autoload.php
+        # GiveWP ships a Composer autoloader (PSR-4 Give\ => src). scanDirectories alone
+        # cannot reflect PaymentGateway's abstract-class-with-traits hierarchy, so load it
+        # here to make the Give\ classes fully reflectable.
+        - wp-content/plugins/give/vendor/autoload.php
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
         - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
 #        - vendor/php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php

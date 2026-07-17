@@ -62,7 +62,12 @@
         <exclude-pattern>*</exclude-pattern>
     </rule>
 
-    <!-- Enforce fewer rules on tests -->
+	<!-- Give WP overrides -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+		<exclude-pattern>includes/integrations/givewp/class-venmo-gateway.php</exclude-pattern>
+	</rule>
+
+	<!-- Enforce fewer rules on tests -->
     <rule ref="Generic.Commenting.DocComment.MissingShort">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
@@ -170,7 +175,7 @@
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
-    <!-- Run wild in the development pluing  -->
+    <!-- Run wild in the development plugin  -->
     <rule ref="WordPress.Security.NonceVerification.Recommended">
         <exclude-pattern>*/development-plugin/*</exclude-pattern>
     </rule>
