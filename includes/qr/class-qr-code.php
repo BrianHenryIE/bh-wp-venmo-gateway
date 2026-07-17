@@ -25,6 +25,10 @@ class QR_Code {
 	 * Render the given data as a QR code, returned as a base64-encoded data URI
 	 * (e.g. `data:image/svg+xml;base64,…`) suitable for an `<img>` `src`.
 	 *
+	 * Returns an empty string when rendering fails (for example `GDIMAGE_PNG` on a
+	 * host without the `gd` extension), so callers can degrade to a plain payment
+	 * link rather than letting the exception fatal the page.
+	 *
 	 * @param string $data        The string to encode, e.g. a `venmo://` payment URL.
 	 * @param string $output_type One of the {@see QROutputInterface} output-type constants.
 	 *                            Defaults to SVG markup; pass `QROutputInterface::GDIMAGE_PNG`
@@ -39,6 +43,10 @@ class QR_Code {
 			)
 		);
 
-		return ( new QRCode( $options ) )->render( $data );
+		try {
+			return ( new QRCode( $options ) )->render( $data );
+		} catch ( \Throwable $e ) {
+			return '';
+		}
 	}
 }

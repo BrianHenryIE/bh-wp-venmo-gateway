@@ -136,14 +136,31 @@ class Donation_Receipt {
 			QROutputInterface::GDIMAGE_PNG
 		);
 
-		$qr_html = sprintf(
-			'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
-			esc_url( $browser_url ),
-			esc_attr( $qr_code_data_uri ),
-			esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
-		);
+		if ( '' === $qr_code_data_uri ) {
+			// QR rendering failed (e.g. the host has no `gd` extension). Degrade to a
+			// text payment link so the donor still has a way to pay.
+			$heading = sprintf(
+				'<a target="_blank" href="%1$s">%2$s</a>',
+				esc_url( $browser_url ),
+				esc_html(
+					sprintf(
+						/* translators: 1: donation amount, 2: store Venmo username */
+						__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+						$amount,
+						$store_username
+					)
+				)
+			);
+		} else {
+			$heading = sprintf(
+				'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
+				esc_url( $browser_url ),
+				esc_attr( $qr_code_data_uri ),
+				esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
+			);
+		}
 
-		$receipt->settings->addSetting( 'heading', $qr_html );
+		$receipt->settings->addSetting( 'heading', $heading );
 
 		$link = sprintf(
 			'<a target="_blank" href="%s">%s</a>',
@@ -338,16 +355,26 @@ class Donation_Receipt {
 		$venmo_browser_url = $this->get_browser_url( $store_username, $amount, $donation_id );
 		$qr_code_data_uri  = ( new QR_Code() )->get_data_uri( $this->get_qr_deep_link( $store_username, $amount, $donation_id ) );
 
+		$link_text = sprintf(
+			/* translators: 1: donation amount, 2: store Venmo username */
+			__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+			$amount,
+			$store_username
+		);
 		?>
 		<div class="bh-wp-venmo-gateway-donation-instructions" style="text-align: center;">
 
 			<p>
 				<a target="_blank" href="<?php echo esc_url( $venmo_browser_url ); ?>">
-					<img
-						style="display:block; margin: 0 auto; max-width: 90vw; max-height: 500px;"
-						src="<?php echo esc_attr( $qr_code_data_uri ); ?>"
-						alt="<?php esc_attr_e( 'Payment QR code', 'bh-wp-venmo-gateway' ); ?>"
-					/>
+					<?php if ( '' !== $qr_code_data_uri ) : ?>
+						<img
+							style="display:block; margin: 0 auto; max-width: 90vw; max-height: 500px;"
+							src="<?php echo esc_attr( $qr_code_data_uri ); ?>"
+							alt="<?php esc_attr_e( 'Payment QR code', 'bh-wp-venmo-gateway' ); ?>"
+						/>
+					<?php else : ?>
+						<?php echo esc_html( $link_text ); ?>
+					<?php endif; ?>
 				</a>
 			</p>
 
