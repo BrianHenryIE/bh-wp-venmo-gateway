@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.1.0 – July 2026
+
+* Add Give WP support
+
 ### 4.0.0 – April 2026
 
 * Rename to BH WP Venmo Gateway

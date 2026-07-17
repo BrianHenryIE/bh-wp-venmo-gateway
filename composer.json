@@ -30,9 +30,9 @@
             "type": "package",
             "package": {
                 "name": "brianhenryie/strauss",
-                "version": "0.28.0",
+                "version": "0.28.1",
                 "dist": {
-                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.0/strauss.phar",
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.1/strauss.phar",
                     "type": "phar"
                 },
                 "installation-source": "dist",
@@ -60,16 +60,17 @@
         "ext-json": "*",
         "alleyinteractive/wordpress-autoloader": "*",
         "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
-        "brianhenryie/bh-wp-logger": "^0.3.3",
+        "brianhenryie/bh-wp-logger": "^0.3.4",
         "chillerlan/php-qrcode": "^5.0"
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
-        "brianhenryie/strauss": "0.28.0",
+        "brianhenryie/strauss": "0.28.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
         "johnpbloch/wordpress": "*",
         "lucatume/wp-browser": "^4.5",
+        "php-stubs/woocommerce-stubs": "*",
         "phpstan/extension-installer": "*",
         "phpunit/phpcov": "*",
         "rector/rector": "^2.3",
@@ -107,36 +108,6 @@
         "strauss": {
             "namespace_prefix": "BrianHenryIE\\WP_Venmo_Gateway\\",
             "classmap_prefix": "BH_WP_Venmo_Gateway_",
-            "exclude_from_copy": {
-                "file_patterns": [
-                    "~psr/log/Psr/Log/Test.*~",
-                    "~^([^/]+/){2}node_modules~",
-                    "~^../([^/]+/){1}node_modules~",
-                    "~^([^/]+/){2}vendor~",
-                    "~^../([^/]+/){1}vendor~",
-                    "~^([^/]+/){2}.git~",
-                    "~^../([^/]+/){1}.git~",
-                    "~^([^/]+/){2}wordpress/~",
-                    "~^../([^/]+/){1}wordpress/~",
-                    "~^([^/]+/){2}wp-content~",
-                    "~^../([^/]+/){1}wp-content~",
-                    "~^([^/]+/){2}bin~",
-                    "~^../([^/]+/){1}bin~",
-                    "~^([^/]+/){2}scratch~",
-                    "~^([^/]+/){2}imap.so~",
-                    "~^([^/]+/){2}tests~",
-                    "~^([^/]+/){2}test-plugin~",
-                    "~^([^/]+/){2}codeception.dist.yml~",
-                    "~^([^/]+/){2}composer.lock~",
-                    "~^([^/]+/){2}phpcs.xml~",
-                    "~^([^/]+/){2}phpunit.xml~",
-                    "~^([^/]+/){2}.*.neon~",
-                    "~^([^/]+/){2}package.json~",
-                    "~^([^/]+/){2}package-lock.json~",
-                    "~^([^/]+/){2}wp-cli.yml~",
-                    "~^([^/]+/){2}\\..*~"
-                ]
-            },
             "namespace_replacement_patterns": {
                 "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
             }
@@ -155,7 +126,8 @@
         "post-autoload-dump": [
             "vendor/bin/strauss include-autoloader",
             "php ./bin/sync-composer-wpenv.php",
-            "php ./bin/modify-autoload-patchwork.php"
+            "php ./bin/modify-autoload-patchwork.php",
+            "php ./bin/wpenv-mappings-to-phpstorm.php"
         ],
         "test": [
             "codecept run unit",
