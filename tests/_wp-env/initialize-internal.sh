@@ -92,6 +92,12 @@ wp option patch update give_settings gateways_v3 '{"venmo":"1"}' --format=json 2
 wp option patch update give_settings venmo_store_username 'testvendor' 2>/dev/null || \
   wp option patch insert give_settings venmo_store_username 'testvendor' 2>/dev/null || true
 
+# Opt the admin into GiveWP's legacy donations list table. The Venmo "Mark paid"
+# row action hooks the legacy list (give_payments_table_column); Give 3.x otherwise
+# renders a React donations list at the same URL that has no equivalent hook, so
+# the link would never appear. (mark-paid.spec.ts depends on this.)
+wp user meta update 1 _give_donations_archive_show_legacy 1 2>/dev/null || true
+
 # Create GiveWP demo pages (gives/history/etc.) for manual developer browsing.
 wp give test-demonstration-page 2>/dev/null || true
 
