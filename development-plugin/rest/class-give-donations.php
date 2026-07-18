@@ -37,6 +37,11 @@ class Give_Donations {
 			'/give/donation',
 			array(
 				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_donation' ),
+					'permission_callback' => '__return_true',
+				),
+				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'create_donation' ),
 					'permission_callback' => '__return_true',
@@ -46,6 +51,26 @@ class Give_Donations {
 					'callback'            => array( $this, 'delete_donation' ),
 					'permission_callback' => '__return_true',
 				),
+			)
+		);
+	}
+
+	/**
+	 * Read a donation's legacy status and gateway, for asserting on it after a test
+	 * acts on it via the UI (the v3 donations API needs fuller meta than this helper
+	 * seeds, so tests assert against the legacy post status instead).
+	 *
+	 * @param WP_REST_Request $request The REST request object.
+	 * @phpstan-param WP_REST_Request<array{id?:int}> $request -- phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint
+	 */
+	public function get_donation( WP_REST_Request $request ): WP_REST_Response {
+		$donation_id = (int) $request->get_param( 'id' );
+
+		return new WP_REST_Response(
+			array(
+				'id'      => $donation_id,
+				'status'  => get_post_status( $donation_id ),
+				'gateway' => give_get_meta( $donation_id, '_give_payment_gateway', true ),
 			)
 		);
 	}
@@ -76,7 +101,24 @@ class Give_Donations {
 			return new WP_REST_Response( array( 'error' => $message ), 500 );
 		}
 
-		give_update_meta( $donation_id, '_give_payment_gateway', $gateway );
+		// Seed the donation meta the GiveWP v3 Donation model requires to hydrate.
+		// The legacy donations list table calls Donation::find() per row, which
+		// fatals (Money::fromDecimal(null, null)) without at least amount + currency.
+		$meta = array(
+			'_give_payment_gateway'          => $gateway,
+			'_give_payment_total'            => '25.00',
+			'_give_payment_currency'         => 'USD',
+			'_give_payment_mode'             => 'live',
+			'_give_payment_form_id'          => 0,
+			'_give_payment_form_title'       => 'Test Donation Form',
+			'_give_payment_donor_id'         => 0,
+			'_give_donor_billing_first_name' => 'Test',
+			'_give_donor_billing_last_name'  => 'Donor',
+			'_give_payment_donor_email'      => 'test-donor@example.com',
+		);
+		foreach ( $meta as $key => $value ) {
+			give_update_meta( $donation_id, $key, $value );
+		}
 
 		return new WP_REST_Response(
 			array(
