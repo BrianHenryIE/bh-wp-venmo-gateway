@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/runner/work/bh-wp-venmo-gateway/bh-wp-venmo-gateway/includes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="_css/bootstrap.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="_css/nv.d3.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="_css/style.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="index.html">/home/runner/work/bh-wp-venmo-gateway/bh-wp-venmo-gateway/includes</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="admin/class-admin.php.html#23">BrianHenryIE\WP_Venmo_Gateway\Admin\Admin</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#19">BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#21">BrianHenryIE\WP_Venmo_Gateway\API\Settings</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="includes/class-i18n.php.html#13">BrianHenryIE\WP_Venmo_Gateway\Includes\I18n</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#27">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#17">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-givewp.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#16">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#14">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-payment-url.php.html#16">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Payment_Url</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="qr/class-qr-code.php.html#22">BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#11">BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2</a></td><td class="text-right">10%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#22">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway</a></td><td class="text-right">20%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-payment-gateways.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways</a></td><td class="text-right">22%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#19">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List</a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support</a></td><td class="text-right">30%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#16">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway</a></td><td class="text-right">31%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-email.php.html#24">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email</a></td><td class="text-right">84%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#16">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway</a></td><td class="text-right">953</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#27">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt</a></td><td class="text-right">702</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#19">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List</a></td><td class="text-right">635</td></tr>
+       <tr><td><a href="api/class-settings.php.html#21">BrianHenryIE\WP_Venmo_Gateway\API\Settings</a></td><td class="text-right">552</td></tr>
+       <tr><td><a href="admin/class-admin.php.html#23">BrianHenryIE\WP_Venmo_Gateway\Admin\Admin</a></td><td class="text-right">210</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#16">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#22">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway</a></td><td class="text-right">111</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#14">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#17">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings</a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#19">BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-payment-gateways.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways</a></td><td class="text-right">22</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support</a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-email.php.html#24">BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email</a></td><td class="text-right">8</td></tr>
+       <tr><td><a href="integrations/givewp/class-givewp.php.html#18">BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="qr/class-qr-code.php.html#22">BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code</a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="admin/class-admin.php.html#37"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Admin::init_notices">init_notices</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="admin/class-admin.php.html#51"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Admin::add_setup_notice">add_setup_notice</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#31"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page::add_settings_action_link">add_settings_action_link</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#54"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page::add_orders_action_link">add_orders_action_link</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#19"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_customer_email_regex">get_customer_email_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#30"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_customer_name_regex">get_customer_name_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#41"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_notes_array_regex">get_notes_array_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#47"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_transaction_id_regex">get_transaction_id_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#54"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_transaction_url_regex">get_transaction_url_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#58"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_subject_regex">get_subject_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-pattern-2.php.html#71"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Pattern_2::get_customer_id_regex">get_customer_id_regex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#34"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_plugin_slug">get_plugin_slug</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#43"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_log_level">get_log_level</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#57"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::is_imap_reconcile_enabled">is_imap_reconcile_enabled</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#61"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_plugin_version">get_plugin_version</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#70"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_payment_method_ids">get_payment_method_ids</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#111"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_emails_cpt_friendly_name">get_emails_cpt_friendly_name</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#122"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_email_accounts_cpt_friendly_name">get_email_accounts_cpt_friendly_name</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#132"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_woo_settings">get_woo_settings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#146"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_configured_mailbox_settings">get_configured_mailbox_settings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#246"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_patterns">get_patterns</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#259"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_customer_payment_id_meta_key">get_customer_payment_id_meta_key</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#266"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_plugin_name">get_plugin_name</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="api/class-settings.php.html#273"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_plugin_basename">get_plugin_basename</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="includes/class-i18n.php.html#18"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Includes\I18n::load_plugin_textdomain">load_plugin_textdomain</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::customize_pending_notice">customize_pending_notice</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#108"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::add_v3_receipt_details">add_v3_receipt_details</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#199"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::replace_v3_success_badge">replace_v3_success_badge</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#277"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::get_store_username">get_store_username</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#294"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::get_browser_url">get_browser_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#310"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::get_qr_deep_link">get_qr_deep_link</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#330"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::print_qr_code">print_qr_code</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#35"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::add_mark_paid_link">add_mark_paid_link</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#69"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::enqueue_assets">enqueue_assets</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#106"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::render_modal">render_modal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#222"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::admin_notice_marked_paid">admin_notice_marked_paid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#286"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::build_note">build_note</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#308"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::is_donations_list_page">is_donations_list_page</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#28"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::register_sections">register_sections</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::register_settings">register_settings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#77"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::sanitize_store_username">sanitize_store_username</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#86"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::get_last_donations_summary">get_last_donations_summary</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-givewp.php.html#28"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP::register_gateway">register_gateway</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#50"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#58"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::getPaymentMethodLabel">getPaymentMethodLabel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#71"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::formSettings">formSettings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#85"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::enqueueScript">enqueueScript</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#115"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::getLegacyFormFieldMarkup">getLegacyFormFieldMarkup</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#19"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#35"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::schedule_email_check">schedule_email_check</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#75"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::admin_view_billing_address">admin_view_billing_address</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-payment-gateways.php.html#49"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways::format_method_title">format_method_title</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-payment-gateways.php.html#79"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways::filter_to_only_venmo_gateways">filter_to_only_venmo_gateways</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#17"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#27"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::allow_data_protocol_for_inline_qr_code">allow_data_protocol_for_inline_qr_code</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::is_thank_you_order_confirmation_page">is_thank_you_order_confirmation_page</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#59"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::print_instructions">print_instructions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#39"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#48"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support::initialize">initialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#57"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support::is_active">is_active</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#68"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support::get_payment_method_script_handles">get_payment_method_script_handles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#40"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#81"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::is_configured">is_configured</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#88"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::init_form_fields">init_form_fields</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#133"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::payment_fields">payment_fields</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#220"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::save_blocks_checkout_meta_data">save_blocks_checkout_meta_data</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#281"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::validate_store_venmo_username_field">validate_store_venmo_username_field</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#347"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::admin_options">admin_options</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#366"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_title">get_title</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#409"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_method_title">get_method_title</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#446"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_method_description">get_method_description</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#464"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::set_venmo_username_cookie">set_venmo_username_cookie</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#517"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::add_checkout_focus_script">add_checkout_focus_script</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-payment-url.php.html#28"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Payment_Url::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-payment-url.php.html#39"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Payment_Url::get_qr_url">get_qr_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-payment-url.php.html#56"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Payment_Url::get_browser_url">get_browser_url</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-payment-url.php.html#71"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Payment_Url::get_html">get_html</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="qr/class-qr-code.php.html#37"><abbr title="BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code::get_data_uri">get_data_uri</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="includes/class-register-hooks.php.html#88"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_woocommerce_hooks">define_woocommerce_hooks</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-email.php.html#39"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email::email_instructions">email_instructions</abbr></a></td><td class="text-right">84%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="admin/class-admin.php.html#51"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Admin::add_setup_notice">add_setup_notice</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#222"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::admin_notice_marked_paid">admin_notice_marked_paid</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#220"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::save_blocks_checkout_meta_data">save_blocks_checkout_meta_data</abbr></a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#366"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_title">get_title</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="api/class-settings.php.html#146"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_configured_mailbox_settings">get_configured_mailbox_settings</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#330"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::print_qr_code">print_qr_code</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#35"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::schedule_email_check">schedule_email_check</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-order.php.html#75"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::admin_view_billing_address">admin_view_billing_address</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::customize_pending_notice">customize_pending_notice</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#108"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::add_v3_receipt_details">add_v3_receipt_details</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#35"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::add_mark_paid_link">add_mark_paid_link</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#86"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::get_last_donations_summary">get_last_donations_summary</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#409"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_method_title">get_method_title</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="admin/class-admin.php.html#37"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Admin::init_notices">init_notices</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="api/class-settings.php.html#70"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_payment_method_ids">get_payment_method_ids</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#199"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::replace_v3_success_badge">replace_v3_success_badge</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#286"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::build_note">build_note</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-payment-gateways.php.html#49"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways::format_method_title">format_method_title</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#59"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::print_instructions">print_instructions</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#54"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page::add_orders_action_link">add_orders_action_link</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#308"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::is_donations_list_page">is_donations_list_page</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::is_thank_you_order_confirmation_page">is_thank_you_order_confirmation_page</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#464"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::set_venmo_username_cookie">set_venmo_username_cookie</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-email.php.html#39"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email::email_instructions">email_instructions</abbr></a></td><td class="text-right">8</td></tr>
+       <tr><td><a href="admin/class-plugins-page.php.html#31"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page::add_settings_action_link">add_settings_action_link</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="api/class-settings.php.html#273"><abbr title="BrianHenryIE\WP_Venmo_Gateway\API\Settings::get_plugin_basename">get_plugin_basename</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-donation-receipt.php.html#277"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt::get_store_username">get_store_username</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#69"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::enqueue_assets">enqueue_assets</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-donations-list.php.html#106"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List::render_modal">render_modal</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-gateway-settings.php.html#42"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings::register_settings">register_settings</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-givewp.php.html#28"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP::register_gateway">register_gateway</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#85"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::enqueueScript">enqueueScript</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/givewp/class-venmo-gateway.php.html#115"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::getLegacyFormFieldMarkup">getLegacyFormFieldMarkup</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-thank-you.php.html#27"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You::allow_data_protocol_for_inline_qr_code">allow_data_protocol_for_inline_qr_code</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway-blocks-checkout-support.php.html#68"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support::get_payment_method_script_handles">get_payment_method_script_handles</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#40"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="integrations/woocommerce/class-venmo-gateway.php.html#446"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::get_method_description">get_method_description</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="qr/class-qr-code.php.html#37"><abbr title="BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code::get_data_uri">get_data_uri</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="includes/class-register-hooks.php.html#88"><abbr title="BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_woocommerce_hooks">define_woocommerce_hooks</abbr></a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.32</a> using <a href="https://secure.php.net/" target="_top">PHP 8.4.23</a> at Sat Jul 18 3:06:23 UTC 2026.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="_js/jquery.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="_js/d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="_js/nv.d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([11,0,1,3,2,0,0,0,0,1,2,4], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([79,0,0,0,0,0,0,0,1,1,5,20], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,14,"<a href=\"admin\/class-admin.php.html#23\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Admin<\/a>"],[0,5,"<a href=\"admin\/class-plugins-page.php.html#19\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Plugins_Page<\/a>"],[10,8,"<a href=\"api\/class-pattern-2.php.html#11\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2<\/a>"],[0,23,"<a href=\"api\/class-settings.php.html#21\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings<\/a>"],[100,3,"<a href=\"class-venmo-username.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Venmo_Username<\/a>"],[100,1,"<a href=\"includes\/class-activator.php.html#17\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Activator<\/a>"],[100,6,"<a href=\"includes\/class-cron.php.html#16\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Cron<\/a>"],[100,1,"<a href=\"includes\/class-deactivator.php.html#17\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Deactivator<\/a>"],[0,1,"<a href=\"includes\/class-i18n.php.html#13\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\I18n<\/a>"],[91.22807017543859,8,"<a href=\"includes\/class-register-hooks.php.html#31\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks<\/a>"],[0,26,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#27\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt<\/a>"],[28.05755395683453,40,"<a href=\"integrations\/givewp\/class-donations-list.php.html#19\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List<\/a>"],[0,9,"<a href=\"integrations\/givewp\/class-gateway-settings.php.html#17\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Gateway_Settings<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-givewp.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\GiveWP<\/a>"],[20.689655172413794,14,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#22\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway<\/a>"],[95.65217391304348,9,"<a href=\"integrations\/woocommerce\/class-admin-order-ui.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Admin_Order_UI<\/a>"],[84,8,"<a href=\"integrations\/woocommerce\/class-email.php.html#24\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Email<\/a>"],[0,13,"<a href=\"integrations\/woocommerce\/class-order.php.html#16\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Order<\/a>"],[22.22222222222222,6,"<a href=\"integrations\/woocommerce\/class-payment-gateways.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Payment_Gateways<\/a>"],[0,10,"<a href=\"integrations\/woocommerce\/class-thank-you.php.html#14\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Thank_You<\/a>"],[30,6,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support<\/a>"],[31.550802139037433,53,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#16\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway<\/a>"],[0,4,"<a href=\"integrations\/woocommerce\/class-venmo-payment-url.php.html#16\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Payment_Url<\/a>"],[0,2,"<a href=\"qr\/class-qr-code.php.html#22\">BrianHenryIE\\WP_Venmo_Gateway\\QR\\QR_Code<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,4,"<a href=\"admin\/class-admin.php.html#37\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Admin::init_notices<\/a>"],[0,10,"<a href=\"admin\/class-admin.php.html#51\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Admin::add_setup_notice<\/a>"],[0,2,"<a href=\"admin\/class-plugins-page.php.html#31\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Plugins_Page::add_settings_action_link<\/a>"],[0,3,"<a href=\"admin\/class-plugins-page.php.html#54\">BrianHenryIE\\WP_Venmo_Gateway\\Admin\\Plugins_Page::add_orders_action_link<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#19\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_customer_email_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#30\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_customer_name_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#41\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_notes_array_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#47\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_transaction_id_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#54\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_transaction_url_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#58\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_subject_regex<\/a>"],[100,1,"<a href=\"api\/class-pattern-2.php.html#62\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_amount_regex<\/a>"],[0,1,"<a href=\"api\/class-pattern-2.php.html#71\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Pattern_2::get_customer_id_regex<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#34\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_plugin_slug<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#43\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_log_level<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#57\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::is_imap_reconcile_enabled<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#61\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_plugin_version<\/a>"],[0,4,"<a href=\"api\/class-settings.php.html#70\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_payment_method_ids<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#111\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_emails_cpt_friendly_name<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#122\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_email_accounts_cpt_friendly_name<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#132\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_woo_settings<\/a>"],[0,7,"<a href=\"api\/class-settings.php.html#146\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_configured_mailbox_settings<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#246\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_patterns<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#259\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_customer_payment_id_meta_key<\/a>"],[0,1,"<a href=\"api\/class-settings.php.html#266\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_plugin_name<\/a>"],[0,2,"<a href=\"api\/class-settings.php.html#273\">BrianHenryIE\\WP_Venmo_Gateway\\API\\Settings::get_plugin_basename<\/a>"],[100,1,"<a href=\"class-venmo-username.php.html#25\">BrianHenryIE\\WP_Venmo_Gateway\\Venmo_Username::sanitize<\/a>"],[100,2,"<a href=\"class-venmo-username.php.html#34\">BrianHenryIE\\WP_Venmo_Gateway\\Venmo_Username::for_display<\/a>"],[100,1,"<a href=\"includes\/class-activator.php.html#22\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Activator::activate<\/a>"],[100,1,"<a href=\"includes\/class-cron.php.html#28\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Cron::__construct<\/a>"],[100,4,"<a href=\"includes\/class-cron.php.html#41\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Cron::add_cron_jon<\/a>"],[100,1,"<a href=\"includes\/class-cron.php.html#65\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Cron::check_for_payment_emails<\/a>"],[100,1,"<a href=\"includes\/class-deactivator.php.html#22\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Deactivator::deactivate<\/a>"],[0,1,"<a href=\"includes\/class-i18n.php.html#18\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\I18n::load_plugin_textdomain<\/a>"],[100,1,"<a href=\"includes\/class-register-hooks.php.html#44\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::__construct<\/a>"],[100,1,"<a href=\"includes\/class-register-hooks.php.html#62\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::set_locale<\/a>"],[100,1,"<a href=\"includes\/class-register-hooks.php.html#73\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::define_admin_hooks<\/a>"],[78.26086956521739,3,"<a href=\"includes\/class-register-hooks.php.html#88\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::define_woocommerce_hooks<\/a>"],[100,1,"<a href=\"includes\/class-register-hooks.php.html#131\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::define_givewp_hooks<\/a>"],[100,1,"<a href=\"includes\/class-register-hooks.php.html#165\">BrianHenryIE\\WP_Venmo_Gateway\\Includes\\Register_Hooks::define_cron_hooks<\/a>"],[0,5,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#42\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::customize_pending_notice<\/a>"],[0,5,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#108\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::add_v3_receipt_details<\/a>"],[0,4,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#199\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::replace_v3_success_badge<\/a>"],[100,1,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#241\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::get_badge_replacement_js<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#277\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::get_store_username<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#294\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::get_browser_url<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#310\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::get_qr_deep_link<\/a>"],[0,7,"<a href=\"integrations\/givewp\/class-donation-receipt.php.html#330\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donation_Receipt::print_qr_code<\/a>"],[0,5,"<a href=\"integrations\/givewp\/class-donations-list.php.html#35\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::add_mark_paid_link<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-donations-list.php.html#69\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::enqueue_assets<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-donations-list.php.html#106\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::render_modal<\/a>"],[97.5,14,"<a href=\"integrations\/givewp\/class-donations-list.php.html#153\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::ajax_mark_paid<\/a>"],[0,10,"<a href=\"integrations\/givewp\/class-donations-list.php.html#222\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::admin_notice_marked_paid<\/a>"],[0,4,"<a href=\"integrations\/givewp\/class-donations-list.php.html#286\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::build_note<\/a>"],[0,3,"<a href=\"integrations\/givewp\/class-donations-list.php.html#308\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Donations_List::is_donations_list_page<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-gateway-settings.php.html#28\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Gateway_Settings::register_sections<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-gateway-settings.php.html#42\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Gateway_Settings::register_settings<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-gateway-settings.php.html#77\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Gateway_Settings::sanitize_store_username<\/a>"],[0,5,"<a href=\"integrations\/givewp\/class-gateway-settings.php.html#86\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Gateway_Settings::get_last_donations_summary<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-givewp.php.html#28\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\GiveWP::register_gateway<\/a>"],[100,1,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#34\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::id<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#42\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::getId<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#50\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::getName<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#58\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::getPaymentMethodLabel<\/a>"],[0,1,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#71\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::formSettings<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#85\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::enqueueScript<\/a>"],[0,2,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#115\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::getLegacyFormFieldMarkup<\/a>"],[100,5,"<a href=\"integrations\/givewp\/class-venmo-gateway.php.html#159\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\GiveWP\\Venmo_Gateway::createPayment<\/a>"],[100,2,"<a href=\"integrations\/woocommerce\/class-admin-order-ui.php.html#25\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Admin_Order_UI::add_venmo_payment_metabox<\/a>"],[95,7,"<a href=\"integrations\/woocommerce\/class-admin-order-ui.php.html#43\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Admin_Order_UI::render_venmo_payment_metabox<\/a>"],[84,8,"<a href=\"integrations\/woocommerce\/class-email.php.html#39\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Email::email_instructions<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-order.php.html#19\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Order::__construct<\/a>"],[0,6,"<a href=\"integrations\/woocommerce\/class-order.php.html#35\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Order::schedule_email_check<\/a>"],[0,6,"<a href=\"integrations\/woocommerce\/class-order.php.html#75\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Order::admin_view_billing_address<\/a>"],[100,1,"<a href=\"integrations\/woocommerce\/class-payment-gateways.php.html#30\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Payment_Gateways::add_to_woocommerce<\/a>"],[0,4,"<a href=\"integrations\/woocommerce\/class-payment-gateways.php.html#49\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Payment_Gateways::format_method_title<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-payment-gateways.php.html#79\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Payment_Gateways::filter_to_only_venmo_gateways<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-thank-you.php.html#17\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Thank_You::__construct<\/a>"],[0,2,"<a href=\"integrations\/woocommerce\/class-thank-you.php.html#27\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Thank_You::allow_data_protocol_for_inline_qr_code<\/a>"],[0,3,"<a href=\"integrations\/woocommerce\/class-thank-you.php.html#42\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Thank_You::is_thank_you_order_confirmation_page<\/a>"],[0,4,"<a href=\"integrations\/woocommerce\/class-thank-you.php.html#59\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Thank_You::print_instructions<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#39\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support::__construct<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#48\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support::initialize<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#57\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support::is_active<\/a>"],[0,2,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#68\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support::get_payment_method_script_handles<\/a>"],[100,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway-blocks-checkout-support.php.html#102\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway_Blocks_Checkout_Support::get_payment_method_data<\/a>"],[0,2,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#40\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::__construct<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#81\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::is_configured<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#88\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::init_form_fields<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#133\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::payment_fields<\/a>"],[100,3,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#162\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::validate_fields<\/a>"],[90.9090909090909,4,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#184\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::save_order_payment_type_meta_data<\/a>"],[0,9,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#220\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::save_blocks_checkout_meta_data<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#281\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::validate_store_venmo_username_field<\/a>"],[96.15384615384616,2,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#293\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::process_payment<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#347\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::admin_options<\/a>"],[0,8,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#366\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::get_title<\/a>"],[0,5,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#409\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::get_method_title<\/a>"],[0,2,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#446\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::get_method_description<\/a>"],[0,3,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#464\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::set_venmo_username_cookie<\/a>"],[95.23809523809523,9,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#477\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::get_saved_venmo_username<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-gateway.php.html#517\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Gateway::add_checkout_focus_script<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-payment-url.php.html#28\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Payment_Url::__construct<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-payment-url.php.html#39\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Payment_Url::get_qr_url<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-payment-url.php.html#56\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Payment_Url::get_browser_url<\/a>"],[0,1,"<a href=\"integrations\/woocommerce\/class-venmo-payment-url.php.html#71\">BrianHenryIE\\WP_Venmo_Gateway\\Integrations\\WooCommerce\\Venmo_Payment_Url::get_html<\/a>"],[0,2,"<a href=\"qr\/class-qr-code.php.html#37\">BrianHenryIE\\WP_Venmo_Gateway\\QR\\QR_Code::get_data_uri<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
