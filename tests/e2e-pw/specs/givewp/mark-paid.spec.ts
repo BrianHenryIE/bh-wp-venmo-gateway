@@ -34,13 +34,22 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 				'post_type=give_forms&page=give-payment-history'
 			);
 
-			// The "Mark paid" link lives in a WordPress row-actions block that is
-			// positioned off-screen until its row is hovered, so hover the row first.
+			// The "Mark paid" link lives in a WordPress row-actions block that WP
+			// positions off-screen until its row is hovered. Synthetic hover is
+			// unreliable across CI's headless browsers, so reveal the row-actions with
+			// a style override and click the link directly (deterministic everywhere).
 			const markPaidLink = page.locator(
 				`.bh-venmo-mark-paid[data-donation-id="${ donationId }"]`
 			);
-			const row = page.locator( 'tr' ).filter( { has: markPaidLink } );
-			await row.hover();
+			await markPaidLink.waitFor( {
+				state: 'attached',
+				timeout: 15_000,
+			} );
+			await page.addStyleTag( {
+				content:
+					'.row-actions { position: static !important; left: auto !important; }',
+			} );
+			await markPaidLink.scrollIntoViewIfNeeded();
 			await markPaidLink.click();
 
 			const modal = page.locator( '#bh-venmo-mark-paid-modal' );
