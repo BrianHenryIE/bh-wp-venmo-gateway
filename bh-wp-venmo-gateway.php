@@ -15,8 +15,8 @@
  * Plugin Name:       Venmo Gateway
  * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-venmo-gateway/
  * Description:       Accepts payments via Venmo and reconciles WooCommerce orders through email receipts.
- * Version:           3.2.0
- * Requires PHP:      8.0
+ * Version:           4.1.0
+ * Requires PHP:      8.4
  * Author:            BrianHenryIE
  * Author URI:        http://BrianHenryIE.com/
  * License:           GPL-2.0+
@@ -47,7 +47,7 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BH_WP_VENMO_GATEWAY_VERSION', '3.2.0' );
+define( 'BH_WP_VENMO_GATEWAY_VERSION', '4.1.0' );
 define( 'BH_WP_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
 define( 'BH_WP_VENMO_GATEWAY_FILE', __FILE__ );
 

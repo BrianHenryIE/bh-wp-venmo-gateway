@@ -59,7 +59,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	}
 
 	public function get_plugin_version(): string {
-		return '4.0.0';
+		return '4.1.0';
 	}
 
 	/**
