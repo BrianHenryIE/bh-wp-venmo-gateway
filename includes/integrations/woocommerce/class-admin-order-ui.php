@@ -5,10 +5,9 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
 use WC_Order;
 use WC_Payment_Gateways;
 use WP_Post;
@@ -76,10 +75,7 @@ class Admin_Order_UI {
 		$venmo_payment_url         = $payment_url_helper->get_browser_url();
 		$venmo_payment_url_display = $payment_url_helper->get_html();
 
-		$qr_options          = new class() extends QROptions {
-			protected int $quietzoneSize = 1;
-		};
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
+		$qr_code_data_base64 = ( new QR_Code() )->get_data_uri( $venmo_payment_qr_url );
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 		$order_total         = "\${$order->get_total()}";
 

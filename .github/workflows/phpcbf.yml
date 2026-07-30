@@ -16,7 +16,10 @@ jobs:
 
     strategy:
       matrix:
-        php: [ '8.0' ]
+        php: [ '8.4' ]
+
+#    env:
+#      COMPOSER_ALLOW_UNSAFE_PHAR_METADATA: 1 # "Refusing to parse a tar/phar archive on PHP < 8.0 because it is not safe to process untrusted archives on that PHP version."
 
     steps:
       - name: Checkout
@@ -29,11 +32,8 @@ jobs:
           tools: composer, cs2pr
           extensions: zip
 
-      - name: Install sponge
-        run: sudo apt-get install moreutils
-
       - name: Run composer install
-        run: composer install
+        run: composer install --no-scripts # We don't need the vendor-prefixed files for PHPCS.
 
       - name: Run PHPCBF to fix what it can
         continue-on-error: true
@@ -50,4 +50,4 @@ jobs:
         run: vendor/bin/phpcs -q -n --report=checkstyle | cs2pr
 
       - name: Fail if there are still phpcs errors in the production code
-        run: vendor/bin/phpcs src
+        run: vendor/bin/phpcs includes

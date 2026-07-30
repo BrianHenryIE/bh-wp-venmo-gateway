@@ -10,7 +10,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Payment_Gateways;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
 /**

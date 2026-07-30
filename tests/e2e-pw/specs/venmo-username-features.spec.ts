@@ -10,61 +10,12 @@
  * 7. Show from/to usernames in order emails
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import * as fs from 'fs';
-import * as path from 'path';
 import { login, loginAsAdmin, logout } from '../helpers/general/ui/login';
-import { useShortcodeCheckout, useBlocksCheckout } from '../helpers/development-plugin/rest/checkout';
+import { SHORTCODE_CHECKOUT_PATH, BLOCKS_CHECKOUT_PATH } from '../helpers/development-plugin/rest/checkout';
 import { setDefaultCustomerAddresses } from '../helpers/development-plugin/ajax/wc-cart';
 import { addProductToCartByName } from '../helpers/general/ui/wc-cart';
 import { setVenmoUsername } from '../helpers/venmo/rest/wc-payment-gateway';
 import { testConfig } from '../test-config';
-
-/**
- * Set the checkout page to blocks checkout via authenticated REST API.
- */
-async function setBlocksCheckoutViaRest( requestUtils: any ) {
-	const blocksContentPath = path.join( __dirname, '../../_wp-env/blocks-checkout-post-content.txt' );
-	let blocksContent: string;
-	try {
-		blocksContent = fs.readFileSync( blocksContentPath, 'utf8' );
-	} catch {
-		// Fallback: minimal blocks checkout content
-		blocksContent = '<!-- wp:woocommerce/checkout --><div class="wp-block-woocommerce-checkout wc-block-checkout is-loading"></div><!-- /wp:woocommerce/checkout -->';
-	}
-
-	const pages = await requestUtils.rest( {
-		method: 'GET',
-		path: '/wp/v2/pages',
-		data: { search: 'Checkout', per_page: 100 },
-	} );
-	const checkoutPage = pages.find( ( p: any ) => p.title.rendered.toLowerCase() === 'checkout' );
-	if ( checkoutPage ) {
-		await requestUtils.rest( {
-			method: 'POST',
-			path: `/wp/v2/pages/${ checkoutPage.id }`,
-			data: { content: blocksContent },
-		} );
-	}
-}
-
-/**
- * Restore the checkout page to shortcode checkout via authenticated REST API.
- */
-async function setShortcodeCheckoutViaRest( requestUtils: any ) {
-	const pages = await requestUtils.rest( {
-		method: 'GET',
-		path: '/wp/v2/pages',
-		data: { search: 'Checkout', per_page: 100 },
-	} );
-	const checkoutPage = pages.find( ( p: any ) => p.title.rendered.toLowerCase() === 'checkout' );
-	if ( checkoutPage ) {
-		await requestUtils.rest( {
-			method: 'POST',
-			path: `/wp/v2/pages/${ checkoutPage.id }`,
-			data: { content: '<!-- wp:shortcode -->[woocommerce_checkout]<!-- /wp:shortcode -->' },
-		} );
-	}
-}
 
 const CUSTOMER_VENMO_USERNAME = 'testcustomer_venmo';
 const STORE_VENMO_USERNAME = 'sackavs';
@@ -74,8 +25,8 @@ const STORE_VENMO_USERNAME = 'sackavs';
  * Assumes product is already in cart and billing address is set.
  */
 async function placeVenmoOrder( page, customerUsername: string ) {
-	await page.goto( '/checkout/' );
-	await page.waitForLoadState( 'networkidle' );
+	await page.goto( SHORTCODE_CHECKOUT_PATH );
+	await page.waitForLoadState( 'domcontentloaded' );
 	await page.click( 'label[for="payment_method_venmo"]' );
 	await expect( page.locator( '#_customer-venmo-username' ) ).toBeVisible();
 	await page.fill( '#_customer-venmo-username', customerUsername );
@@ -124,13 +75,6 @@ async function deleteCustomer( requestUtils, userId: number ) {
 test.describe( 'Venmo username features (shortcode)', () => {
 	test.describe.configure( { mode: 'serial' } );
 
-	test.beforeAll( async ( { browser } ) => {
-		const page = await browser.newPage();
-		await useShortcodeCheckout();
-		await page.context().clearCookies();
-		await page.close();
-	} );
-
 	test.beforeEach( async ( { page } ) => {
 		await page.context().clearCookies();
 		await page.goto( 'about:blank' );
@@ -158,8 +102,8 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 			// Verify usermeta was saved by starting a new checkout and checking auto-fill.
 			await addProductToCartByName( page, testConfig.products.simple.name );
-			await page.goto( '/checkout/' );
-			await page.waitForLoadState( 'networkidle' );
+			await page.goto( SHORTCODE_CHECKOUT_PATH );
+			await page.waitForLoadState( 'domcontentloaded' );
 			await page.click( 'label[for="payment_method_venmo"]' );
 
 			const usernameField = page.locator( '#_customer-venmo-username' );
@@ -207,8 +151,8 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 			// Now start a second checkout — username should be pre-filled.
 			await addProductToCartByName( page, testConfig.products.simple.name );
-			await page.goto( '/checkout/' );
-			await page.waitForLoadState( 'networkidle' );
+			await page.goto( SHORTCODE_CHECKOUT_PATH );
+			await page.waitForLoadState( 'domcontentloaded' );
 			await page.click( 'label[for="payment_method_venmo"]' );
 
 			const usernameField = page.locator( '#_customer-venmo-username' );
@@ -238,8 +182,8 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 		// Now add another product and go to checkout — username should be pre-filled from cookie.
 		await addProductToCartByName( page, testConfig.products.simple.name );
-		await page.goto( '/checkout/' );
-		await page.waitForLoadState( 'networkidle' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
+		await page.waitForLoadState( 'domcontentloaded' );
 		await page.click( 'label[for="payment_method_venmo"]' );
 
 		const usernameField = page.locator( '#_customer-venmo-username' );
@@ -256,8 +200,8 @@ test.describe( 'Venmo username features (shortcode)', () => {
 		await setDefaultCustomerAddresses( page );
 		await addProductToCartByName( page, testConfig.products.simple.name );
 
-		await page.goto( '/checkout/' );
-		await page.waitForLoadState( 'networkidle' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
+		await page.waitForLoadState( 'domcontentloaded' );
 
 		// Select a different payment method first (e.g., cheque or cod).
 		const otherMethod = page.locator( 'input[name="payment_method"]' ).first();
@@ -284,8 +228,8 @@ test.describe( 'Venmo username features (shortcode)', () => {
 		await setDefaultCustomerAddresses( page );
 		await addProductToCartByName( page, testConfig.products.simple.name );
 
-		await page.goto( '/checkout/' );
-		await page.waitForLoadState( 'networkidle' );
+		await page.goto( SHORTCODE_CHECKOUT_PATH );
+		await page.waitForLoadState( 'domcontentloaded' );
 
 		// Select Venmo but leave username empty.
 		await page.click( 'label[for="payment_method_venmo"]' );
@@ -387,14 +331,6 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 test.describe( 'Venmo username features (blocks)', () => {
 
-	test.beforeAll( async ( { requestUtils } ) => {
-		await setBlocksCheckoutViaRest( requestUtils );
-	} );
-
-	test.afterAll( async ( { requestUtils } ) => {
-		await setShortcodeCheckoutViaRest( requestUtils );
-	} );
-
 	test.beforeEach( async ( { page } ) => {
 		await page.context().clearCookies();
 		await setVenmoUsername( STORE_VENMO_USERNAME );
@@ -413,17 +349,13 @@ test.describe( 'Venmo username features (blocks)', () => {
 			await login( { username: customer.username, password: customer.password }, page );
 
 			// First, place an order via shortcode checkout to save the username to usermeta.
-			await setShortcodeCheckoutViaRest( requestUtils );
 			await setDefaultCustomerAddresses( page );
 			await addProductToCartByName( page, testConfig.products.simple.name );
 			await placeVenmoOrder( page, CUSTOMER_VENMO_USERNAME );
 
-			// Switch back to blocks checkout.
-			await setBlocksCheckoutViaRest( requestUtils );
-
 			// Add product and go to blocks checkout.
 			await addProductToCartByName( page, testConfig.products.simple.name );
-			await page.goto( '/checkout/' );
+			await page.goto( BLOCKS_CHECKOUT_PATH );
 			await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 			// Select Venmo.
@@ -434,8 +366,6 @@ test.describe( 'Venmo username features (blocks)', () => {
 			await expect( usernameInput ).toBeVisible();
 			await expect( usernameInput ).toHaveValue( CUSTOMER_VENMO_USERNAME );
 		} finally {
-			// Restore blocks checkout for remaining tests.
-			await setBlocksCheckoutViaRest( requestUtils );
 			await deleteCustomer( requestUtils, customer.id );
 		}
 	} );
@@ -449,16 +379,13 @@ test.describe( 'Venmo username features (blocks)', () => {
 		await setDefaultCustomerAddresses( page );
 		await addProductToCartByName( page, testConfig.products.simple.name );
 
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
-		// Select Venmo.
-		await page.click( 'label[for="radio-control-wc-payment-method-options-venmo"]' );
-		await page.waitForTimeout( 300 );
-
-		// Verify the username field has focus.
-		const focusedId = await page.evaluate( () => document.activeElement?.id );
-		expect( focusedId ).toBe( 'venmo-username-input' );
+		// Venmo is the only enabled gateway, so it is auto-selected and its payment
+		// content mounts; the username field auto-focuses on mount (see
+		// src/checkout/index.tsx). toBeFocused() retries to cover the focus delay.
+		await expect( page.locator( '#venmo-username-input' ) ).toBeFocused();
 	} );
 
 	// ─── TODO 5: Focus on validation error (blocks) ────────
@@ -470,7 +397,7 @@ test.describe( 'Venmo username features (blocks)', () => {
 		await setDefaultCustomerAddresses( page );
 		await addProductToCartByName( page, testConfig.products.simple.name );
 
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		// Select Venmo but leave username empty.
@@ -507,7 +434,7 @@ test.describe( 'Venmo username features (blocks)', () => {
 		await setDefaultCustomerAddresses( page );
 		await addProductToCartByName( page, testConfig.products.simple.name );
 
-		await page.goto( '/checkout/' );
+		await page.goto( BLOCKS_CHECKOUT_PATH );
 		await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 		await page.click( 'label[for="radio-control-wc-payment-method-options-venmo"]' );
@@ -534,7 +461,7 @@ test.describe( 'Venmo username features (blocks)', () => {
 			await setDefaultCustomerAddresses( page );
 			await addProductToCartByName( page, testConfig.products.simple.name );
 
-			await page.goto( '/checkout/' );
+			await page.goto( BLOCKS_CHECKOUT_PATH );
 			await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 			await page.click( 'label[for="radio-control-wc-payment-method-options-venmo"]' );
@@ -545,7 +472,7 @@ test.describe( 'Venmo username features (blocks)', () => {
 			// Verify usermeta was saved by starting a second checkout.
 			// The blocks checkout reads saved_venmo_username from settings data.
 			await addProductToCartByName( page, testConfig.products.simple.name );
-			await page.goto( '/checkout/' );
+			await page.goto( BLOCKS_CHECKOUT_PATH );
 			await page.waitForSelector( '.wc-block-checkout', { timeout: 15000 } );
 
 			await page.click( 'label[for="radio-control-wc-payment-method-options-venmo"]' );

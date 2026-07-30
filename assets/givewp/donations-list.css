@@ -1,0 +1,71 @@
+/**
+ * "Mark paid" link + modal for pending Venmo donations on the donations list.
+ */
+
+.bh-venmo-mark-paid-wrap {
+	margin-top: 4px;
+}
+
+.bh-venmo-mark-paid {
+	text-decoration: none;
+}
+
+.bh-venmo-modal[hidden] {
+	display: none;
+}
+
+.bh-venmo-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bh-venmo-modal__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba( 0, 0, 0, 0.5 );
+}
+
+.bh-venmo-modal__dialog {
+	position: relative;
+	background: #fff;
+	border-radius: 4px;
+	box-shadow: 0 4px 24px rgba( 0, 0, 0, 0.2 );
+	padding: 20px 24px;
+	width: 360px;
+	max-width: calc( 100% - 32px );
+}
+
+.bh-venmo-modal__dialog h2 {
+	margin-top: 0;
+}
+
+.bh-venmo-modal__dialog label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.bh-venmo-modal__dialog input[type="text"],
+.bh-venmo-modal__dialog input[type="date"] {
+	width: 100%;
+}
+
+.bh-venmo-modal__hint {
+	color: #646970;
+	font-style: italic;
+}
+
+.bh-venmo-modal__error {
+	color: #d63638;
+}
+
+.bh-venmo-modal__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-bottom: 0;
+}

@@ -7,6 +7,8 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
+use DateTimeInterface;
+
 /**
  * Fired during plugin activation.
  *
@@ -15,10 +17,14 @@ namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 class Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Record each time the plugin is activated.
 	 */
 	public static function activate(): void {
 
-		update_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
+		$times = get_option( 'bh_wp_venmo_gateway_activated_time', array() );
+
+		$times[ wp_date( DateTimeInterface::ATOM ) ] = constant( 'BH_WP_VENMO_GATEWAY_VERSION' );
+
+		update_option( 'bh_wp_venmo_gateway_activated_time', $times );
 	}
 }

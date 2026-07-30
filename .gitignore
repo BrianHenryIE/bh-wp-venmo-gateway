@@ -97,3 +97,5 @@ artifacts/storage-states/admin.json
 
 # Build output
 /build
+/.playwright-mcp
+scratch.txt

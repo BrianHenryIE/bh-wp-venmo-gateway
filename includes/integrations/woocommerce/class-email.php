@@ -10,11 +10,10 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\WooCommerce;
+namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
 use WC_Order;
 use WC_Payment_Gateways;
 
@@ -62,12 +61,8 @@ class Email {
 		$venmo_payment_url    = $payment_url_helper->get_browser_url();
 		$venmo_payment_qr_url = $payment_url_helper->get_qr_url();
 
-		$qr_options          = new class() extends QROptions {
-			protected int $quietzoneSize = 1;
-			protected string $outputType = QROutputInterface::GDIMAGE_PNG;
-		};
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
-		$qr_code_data_base64 = ( new QRCode( $qr_options ) )->render( $venmo_payment_qr_url );
+		$qr_code_data_base64 = ( new QR_Code() )->get_data_uri( $venmo_payment_qr_url, QROutputInterface::GDIMAGE_PNG );
 
 		// Your order has been received.
 

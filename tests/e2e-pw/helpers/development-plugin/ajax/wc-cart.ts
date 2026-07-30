@@ -48,15 +48,19 @@ export async function updateCartCustomer(
 ): Promise< void > {
 	const baseURL: string = config.use.baseURL!;
 
-	// Visit any WooCommerce page to get the nonce (doesn't need to be checkout)
-	// The AJAX endpoint will initialize the session if needed
-	const currentUrl = page.url();
-	const isOnSite = currentUrl.startsWith( baseURL );
+	// The nonce lives on window.woocommerce_params, which WooCommerce only localizes
+	// on its own frontend pages. Ensure it is present before reading it: if the
+	// current page lacks it — a non-Woo page, or the script has not finished loading
+	// (timing-sensitive on webkit) — navigate to /shop and wait for it. Any Woo page
+	// works; the AJAX endpoint initializes the session if needed.
+	const nonceReady = () =>
+		// @ts-ignore -- woocommerce_params is localized by WooCommerce at runtime
+		typeof window.woocommerce_params?.e2e_set_customer_data_nonce ===
+		'string';
 
-	if ( ! isOnSite ) {
-		// Visit shop page if not already on the site
+	if ( ! ( await page.evaluate( nonceReady ) ) ) {
 		await page.goto( `${ baseURL }/shop` );
-		await page.waitForLoadState( 'networkidle' );
+		await page.waitForFunction( nonceReady );
 	}
 
 	// Make the AJAX call from within the browser context to ensure session cookie is included
@@ -65,7 +69,10 @@ export async function updateCartCustomer(
 			const formData = new URLSearchParams();
 			formData.append( 'action', 'e2e_set_customer_data' );
 			// @ts-ignore
-			formData.append( 'security', window.woocommerce_params.e2e_set_customer_data_nonce );
+			formData.append(
+				'security',
+				window.woocommerce_params.e2e_set_customer_data_nonce
+			);
 
 			if ( billing ) {
 				formData.append( 'billing_first_name', billing.first_name );
@@ -119,7 +126,9 @@ export async function updateCartCustomer(
 
 	if ( ! result.ok || ! result.body.success ) {
 		throw new Error(
-			`Failed to set customer data: ${ result.status } ${ JSON.stringify( result.body ) }`
+			`Failed to set customer data: ${ result.status } ${ JSON.stringify(
+				result.body
+			) }`
 		);
 	}
 }
@@ -163,8 +172,10 @@ export async function setDefaultShippingAddress( page: Page ): Promise< void > {
 	await updateCartCustomer( page, undefined, shippingAddress );
 }
 
-export async function setDefaultCustomerAddresses( page: Page ): Promise< void > {
-	console.log('setDefaultCustomerAddresses()');
+export async function setDefaultCustomerAddresses(
+	page: Page
+): Promise< void > {
+	console.log( 'setDefaultCustomerAddresses()' );
 
 	const billing = testConfig.addresses.customer.billing;
 

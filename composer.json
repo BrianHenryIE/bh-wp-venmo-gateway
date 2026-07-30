@@ -1,6 +1,6 @@
 {
     "name": "brianhenryie/bh-wp-venmo-gateway",
-    "description": "Receive Venmo payments on your WooCommerce store. Reconciles payments via email.",
+    "description": "Receive Venmo payments on your WordPress WooCommerce/Give site. Reconciles payments via email.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
@@ -20,54 +20,65 @@
             "cweagans/composer-patches": true
         },
         "platform": {
-            "php": "8.0"
+            "php": "8.4"
         },
         "process-timeout": 0,
         "sort-packages": true
     },
-    "repositories": [
-        {
+    "repositories": {
+        "brianhenryie/strauss": {
+            "type": "package",
+            "package": {
+                "name": "brianhenryie/strauss",
+                "version": "0.28.1",
+                "dist": {
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.1/strauss.phar",
+                    "type": "phar"
+                },
+                "installation-source": "dist",
+                "bin": "bin/strauss"
+            }
+        },
+        "wordpress/wordpress": {
+            "type": "git",
             "url": "https://github.com/WordPress/wordpress-develop.git",
-            "type": "git"
+            "only": [
+                "wordpress/wordpress"
+            ]
         },
-        {
-            "type": "path",
-            "url": "../bh-wc-order-email-reconcile/"
-        },
-        {
-            "type": "path",
-            "url": "../bh-wp-mailboxes/"
-        },
-        {
+        "outlandish/wpackagist": {
             "type": "composer",
-            "url": "https://wpackagist.org"
+            "url": "https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*",
+                "wpackagist-theme/*"
+            ]
         }
-    ],
+    },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.4",
         "ext-json": "*",
         "alleyinteractive/wordpress-autoloader": "*",
-        "brianhenryie/bh-wc-order-email-reconcile": "dev-master",
-        "brianhenryie/bh-wp-logger": "^0.2",
+        "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
+        "brianhenryie/bh-wp-logger": "^0.3.4",
         "chillerlan/php-qrcode": "^5.0"
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
+        "brianhenryie/strauss": "0.28.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
-        "brianhenryie/php-codecoverage-markdown": "*",
-        "brianhenryie/strauss": "^0.26",
         "johnpbloch/wordpress": "*",
         "lucatume/wp-browser": "^4.5",
+        "php-stubs/woocommerce-stubs": "*",
         "phpstan/extension-installer": "*",
         "phpunit/phpcov": "*",
         "rector/rector": "^2.3",
         "szepeviktor/phpstan-wordpress": "*",
         "wordpress/wordpress": ">=6.9",
-        "wp-cli/dist-archive-command": "*",
-        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
+        "wpackagist-plugin/give": "^4",
         "wpackagist-plugin/query-monitor": "*",
         "wpackagist-plugin/woocommerce": ">=10.5",
         "wpackagist-plugin/wp-mail-debugger": "^1.1",
@@ -87,55 +98,36 @@
             ]
         },
         "classmap": [
-          "tests/unit",
-          "tests/wpunit",
-          "tests/integration",
-          "tests/_support"
+            "tests/unit",
+            "tests/wpunit",
+            "tests/integration",
+            "tests/_support"
         ]
     },
     "extra": {
         "strauss": {
             "namespace_prefix": "BrianHenryIE\\WP_Venmo_Gateway\\",
             "classmap_prefix": "BH_WP_Venmo_Gateway_",
-            "exclude_from_copy": {
-                "file_patterns": [
-                    "~psr/log/Psr/Log/Test.*~",
-                    "~^([^/]+/){2}wp-content~",
-                    "~^([^/]+/){2}scratch~",
-                    "~^([^/]+/){2}imap.so~",
-                    "~^([^/]+/){2}tests~",
-                    "~^([^/]+/){2}test-plugin~",
-                    "~^([^/]+/){2}codeception.dist.yml~",
-                    "~^([^/]+/){2}composer.lock~",
-                    "~^([^/]+/){2}phpcs.xml~",
-                    "~^([^/]+/){2}phpunit.xml~",
-                    "~^([^/]+/){2}.*.neon~",
-                    "~^([^/]+/){2}package.json~",
-                    "~^([^/]+/){2}package-lock.json~",
-                    "~^([^/]+/){2}wp-cli.yml~",
-                    "~^([^/]+/){2}\\..*~"
-                ]
-            },
             "namespace_replacement_patterns": {
                 "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
             }
-        },
-        "google/apiclient-services": [
-            "Gmail"
-        ]
+        }
     },
     "scripts": {
+        "prefix-namespaces": [
+            "php -d memory_limit=1G vendor/bin/strauss --info"
+        ],
         "post-install-cmd": [
-            "strauss --info",
-            "@sync-composer-wpenv"
+            "@prefix-namespaces"
         ],
         "post-update-cmd": [
-            "strauss --info",
-            "@sync-composer-wpenv"
+            "@prefix-namespaces"
         ],
-        "sync-composer-wpenv": [
-            "for name in $(cat .wp-env.json | jq '.mappings | values[]' | sed -r 's/^\\\"|\\\"$//g'); do [ ! -d $name ] && [ ! -f $name ] && echo $name && jq 'del(.. | select(. ==\"'$name'\"))' .wp-env.json | sponge .wp-env.json || true; done",
-            "find wp-content/plugins -type d -depth 1 ! -type l | sort -h | jq -Rn '[inputs]' | jq 'reduce .[] as $item ({}; . + {$item:$item})' | jq '.[] |= \"./\\(.)\"' | jq '. | {mappings: .}' | jq --sort-keys -s '.[] * $existing[]' --slurpfile existing .wp-env.json | sponge .wp-env.json"
+        "post-autoload-dump": [
+            "vendor/bin/strauss include-autoloader",
+            "php ./bin/sync-composer-wpenv.php",
+            "php ./bin/modify-autoload-patchwork.php",
+            "php ./bin/wpenv-mappings-to-phpstorm.php"
         ],
         "test": [
             "codecept run unit",
@@ -168,7 +160,7 @@
         "create-plugin-archive": [
             "wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
         ],
-        "github-actions":  [
+        "github-actions": [
             "act -P ubuntu-latest=shivammathur/node:latest"
         ]
     }

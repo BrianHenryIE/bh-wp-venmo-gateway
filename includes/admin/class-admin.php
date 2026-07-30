@@ -8,7 +8,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
 
 use BrianHenryIE\WP_Venmo_Gateway\WPTRT\AdminNotices\Notices;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 
 /**
  * Checks that:

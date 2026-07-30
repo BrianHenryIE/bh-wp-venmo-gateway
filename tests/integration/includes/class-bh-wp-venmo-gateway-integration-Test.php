@@ -8,7 +8,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
-use BrianHenryIE\WP_Venmo_Gateway\WooCommerce\Payment_Gateways;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 /**

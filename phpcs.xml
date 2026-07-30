@@ -15,6 +15,7 @@
     <arg name="colors"/>
 
     <exclude-pattern>/assets/</exclude-pattern>
+    <exclude-pattern>/bin/</exclude-pattern>
     <exclude-pattern>/dist-archive/</exclude-pattern>
     <exclude-pattern>/node_modules/</exclude-pattern>
     <exclude-pattern>/scratch/</exclude-pattern>
@@ -61,7 +62,12 @@
         <exclude-pattern>*</exclude-pattern>
     </rule>
 
-    <!-- Enforce fewer rules on tests -->
+	<!-- Give WP overrides -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase">
+		<exclude-pattern>includes/integrations/givewp/class-venmo-gateway.php</exclude-pattern>
+	</rule>
+
+	<!-- Enforce fewer rules on tests -->
     <rule ref="Generic.Commenting.DocComment.MissingShort">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
@@ -116,6 +122,23 @@
     <rule ref="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
+    <!-- Third-party GiveWP API object properties are camelCase and cannot be renamed. -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName">
+        <properties>
+            <property name="allowed_custom_properties" type="array">
+                <element value="gatewayId"/>
+                <element value="donationDetails"/>
+            </property>
+        </properties>
+    </rule>
+    <!-- GiveWP registers these capabilities; they are not core WordPress caps. -->
+    <rule ref="WordPress.WP.Capabilities">
+        <properties>
+            <property name="custom_capabilities" type="array">
+                <element value="edit_give_payments"/>
+            </property>
+        </properties>
+    </rule>
     <rule ref="WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
@@ -152,7 +175,7 @@
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
-    <!-- Run wild in the development pluing  -->
+    <!-- Run wild in the development plugin  -->
     <rule ref="WordPress.Security.NonceVerification.Recommended">
         <exclude-pattern>*/development-plugin/*</exclude-pattern>
     </rule>

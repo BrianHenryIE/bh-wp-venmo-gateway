@@ -15,8 +15,8 @@
  * Plugin Name:       Venmo Gateway
  * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-venmo-gateway/
  * Description:       Accepts payments via Venmo and reconciles WooCommerce orders through email receipts.
- * Version:           3.2.0
- * Requires PHP:      8.0
+ * Version:           4.1.0
+ * Requires PHP:      8.4
  * Author:            BrianHenryIE
  * Author URI:        http://BrianHenryIE.com/
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_Order_Email_Reconcile\BH_WC_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\BH_WP_Order_Email_Reconcile;
 use BrianHenryIE\WP_Venmo_Gateway\API\API;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger;
@@ -47,8 +47,9 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BH_WP_VENMO_GATEWAY_VERSION', '3.2.0' );
+define( 'BH_WP_VENMO_GATEWAY_VERSION', '4.1.0' );
 define( 'BH_WP_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
+define( 'BH_WP_VENMO_GATEWAY_FILE', __FILE__ );
 
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
@@ -68,7 +69,7 @@ function instantiate_bh_wp_venmo_gateway(): API {
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
 
-	$order_email_reconcile = BH_WC_Order_Email_Reconcile::instance( $settings, $logger );
+	$order_email_reconcile = BH_WP_Order_Email_Reconcile::make( $settings, $logger );
 
 	$api = new API( $order_email_reconcile, $settings, $logger );
 
