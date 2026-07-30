@@ -36,7 +36,7 @@ jobs:
       COMPOSER_ALLOW_UNSAFE_PHAR_METADATA: 1 # "Refusing to parse a tar/phar archive on PHP < 8.0 because it is not safe to process untrusted archives on that PHP version."
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Value already defaults to true, but `persist-credentials` is required to push new commits to the repository.
           persist-credentials: true
@@ -44,7 +44,7 @@ jobs:
 
       - name: Checkout GitHub Pages branch for code coverage report
         if: ${{ matrix.php == env.COVERAGE_PHP_VERSION }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: gh-pages
