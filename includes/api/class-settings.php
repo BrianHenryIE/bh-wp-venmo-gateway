@@ -5,6 +5,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
@@ -59,7 +60,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	}
 
 	public function get_plugin_version(): string {
-		return '4.1.0';
+		return '4.2.0';
 	}
 
 	/**
@@ -274,5 +275,12 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' )
 			? constant( 'BH_WP_VENMO_GATEWAY_BASENAME' )
 			: 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php';
+	}
+
+	/**
+	 * @see BH_WP_Mailboxes_Settings_Interface::get_rest_namespace()
+	 */
+	public function get_rest_namespace(): ?string {
+		return 'bh-wp-venmo-gateway';
 	}
 }

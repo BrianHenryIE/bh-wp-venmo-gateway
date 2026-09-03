@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.2.0 August 2026
+
+* Add: POSTing email via REST
+
 ### 4.1.0 – July 2026
 
 * Add Give WP support
