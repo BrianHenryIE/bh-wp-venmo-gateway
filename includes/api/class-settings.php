@@ -61,7 +61,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	/**
 	 *
 	 *
-	 * @return array|string
+	 * @return string[]
 	 */
 	public function get_payment_method_ids(): array {
 
