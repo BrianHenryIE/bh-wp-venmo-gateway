@@ -59,7 +59,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$this->description = $this->get_option( 'description' );
 
-		// Save the wp-admin configuration form options.
+		// Save the wp-admin configuration form options. /** @phpstan-ignore return.void  */
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Save the customer Venmo username to the order meta as the order is created (shortcode checkout).
