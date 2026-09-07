@@ -23,7 +23,7 @@ export async function login( user: { username: string; password: string }, page:
 	// which never settles on the WooCommerce my-account page (persistent requests).
 	await Promise.all( [
 		page.waitForLoadState( 'domcontentloaded' ),
-		page.locator( '#loginform' ).getByText( 'Log In' ).click(),
+		page.locator( '#loginform' ).getByRole( 'button', { name: 'Log In' } ).click(),
 	] );
 
 	expect( await isLoggedIn( page ) );

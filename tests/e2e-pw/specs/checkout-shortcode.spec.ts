@@ -18,6 +18,7 @@ const CUSTOMER_VENMO_USERNAME = 'brianhenryie';
 const STORE_VENMO_USERNAME = 'sackavs';
 
 test.describe( 'Venmo checkout (shortcode)', () => {
+	test.describe.configure( { mode: 'serial' } );
 
 	test.beforeEach( async ( { page } ) => {
 		// Delete all cookies so user is logged out and cart is empty
