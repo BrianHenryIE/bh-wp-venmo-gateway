@@ -6,6 +6,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
@@ -41,9 +42,6 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$this->plugin_settings = new Settings();
 
-		// Is this a good or bad idea?
-		$this->plugin_id = "{$this->plugin_settings->get_plugin_slug()}_";
-
 		$this->icon = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 
 		$this->has_fields = true;
@@ -69,6 +67,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		// Save the customer Venmo username for blocks checkout (Store API).
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'save_blocks_checkout_meta_data' ) );
+
+		// When the gateway's settings are saved, update the plugin's log level to match.
+		add_action( 'update_option_' . $this->get_option_key(), array( $this, 'update_plugin_log_level_on_settings_save' ), 10, 3 );
 
 		$this->enabled = ( 'yes' === $this->enabled & $this->is_configured() ) ? 'yes' : 'no';
 	}
@@ -123,11 +124,67 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		$credentials_fields = new Credentials_Settings_Fields();
 		$form_fields        = $credentials_fields->append_imap_reconcile_fields( $form_fields );
 
+		/**
+		 * The gateway's log level is shared with the entire plugin.
+		 * When the gateway's settings are saved, the value is synced to `bh_wp_venmo_gateway_log_level`.
+		 * When the gateway's settings are loaded, the value is overwritten by `bh_wp_venmo_gateway_log_level`
+		 *
+		 * @see self::update_plugin_log_level_on_settings_save()
+		 * @see self::init_settings()
+		 */
+		$log_levels        = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
+		$log_levels_option = array();
+		foreach ( $log_levels as $log_level ) {
+			$log_levels_option[ $log_level ] = ucfirst( $log_level );
+		}
+		unset( $log_levels, $log_level );
+
+		$form_fields['log_level'] = array(
+			'title'       => __( 'Log Level', 'bh-wp-venmo-gateway' ),
+			'label'       => __( 'Enable Logging', 'bh-wp-venmo-gateway' ),
+			'type'        => 'select',
+			'options'     => $log_levels_option,
+			// TODO: if there is more than one instance, display a note saying "log level is common the the plugin not this specific instance".
+			'description' => __( 'Increasingly detailed levels of logs. ', 'bh-wp-venmo-gateway' ) . '<a href="' . admin_url( 'admin.php?page=bh-wp-venmo-gateway-logs' ) . '">View Logs</a>',
+			'desc_tip'    => false,
+			'default'     => 'notice',
+			'id'          => 'log_level',
+		);
+
 		$this->form_fields = $form_fields;
 	}
 
 	/**
-	 * Prints the form displayed on the checkout.
+	 * Use a shared `log_level` setting across the plugin – all instances across WooCommerce and GiveWP use the plugin's log level.
+	 *
+	 * @return void
+	 */
+	public function init_settings() {
+		parent::init_settings();
+		$this->settings['log_level'] = get_option( 'bh_wp_venmo_gateway_log_level', $this->settings['log_level'] );
+	}
+
+	/**
+	 * When settings are saved, update the plugin's log level.
+	 *
+	 * @hooked update_option_woocommerce_venmo_settings
+	 * @see WC_Settings_API::update_option()
+	 * @see update_option()
+	 *
+	 * @param mixed|array{log_level?:string} $old_value The existing wp_options value.
+	 * @param mixed|array{log_level?:string} $value The value being saved.
+	 * @param string                         $option Always "woocommerce_venmo_settings".
+	 */
+	public function update_plugin_log_level_on_settings_save( $old_value, $value, string $option ): void {
+		if ( is_array( $old_value ) && isset( $old_value['log_level'] ) && $old_value['log_level'] === $value['log_level'] ) {
+			return;
+		}
+
+		update_option( 'bh_wp_venmo_gateway_log_level', $value['log_level'] );
+	}
+
+	/**
+	 * Frontend: prints the form displayed on the checkout.
 	 * i.e. a simple HTML text input for the Venmo username.
 	 */
 	public function payment_fields(): void {
