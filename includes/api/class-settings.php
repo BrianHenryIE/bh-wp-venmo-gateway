@@ -127,7 +127,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 */
 	protected function get_woo_settings( $gateway_id, string $setting ) {
 
-		$settings_id = "bh-wp-venmo-gateway_{$gateway_id}_settings";
+		$settings_id = "woocommerce_{$gateway_id}_settings";
 
 		$woo_settings = get_option( $settings_id, array() );
 
