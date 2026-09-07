@@ -138,6 +138,8 @@ class Register_Hooks {
 		add_filter( 'give_get_settings_gateways', array( $gateway_settings, 'register_settings' ) );
 		// Store the destination username as the bare handle (no leading "@").
 		add_filter( 'give_admin_settings_sanitize_option_venmo_store_username', array( $gateway_settings, 'sanitize_store_username' ) );
+		// Sync the log level to the plugin-wide setting shared with the WooCommerce gateway.
+		add_filter( 'give_admin_settings_sanitize_option_venmo_log_level', array( $gateway_settings, 'sanitize_log_level' ) );
 
 		$donation_receipt = new GiveWP_Donation_Receipt();
 		// Legacy (v2) confirmation page: replace the generic "currently processing"

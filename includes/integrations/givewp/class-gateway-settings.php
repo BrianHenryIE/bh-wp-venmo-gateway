@@ -9,12 +9,28 @@ declare(strict_types=1);
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway as WooCommerce_Venmo_Gateway;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 
 /**
  * Registers the Venmo section and its fields on GiveWP's gateway settings tab.
  */
 class Gateway_Settings {
+
+	/**
+	 * The wp_options key for the plugin-wide log level, shared with the WooCommerce gateway.
+	 *
+	 * @see Settings::get_log_level()
+	 * @see WooCommerce_Venmo_Gateway::update_plugin_log_level_on_settings_save()
+	 */
+	const LOG_LEVEL_OPTION_NAME = 'bh_wp_venmo_gateway_log_level';
+
+	/**
+	 * The GiveWP settings field id for the log level, stored inside the `give_settings` option.
+	 */
+	const LOG_LEVEL_FIELD_ID = 'venmo_log_level';
 
 	/**
 	 * Add the "Venmo" section to GiveWP gateway settings tabs.
@@ -58,12 +74,95 @@ class Gateway_Settings {
 			'placeholder' => '@username',
 		);
 
+		/**
+		 * The log level is shared with the entire plugin – the WooCommerce gateway settings page edits the same value.
+		 * When this section's settings are saved, the value is synced to `bh_wp_venmo_gateway_log_level`.
+		 * When this section is displayed, the stored GiveWP value is overwritten by `bh_wp_venmo_gateway_log_level`,
+		 * so a change made on the WooCommerce settings page is reflected here.
+		 *
+		 * @see self::sanitize_log_level()
+		 * @see WooCommerce_Venmo_Gateway::init_form_fields()
+		 */
+		$log_level = $this->get_shared_log_level();
+		if ( give_get_option( self::LOG_LEVEL_FIELD_ID ) !== $log_level ) {
+			give_update_option( self::LOG_LEVEL_FIELD_ID, $log_level );
+		}
+
+		$settings[] = array(
+			'name'    => __( 'Log Level', 'bh-wp-venmo-gateway' ),
+			'desc'    => __( 'Increasingly detailed levels of logs. Shared with the WooCommerce Venmo gateway. ', 'bh-wp-venmo-gateway' ) . '<a href="' . esc_url( $this->get_logs_page_url() ) . '">' . __( 'View Logs', 'bh-wp-venmo-gateway' ) . '</a>',
+			'id'      => self::LOG_LEVEL_FIELD_ID,
+			'type'    => 'select',
+			'options' => $this->get_log_level_options(),
+			'default' => $log_level,
+		);
+
 		$settings[] = array(
 			'id'   => 'give_title_venmo',
 			'type' => 'sectionend',
 		);
 
 		return $settings;
+	}
+
+	/**
+	 * When the log level is saved on the GiveWP settings page, update the plugin-wide log level to match.
+	 *
+	 * Invalid values fall back to the currently configured level.
+	 *
+	 * @hooked give_admin_settings_sanitize_option_venmo_log_level
+	 * @see \Give_Admin_Settings::save()
+	 *
+	 * @param mixed $value The sanitized value about to be saved into `give_settings`.
+	 */
+	public function sanitize_log_level( $value ): string {
+		$value = is_string( $value ) ? $value : '';
+
+		if ( ! array_key_exists( $value, $this->get_log_level_options() ) ) {
+			$value = $this->get_shared_log_level();
+		}
+
+		if ( $this->get_shared_log_level() !== $value ) {
+			update_option( self::LOG_LEVEL_OPTION_NAME, $value );
+		}
+
+		return $value;
+	}
+
+	/**
+	 * The plugin-wide log level, as configured on either the WooCommerce or GiveWP gateway settings page.
+	 *
+	 * @see Settings::get_log_level()
+	 */
+	private function get_shared_log_level(): string {
+		return get_option( self::LOG_LEVEL_OPTION_NAME, LogLevel::NOTICE );
+	}
+
+	/**
+	 * The selectable log levels, keyed by the PSR log level name, with "none" to disable logging.
+	 *
+	 * @see WooCommerce_Venmo_Gateway::init_form_fields() – the same list is used on the WooCommerce settings page.
+	 *
+	 * @return array<string, string>
+	 */
+	private function get_log_level_options(): array {
+		$log_levels = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
+
+		$options = array();
+		foreach ( $log_levels as $log_level ) {
+			$options[ $log_level ] = ucfirst( $log_level );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * The URL of the plugin's logs page, registered by the logger library.
+	 *
+	 * @see WooCommerce_Venmo_Gateway::init_form_fields()
+	 */
+	private function get_logs_page_url(): string {
+		return admin_url( 'admin.php?page=bh-wp-venmo-gateway-logs' );
 	}
 
 	/**

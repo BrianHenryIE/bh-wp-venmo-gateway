@@ -1,6 +1,6 @@
 <?php
 /**
- * Add additional settings (`woocommerce_checkout_page_id`) to  `/wp-json/wp/v2/settings`.
+ * Add additional settings (`woocommerce_checkout_page_id`, `bh_wp_venmo_gateway_log_level`) to  `/wp-json/wp/v2/settings`.
  *
  * @package brianhenryie/bh-wp-venmo-gateway
  */
@@ -23,6 +23,7 @@ class WooCommerce_Settings {
 	 * Expose settings through the REST API.
 	 *
 	 * `woocommerce_checkout_page_id`
+	 * `bh_wp_venmo_gateway_log_level`
 	 *
 	 * @hooked rest_pre_dispatch
 	 *
@@ -42,6 +43,15 @@ class WooCommerce_Settings {
 				'type'              => 'integer',
 				'sanitize_callback' => 'absint',
 				'default'           => 0,
+			);
+		}
+
+		if ( ! in_array( 'bh_wp_venmo_gateway_log_level', $wp_registered_settings, true ) ) {
+			$wp_registered_settings['bh_wp_venmo_gateway_log_level'] = array(
+				'show_in_rest'      => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'notice',
 			);
 		}
 
