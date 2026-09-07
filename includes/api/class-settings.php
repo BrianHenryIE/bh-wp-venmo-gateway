@@ -69,7 +69,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 		// If not?... cache it.
 		// Print a warning in the logs.
 
-		// if( ! did_action( 'woocommerce_payment_gateways' ) ) { rteturn
+		// if( ! did_action( 'woocommerce_payment_gateways' ) ) { return
 
 		if ( class_exists( WC_Payment_Gateways::class ) ) {
 			$gateway_subclasses = array();
