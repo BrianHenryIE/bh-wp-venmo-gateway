@@ -12,10 +12,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Account_Credentials_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\API\Ddeboer_Imap\IMAP_Credentials_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Defaults_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
@@ -29,8 +26,6 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	/**
 	 * @see Logger_Settings_Interface
 	 * @see IMAP_Reconcile_Settings_Interface
-	 *
-	 * @return string
 	 */
 	public function get_plugin_slug(): string {
 		return 'bh-wp-venmo-gateway';
