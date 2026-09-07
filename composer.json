@@ -30,21 +30,14 @@
             "type": "package",
             "package": {
                 "name": "brianhenryie/strauss",
-                "version": "0.28.1",
+                "version": "0.29.1",
                 "dist": {
-                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.1/strauss.phar",
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.29.1/strauss.phar",
                     "type": "phar"
                 },
                 "installation-source": "dist",
                 "bin": "bin/strauss"
             }
-        },
-        "wordpress/wordpress": {
-            "type": "git",
-            "url": "https://github.com/WordPress/wordpress-develop.git",
-            "only": [
-                "wordpress/wordpress"
-            ]
         },
         "outlandish/wpackagist": {
             "type": "composer",
@@ -60,14 +53,14 @@
         "ext-json": "*",
         "alleyinteractive/wordpress-autoloader": "*",
         "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
-        "brianhenryie/bh-wp-logger": "^0.3.4",
+        "brianhenryie/bh-wp-logger": ">0.4",
         "chillerlan/php-qrcode": "^5.0"
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
-        "brianhenryie/strauss": "0.28.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
+        "brianhenryie/strauss": "0.29.1",
         "johnpbloch/wordpress": "*",
         "lucatume/wp-browser": "^4.5",
         "php-stubs/woocommerce-stubs": "*",
@@ -75,7 +68,7 @@
         "phpunit/phpcov": "*",
         "rector/rector": "^2.3",
         "szepeviktor/phpstan-wordpress": "*",
-        "wordpress/wordpress": ">=6.9",
+        "wp-cli/dist-archive-command": "dev-main",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
         "wpackagist-plugin/give": "^4",

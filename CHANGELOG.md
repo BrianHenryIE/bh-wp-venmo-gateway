@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.2.1 September 2026
+
+* Fix: update bh-wp-logger and bh-wp-private-uploads to fix huge log files and undismissable notices.
+
 ### 4.2.0 August 2026
 
 * Add: POSTing email via REST
