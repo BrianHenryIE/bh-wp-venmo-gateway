@@ -4,7 +4,11 @@ PLUGIN_SLUG=$1;
 # Print the script name.
 echo "Running " $(basename "$0") " for " $PLUGIN_SLUG;
 
-mkdir /var/www/html/wp-content/uploads || true;
+if [ ! -d /var/www/html/wp-content/uploads ]; then
+  echo "mkdir /var/www/html/wp-content/uploads"
+  mkdir /var/www/html/wp-content/uploads
+fi
+
 chmod a+w /var/www/html/wp-content/uploads;
 
 echo "wp plugin activate --all"
