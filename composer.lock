@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cdfc2ead112b69ad7af6d1f49d93578d",
+    "content-hash": "fd48bdb44f89e85ed18588eddfc4d1a3",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -164,12 +164,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-logger.git",
-                "reference": "25049bf71785aa55195beb793b2b757a0876d6d8"
+                "reference": "37379c6393d8bda94ff1429a5474a1836bc75151"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-logger/zipball/25049bf71785aa55195beb793b2b757a0876d6d8",
-                "reference": "25049bf71785aa55195beb793b2b757a0876d6d8",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-logger/zipball/37379c6393d8bda94ff1429a5474a1836bc75151",
+                "reference": "37379c6393d8bda94ff1429a5474a1836bc75151",
                 "shasum": ""
             },
             "require": {
@@ -190,7 +190,7 @@
                 "brianhenryie/php-codecoverage-markdown": "*",
                 "ext-curl": "*",
                 "johnpbloch/wordpress": "*",
-                "lucatume/wp-browser": "^4.5",
+                "lucatume/wp-browser": "^4.7",
                 "php-stubs/woocommerce-stubs": "*",
                 "phpstan/extension-installer": "*",
                 "phpstan/phpstan-phpunit": "^2.0",
@@ -227,7 +227,7 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-logger/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-logger/tree/master"
             },
-            "time": "2026-09-03T16:59:55+00:00"
+            "time": "2026-09-08T19:59:47+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-mailboxes",
@@ -235,27 +235,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-mailboxes.git",
-                "reference": "2a4f06521cefac19de528b57cb017b4f65eb304b"
+                "reference": "5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/2a4f06521cefac19de528b57cb017b4f65eb304b",
-                "reference": "2a4f06521cefac19de528b57cb017b4f65eb304b",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a",
+                "reference": "5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a",
                 "shasum": ""
             },
             "require": {
+                "composer-runtime-api": "^2.2",
                 "directorytree/imapengine": "^1.25",
                 "ext-json": "*",
                 "php": ">=8.4",
-                "psr/log-implementation": "*",
+                "psr/log": "*",
+                "wordpress/secrets-api": "dev-main#ffe647beff839024722eac1964d310125388c355",
                 "wptrt/admin-notices": "^1.0"
             },
             "require-dev": {
                 "10up/wp_mock": "*",
                 "alleyinteractive/wordpress-autoloader": "^1.2",
                 "antecedent/patchwork": "^2.2",
-                "brianhenryie/bh-wp-logger": ">0.3.3",
-                "brianhenryie/bh-wp-private-uploads": "^0.4.0",
+                "brianhenryie/bh-wp-logger": ">=0.4",
+                "brianhenryie/bh-wp-private-uploads": ">=0.5.1",
                 "brianhenryie/color-logger": "*",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
                 "ext-dom": "*",
@@ -271,7 +273,7 @@
                 "squizlabs/php_codesniffer": "*",
                 "szepeviktor/phpstan-wordpress": "*",
                 "vlucas/phpdotenv": "*",
-                "wordpress/wordpress": "*",
+                "wordpress/wordpress": "7.1.0",
                 "wp-coding-standards/wpcs": "*",
                 "wpackagist-plugin/wp-crontrol": "^1.21",
                 "wpackagist-theme/twentytwenty": "*"
@@ -283,6 +285,11 @@
             "default-branch": true,
             "type": "library",
             "extra": {
+                "installer-paths": {
+                    "vendor/{$vendor}/{$name}/": [
+                        "wordpress/secrets-api"
+                    ]
+                },
                 "google/apiclient-services": [
                     "Gmail"
                 ]
@@ -307,7 +314,7 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-mailboxes/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-mailboxes/tree/master"
             },
-            "time": "2026-08-27T01:12:33+00:00"
+            "time": "2026-09-10T16:42:08+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-order-email-reconcile",
@@ -315,12 +322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile.git",
-                "reference": "d27d56345a6abbf43e2b8cad389159648ae9d621"
+                "reference": "79095c193c7467177f7de7651caabcd25ab296f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-order-email-reconcile/zipball/d27d56345a6abbf43e2b8cad389159648ae9d621",
-                "reference": "d27d56345a6abbf43e2b8cad389159648ae9d621",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-order-email-reconcile/zipball/79095c193c7467177f7de7651caabcd25ab296f3",
+                "reference": "79095c193c7467177f7de7651caabcd25ab296f3",
                 "shasum": ""
             },
             "require": {
@@ -332,7 +339,10 @@
             "require-dev": {
                 "10up/wp_mock": "*",
                 "antecedent/patchwork": "^2.1",
-                "brianhenryie/bh-wp-logger": ">0.3.4",
+                "brianhenryie/bh-wc-logger": "dev-master as 0.1.0 || dev-master || >=0.1.0",
+                "brianhenryie/bh-wp-cli-logger": "dev-master as 1.0 || dev-master || >=1.0",
+                "brianhenryie/bh-wp-logger": ">=0.4.0 || dev-master",
+                "brianhenryie/bh-wp-private-uploads": "dev-master as 0.5.1 || dev-master || >=0.5.1",
                 "brianhenryie/color-logger": "*",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
                 "ext-dom": "*",
@@ -349,7 +359,6 @@
                 "squizlabs/php_codesniffer": "*",
                 "szepeviktor/phpstan-wordpress": "*",
                 "vlucas/phpdotenv": "*",
-                "wordpress/wordpress": "*",
                 "wp-coding-standards/wpcs": "*",
                 "wpackagist-plugin/give": "^4.15",
                 "wpackagist-plugin/woocommerce": "*",
@@ -358,6 +367,13 @@
             },
             "default-branch": true,
             "type": "wordpress-library",
+            "extra": {
+                "installer-paths": {
+                    "vendor/{$vendor}/{$name}/": [
+                        "wordpress/secrets-api"
+                    ]
+                }
+            },
             "autoload": {
                 "classmap": [
                     "includes/"
@@ -378,20 +394,20 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile/tree/master"
             },
-            "time": "2026-08-22T07:47:53+00:00"
+            "time": "2026-09-10T17:43:48+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-private-uploads",
-            "version": "0.5.0",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-private-uploads.git",
-                "reference": "11aa63f7504b2f6cfec79474566dc3314f8aa422"
+                "reference": "06d92a3f1a3be79ccff96181c9109007cfb63899"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-private-uploads/zipball/11aa63f7504b2f6cfec79474566dc3314f8aa422",
-                "reference": "11aa63f7504b2f6cfec79474566dc3314f8aa422",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-private-uploads/zipball/06d92a3f1a3be79ccff96181c9109007cfb63899",
+                "reference": "06d92a3f1a3be79ccff96181c9109007cfb63899",
                 "shasum": ""
             },
             "require": {
@@ -401,25 +417,28 @@
                 "wptrt/admin-notices": "^1.0"
             },
             "require-dev": {
-                "10up/wp_mock": "^1.0",
+                "10up/wp_mock": ">1.0",
                 "alleyinteractive/wordpress-autoloader": "^1.2",
-                "antecedent/patchwork": "^2.1",
+                "antecedent/patchwork": "^2.2",
                 "behat/behat": "^3.29",
                 "brianhenryie/color-logger": "*",
                 "codeception/codeception": "^5.2.2",
-                "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.2.1",
                 "dvdoug/behat-code-coverage": "^5.3",
                 "ext-json": "*",
-                "johnpbloch/wordpress": "*",
-                "kamazee/pr-filter": "^1.1",
+                "johnpbloch/wordpress": "7.1.0",
                 "lucatume/wp-browser": "^4",
                 "phpstan/extension-installer": "*",
                 "phpunit/phpcov": "*",
                 "rector/rector": "^2.6",
-                "squizlabs/php_codesniffer": "*",
-                "szepeviktor/phpstan-wordpress": "*",
-                "wordpress/wordpress": "*",
-                "wp-coding-standards/wpcs": "*",
+                "szepeviktor/phpstan-wordpress": "^2.0.4",
+                "wordpress/wordpress": "7.1.0",
+                "wp-cli/dist-archive-command": "dev-main#be62a96becee07a47613f64ad52657bfcb856663",
+                "wp-cli/handbook": "dev-main#6b00d2d62b5f6be26789c674ab6f9bf7fa907300",
+                "wp-cli/wp-cli": "dev-main#97e0ac20290f2ef579ef87171bc7e62929ac3f42",
+                "wp-cli/wp-cli-bundle": "dev-main#789ab57db20822e1c306085584e058f2b5c3afeb",
+                "wp-cli/wp-cli-tests": "dev-main#902de26e34e8ba5e98a40f3132b7087af38ae638",
+                "wp-coding-standards/wpcs": "dev-develop#f72bcdfc4da28526a6e753bcecfaeff8a80a6d00",
                 "wpackagist-plugin/debug-log-manager": "*",
                 "wpackagist-plugin/document-generator-for-openapi": "*",
                 "wpackagist-plugin/monkeyman-rewrite-analyzer": "*",
@@ -455,22 +474,22 @@
             "description": "WordPress library for serving private/protected file uploads.",
             "support": {
                 "issues": "https://github.com/BrianHenryIE/bh-wp-private-uploads/issues",
-                "source": "https://github.com/BrianHenryIE/bh-wp-private-uploads/tree/0.5.0"
+                "source": "https://github.com/BrianHenryIE/bh-wp-private-uploads/tree/0.5.1"
             },
-            "time": "2026-09-03T16:45:17+00:00"
+            "time": "2026-09-08T20:59:32+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon-doctrine-types.git",
-                "reference": "18ba5ddfec8976260ead6e866180bd5d2f71aa1d"
+                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon-doctrine-types/zipball/18ba5ddfec8976260ead6e866180bd5d2f71aa1d",
-                "reference": "18ba5ddfec8976260ead6e866180bd5d2f71aa1d",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon-doctrine-types/zipball/5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
+                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
                 "shasum": ""
             },
             "require": {
@@ -485,6 +504,11 @@
                 "phpunit/phpunit": "^10.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Carbon\\Doctrine\\": "src/Carbon/Doctrine/"
@@ -510,7 +534,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CarbonPHP/carbon-doctrine-types/issues",
-                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.0"
+                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.1"
             },
             "funding": [
                 {
@@ -526,7 +550,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-09T16:56:22+00:00"
+            "time": "2026-09-06T14:11:38+00:00"
         },
         {
             "name": "chillerlan/php-qrcode",
@@ -1017,16 +1041,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v13.30.1",
+            "version": "v13.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "09fbf9c4441d1164b6178ad2f398d7e309450597"
+                "reference": "ed3a9da8ceab848cd5ed5bf1bd1236c412905522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/09fbf9c4441d1164b6178ad2f398d7e309450597",
-                "reference": "09fbf9c4441d1164b6178ad2f398d7e309450597",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/ed3a9da8ceab848cd5ed5bf1bd1236c412905522",
+                "reference": "ed3a9da8ceab848cd5ed5bf1bd1236c412905522",
                 "shasum": ""
             },
             "require": {
@@ -1073,11 +1097,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-08-28T14:38:21+00:00"
+            "time": "2026-09-03T14:32:12+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v13.30.1",
+            "version": "v13.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1123,16 +1147,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v13.30.1",
+            "version": "v13.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "52fd3118b71254dd083eca6acba39b3f7325ec9a"
+                "reference": "42b0c80ba672f3bfd404470d1e92af274ecc186b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/52fd3118b71254dd083eca6acba39b3f7325ec9a",
-                "reference": "52fd3118b71254dd083eca6acba39b3f7325ec9a",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/42b0c80ba672f3bfd404470d1e92af274ecc186b",
+                "reference": "42b0c80ba672f3bfd404470d1e92af274ecc186b",
                 "shasum": ""
             },
             "require": {
@@ -1167,11 +1191,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-08-10T17:21:54+00:00"
+            "time": "2026-09-06T21:12:06+00:00"
         },
         {
             "name": "illuminate/macroable",
-            "version": "v13.30.1",
+            "version": "v13.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1278,16 +1302,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "147f303310f06334f03f409e49d7ad1e275ff05a"
+                "reference": "72c534fc0ab181ef52d92a68382318631e301608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/147f303310f06334f03f409e49d7ad1e275ff05a",
-                "reference": "147f303310f06334f03f409e49d7ad1e275ff05a",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/72c534fc0ab181ef52d92a68382318631e301608",
+                "reference": "72c534fc0ab181ef52d92a68382318631e301608",
                 "shasum": ""
             },
             "require": {
@@ -1313,6 +1337,7 @@
                 "phpstan/phpstan-strict-rules": "^2",
                 "phpunit/phpunit": "^10.5.17 || ^11.0.7",
                 "predis/predis": "^1.1 || ^2",
+                "psr/clock": "^1.0",
                 "rollbar/rollbar": "^4.0",
                 "ruflin/elastica": "^7 || ^8",
                 "symfony/mailer": "^5.4 || ^6",
@@ -1331,6 +1356,7 @@
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "psr/clock": "Required to pass a clock to the Logger and control the timestamp of log records",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
@@ -1365,7 +1391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/3.11.0"
+                "source": "https://github.com/Seldaek/monolog/tree/3.12.0"
             },
             "funding": [
                 {
@@ -1377,7 +1403,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-02T12:39:56+00:00"
+            "time": "2026-09-09T08:34:20+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3041,6 +3067,63 @@
             "time": "2026-06-05T06:23:12+00:00"
         },
         {
+            "name": "wordpress/secrets-api",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ericmann/secrets-api",
+                "reference": "ffe647beff839024722eac1964d310125388c355"
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "php-stubs/wp-cli-stubs": "^2.9",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "^3.9",
+                "szepeviktor/phpstan-wordpress": "^2.0",
+                "wp-coding-standards/wpcs": "^3.1",
+                "yoast/phpunit-polyfills": "^2.0"
+            },
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "scripts": {
+                "lint": [
+                    "phpcs"
+                ],
+                "lint-fix": [
+                    "phpcbf"
+                ],
+                "compat": [
+                    "phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- --extensions=php src plugin cli secrets-api.php"
+                ],
+                "analyse": [
+                    "phpstan analyse --memory-limit=1G"
+                ],
+                "test": [
+                    "phpunit"
+                ],
+                "test-ms": [
+                    "phpunit -c phpunit-multisite.xml.dist"
+                ],
+                "ci": [
+                    "@lint",
+                    "@compat",
+                    "@analyse",
+                    "@test",
+                    "@test-ms"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Feature plugin for the WordPress Secrets API proposed for 7.2.",
+            "time": "2026-09-04T20:17:06+00:00"
+        },
+        {
             "name": "wptrt/admin-notices",
             "version": "v1.0.4",
             "source": {
@@ -3094,16 +3177,16 @@
         },
         {
             "name": "zbateson/mail-mime-parser",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zbateson/mail-mime-parser.git",
-                "reference": "f0f7ea3d5fc07471187e6369a7f32dbfea6220e0"
+                "reference": "4cc63e42154d0062812a11aac13f2772e4a5de55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/f0f7ea3d5fc07471187e6369a7f32dbfea6220e0",
-                "reference": "f0f7ea3d5fc07471187e6369a7f32dbfea6220e0",
+                "url": "https://api.github.com/repos/zbateson/mail-mime-parser/zipball/4cc63e42154d0062812a11aac13f2772e4a5de55",
+                "reference": "4cc63e42154d0062812a11aac13f2772e4a5de55",
                 "shasum": ""
             },
             "require": {
@@ -3166,7 +3249,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-30T17:53:06+00:00"
+            "time": "2026-09-09T17:40:56+00:00"
         },
         {
             "name": "zbateson/mb-wrapper",
@@ -3534,10 +3617,10 @@
         },
         {
             "name": "brianhenryie/strauss",
-            "version": "0.29.1",
+            "version": "0.29.2",
             "dist": {
                 "type": "phar",
-                "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.29.1/strauss.phar"
+                "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.29.2/strauss.phar"
             },
             "bin": [
                 "bin/strauss"
@@ -6174,11 +6257,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.12",
+            "version": "2.2.13",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/174b0d88710f00a42598886504dd7a146f91ace5",
-                "reference": "174b0d88710f00a42598886504dd7a146f91ace5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
+                "reference": "9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
                 "shasum": ""
             },
             "require": {
@@ -6234,7 +6317,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T19:09:43+00:00"
+            "time": "2026-09-03T20:38:19+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -9595,12 +9678,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "2fb37b616b583aae4202f4db6372107d60cbbdd7"
+                "reference": "97e0ac20290f2ef579ef87171bc7e62929ac3f42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/2fb37b616b583aae4202f4db6372107d60cbbdd7",
-                "reference": "2fb37b616b583aae4202f4db6372107d60cbbdd7",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/97e0ac20290f2ef579ef87171bc7e62929ac3f42",
+                "reference": "97e0ac20290f2ef579ef87171bc7e62929ac3f42",
                 "shasum": ""
             },
             "require": {
@@ -9672,7 +9755,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2026-09-03T09:30:48+00:00"
+            "time": "2026-09-07T06:30:37+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -9760,15 +9843,15 @@
         },
         {
             "name": "wpackagist-plugin/give",
-            "version": "4.16.7.2",
+            "version": "4.16.8.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/give/",
-                "reference": "tags/4.16.7.2"
+                "reference": "tags/4.16.8.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/give.4.16.7.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/give.4.16.8.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
