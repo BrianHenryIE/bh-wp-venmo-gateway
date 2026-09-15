@@ -24,7 +24,7 @@ VARIABLES:
 EXAMPLE (Request $2.00 from '@Username with note "Note here":
 https://account.venmo.com/pay?audience=private&amount=2.00&note=Note%20here&recipients=%2CUsername&txn=charge
 
-Requires php-imap / ext-imap
+
 
 
 https://developer.paypal.com/braintree/in-person/guides/paypal-and-venmo-qrc/
@@ -34,6 +34,10 @@ https://developer.paypal.com/docs/multiparty/checkout/pay-with-venmo/
 Someone else will always have done it first:
 * https://github.com/search?q=venmo%20qr&type=repositories
 * https://github.com/mmqn/venmo-qr-code-generator/blob/fc4a2d8c9d3f5a79b3eacc59638ace896a74d7d2/src/App.jsx#L21
+
+
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/BrianHenryIE/bh-wp-mailboxes-cloudflare-worker)
 
 
 TODO:
