@@ -46,7 +46,7 @@ class WooCommerce_Settings {
 			);
 		}
 
-		if ( ! in_array( 'bh_wp_venmo_gateway_log_level', $wp_registered_settings, true ) ) {
+		if ( ! array_key_exists( 'bh_wp_venmo_gateway_log_level', $wp_registered_settings ) ) {
 			$wp_registered_settings['bh_wp_venmo_gateway_log_level'] = array(
 				'show_in_rest'      => true,
 				'type'              => 'string',
