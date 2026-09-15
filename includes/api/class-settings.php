@@ -5,16 +5,14 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
+use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Account_Credentials_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\API\Ddeboer_Imap\IMAP_Credentials_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Mailbox_Settings_Defaults_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
@@ -28,20 +26,20 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	/**
 	 * @see Logger_Settings_Interface
 	 * @see IMAP_Reconcile_Settings_Interface
-	 *
-	 * @return string
 	 */
 	public function get_plugin_slug(): string {
 		return 'bh-wp-venmo-gateway';
 	}
 
 	/**
-	 * TODO: Add to WooCommerce settings.
+	 * The log level for the plugin, configured on the WooCommerce gateway settings page.
 	 *
-	 * @return string
+	 * `wp option update bh_wp_venmo_gateway_log_level`
+	 *
+	 * @see Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
 	public function get_log_level(): string {
-		return LogLevel::DEBUG;
+		return get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
 	}
 
 
@@ -59,13 +57,13 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	}
 
 	public function get_plugin_version(): string {
-		return '4.1.0';
+		return '4.3.0';
 	}
 
 	/**
 	 *
 	 *
-	 * @return array|string
+	 * @return string[]
 	 */
 	public function get_payment_method_ids(): array {
 
@@ -73,7 +71,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 		// If not?... cache it.
 		// Print a warning in the logs.
 
-		// if( ! did_action( 'woocommerce_payment_gateways' ) ) { rteturn
+		// if( ! did_action( 'woocommerce_payment_gateways' ) ) { return
 
 		if ( class_exists( WC_Payment_Gateways::class ) ) {
 			$gateway_subclasses = array();
@@ -131,7 +129,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	 */
 	protected function get_woo_settings( $gateway_id, string $setting ) {
 
-		$settings_id = "bh-wp-venmo-gateway_{$gateway_id}_settings";
+		$settings_id = "woocommerce_{$gateway_id}_settings";
 
 		$woo_settings = get_option( $settings_id, array() );
 
@@ -274,5 +272,12 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' )
 			? constant( 'BH_WP_VENMO_GATEWAY_BASENAME' )
 			: 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php';
+	}
+
+	/**
+	 * @see BH_WP_Mailboxes_Settings_Interface::get_rest_namespace()
+	 */
+	public function get_rest_namespace(): ?string {
+		return 'bh-wp-venmo-gateway';
 	}
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+### 4.3.0 September 2026
+
+* Add: shared log level setting, configurable on the WooCommerce and GiveWP gateway settings pages, with a link to the logs page.
+
+### 4.2.1 September 2026
+
+* Fix: update bh-wp-logger and bh-wp-private-uploads to fix huge log files and undismissable notices.
+
+### 4.2.0 August 2026
+
+* Add: POSTing email via REST
+
 ### 4.1.0 – July 2026
 
 * Add Give WP support

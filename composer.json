@@ -25,49 +25,46 @@
         "process-timeout": 0,
         "sort-packages": true
     },
-    "repositories": {
-        "brianhenryie/strauss": {
+    "repositories": [
+        {
+            "name": "ericmann/secrets-api",
+            "type": "git",
+            "url": "https://github.com/ericmann/secrets-api"
+        },
+        {
+            "name": "brianhenryie/strauss",
             "type": "package",
             "package": {
                 "name": "brianhenryie/strauss",
-                "version": "0.28.1",
+                "version": "0.29.2",
                 "dist": {
-                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.28.1/strauss.phar",
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.29.2/strauss.phar",
                     "type": "phar"
                 },
                 "installation-source": "dist",
                 "bin": "bin/strauss"
             }
         },
-        "wordpress/wordpress": {
-            "type": "git",
-            "url": "https://github.com/WordPress/wordpress-develop.git",
-            "only": [
-                "wordpress/wordpress"
-            ]
-        },
-        "outlandish/wpackagist": {
+        {
+            "name": "outlandish/wpackagist",
             "type": "composer",
             "url": "https://wpackagist.org",
-            "only": [
-                "wpackagist-plugin/*",
-                "wpackagist-theme/*"
-            ]
+            "only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
         }
-    },
+    ],
     "require": {
         "php": ">=8.4",
         "ext-json": "*",
         "alleyinteractive/wordpress-autoloader": "*",
+        "brianhenryie/bh-wp-logger": ">0.4",
         "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
-        "brianhenryie/bh-wp-logger": "^0.3.4",
         "chillerlan/php-qrcode": "^5.0"
     },
     "require-dev": {
         "10up/wp_mock": "^1.1",
-        "brianhenryie/strauss": "0.28.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
+        "brianhenryie/strauss": "0.29.2",
         "johnpbloch/wordpress": "*",
         "lucatume/wp-browser": "^4.5",
         "php-stubs/woocommerce-stubs": "*",
@@ -75,7 +72,7 @@
         "phpunit/phpcov": "*",
         "rector/rector": "^2.3",
         "szepeviktor/phpstan-wordpress": "*",
-        "wordpress/wordpress": ">=6.9",
+        "wp-cli/dist-archive-command": "dev-main",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^2.19",
         "wpackagist-plugin/give": "^4",
@@ -108,9 +105,43 @@
         "strauss": {
             "namespace_prefix": "BrianHenryIE\\WP_Venmo_Gateway\\",
             "classmap_prefix": "BH_WP_Venmo_Gateway_",
+            "constant_prefix": "BH_WP_VENMO_GATEWAY_",
             "namespace_replacement_patterns": {
                 "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
-            }
+            },
+            "override_autoload": {
+                "wordpress/secrets-api": {
+                    "classmap": ["src"]
+                }
+            },
+          "exclude_from_copy": {
+            "file_patterns": [
+              "#secrets-api/src/wp-admin#",
+              "#secrets-api/.github#",
+              "#secrets-api/bin#",
+              "#secrets-api/cli#",
+              "#secrets-api/docs#",
+              "#secrets-api/examples#",
+              "#secrets-api/plugin#",
+              "#secrets-api/tests#",
+              "#secrets-api/.gitignore#",
+              "#secrets-api/.wp-env.json#",
+              "#secrets-api/composer.lock#",
+              "#secrets-api/CONTRIBUTING.md#",
+              "#secrets-api/Makefile#",
+              "#secrets-api/phpcs.xml.dist#",
+              "#secrets-api/phpstan.neon.dist#",
+              "#secrets-api/phpunit.xml.dist#",
+              "#secrets-api/phpunit-multisite.xml.dist#",
+              "#secrets-api/secrets-api.php#",
+              "#secrets-api/SECURITY.md#"
+            ]
+          }
+        },
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}/": [
+                "wordpress/secrets-api"
+            ]
         }
     },
     "scripts": {

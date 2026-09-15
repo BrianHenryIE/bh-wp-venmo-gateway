@@ -30,7 +30,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [ '8.4', '8.5', '8.6' ]
+        php: [ '8.4', '8.5' ]
+#        php: [ '8.4', '8.5', '8.6' ] strauss failing with symfony/polyfill-iconv
 
     env:
       COMPOSER_ALLOW_UNSAFE_PHAR_METADATA: 1 # "Refusing to parse a tar/phar archive on PHP < 8.0 because it is not safe to process untrusted archives on that PHP version."
@@ -77,15 +78,15 @@ jobs:
       # NB: how would that affect tj-actions/changed-files?
 
       # Local repository references will always fail in CI. Remove them and let's hope the requirements are already up to date on Packagist.
-      - name: Remove local repository references
-        run: |
-          jq '
-            ([.repositories[] | select(.type=="path") | .only[]]) as $paths
-            | .repositories |= with_entries(select(.value.type != "path"))
-            | .require |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end))
-            | (.["require-dev"] |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end)))
-          ' composer.json > composer.json.tmp
-          mv composer.json.tmp composer.json
+#      - name: Remove local repository references
+#        run: |
+#          jq '
+#            ([.repositories[] | select(.type=="path") | .only[]]) as $paths
+#            | .repositories |= with_entries(select(.value.type != "path"))
+#            | .require |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end))
+#            | (.["require-dev"] |= with_entries(.key as $k | .value = (if ($paths | index($k)) then "*" else .value end)))
+#          ' composer.json > composer.json.tmp
+#          mv composer.json.tmp composer.json
 
       # TODO: on merge to main, the workflow should commit the updated composer.json.
 

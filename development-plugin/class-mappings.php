@@ -1,4 +1,10 @@
 <?php
+/**
+ * Fixes issues with symlinked directories. I.e. in the project directory, vendor is a sibling of development-plugin
+ * rather than a child, which is how it would be in a packaged plugin (e.g. in Playground).
+ *
+ * @package brianhenryie/bh-wp-venmo-gateway
+ */
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
 
@@ -25,8 +31,9 @@ class Mappings {
 	 * Partial fix for symlinks.
 	 *
 	 * @hooked plugins_url
+	 * @see plugins_url()
 	 */
-	public function plugins_url_fix( $url, $_path, $_plugin ) {
+	public function plugins_url_fix( string $url, string $_path, string $_plugin ): string {
 		$url = str_replace( 'wp-content/plugins/var/www/html/', '', $url );
 		$url = str_replace( 'plugins/development-plugin/vendor', 'uploads/bh-wp-venmo-gateway/vendor', $url );
 		$url = str_replace( 'plugins/development-plugin/includes', 'uploads/bh-wp-venmo-gateway/includes', $url );

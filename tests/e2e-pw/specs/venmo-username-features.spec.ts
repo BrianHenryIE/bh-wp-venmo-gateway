@@ -330,6 +330,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 // ──────────────────────────────────────────────────────────────────
 
 test.describe( 'Venmo username features (blocks)', () => {
+	test.describe.configure( { mode: 'serial' } );
 
 	test.beforeEach( async ( { page } ) => {
 		await page.context().clearCookies();

@@ -26,3 +26,26 @@
 /wp-cli.yml
 /wp-content
 /webpack.config.js
+
+/bin
+/spec.md
+/CLAUDE.md
+
+# In packages
+.github
+.php-cs-fixer.dist.php
+phpstan.neon
+PHPStanConstants.php
+PhpCsFixer.php
+vendor-prefixed/symfony/translation-contracts/Test
+vendor-prefixed/symfony/translation/Test
+.editorconfig
+.phpstorm.meta.php
+extension.neon
+CONTRIBUTING.md
+UPGRADE.md
+rules-magic-access.neon
+vendor-prefixed/chillerlan/php-settings-container/.phpstan
+.gitattributes
+.gitignore
+phpcs.xml
