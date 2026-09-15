@@ -176,6 +176,10 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 * @param string                         $option Always "woocommerce_venmo_settings".
 	 */
 	public function update_plugin_log_level_on_settings_save( $old_value, $value, string $option ): void {
+		if ( ! isset( $value['log_level'] ) ) {
+			return;
+		}
+
 		if ( is_array( $old_value ) && isset( $old_value['log_level'] ) && $old_value['log_level'] === $value['log_level'] ) {
 			return;
 		}
