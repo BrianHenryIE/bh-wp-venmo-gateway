@@ -163,9 +163,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	public function init_settings() {
 		parent::init_settings();
 		$log_levels = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
-		$log_level = get_option( 'bh_wp_venmo_gateway_log_level', $this->settings['log_level'] ?? 'notice' );
+		$log_level  = get_option( 'bh_wp_venmo_gateway_log_level', $this->settings['log_level'] ?? 'notice' );
 
-		if( ! in_array( $log_level, $log_levels, true ) ) {
+		if ( ! in_array( $log_level, $log_levels, true ) ) {
 			$log_level = 'notice';
 		}
 
