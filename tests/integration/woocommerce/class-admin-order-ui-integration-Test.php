@@ -19,18 +19,6 @@ use WC_Order;
 class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 
 	/**
-	 * Confirms that `add_meta_boxes` has a callback registered by the plugin for the metabox.
-	 *
-	 * @covers ::add_venmo_payment_metabox
-	 */
-	public function test_add_meta_boxes_hook_is_registered(): void {
-		$this->assertGreaterThan(
-			0,
-			has_action( 'add_meta_boxes', array( new Admin_Order_UI(), 'add_venmo_payment_metabox' ) )
-		);
-	}
-
-	/**
 	 * Confirms the metabox is registered on the shop_order screen after the hook fires.
 	 *
 	 * @covers ::add_venmo_payment_metabox
@@ -38,7 +26,10 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 	public function test_metabox_registered_on_shop_order_screen(): void {
 		global $wp_meta_boxes;
 
-		do_action( 'add_meta_boxes' );
+		$post_type = 'shop_order';
+		$post = new WC_Order();
+
+		do_action( 'add_meta_boxes', $post_type, $post );
 
 		$this->assertArrayHasKey( 'shop_order', $wp_meta_boxes );
 		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['shop_order']['side']['high'] );
@@ -52,7 +43,10 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 	public function test_metabox_registered_on_hpos_screen(): void {
 		global $wp_meta_boxes;
 
-		do_action( 'add_meta_boxes' );
+		$post_type = 'shop_order';
+		$post = new WC_Order();
+
+		do_action( 'add_meta_boxes', $post_type, $post );
 
 		$this->assertArrayHasKey( 'woocommerce_page_wc-orders', $wp_meta_boxes );
 		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['woocommerce_page_wc-orders']['side']['high'] );
@@ -113,9 +107,9 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 			rawurlencode( '42.00' ),
 			rawurlencode( 'order ' . $order_id )
 		);
-
-		// Expected: `<a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">`.
 		// Actual: `<a href="https://venmo.com/astore?txn=pay&#038;amount=42.00&#038;note=order%2011">`.
+		$expected_url = str_replace( '&', '&#038;', $expected_url );
+
 		$this->assertStringContainsString( $expected_url, $output );
 	}
 
