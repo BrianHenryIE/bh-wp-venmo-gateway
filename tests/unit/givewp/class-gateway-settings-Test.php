@@ -94,7 +94,9 @@ class Gateway_Settings_Test extends Unit_Testcase {
 
 		$settings = ( new Gateway_Settings() )->register_settings( array() );
 
-		$this->assertSame( 'error', $this->find_log_level_field( $settings )['default'] );
+		$field = $this->find_log_level_field( $settings );
+		$this->assertArrayHasKey( 'default', $field );
+		$this->assertSame( 'error', $field['default'] );
 	}
 
 	/**
