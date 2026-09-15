@@ -11,6 +11,7 @@ use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooComme
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use ReflectionClass;
 use WC_Order;
 use WC_Payment_Gateway;
 
@@ -161,7 +162,16 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	public function init_settings() {
 		parent::init_settings();
-		$this->settings['log_level'] = get_option( 'bh_wp_venmo_gateway_log_level', $this->settings['log_level'] );
+		$log_level = get_option( 'bh_wp_venmo_gateway_log_level', $this->settings['log_level'] ?? 'notice' );
+
+		if(
+			! in_array( $log_level, array_values( new ReflectionClass( LogLevel::class )->getConstants() ), true )
+			&& 'none' !== $log_level
+		) {
+			$log_level = 'notice';
+		}
+
+		$this->settings['log_level'] = $log_level;
 	}
 
 	/**
