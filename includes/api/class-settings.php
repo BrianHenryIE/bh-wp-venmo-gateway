@@ -34,6 +34,8 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 	/**
 	 * The log level for the plugin, configured on the WooCommerce gateway settings page.
 	 *
+	 * `wp option update bh_wp_venmo_gateway_log_level`
+	 *
 	 * @see Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
 	public function get_log_level(): string {
