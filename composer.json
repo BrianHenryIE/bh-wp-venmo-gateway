@@ -66,6 +66,7 @@
         "brianhenryie/color-logger": "*",
         "brianhenryie/strauss": "0.29.2",
         "johnpbloch/wordpress": "*",
+        "kamazee/pr-filter": "^1.1",
         "lucatume/wp-browser": "^4.5",
         "php-stubs/woocommerce-stubs": "*",
         "phpstan/extension-installer": "*",

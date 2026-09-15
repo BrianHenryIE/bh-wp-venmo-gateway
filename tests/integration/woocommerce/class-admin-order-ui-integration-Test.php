@@ -27,7 +27,7 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 		global $wp_meta_boxes;
 
 		$post_type = 'shop_order';
-		$post = new WC_Order();
+		$post      = new WC_Order();
 
 		do_action( 'add_meta_boxes', $post_type, $post );
 
@@ -44,7 +44,7 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 		global $wp_meta_boxes;
 
 		$post_type = 'shop_order';
-		$post = new WC_Order();
+		$post      = new WC_Order();
 
 		do_action( 'add_meta_boxes', $post_type, $post );
 
