@@ -6,6 +6,9 @@
 
 ### 4.2.1 September 2026
 
+* Add: link from the WooCommerce gateway settings page to the orders list filtered to pending and on-hold Venmo orders.
+* Add: "Unreconciled orders" admin page listing orders and donations awaiting a Venmo payment email (from bh-wp-order-email-reconcile), linked from plugins.php.
+* Update: bh-wp-order-email-reconcile – each processed email's extraction result is saved and shown on the email; reconciled emails are kept and link to their order.
 * Fix: update bh-wp-logger and bh-wp-private-uploads to fix huge log files and undismissable notices.
 
 ### 4.2.0 August 2026

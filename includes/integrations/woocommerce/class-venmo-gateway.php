@@ -91,12 +91,16 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$store_venmo_username_description = '';
 
+		$awaiting_payment_orders_url = ( new Orders_List_Filter() )->get_awaiting_payment_orders_url();
+
 		$form_fields = array(
 			'enabled'              => array(
-				'title'   => __( 'Enable/Disable', 'bh-wp-venmo-gateway' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enable This Gateway', 'bh-wp-venmo-gateway' ),
-				'default' => 'yes',
+				'title'       => __( 'Enable/Disable', 'bh-wp-venmo-gateway' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Enable This Gateway', 'bh-wp-venmo-gateway' ),
+				'default'     => 'yes',
+				'description' => '<a href="' . esc_url( $awaiting_payment_orders_url ) . '">' . __( 'View orders awaiting Venmo payment', 'bh-wp-venmo-gateway' ) . '</a>',
+				'desc_tip'    => false,
 			),
 			'title'                => array(
 				'title'       => __( 'Title', 'bh-wp-venmo-gateway' ),

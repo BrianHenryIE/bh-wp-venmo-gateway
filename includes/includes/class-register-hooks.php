@@ -11,6 +11,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
@@ -19,6 +20,7 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
@@ -80,6 +82,11 @@ class Register_Hooks {
 		$plugin_basename = $this->settings->get_plugin_basename();
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_settings_action_link' ) );
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_orders_action_link' ) );
+		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_unreconciled_orders_action_link' ) );
+
+		// The reconcile library's list of orders/donations still waiting for a payment email, as a hidden admin page linked from plugins.php.
+		$unreconciled_orders_menu = new Unreconciled_Orders_Menu( $this->api, $this->settings, $this->logger );
+		add_action( 'admin_menu', array( $unreconciled_orders_menu, 'register_submenu' ) );
 	}
 
 	/**
@@ -97,6 +104,11 @@ class Register_Hooks {
 
 		$admin_order_ui = new Admin_Order_UI();
 		add_action( 'add_meta_boxes', array( $admin_order_ui, 'add_venmo_payment_metabox' ) );
+
+		// The orders list filtered to Venmo orders awaiting payment, linked from the gateway settings page.
+		$orders_list_filter = new Orders_List_Filter();
+		add_filter( 'woocommerce_order_list_table_prepare_items_query_args', array( $orders_list_filter, 'filter_hpos_list_table_query_args' ) );
+		add_filter( 'request', array( $orders_list_filter, 'filter_legacy_list_table_query_vars' ) );
 
 		$admin_order_page = new Order( $this->settings, $this->logger );
 		// On admin order screen, show the Venmo username in place of the billing address.
