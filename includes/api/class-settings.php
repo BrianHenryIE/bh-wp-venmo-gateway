@@ -16,7 +16,7 @@ use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
-class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface, WooCommerce_Logger_Settings_Interface {
+class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interface {
 	use BH_WP_Mailboxes_Settings_Defaults_Trait, Logger_Settings_Trait {
 		BH_WP_Mailboxes_Settings_Defaults_Trait::get_cli_base insteadof Logger_Settings_Trait;
 		BH_WP_Mailboxes_Settings_Defaults_Trait::get_cli_base as mailboxes_cli_base;
@@ -247,6 +247,7 @@ class Settings implements Settings_Interface, Email_Reconcile_Settings_Interface
 
 		$patterns[] = new Pattern_1();
 		$patterns[] = new Pattern_2();
+		$patterns[] = new Pattern_3();
 
 		return $patterns;
 	}
