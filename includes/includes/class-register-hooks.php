@@ -11,6 +11,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
@@ -81,6 +82,11 @@ class Register_Hooks {
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_settings_action_link' ) );
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_orders_action_link' ) );
 	}
+		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_unreconciled_orders_action_link' ) );
+
+		// The reconcile library's list of orders/donations still waiting for a payment email, under the WooCommerce menu.
+		$unreconciled_orders_menu = new Unreconciled_Orders_Menu( $this->api, $this->settings, $this->logger );
+		add_action( 'admin_menu', array( $unreconciled_orders_menu, 'register_submenu' ) );
 
 	/**
 	 * Register the payment gateway and customise the UI.

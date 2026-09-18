@@ -7,6 +7,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\API as BH_WP_Order_Email_Reconcile;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Unpaid_Orders_Provider_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 
@@ -36,5 +37,14 @@ class API implements API_Interface {
 	public function check_for_payment_emails( $since = null ): void {
 
 		// $this->imap->check_for_payment_emails( $since );
+	}
+
+	/**
+	 * The reconcile library's aggregate provider of unpaid orders and donations.
+	 *
+	 * @see Unreconciled_Orders_Menu
+	 */
+	public function get_unpaid_orders_provider(): Unpaid_Orders_Provider_Interface {
+		return $this->reconciler->get_unpaid_orders_provider();
 	}
 }

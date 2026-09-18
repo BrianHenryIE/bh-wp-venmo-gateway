@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb7cbedc6eb156abfbbb46e4ab89708e",
+    "content-hash": "e764743a00b43b2eef53451afc53d3b7",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -235,12 +235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-mailboxes.git",
-                "reference": "5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a"
+                "reference": "71265dcef4999b2e364499362f4bcfd600c89ae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a",
-                "reference": "5ebbb6cb04214aea4ed7f201d9d49a0aa08edd6a",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/71265dcef4999b2e364499362f4bcfd600c89ae7",
+                "reference": "71265dcef4999b2e364499362f4bcfd600c89ae7",
                 "shasum": ""
             },
             "require": {
@@ -314,7 +314,7 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-mailboxes/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-mailboxes/tree/master"
             },
-            "time": "2026-09-10T16:42:08+00:00"
+            "time": "2026-09-16T18:06:49+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-order-email-reconcile",
@@ -322,12 +322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile.git",
-                "reference": "79095c193c7467177f7de7651caabcd25ab296f3"
+                "reference": "a0097ec9170adb1afb86ba2d003ba6184747b2fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-order-email-reconcile/zipball/79095c193c7467177f7de7651caabcd25ab296f3",
-                "reference": "79095c193c7467177f7de7651caabcd25ab296f3",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-order-email-reconcile/zipball/a0097ec9170adb1afb86ba2d003ba6184747b2fe",
+                "reference": "a0097ec9170adb1afb86ba2d003ba6184747b2fe",
                 "shasum": ""
             },
             "require": {
@@ -394,7 +394,7 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-order-email-reconcile/tree/master"
             },
-            "time": "2026-09-10T17:43:48+00:00"
+            "time": "2026-09-17T22:31:03+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-private-uploads",
@@ -3617,10 +3617,10 @@
         },
         {
             "name": "brianhenryie/strauss",
-            "version": "0.29.2",
+            "version": "0.30.0",
             "dist": {
                 "type": "phar",
-                "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.29.2/strauss.phar"
+                "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.30.0/strauss.phar"
             },
             "bin": [
                 "bin/strauss"
@@ -9991,15 +9991,15 @@
         },
         {
             "name": "wpackagist-plugin/checkout-fees-for-woocommerce",
-            "version": "2.19.0",
+            "version": "3.3.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/checkout-fees-for-woocommerce/",
-                "reference": "tags/2.19.0"
+                "reference": "tags/3.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/checkout-fees-for-woocommerce.2.19.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/checkout-fees-for-woocommerce.3.3.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
