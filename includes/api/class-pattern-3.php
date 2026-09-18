@@ -55,7 +55,7 @@ class Pattern_3 implements Email_Extract_Settings_Interface {
 	}
 
 	/**
-	 * This is including the currency symbol. Should it?
+	 * Value as string, no currency symbol.
 	 */
 	public function get_amount_regex(): string {
 		return '/title>.*?\s*paid you\s*\$(.*)<\/title>/';
