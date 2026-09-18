@@ -84,7 +84,7 @@ class Register_Hooks {
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_orders_action_link' ) );
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_unreconciled_orders_action_link' ) );
 
-		// The reconcile library's list of orders/donations still waiting for a payment email, under the WooCommerce menu.
+		// The reconcile library's list of orders/donations still waiting for a payment email, as a hidden admin page linked from plugins.php.
 		$unreconciled_orders_menu = new Unreconciled_Orders_Menu( $this->api, $this->settings, $this->logger );
 		add_action( 'admin_menu', array( $unreconciled_orders_menu, 'register_submenu' ) );
 	}
