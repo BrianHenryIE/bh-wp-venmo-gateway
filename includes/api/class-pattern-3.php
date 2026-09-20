@@ -3,6 +3,8 @@
  * @package brianhenryie/bh-wp-venmo-gateway
  */
 
+declare(strict_types=1);
+
 namespace BrianHenryIE\WP_Venmo_Gateway\API;
 
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;

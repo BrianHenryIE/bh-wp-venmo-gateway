@@ -186,12 +186,14 @@ class Venmo_Payment_Email {
 	 * @param string $transaction_id A random Venmo-style transaction id.
 	 */
 	protected function substitute_html( string $html, string $customer_name, string $amount, string $note, string $transaction_id ): string {
-		list( $dollars, $cents ) = explode( '.', $amount );
+		list( $dollars, $cents )                   = explode( '.', $amount );
+		list( $template_dollars, $template_cents ) = explode( '.', self::TEMPLATE_AMOUNT );
 
 		$html = str_replace( self::TEMPLATE_CUSTOMER_NAME, $customer_name, $html );
 		$html = str_replace( '$' . self::TEMPLATE_AMOUNT, '$' . $amount, $html );
-		$html = str_replace( 'line-height:40px">46</div>', 'line-height:40px">' . $dollars . '</div>', $html );
-		$html = (string) preg_replace( '/(padding-top:1px">)00(<\/div>)/', '${1}' . $cents . '$2', $html, 1 );
+		// The dollars and cents are in separate elements, identified by the end of their inline style.
+		$html = str_replace( 'line-height:40px">' . $template_dollars . '</div>', 'line-height:40px">' . $dollars . '</div>', $html );
+		$html = (string) preg_replace( '/(padding-top:1px">)' . preg_quote( $template_cents, '/' ) . '(<\/div>)/', '${1}' . $cents . '$2', $html, 1 );
 		$html = str_replace( self::TEMPLATE_NOTE, $note, $html );
 		$html = str_replace( self::TEMPLATE_TRANSACTION_ID, $transaction_id, $html );
 

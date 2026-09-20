@@ -79,7 +79,7 @@ class Plugins_Page {
 	 * Add an "Unreconciled orders" link to the reconcile library's page listing orders awaiting a payment email.
 	 *
 	 * This view lists both WooCommerce and GiveWP orders, which is why we do not link to their native view directly.
-	 * TODO: Check what plugins are acitive and prefer the native view.
+	 * TODO: Check what plugins are active and prefer the native view.
 	 *
 	 * @hooked plugin_action_links_{$plugin_basename}
 	 * @see \WP_Plugins_List_Table::single_row()

@@ -45,6 +45,7 @@ class Reconciliation_Email_Metabox {
 	 * Register the metabox on both the legacy (shop_order post) and HPOS (woocommerce_page_wc-orders) screens.
 	 *
 	 * @hooked add_meta_boxes
+	 * @see do_meta_boxes()
 	 */
 	public function add_metabox(): void {
 		foreach ( array( 'shop_order', 'woocommerce_page_wc-orders' ) as $screen ) {
@@ -95,17 +96,18 @@ class Reconciliation_Email_Metabox {
 	 * Reached by the link in the metabox: `admin-post.php?action=...&order_id=...&_wpnonce=...`.
 	 *
 	 * @hooked admin_post_bh_wp_venmo_gateway_send_reconciliation_email
+	 * @see wp-admin/admin-post.php
 	 */
 	public function handle_send(): void {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- verified on the next line; the order id is part of the nonce action.
 		$order_id = isset( $_GET['order_id'] ) ? absint( wp_unslash( $_GET['order_id'] ) ) : 0;
 
-		check_admin_referer( self::ACTION . '_' . $order_id );
-
-		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce capability.
-		if ( ! current_user_can( 'edit_shop_orders' ) ) {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce meta capability for this order.
+		if ( ! current_user_can( 'edit_shop_order', $order_id ) ) {
 			wp_die( 'You are not allowed to do that.', '', array( 'response' => 403 ) );
 		}
+
+		check_admin_referer( self::ACTION . '_' . $order_id );
 
 		$order = wc_get_order( $order_id );
 		if ( ! ( $order instanceof WC_Order ) ) {
@@ -138,6 +140,7 @@ class Reconciliation_Email_Metabox {
 	 * Show the outcome of the last send on the order screen.
 	 *
 	 * @hooked admin_notices
+	 * @see wp-admin/admin-header.php
 	 */
 	public function print_result_notice(): void {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display only, set by our own redirect.
