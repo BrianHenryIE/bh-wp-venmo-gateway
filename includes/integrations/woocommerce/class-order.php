@@ -9,6 +9,7 @@ namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
+use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
 use WC_Order;
 use WC_Payment_Gateways;
@@ -18,7 +19,7 @@ class Order {
 
 	public function __construct(
 		protected Settings_Interface $settings,
-		$logger
+		LoggerInterface $logger
 	) {
 		$this->setLogger( $logger );
 	}

@@ -498,9 +498,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		/**
 		 * Filter the method title.
 		 *
-		 * @param string $title Method title.
-		 * @param WC_Payment_Gateway $this Payment gateway instance.
-		 * @return string
+		 * @param string             $title   Method title.
+		 * @param WC_Payment_Gateway $gateway Payment gateway instance.
 		 */
 		return apply_filters( 'woocommerce_gateway_method_title', $method_title, $this );
 	}
@@ -563,6 +562,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		// Fallback to previous order meta (if logged in)
 		if ( $customer_id > 0 ) {
+			/** @var WC_Order[] $orders */
 			$orders = wc_get_orders(
 				array(
 					'customer_id'    => $customer_id,
@@ -573,9 +573,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 				)
 			);
 
-			if ( ! empty( $orders ) && $orders[0] instanceof WC_Order ) {
-				$username = $orders[0]->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
-				if ( ! empty( $username ) ) {
+			if ( isset( $orders[0] ) ) {
+				$username = (string) $orders[0]->get_meta( self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
+				if ( '' !== $username ) {
 					return $username;
 				}
 			}

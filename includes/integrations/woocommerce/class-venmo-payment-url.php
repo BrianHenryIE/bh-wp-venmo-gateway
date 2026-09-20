@@ -68,7 +68,7 @@ class Venmo_Payment_Url {
 	/**
 	 * Get the browser payment URL for printing. Returns a string split with `<span>` and `&ZeroWidthSpace;` for line-breaks.
 	 */
-	public function get_html() {
+	public function get_html(): string {
 
 		$venmo_payment_url_display = sprintf(
 			'<span>venmo.com/</span>&ZeroWidthSpace;<span>%s?</span>&ZeroWidthSpace;<span>txn=pay&</span>&ZeroWidthSpace;<span>amount=%s&</span>&ZeroWidthSpace;<span>note=%s</span>',

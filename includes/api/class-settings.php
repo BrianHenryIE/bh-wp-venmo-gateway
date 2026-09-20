@@ -11,7 +11,6 @@ use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Setti
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Account_Credentials_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
@@ -42,15 +41,11 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 		return get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
 	}
 
-
-
 	/**
 	 * This bool determines if the cron job is created (if absent) or deleted (if present).
 	 *
 	 * TODO: use the actual settings! (validate...)
 	 * TODO: add filter.
-	 *
-	 * @return bool
 	 */
 	public function is_imap_reconcile_enabled(): bool {
 		return true;
@@ -119,117 +114,6 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 */
 	public function get_email_accounts_cpt_friendly_name(): string {
 		return 'Venmo Email Accounts';
-	}
-
-	/**
-	 * Helper function to return settings saved by WooCommerce.
-	 *
-	 * @param string $setting
-	 * @return mixed
-	 */
-	protected function get_woo_settings( $gateway_id, string $setting ) {
-
-		$settings_id = "woocommerce_{$gateway_id}_settings";
-
-		$woo_settings = get_option( $settings_id, array() );
-
-		return $woo_settings[ $setting ] ?? false;
-	}
-
-	/**
-	 * The settings for the mailboxes to be checked.
-	 *
-	 * @return Mailbox_Settings_Interface[]
-	 */
-	public function get_configured_mailbox_settings(): array {
-
-		$mailboxes = array();
-		foreach ( $this->get_payment_method_ids() as $gateway_id ) {
-
-			$email_imap_server      = $this->get_woo_settings( $gateway_id, 'email_server' );
-			$email_account_username = $this->get_woo_settings( $gateway_id, 'email_username' );
-			$email_account_password = $this->get_woo_settings( $gateway_id, 'email_password' );
-
-			if ( empty( $email_imap_server ) || empty( $email_account_username ) || empty( $email_account_password ) ) {
-				continue;
-			}
-
-			$action = $this->get_woo_settings( $gateway_id, 'after_reconcile_email_action' );
-
-			$mailboxes[] = new class( $gateway_id, $email_imap_server, $email_account_username, $email_account_password, $action ) implements Mailbox_Settings_Interface {
-				use Mailbox_Settings_Defaults_Trait;
-
-				protected Account_Credentials_Interface $credentials;
-
-				public function __construct( protected string $gateway_id, $email_imap_server, $email_account_username, $email_account_password, protected string $action ) {
-					$imap_credentials = new class($email_imap_server, $email_account_username, $email_account_password) implements IMAP_Credentials_Interface {
-
-						public function __construct( protected string $email_imap_server, protected string $email_account_username, protected string $email_account_password ) {
-						}
-
-						public function get_email_imap_server(): string {
-							return $this->email_imap_server;
-						}
-
-						public function get_email_account_username(): string {
-							return $this->email_account_username;
-						}
-
-						public function get_email_account_password(): string {
-							return $this->email_account_password;
-						}
-					};
-
-					$this->credentials = $imap_credentials;
-				}
-
-				/**
-				 * Should the email be deleted after it is reconciled?
-				 *
-				 * Default: mark_read.
-				 * On staging sites: nothing.
-				 *
-				 * @return string nothing|mark_read|delete
-				 */
-				public function after_reconcile_email_action(): string {
-
-					if ( 'production' !== wp_get_environment_type() ) {
-						return 'nothing';
-					}
-
-					return in_array( $this->action, array( 'nothing', 'mark_read', 'delete' ), true ) ? $this->action : 'mark_read';
-				}
-
-				/**
-				 * Do not filter to a specific email address.
-				 *
-				 * @return null
-				 */
-				public function get_from_email_regex(): ?string {
-					return null;
-				}
-
-				/**
-				 * Ignore emails that don't mention https://venmo.com/
-				 *
-				 * @return string
-				 */
-				public function get_identifier_regex(): ?string {
-					return '/https:\/\/venmo.com\//';
-				}
-
-
-				public function get_account_unique_friendly_name(): string {
-					return $this->gateway_id;
-				}
-
-				public function get_credentials(): Account_Credentials_Interface {
-					return $this->credentials;
-				}
-			};
-
-		}
-		return $mailboxes;
 	}
 
 	/**

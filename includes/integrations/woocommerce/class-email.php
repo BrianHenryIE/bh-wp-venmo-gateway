@@ -86,7 +86,7 @@ class Email {
 		$instructions .= "<p><a href=\"{$venmo_payment_url}\">Open Venmo</a></p>";
 
 		// TODO: escape output.
-		if ( $instructions && ! $sent_to_admin && $order->has_status( 'on-hold' ) ) {
+		if ( ! $sent_to_admin && $order->has_status( 'on-hold' ) ) {
 			echo wptexturize( $instructions ) . PHP_EOL;
 		}
 	}

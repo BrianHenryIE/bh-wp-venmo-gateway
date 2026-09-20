@@ -36,7 +36,7 @@ class Admin {
 	 */
 	public function init_notices(): void {
 
-		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		if ( ! is_admin() && ! wp_doing_ajax() ) {
 			return;
 		}
 

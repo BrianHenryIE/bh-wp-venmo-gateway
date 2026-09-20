@@ -78,7 +78,8 @@ test.describe( 'Venmo GiveWP gateway settings', () => {
 		await expect( select ).toBeVisible();
 		await expect( select.locator( 'option' ) ).toHaveText( [ 'None', 'Error', 'Warning', 'Notice', 'Info', 'Debug' ] );
 
-		const logsLink = page.locator( 'a', { hasText: 'View Logs' } );
+		// Scoped to the field's row: the logger's "recent error" admin notice also carries a "View Logs" link.
+		const logsLink = page.locator( 'tr', { has: select } ).getByRole( 'link', { name: 'View Logs' } );
 		await expect( logsLink ).toBeVisible();
 		await expect( logsLink ).toHaveAttribute( 'href', /admin\.php\?page=bh-wp-venmo-gateway-logs/ );
 	} );

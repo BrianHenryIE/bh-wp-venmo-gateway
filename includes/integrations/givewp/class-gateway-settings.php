@@ -209,7 +209,7 @@ class Gateway_Settings {
 			if ( ! empty( $payments ) ) {
 				// give_get_payments() returns WP_Post objects; the date is post_date.
 				$post_date = get_post_field( 'post_date', $payments[0]->ID );
-				$timestamp = is_string( $post_date ) ? strtotime( $post_date ) : false;
+				$timestamp = strtotime( $post_date );
 				if ( false !== $timestamp ) {
 					$when = date_i18n( $date_format, $timestamp );
 				}
