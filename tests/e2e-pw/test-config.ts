@@ -9,6 +9,15 @@ export const testConfig = {
 			username: 'customer',
 			password: 'password',
 		},
+		// Created in initialize-internal.sh.
+		shopManager: {
+			username: 'shopmanager',
+			password: 'password',
+		},
+		giveManager: {
+			username: 'givemanager',
+			password: 'password',
+		},
 	},
 	products: {
 		simple: {

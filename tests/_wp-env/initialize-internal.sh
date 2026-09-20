@@ -102,6 +102,11 @@ wp option patch update give_settings venmo_store_username 'testvendor' 2>/dev/nu
 # the link would never appear. (mark-paid.spec.ts depends on this.)
 wp user meta update 1 _give_donations_archive_show_legacy 1 2>/dev/null || true
 
+# Non-administrator users for the roles e2e tests: WooCommerce shop manager and GiveWP manager.
+wp user get shopmanager --field=ID >/dev/null 2>&1 || wp user create shopmanager shopmanager@example.com --role=shop_manager --user_pass=password --display_name="Shop Manager"
+wp user get givemanager --field=ID >/dev/null 2>&1 || wp user create givemanager givemanager@example.com --role=give_manager --user_pass=password --display_name="GiveWP Manager"
+
+
 # Create GiveWP demo pages (gives/history/etc.) for manual developer browsing.
 wp give test-demonstration-page 2>/dev/null || true
 

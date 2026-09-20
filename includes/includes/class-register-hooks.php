@@ -10,6 +10,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
@@ -76,6 +77,10 @@ class Register_Hooks {
 
 		$admin = new Admin();
 		add_action( 'plugins_loaded', array( $admin, 'init_notices' ) );
+
+		// Let shop managers and GiveWP managers view and process payment emails; accounts remain administrator-only.
+		$capabilities = new Capabilities( $this->settings );
+		add_filter( 'bh_wp_mailboxes_required_capability', array( $capabilities, 'filter_required_capability' ), 10, 3 );
 		add_action( 'admin_init', array( $admin, 'add_setup_notice' ) );
 
 		$plugins_page    = new Plugins_Page();
@@ -85,7 +90,7 @@ class Register_Hooks {
 		add_filter( "plugin_action_links_{$plugin_basename}", array( $plugins_page, 'add_unreconciled_orders_action_link' ) );
 
 		// The reconcile library's list of orders/donations still waiting for a payment email, as a hidden admin page linked from plugins.php.
-		$unreconciled_orders_menu = new Unreconciled_Orders_Menu( $this->api, $this->settings, $this->logger );
+		$unreconciled_orders_menu = new Unreconciled_Orders_Menu( $this->api, $this->settings, $capabilities, $this->logger );
 		add_action( 'admin_menu', array( $unreconciled_orders_menu, 'register_submenu' ) );
 	}
 

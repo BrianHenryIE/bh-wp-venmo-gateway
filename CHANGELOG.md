@@ -6,6 +6,7 @@
 
 ### 4.2.1 September 2026
 
+* Add: WooCommerce shop managers and GiveWP managers can view and process payment emails and view unreconciled orders; email accounts and logs remain administrator-only.
 * Add: link from the WooCommerce gateway settings page to the orders list filtered to pending and on-hold Venmo orders.
 * Add: "Unreconciled orders" admin page listing orders and donations awaiting a Venmo payment email (from bh-wp-order-email-reconcile), linked from plugins.php.
 * Update: bh-wp-order-email-reconcile – each processed email's extraction result is saved and shown on the email; reconciled emails are kept and link to their order.

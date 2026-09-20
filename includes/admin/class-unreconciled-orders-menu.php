@@ -34,18 +34,15 @@ class Unreconciled_Orders_Menu {
 	const PARENT_SLUG = '';
 
 	/**
-	 * The capability required to view the page.
-	 */
-	const CAPABILITY = 'manage_woocommerce';
-
-	/**
-	 * @param API_Interface      $api      Provides the unpaid orders provider the page lists.
-	 * @param Settings_Interface $settings The plugin settings.
-	 * @param LoggerInterface    $logger   PSR logger.
+	 * @param API_Interface      $api          Provides the unpaid orders provider the page lists.
+	 * @param Settings_Interface $settings     The plugin settings.
+	 * @param Capabilities       $capabilities Decides the capability the page requires for the current user.
+	 * @param LoggerInterface    $logger       PSR logger.
 	 */
 	public function __construct(
 		protected API_Interface $api,
 		protected Settings_Interface $settings,
+		protected Capabilities $capabilities,
 		protected LoggerInterface $logger,
 	) {
 	}
@@ -57,7 +54,7 @@ class Unreconciled_Orders_Menu {
 	 * @see Unreconciled_Orders_Page::register_submenu()
 	 */
 	public function register_submenu(): void {
-		$this->get_page()->register_submenu( self::PARENT_SLUG, self::CAPABILITY );
+		$this->get_page()->register_submenu( self::PARENT_SLUG, $this->capabilities->get_payment_emails_capability() );
 	}
 
 	/**

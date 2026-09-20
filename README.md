@@ -55,6 +55,38 @@ What does  /checkout/order-pay/ look like? I think when an order is on-hold that
 `wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time; wp cron event run bh_wp_venmo_gateway_check_for_payment_emails`
 
 
+## Roles and permissions
+
+Everything in the plugin's WooCommerce and GiveWP settings is gated by those plugins' own capabilities. The payment
+emails (the mailbox provided by [bh-wp-mailboxes](https://github.com/BrianHenryIE/bh-wp-mailboxes)) are
+administrator-only by default; the plugin lowers that for the roles that process payments:
+
+| Screen / action | Administrator | WooCommerce Shop manager | GiveWP Manager |
+|---|---|---|---|
+| Emails list, single email, mark read/unread, delete on server, change status | ✓ | ✓ (`manage_woocommerce`) | ✓ (`manage_give_settings`) |
+| Extraction result on an email; email log notes | ✓ | ✓ | ✓ |
+| Unreconciled orders page | ✓ | ✓ | ✓ |
+| Email accounts: add/edit, credentials, "Check now" | ✓ (`manage_options`) | – | – |
+| Logs page | ✓ (`manage_options`) | – | – |
+| WooCommerce gateway settings | ✓ | ✓ | – |
+| GiveWP gateway settings, "Mark paid" on a donation | ✓ | – | ✓ (`edit_give_payments`) |
+
+The GiveWP counterpart of WooCommerce's Shop manager is the **GiveWP Manager** (`give_manager`) role. GiveWP's
+Accountant (`give_accountant`) can mark donations paid (`edit_give_payments`) but does not get the emails, since it
+lacks `manage_give_settings`; grant it via the filter below if wanted.
+
+The mapping lives in `Admin\Capabilities`, which answers bh-wp-mailboxes' `bh_wp_mailboxes_required_capability` filter
+for the emails post type only, so account management stays with administrators. To change it, add a later filter:
+
+```php
+add_filter( 'bh_wp_mailboxes_required_capability', function ( string $required, string $capability, string $post_type ): string {
+	return 'venmo_payment_emails' === $post_type ? 'edit_give_payments' : $required;
+}, 20, 3 );
+```
+
+The REST ingress (the Cloudflare worker delivering emails) authenticates with an application password; that user
+needs the same capability, i.e. administrator, shop manager or GiveWP manager.
+
 ## Venmo Transaction Fees
 
 https://help.venmo.com/cs/articles/business-profile-transaction-fees-vhel221
