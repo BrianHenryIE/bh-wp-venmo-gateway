@@ -73,10 +73,9 @@ function instantiate_bh_wp_venmo_gateway(): API {
 
 	$api = new API( $order_email_reconcile, $settings, $logger );
 
-	$plugin = new Register_Hooks( $api, $settings, $logger );
+	new Register_Hooks( $api, $settings, $logger );
 
 	return $api;
 }
 
-/** @var API $GLOBALS['bh_wp_venmo_gateway'] */
 $GLOBALS['bh_wp_venmo_gateway'] = instantiate_bh_wp_venmo_gateway();

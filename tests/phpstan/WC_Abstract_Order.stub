@@ -1,0 +1,21 @@
+<?php
+/**
+ * PHPStan stub correcting `WC_Abstract_Order::get_total()`.
+ *
+ * php-stubs/woocommerce-stubs declares it `@return float`, copied from WooCommerce's own docblock, but
+ * the method returns the stored total, a numeric string such as "46.00" (see `WC_Abstract_Order::get_total()`
+ * → `get_prop()`; totals are set via `wc_format_decimal()`). Callers pass it to string functions directly.
+ *
+ * @see \WC_Abstract_Order::get_total()
+ */
+
+abstract class WC_Abstract_Order extends \WC_Abstract_Legacy_Order
+{
+    /**
+     * @param string $context View or edit context.
+     * @return numeric-string
+     */
+    public function get_total($context = 'view')
+    {
+    }
+}

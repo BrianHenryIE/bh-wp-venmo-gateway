@@ -9,6 +9,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
 
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Admin\Unreconciled_Orders_Page;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use WC_Payment_Gateway;
 use WC_Payment_Gateways;
@@ -72,5 +73,27 @@ class Plugins_Page {
 		}
 
 		return array_merge( $plugin_links, $links_array );
+	}
+
+	/**
+	 * Add an "Unreconciled orders" link to the reconcile library's page listing orders awaiting a payment email.
+	 *
+	 * This view lists both WooCommerce and GiveWP orders, which is why we do not link to their native view directly.
+	 * TODO: Check what plugins are active and prefer the native view.
+	 *
+	 * @hooked plugin_action_links_{$plugin_basename}
+	 * @see \WP_Plugins_List_Table::single_row()
+	 * @see Unreconciled_Orders_Menu
+	 *
+	 * @param string[] $links_array The links that will be shown below the plugin name on plugins.php.
+	 *
+	 * @return string[]
+	 */
+	public function add_unreconciled_orders_action_link( array $links_array ): array {
+		$url = admin_url( 'admin.php?page=' . Unreconciled_Orders_Page::PAGE_SLUG );
+
+		array_unshift( $links_array, '<a href="' . esc_url( $url ) . '">' . __( 'Unreconciled orders', 'bh-wp-venmo-gateway' ) . '</a>' );
+
+		return $links_array;
 	}
 }

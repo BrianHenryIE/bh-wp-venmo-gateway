@@ -10,6 +10,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
 
 use BrianHenryIE\WP_Venmo_Gateway\Alley_Interactive\Autoloader\Autoloader;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\Reconciliation_Email_Metabox;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce_Order;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Action_Scheduler;
@@ -40,6 +41,7 @@ new Mappings()->register_hooks();
 // Admin UI changes.
 ( new WooCommerce() )->register_hooks();
 ( new WooCommerce_Order() )->register_hooks();
+( new Reconciliation_Email_Metabox() )->register_hooks();
 
 // New REST endpoints.
 ( new Action_Scheduler() )->register_hooks();

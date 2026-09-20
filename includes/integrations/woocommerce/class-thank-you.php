@@ -24,7 +24,7 @@ class Thank_You {
 	 * @see wp_allowed_protocols()
 	 * Must be hooked before wp_loaded.
 	 */
-	public function allow_data_protocol_for_inline_qr_code() {
+	public function allow_data_protocol_for_inline_qr_code(): void {
 		if ( ! $this->is_thank_you_order_confirmation_page() ) {
 			return;
 		}
@@ -52,9 +52,8 @@ class Thank_You {
 	 *
 	 * @hooked woocommerce_thankyou_order_received_text
 	 *
-	 * @param string $thank_you_text "Your order has been received".
-	 * @param mixed  $order_id
-	 * @return string
+	 * @param string    $thank_you_text "Your order has been received".
+	 * @param ?WC_Order $order          The order, or null when WooCommerce could not load it.
 	 */
 	public function print_instructions( string $thank_you_text, ?WC_Order $order = null ): string {
 

@@ -7,9 +7,11 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
@@ -57,6 +59,16 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 			array( new AnyInstance( Plugins_Page::class ), 'add_orders_action_link' )
 		);
 
+		\WP_Mock::expectFilterAdded(
+			'plugin_action_links_bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+			array( new AnyInstance( Plugins_Page::class ), 'add_unreconciled_orders_action_link' )
+		);
+
+		\WP_Mock::expectActionAdded(
+			'admin_menu',
+			array( new AnyInstance( Unreconciled_Orders_Menu::class ), 'register_submenu' )
+		);
+
 		$api      = $this->makeEmpty( API_Interface::class );
 		$settings = $this->makeEmpty(
 			Settings_Interface::class,
@@ -78,6 +90,16 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 			array( new AnyInstance( Payment_Gateways::class ), 'format_method_title' ),
 			10,
 			2
+		);
+
+		\WP_Mock::expectFilterAdded(
+			'woocommerce_order_list_table_prepare_items_query_args',
+			array( new AnyInstance( Orders_List_Filter::class ), 'filter_hpos_list_table_query_args' )
+		);
+
+		\WP_Mock::expectFilterAdded(
+			'request',
+			array( new AnyInstance( Orders_List_Filter::class ), 'filter_legacy_list_table_query_vars' )
 		);
 
 		$api      = $this->makeEmpty( API_Interface::class );

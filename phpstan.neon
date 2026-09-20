@@ -24,10 +24,14 @@ parameters:
     scanDirectories:
         - wp-content/plugins
         - vendor-prefixed
+        - development-plugin
 #        - wp-content/plugins/...
 #        - vendor/wp-cli
     scanFiles:
         - vendor/antecedent/patchwork/Patchwork.php
+    stubFiles:
+        # WC_Abstract_Order::get_total() returns a numeric string, not the float the WooCommerce stubs declare.
+        - tests/phpstan/WC_Abstract_Order.stub
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#LoggerInterface\|null#'
