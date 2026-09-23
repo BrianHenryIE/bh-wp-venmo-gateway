@@ -13,7 +13,7 @@ use WP_REST_Server;
 use WP_User;
 
 /**
- * Set all REST access to admin.
+ * Treat unauthenticated REST requests as the administrator, so tests can arrange data over REST without credentials.
  * Add `?login_as_user=`.
  */
 class Authentication {
@@ -47,6 +47,18 @@ class Authentication {
 		 * Don't affect logged out behaviour for the store.
 		 */
 		if ( str_starts_with( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-json/wc/store' ) ) {
+			return $errors;
+		}
+
+		/**
+		 * A user already authenticated by cookie stays themselves. Core verifies the REST nonce against the current
+		 * user at priority 100 (`rest_cookie_check_errors()`), so switching a logged-in shop manager to the
+		 * administrator here made every nonce minted for them fail with `rest_cookie_invalid_nonce` (403), breaking
+		 * the whole WooCommerce admin for non-administrators.
+		 *
+		 * @see rest_cookie_check_errors()
+		 */
+		if ( is_user_logged_in() ) {
 			return $errors;
 		}
 

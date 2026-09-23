@@ -7,7 +7,7 @@
  *
  * Arrange: an email is delivered to the REST ingress endpoint as the administrator (the default storage
  * state). Act/assert: each role logs in through the UI and visits the admin screens. Assertions are via
- * the UI because the development plugin authenticates every REST request as the administrator.
+ * the UI because the development plugin authenticates every unauthenticated REST request as the administrator.
  *
  * The `shopmanager` and `givemanager` users are created in tests/_wp-env/initialize-internal.sh.
  */
