@@ -15,6 +15,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
@@ -135,6 +136,18 @@ class Register_Hooks {
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
+
+		/**
+		 * Declare compatibility with WooCommerce High Performance Order Storage.
+		 *
+		 * @see wp-admin/plugins.php?plugin_status=incompatible_with_feature
+		 */
+		/** @var Features $features */
+		$features = new Features($this->settings);
+
+		add_action( 'before_woocommerce_init', array( $features, 'declare_custom_order_tables_compatibility' ) );
+
+		add_action( 'before_woocommerce_init', array( $features, 'declare_cart_checkout__blocks_compatibility' ) );
 	}
 
 	/**
