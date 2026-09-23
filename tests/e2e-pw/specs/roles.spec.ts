@@ -2,8 +2,9 @@
  * Playwright E2E tests for non-administrator access to the payment emails.
  *
  * The bh-wp-mailboxes library requires `manage_options` for everything by default; the plugin's
- * `Capabilities` class lowers that for the emails (not the email accounts) to `manage_woocommerce`
- * (WooCommerce shop managers) and `manage_give_settings` (GiveWP managers).
+ * `Capabilities` class lowers that for the emails and the email accounts to `manage_woocommerce`
+ * (WooCommerce shop managers) and `manage_give_settings` (GiveWP managers). The logs page stays
+ * administrator-only.
  *
  * Arrange: an email is delivered to the REST ingress endpoint as the administrator (the default storage
  * state). Act/assert: each role logs in through the UI and visits the admin screens. Assertions are via
@@ -52,17 +53,18 @@ for ( const role of [
 	{ name: 'GiveWP manager', user: testConfig.users.giveManager },
 ] ) {
 	test.describe( `${ role.name } access`, () => {
-		test( 'can view and process emails but not manage accounts or view logs', async ( { page } ) => {
+		test( 'can view and process emails and manage accounts but not view logs', async ( { page } ) => {
 			const emailId = await createEmail( page );
 
 			await logout( page );
 			await login( role.user, page );
 
-			// Emails list: reachable, but the account-management controls are absent.
+			// Emails list: reachable, with the account-management controls.
 			await page.goto( EMAILS_LIST, { waitUntil: 'domcontentloaded' } );
-			await expect( page.locator( '.wp-list-table' ) ).toBeVisible();
+			await expect( page.locator( '.wp-list-table' ).first() ).toBeVisible();
 			await expect( page.locator( `#post-${ emailId }` ) ).toBeVisible();
-			await expect( page.locator( '#check-email' ) ).toHaveCount( 0 );
+			await expect( page.locator( '#check-email' ) ).toHaveCount( 1 );
+			await expect( page.locator( '.bh-account-add' ) ).toHaveCount( 1 );
 
 			// Single email: the status metabox (the actions) is rendered.
 			await page.goto( `/wp-admin/post.php?post=${ emailId }&action=edit`, { waitUntil: 'domcontentloaded' } );
@@ -73,8 +75,11 @@ for ( const role of [
 			await page.goto( UNRECONCILED_ORDERS, { waitUntil: 'domcontentloaded' } );
 			await expect( page.getByRole( 'heading', { name: 'Unreconciled Orders' } ) ).toBeVisible();
 
-			// Administrator-only: the email accounts (credentials) and the logs.
-			await expectNotAllowed( page, ACCOUNTS_LIST );
+			// The email accounts list screen.
+			await page.goto( ACCOUNTS_LIST, { waitUntil: 'domcontentloaded' } );
+			await expect( page.locator( '.wp-list-table' ).first() ).toBeVisible();
+
+			// Administrator-only: the logs.
 			await expectNotAllowed( page, LOGS_PAGE );
 		} );
 	} );

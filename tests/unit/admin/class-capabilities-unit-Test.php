@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit tests for the capability mapping that lets shop managers and GiveWP managers process payment emails.
+ * Unit tests for the capability mapping that lets shop managers and GiveWP managers process payment emails and manage email accounts.
  *
  * @package brianhenryie/bh-wp-venmo-gateway
  */
@@ -27,7 +27,15 @@ class Capabilities_Unit_Test extends Unit_Testcase {
 	}
 
 	private function sut(): Capabilities {
-		return new Capabilities( $this->makeEmpty( Settings_Interface::class, array( 'get_emails_cpt_underscored_20' => 'venmo_payment_emails' ) ) );
+		return new Capabilities(
+			$this->makeEmpty(
+				Settings_Interface::class,
+				array(
+					'get_emails_cpt_underscored_20' => 'venmo_payment_emails',
+					'get_email_accounts_cpt_underscored_20' => 'venmo_email_accounts',
+				)
+			)
+		);
 	}
 
 	/**
@@ -67,13 +75,24 @@ class Capabilities_Unit_Test extends Unit_Testcase {
 	}
 
 	/**
-	 * Account management (credentials, "Check now") stays with administrators.
+	 * Shop managers add and remove the email accounts that are checked for payments.
 	 *
 	 * @covers ::filter_required_capability
 	 */
-	public function test_filter_leaves_email_accounts_post_type_alone(): void {
+	public function test_filter_lowers_capability_for_email_accounts_post_type(): void {
 		$this->user_has( array( 'manage_woocommerce' ) );
 
-		$this->assertSame( 'manage_options', $this->sut()->filter_required_capability( 'manage_options', 'manage_venmo_email_accounts', 'venmo_email_accounts' ) );
+		$this->assertSame( 'manage_woocommerce', $this->sut()->filter_required_capability( 'manage_options', 'manage_venmo_email_accounts', 'venmo_email_accounts' ) );
+	}
+
+	/**
+	 * The filter is shared by every mailbox on the site; another plugin's mailbox is left alone.
+	 *
+	 * @covers ::filter_required_capability
+	 */
+	public function test_filter_leaves_other_mailboxes_alone(): void {
+		$this->user_has( array( 'manage_woocommerce' ) );
+
+		$this->assertSame( 'manage_options', $this->sut()->filter_required_capability( 'manage_options', 'manage_other_email_accounts', 'other_email_accounts' ) );
 	}
 }

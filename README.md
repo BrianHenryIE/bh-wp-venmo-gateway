@@ -66,7 +66,7 @@ administrator-only by default; the plugin lowers that for the roles that process
 | Emails list, single email, mark read/unread, delete on server, change status | ✓ | ✓ (`manage_woocommerce`) | ✓ (`manage_give_settings`) |
 | Extraction result on an email; email log notes | ✓ | ✓ | ✓ |
 | Unreconciled orders page | ✓ | ✓ | ✓ |
-| Email accounts: add/edit, credentials, "Check now" | ✓ (`manage_options`) | – | – |
+| Email accounts: add/edit/remove, credentials, "Check now" | ✓ | ✓ | ✓ |
 | Logs page | ✓ (`manage_options`) | – | – |
 | WooCommerce gateway settings | ✓ | ✓ | – |
 | GiveWP gateway settings, "Mark paid" on a donation | ✓ | – | ✓ (`edit_give_payments`) |
@@ -76,7 +76,8 @@ Accountant (`give_accountant`) can mark donations paid (`edit_give_payments`) bu
 lacks `manage_give_settings`; grant it via the filter below if wanted.
 
 The mapping lives in `Admin\Capabilities`, which answers bh-wp-mailboxes' `bh_wp_mailboxes_required_capability` filter
-for the emails post type only, so account management stays with administrators. To change it, add a later filter:
+for this plugin's emails and email accounts post types. To change it, add a later filter, e.g. to let GiveWP
+accountants process emails while keeping account management with the roles above:
 
 ```php
 add_filter( 'bh_wp_mailboxes_required_capability', function ( string $required, string $capability, string $post_type ): string {

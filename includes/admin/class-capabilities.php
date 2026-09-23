@@ -1,6 +1,6 @@
 <?php
 /**
- * Which WordPress capability non-administrators need to work with the plugin's payment emails.
+ * Which WordPress capability non-administrators need to work with the plugin's payment emails and email accounts.
  *
  * @package brianhenryie/bh-wp-venmo-gateway
  */
@@ -15,12 +15,11 @@ use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\WP_Includes\Mailbox_Capabilities;
 /**
  * The bh-wp-mailboxes library maps every mailbox capability (`edit_{emails_cpt}`, `manage_{accounts_cpt}`, …) to a single base
  * capability, `manage_options` by default, via its `bh_wp_mailboxes_required_capability` filter. This class answers
- * that filter so the roles that process payments can also read and act on the payment emails:
+ * that filter so the roles that process payments can also read and act on the payment emails, and add, edit,
+ * check and remove the email accounts that are checked for them:
  *
  * - WooCommerce shop managers (`manage_woocommerce`)
  * - GiveWP managers (`manage_give_settings`)
- *
- * Email account management ("Check now", adding/editing accounts and their credentials) stays with administrators.
  *
  * @see Mailbox_Capabilities::map_meta_cap()
  * @see Unreconciled_Orders_Menu
@@ -35,7 +34,7 @@ class Capabilities {
 	const PAYMENT_MANAGER_CAPABILITIES = array( 'manage_woocommerce', 'manage_give_settings' );
 
 	/**
-	 * @param Settings_Interface $settings Provides the emails post type name the filter is scoped to.
+	 * @param Settings_Interface $settings Provides the post type names the filter is scoped to.
 	 */
 	public function __construct(
 		protected Settings_Interface $settings,
@@ -43,7 +42,7 @@ class Capabilities {
 	}
 
 	/**
-	 * The base capability required to view and process payment emails, and to view unreconciled orders.
+	 * The base capability required to view and process payment emails, manage email accounts, and view unreconciled orders.
 	 *
 	 * The mailbox filter maps a capability, not a user, so the choice is made for the current user: the first
 	 * payment-manager capability they hold, falling back to `manage_options`.
@@ -59,17 +58,24 @@ class Capabilities {
 	}
 
 	/**
-	 * Lower the capability required for the plugin's emails (but not its email accounts).
+	 * Lower the capability required for the plugin's emails and email accounts.
+	 *
+	 * The filter is shared by every mailbox on the site, so it is scoped to this plugin's own post types.
 	 *
 	 * @hooked bh_wp_mailboxes_required_capability
 	 * @see Mailbox_Capabilities::required_capability()
 	 *
 	 * @param string $required   The base capability the library requires, `manage_options` by default.
-	 * @param string $capability The mailbox capability being checked, e.g. `edit_venmo_payment_emails`.
+	 * @param string $capability The mailbox capability being checked, e.g. `edit_venmo_payment_emails` or `manage_venmo_email_accounts`.
 	 * @param string $post_type  The post type the capability belongs to: the emails or the email accounts CPT.
 	 */
 	public function filter_required_capability( string $required, string $capability, string $post_type ): string {
-		if ( $this->settings->get_emails_cpt_underscored_20() !== $post_type ) {
+		$plugin_post_types = array(
+			$this->settings->get_emails_cpt_underscored_20(),
+			$this->settings->get_email_accounts_cpt_underscored_20(),
+		);
+
+		if ( ! in_array( $post_type, $plugin_post_types, true ) ) {
 			return $required;
 		}
 

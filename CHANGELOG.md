@@ -2,6 +2,7 @@
 
 ### 4.3.0 September 2026
 
+* Add: WooCommerce shop managers and GiveWP managers can add, edit, check and remove the email accounts checked for payment emails; the logs page remains administrator-only.
 * Add: shared log level setting, configurable on the WooCommerce and GiveWP gateway settings pages, with a link to the logs page.
 
 ### 4.2.1 September 2026
