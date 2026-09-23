@@ -1,0 +1,131 @@
+name: Update "Tested up to" headers
+
+# Updates the plugin headers:
+#  - `WC tested up to` in bh-wp-venmo-gateway.php is set to the higher of the existing header or the installed WooCommerce version.
+#  - `Tested up to` in bh-wp-venmo-gateway.php, readme.txt and README.txt is set to the installed WordPress version.
+# Only major.minor is used, never the patch version.
+#
+# WordPress is installed to `wordpress/` and WooCommerce to `wp-content/plugins/woocommerce/` by `composer install`.
+#
+# @author BrianHenryIE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-tested-up-to:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        php: [ '8.4' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: master
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+          extensions: zip
+
+      - name: Run composer install
+        run: composer install --no-scripts
+
+      - name: Update headers
+        id: update
+        run: |
+          set -euo pipefail
+
+          PLUGIN_FILE="bh-wp-venmo-gateway.php"
+          README_FILES="readme.txt README.txt"
+
+          # Reduce a version string to major.minor.
+          major_minor() {
+            echo "$1" | grep -oE '^[0-9]+\.[0-9]+'
+          }
+
+          # Print the higher of two major.minor versions.
+          higher() {
+            printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n 1
+          }
+
+          WP_VERSION=$(major_minor "$(grep -oE "^\\\$wp_version = '[^']+'" wordpress/wp-includes/version.php | grep -oE "[0-9]+(\.[0-9]+)*")")
+          WC_VERSION=$(major_minor "$(grep -oE '^ \* Version: *[0-9]+(\.[0-9]+)*' wp-content/plugins/woocommerce/woocommerce.php | grep -oE '[0-9]+(\.[0-9]+)*')")
+
+          CURRENT_WP=$(major_minor "$(grep -oE '^ \* Tested up to: *[0-9]+(\.[0-9]+)*' "$PLUGIN_FILE" | grep -oE '[0-9]+(\.[0-9]+)*')")
+          CURRENT_WC=$(major_minor "$(grep -oE '^ \* WC tested up to: *[0-9]+(\.[0-9]+)*' "$PLUGIN_FILE" | grep -oE '[0-9]+(\.[0-9]+)*')")
+
+          NEW_WP="$WP_VERSION"
+          NEW_WC=$(higher "$CURRENT_WC" "$WC_VERSION")
+
+          echo "Installed WordPress: $WP_VERSION (header currently $CURRENT_WP)"
+          echo "Installed WooCommerce: $WC_VERSION (header currently $CURRENT_WC)"
+
+          # Replace only the version, preserving the existing whitespace alignment.
+          sed -E -i "s/^( \* Tested up to: *)[0-9]+(\.[0-9]+)*/\1${NEW_WP}/" "$PLUGIN_FILE"
+          sed -E -i "s/^( \* WC tested up to: *)[0-9]+(\.[0-9]+)*/\1${NEW_WC}/" "$PLUGIN_FILE"
+          # Only README.txt is tracked in git; readme.txt exists locally on case-insensitive filesystems.
+          for README_FILE in $README_FILES; do
+            [ -f "$README_FILE" ] || continue
+            sed -E -i "s/^(Tested up to: *)[0-9]+(\.[0-9]+)*/\1${NEW_WP}/" "$README_FILE"
+          done
+
+          git --no-pager diff -- "$PLUGIN_FILE" $README_FILES
+
+          echo "wp_from=$CURRENT_WP" >> "$GITHUB_OUTPUT"
+          echo "wp_to=$NEW_WP" >> "$GITHUB_OUTPUT"
+          echo "wc_from=$CURRENT_WC" >> "$GITHUB_OUTPUT"
+          echo "wc_to=$NEW_WC" >> "$GITHUB_OUTPUT"
+
+      # E.g. "🤖 Update tested up to: WordPress 7.0 → 7.1, WooCommerce 11.1 → 11.2", omitting whichever did not change.
+      - name: Build commit message
+        id: commit_message
+        run: |
+          set -euo pipefail
+
+          PARTS=()
+          if [ "$WP_FROM" != "$WP_TO" ]; then
+            PARTS+=("WordPress $WP_FROM → $WP_TO")
+          fi
+          if [ "$WC_FROM" != "$WC_TO" ]; then
+            PARTS+=("WooCommerce $WC_FROM → $WC_TO")
+          fi
+
+          if [ "${#PARTS[@]}" -eq 0 ]; then
+            echo "No version changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          MESSAGE="🤖 Update tested up to: $(printf '%s, ' "${PARTS[@]}" | sed 's/, $//')"
+
+          echo "$MESSAGE"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "message=$MESSAGE" >> "$GITHUB_OUTPUT"
+        env:
+          WP_FROM: ${{ steps.update.outputs.wp_from }}
+          WP_TO: ${{ steps.update.outputs.wp_to }}
+          WC_FROM: ${{ steps.update.outputs.wc_from }}
+          WC_TO: ${{ steps.update.outputs.wc_to }}
+
+      - name: Commit changes
+        if: ${{ steps.commit_message.outputs.changed == 'true' }}
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: ${{ steps.commit_message.outputs.message }}
+          file_pattern: bh-wp-venmo-gateway.php README.txt
