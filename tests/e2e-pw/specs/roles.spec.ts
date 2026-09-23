@@ -10,7 +10,7 @@
  * state). Act/assert: each role logs in through the UI and visits the admin screens. Assertions are via
  * the UI because the development plugin authenticates every unauthenticated REST request as the administrator.
  *
- * The `shopmanager` and `givemanager` users are created in tests/_wp-env/initialize-internal.sh.
+ * The `shopmanager`, `givemanager` and `contributor` users are created in tests/_wp-env/initialize-internal.sh.
  */
 import * as fs from 'fs';
 import * as path from 'path';
@@ -84,6 +84,21 @@ for ( const role of [
 		} );
 	} );
 }
+
+test.describe( 'contributor access', () => {
+	test( 'cannot view the emails, the accounts, or the unreconciled orders', async ( { page } ) => {
+		const emailId = await createEmail( page );
+
+		await logout( page );
+		await login( testConfig.users.contributor, page );
+
+		await expectNotAllowed( page, EMAILS_LIST );
+		await expectNotAllowed( page, `/wp-admin/post.php?post=${ emailId }&action=edit` );
+		await expectNotAllowed( page, ACCOUNTS_LIST );
+		await expectNotAllowed( page, UNRECONCILED_ORDERS );
+		await expectNotAllowed( page, LOGS_PAGE );
+	} );
+} );
 
 test.describe( 'administrator access', () => {
 	test( 'sees the account-management controls on the emails list', async ( { page } ) => {

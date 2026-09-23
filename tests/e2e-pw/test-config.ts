@@ -18,6 +18,10 @@ export const testConfig = {
 			username: 'givemanager',
 			password: 'password',
 		},
+		contributor: {
+			username: 'contributor',
+			password: 'password',
+		},
 	},
 	products: {
 		simple: {
