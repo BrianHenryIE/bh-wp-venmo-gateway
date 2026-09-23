@@ -15,6 +15,9 @@ use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
+/**
+ * Settings for the plugin's own classes, bh-wp-order-email-reconcile, and bh-wp-mailboxes.
+ */
 class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interface {
 	use BH_WP_Mailboxes_Settings_Defaults_Trait, Logger_Settings_Trait {
 		BH_WP_Mailboxes_Settings_Defaults_Trait::get_cli_base insteadof Logger_Settings_Trait;
