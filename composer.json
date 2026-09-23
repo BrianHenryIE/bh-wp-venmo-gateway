@@ -81,6 +81,7 @@
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^3",
         "wpackagist-plugin/give": "^4",
         "wpackagist-plugin/query-monitor": "*",
+        "wpackagist-plugin/user-switching": "^1.12",
         "wpackagist-plugin/woocommerce": ">=10.5",
         "wpackagist-plugin/wp-mail-debugger": "^1.1",
         "wpackagist-theme/twentytwenty": "*"
