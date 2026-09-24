@@ -17,12 +17,17 @@
  * Description:       Accepts payments via Venmo and reconciles WooCommerce orders through email receipts.
  * Version:           4.3.0
  * Requires PHP:      8.4
+ * Requires at least: 6.9
+ * Tested up to:      7.1
  * Author:            BrianHenryIE
  * Author URI:        http://BrianHenryIE.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       bh-wc-venmo-gateway
  * Domain Path:       /languages
+ *
+ * WC requires at least:   10.1
+ * WC tested up to:        11.1
  */
 
 namespace BrianHenryIE\WP_Venmo_Gateway;

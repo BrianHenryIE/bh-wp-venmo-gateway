@@ -15,6 +15,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
@@ -30,6 +31,9 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
+/**
+ * `add_action()` and `add_filter()` for the plugin.
+ */
 class Register_Hooks {
 
 	/**
@@ -39,14 +43,14 @@ class Register_Hooks {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the frontend-facing side of the site.
 	 *
-	 * @param API_Interface      $api
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
+	 * @param API_Interface      $api The core functions (service) of the plugin.
+	 * @param Settings_Interface $settings User configurable options for the plugin.
+	 * @param LoggerInterface    $logger PSR logger used constucting all objects.
 	 */
 	public function __construct(
 		protected API_Interface $api,
 		protected Settings_Interface $settings,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -135,6 +139,21 @@ class Register_Hooks {
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
+
+		/**
+		 * @see wp-admin/plugins.php?plugin_status=incompatible_with_feature
+		 */
+		$features = new Features( $this->settings );
+
+		/**
+		 * Declare compatibility with WooCommerce High Performance Order Storage.
+		 */
+		add_action( 'before_woocommerce_init', array( $features, 'declare_custom_order_tables_compatibility' ) );
+
+		/**
+		 * Declare compatibility with WooCommerce Blocks cart and checkout.
+		 */
+		add_action( 'before_woocommerce_init', array( $features, 'declare_cart_checkout_blocks_compatibility' ) );
 	}
 
 	/**
