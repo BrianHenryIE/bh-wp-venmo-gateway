@@ -41,7 +41,9 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * @see Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
 	public function get_log_level(): string {
-		return get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
+		$log_levels      = array( LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL, LogLevel::ALERT );
+		$saved_log_level = get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
+		return in_array( $saved_log_level, $log_levels, true ) ? $saved_log_level : LogLevel::NOTICE;
 	}
 
 	/**
@@ -54,12 +56,16 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 		return true;
 	}
 
+	/**
+	 * @see bh-wp-venmo-gateway.php
+	 * @see BH_WP_VENMO_GATEWAY_VERSION
+	 */
 	public function get_plugin_version(): string {
 		return '4.3.0';
 	}
 
 	/**
-	 *
+	 * TODO: This should be in the WooCommerce integration.
 	 *
 	 * @return string[]
 	 */
@@ -157,7 +163,7 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * Used in the logs library; used for `plugins.php` links.
 	 */
 	public function get_plugin_basename(): string {
-		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' )
+		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' ) && is_string( constant( 'BH_WP_VENMO_GATEWAY_BASENAME' ) )
 			? constant( 'BH_WP_VENMO_GATEWAY_BASENAME' )
 			: 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php';
 	}

@@ -7,6 +7,7 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
@@ -648,6 +649,10 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler::get_order_meta_key()
 	 * @see Venmo_Gateway::get_transaction_url()
+	 *
+	 * Accidentally identical to {@see Email_Reconciler::get_order_meta_key()}.
+	 *
+	 * @param string $unprefixed The local meta key name.
 	 */
 	protected function get_order_meta_key( string $unprefixed ): string {
 		return str_replace( '-', '_', sprintf( '%s_%s', $this->id, $unprefixed ) );
