@@ -41,7 +41,7 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * @see Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
 	public function get_log_level(): string {
-		$log_levels      = array( LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL, LogLevel::ALERT );
+		$log_levels      = array( 'none', LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL, LogLevel::ALERT );
 		$saved_log_level = get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
 		return in_array( $saved_log_level, $log_levels, true ) ? $saved_log_level : LogLevel::NOTICE;
 	}
