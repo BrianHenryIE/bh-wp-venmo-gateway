@@ -2,6 +2,8 @@
 
 ### 4.3.0 September 2026
 
+* Add: the transaction id on the WooCommerce admin order screen links to the transaction on venmo.com.
+* Fix: a reconciled order's meta is prefixed with the gateway id (`venmo_note`, `venmo_transaction_id`, `venmo_transaction_url`), and the transaction url is recorded once rather than as `transaction_id_href` twice and `transaction_url`.
 * Add: shared log level setting, configurable on the WooCommerce and GiveWP gateway settings pages, with a link to the logs page.
 
 ### 4.2.1 September 2026

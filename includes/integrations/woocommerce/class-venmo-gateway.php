@@ -7,11 +7,11 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
-use ReflectionClass;
 use WC_Order;
 use WC_Payment_Gateway;
 
@@ -31,7 +31,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	// TODO: use all underscores. Requires an upgrade routine.
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 
-	// The meta key to save to individual orders.
+	/**
+	 * The settings.store_venmo_username is saved to this order meta to know where we told the customer to pay.
+	 */
 	const STORE_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
 
 	/**
@@ -617,5 +619,42 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		});
 		</script>
 		<?php
+	}
+
+	/**
+	 * Link the transaction id shown on the admin order screen ("Payment via Venmo (123)") to the transaction on venmo.com.
+	 *
+	 * The url is recorded on the order as `{prefix}transaction_url` by bh-wp-order-email-reconcile when the payment
+	 * email is matched to the order; there is no url pattern to build one from the transaction id alone.
+	 *
+	 * @see WC_Payment_Gateway::get_transaction_url()
+	 * @see \WC_Meta_Box_Order_Data::output()
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler::match_email_to_order()
+	 *
+	 * @param WC_Order $order The order.
+	 * @return string The transaction url, or empty string.
+	 */
+	public function get_transaction_url( $order ) {
+		$transaction_url = $order->get_meta( $this->get_order_meta_key( 'transaction_url' ) );
+
+		return is_string( $transaction_url ) && '' !== $transaction_url
+			? $transaction_url
+			: parent::get_transaction_url( $order );
+	}
+
+	/**
+	 * Prefix meta/option keys related to the gateway with the gateway id.
+	 *
+	 * Matches the keys bh-wp-order-email-reconcile records on the order when its payment email is matched.
+	 *
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler::get_order_meta_key()
+	 * @see Venmo_Gateway::get_transaction_url()
+	 *
+	 * Accidentally identical to {@see Email_Reconciler::get_order_meta_key()}.
+	 *
+	 * @param string $unprefixed The local meta key name.
+	 */
+	protected function get_order_meta_key( string $unprefixed ): string {
+		return str_replace( '-', '_', sprintf( '%s_%s', $this->id, $unprefixed ) );
 	}
 }
