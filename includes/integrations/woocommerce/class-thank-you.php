@@ -108,7 +108,7 @@ class Thank_You {
 
 	<div>
 		<a target="_blank" href="{$venmo_payment_url}">
-			<img style="display:block; max-width: 90vw; max-height: 500px;" src="{$qr_code_data_base64}" alt="Payment QR code" />
+			<img style="display:block; max-height: 75vh; width: auto; max-width: 90vw; aspect-ratio: 1 / 1; margin: 0 auto;" src="{$qr_code_data_base64}" alt="Payment QR code" />
 		</a>
 	</div>
 
