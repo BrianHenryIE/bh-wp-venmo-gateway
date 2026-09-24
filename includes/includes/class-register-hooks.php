@@ -31,6 +31,9 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
+/**
+ * `add_action()` and `add_filter()` for the plugin.
+ */
 class Register_Hooks {
 
 	/**
@@ -40,14 +43,14 @@ class Register_Hooks {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the frontend-facing side of the site.
 	 *
-	 * @param API_Interface      $api
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
+	 * @param API_Interface      $api The core functions (service) of the plugin.
+	 * @param Settings_Interface $settings User configurable options for the plugin.
+	 * @param LoggerInterface    $logger PSR logger used constucting all objects.
 	 */
 	public function __construct(
 		protected API_Interface $api,
 		protected Settings_Interface $settings,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -143,7 +146,7 @@ class Register_Hooks {
 		 * @see wp-admin/plugins.php?plugin_status=incompatible_with_feature
 		 */
 		/** @var Features $features */
-		$features = new Features($this->settings);
+		$features = new Features( $this->settings );
 
 		add_action( 'before_woocommerce_init', array( $features, 'declare_custom_order_tables_compatibility' ) );
 
