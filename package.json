@@ -20,7 +20,7 @@
   "license": "GPL-2.0+",
   "devDependencies": {
     "@wordpress/env": "*",
-    "@playwright/test": "^1.58",
+    "@playwright/test": "^1.63",
     "@wordpress/e2e-test-utils-playwright": "^1.40",
     "dotenv": "^17.3",
     "@types/jquery": "^3.5",
