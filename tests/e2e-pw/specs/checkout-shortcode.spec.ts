@@ -103,6 +103,10 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		const qrImage = page.locator( 'img[alt="Payment QR code"]' );
 		await expect( qrImage ).toBeVisible();
 
+		// The inline SVG data URI must not be stripped by kses (which would leave a broken image).
+		await expect( qrImage ).toHaveAttribute( 'src', /^data:image\/svg\+xml;base64,/ );
+		expect( await qrImage.evaluate( ( img: HTMLImageElement ) => img.complete && img.naturalWidth > 0 ) ).toBe( true );
+
 		// The QR code should fill 75% of the viewport height (75vh) so it is easy to scan.
 		const viewportHeight = page.viewportSize()!.height;
 		const qrBox = ( await qrImage.boundingBox() )!;

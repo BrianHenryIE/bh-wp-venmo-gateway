@@ -11,38 +11,52 @@ use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
 use WC_Order;
 use WC_Payment_Gateways;
 
+/**
+ * Adds Venmo payment instructions and a QR code to the WooCommerce order received (thank you) page.
+ */
 class Thank_You {
 
-
+	/**
+	 * Constructor.
+	 *
+	 * The `kses_allowed_protocols` filter is attached here, at plugin load, rather than on `init`, because
+	 * {@see wp_allowed_protocols()} caches its result in a static variable the first time it is called (which
+	 * can be earlier than `init`, e.g. via `sanitize_url()`). It is also only applied before `wp_loaded`.
+	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'allow_data_protocol_for_inline_qr_code' ) );
+		add_filter( 'kses_allowed_protocols', array( $this, 'allow_data_protocol_for_inline_qr_code' ) );
 	}
 
 	/**
-	 * @hooked init
-	 * @see wp_kses()
+	 * Allow `data:` URIs on the thank you page so the inline QR code `<img src>` survives {@see wp_kses_post()}.
+	 *
+	 * @hooked kses_allowed_protocols
 	 * @see wp_allowed_protocols()
-	 * Must be hooked before wp_loaded.
+	 *
+	 * @param string[] $protocols Protocols allowed in HTML attributes.
+	 *
+	 * @return string[]
 	 */
-	public function allow_data_protocol_for_inline_qr_code(): void {
+	public function allow_data_protocol_for_inline_qr_code( array $protocols ): array {
 		if ( ! $this->is_thank_you_order_confirmation_page() ) {
-			return;
+			return $protocols;
 		}
 
-		add_filter(
-			'kses_allowed_protocols',
-			fn( array $protocols ): array => array_merge( $protocols, array( 'data' ) )
-		);
+		return array_unique( array_merge( $protocols, array( 'data' ) ) );
 	}
 
 	/**
 	 * Check for `/order-received/` in the URL.
+	 *
+	 * Must not call `sanitize_url()`/`esc_url()`: they call `wp_allowed_protocols()`, which runs the filter this
+	 * is used in.
+	 *
 	 * TODO: How to confirm it without permalinks.
 	 */
 	protected function is_thank_you_order_confirmation_page(): bool {
 
 		return isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) &&
-			str_contains( sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/order-received/' );
+			str_contains( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/order-received/' );
 	}
 
 	/**
