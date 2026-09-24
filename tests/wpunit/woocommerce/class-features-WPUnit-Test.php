@@ -22,7 +22,7 @@ class Features_WPUnit_Test extends WPUnit_Testcase {
 				'feature' => 'custom_order_tables',
 			),
 			'cart_checkout_blocks' => array(
-				'method'  => 'declare_cart_checkout__blocks_compatibility',
+				'method'  => 'declare_cart_checkout_blocks_compatibility',
 				'feature' => 'cart_checkout_blocks',
 			),
 		);
@@ -30,7 +30,7 @@ class Features_WPUnit_Test extends WPUnit_Testcase {
 
 	/**
 	 * @covers ::declare_custom_order_tables_compatibility
-	 * @covers ::declare_cart_checkout__blocks_compatibility
+	 * @covers ::declare_cart_checkout_blocks_compatibility
 	 * @covers ::__construct
 	 *
 	 * @dataProvider declare_compatibility_provider

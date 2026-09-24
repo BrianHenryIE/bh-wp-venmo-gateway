@@ -16,7 +16,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
- * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks
+ * @coversDefaultClass  \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks
  *
  * Class BH_WP_Venmo_Gateway_Unit_Test
  * @package brianhenryie/bh-wp-venmo-gateway

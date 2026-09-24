@@ -57,7 +57,7 @@ class Features {
 	 * @hooked before_woocommerce_init
 	 * @see WooCommerce::init()
 	 */
-	public function declare_cart_checkout__blocks_compatibility(): void {
+	public function declare_cart_checkout_blocks_compatibility(): void {
 		if ( ! class_exists( FeaturesUtil::class ) ) {
 			return;
 		}

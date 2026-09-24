@@ -141,16 +141,19 @@ class Register_Hooks {
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
 
 		/**
-		 * Declare compatibility with WooCommerce High Performance Order Storage.
-		 *
 		 * @see wp-admin/plugins.php?plugin_status=incompatible_with_feature
 		 */
-		/** @var Features $features */
 		$features = new Features( $this->settings );
 
+		/**
+		 * Declare compatibility with WooCommerce High Performance Order Storage.
+		 */
 		add_action( 'before_woocommerce_init', array( $features, 'declare_custom_order_tables_compatibility' ) );
 
-		add_action( 'before_woocommerce_init', array( $features, 'declare_cart_checkout__blocks_compatibility' ) );
+		/**
+		 * Declare compatibility with WooCommerce Blocks cart and checkout.
+		 */
+		add_action( 'before_woocommerce_init', array( $features, 'declare_cart_checkout_blocks_compatibility' ) );
 	}
 
 	/**
