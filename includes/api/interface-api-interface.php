@@ -17,4 +17,13 @@ interface API_Interface {
 	 * Used to render the "Unreconciled orders" admin page.
 	 */
 	public function get_unpaid_orders_provider(): Unpaid_Orders_Provider_Interface;
+
+	/**
+	 * Fetch a customer's public Venmo profile (their full name) from venmo.com.
+	 *
+	 * @param string $username The Venmo username entered at checkout, with or without a leading `@`.
+	 *
+	 * @return ?Venmo_Profile Null when the user does not exist or the page could not be fetched.
+	 */
+	public function get_venmo_profile( string $username ): ?Venmo_Profile;
 }

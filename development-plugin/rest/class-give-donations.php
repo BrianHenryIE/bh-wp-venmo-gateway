@@ -66,11 +66,18 @@ class Give_Donations {
 	public function get_donation( WP_REST_Request $request ): WP_REST_Response {
 		$donation_id = (int) $request->get_param( 'id' );
 
+		$notes = give_get_payment_notes( $donation_id );
+
 		return new WP_REST_Response(
 			array(
 				'id'      => $donation_id,
 				'status'  => get_post_status( $donation_id ),
 				'gateway' => give_get_meta( $donation_id, '_give_payment_gateway', true ),
+				'meta'    => array(
+					'_customer-venmo-username'     => give_get_meta( $donation_id, '_customer-venmo-username', true ),
+					'_customer-venmo-display-name' => give_get_meta( $donation_id, '_customer-venmo-display-name', true ),
+				),
+				'notes'   => array_values( array_map( fn( $note ) => (string) $note->comment_content, is_array( $notes ) ? $notes : array() ) ),
 			)
 		);
 	}

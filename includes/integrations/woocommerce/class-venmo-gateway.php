@@ -37,6 +37,15 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	const STORE_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
 
 	/**
+	 * Order meta key for the customer's full name as shown on their public Venmo profile, fetched in the
+	 * background after checkout. Venmo's payment emails name the payer, not their username, so this is
+	 * what a payment email can be matched against.
+	 *
+	 * @see Order::fetch_customer_venmo_profile()
+	 */
+	const CUSTOMER_VENMO_DISPLAY_NAME_META_KEY = '_customer-venmo-display-name';
+
+	/**
 	 * @var Settings_Interface
 	 */
 	protected Settings_Interface $plugin_settings;
