@@ -16,13 +16,14 @@ export function wpCli( args: string[] ): string {
  * WP-Cron may already have spawned and run the event on an earlier page load, in which case there is nothing
  * to run and WP-CLI exits non-zero; that is not a failure for callers who then assert the event's effect.
  */
-export function runDueCronHook( hook: string ): void {
+export function runDueCronHook( hook: string ): string {
 	try {
-		wpCli( [ 'cron', 'event', 'run', hook ] );
+		return wpCli( [ 'cron', 'event', 'run', hook ] );
 	} catch ( error ) {
 		const output = String( ( error as { stderr?: string } ).stderr ?? '' ) + String( ( error as { stdout?: string } ).stdout ?? '' );
 		if ( ! /Invalid cron event|no.*events/i.test( output ) ) {
 			throw error;
 		}
+		return output;
 	}
 }

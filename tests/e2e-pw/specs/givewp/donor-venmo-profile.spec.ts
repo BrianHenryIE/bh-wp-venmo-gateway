@@ -10,19 +10,23 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { mockVenmoProfile, removeMockVenmoProfile } from '../../helpers/development-plugin/rest/venmo-profiles';
 import { runDueCronHook } from '../../helpers/general/cli/wp-cli';
 
-const DONOR_VENMO_USERNAME = 'e2e-donor-profile-tester';
 const DONOR_VENMO_DISPLAY_NAME = 'Dana Profile Donor';
 const CRON_HOOK = 'bh_wp_venmo_gateway_fetch_donor_venmo_profile';
 
 test.describe( 'Donor Venmo profile name', () => {
 	test.setTimeout( 90_000 );
 
-	test.beforeAll( async () => {
-		await mockVenmoProfile( DONOR_VENMO_USERNAME, DONOR_VENMO_DISPLAY_NAME );
+	// Each browser project runs this spec concurrently against the same site, so the mocked username is per
+	// project: otherwise one project's teardown removes the mock before another project's cron event has run.
+	let donorVenmoUsername: string;
+
+	test.beforeEach( async () => {
+		donorVenmoUsername = `e2e-donor-profile-tester-${ test.info().project.name }`;
+		await mockVenmoProfile( donorVenmoUsername, DONOR_VENMO_DISPLAY_NAME );
 	} );
 
-	test.afterAll( async () => {
-		await removeMockVenmoProfile( DONOR_VENMO_USERNAME );
+	test.afterEach( async () => {
+		await removeMockVenmoProfile( donorVenmoUsername );
 	} );
 
 	test( 'is fetched in the background and saved to the donation meta', async ( { page, requestUtils } ) => {
@@ -33,7 +37,7 @@ test.describe( 'Donor Venmo profile name', () => {
 		await page.fill( '#give-first', 'Dana' );
 		await page.fill( '#give-last', 'Donor' );
 		await page.fill( '#give-email', 'dana@example.com' );
-		await page.fill( '#give-venmo-username', DONOR_VENMO_USERNAME );
+		await page.fill( '#give-venmo-username', donorVenmoUsername );
 		await page.click( '#give-purchase-button' );
 		await page.waitForURL( /donation-confirmation/, { timeout: 60_000 } );
 
@@ -50,7 +54,7 @@ test.describe( 'Donor Venmo profile name', () => {
 				path: '/e2e-test-helper/v1/give/donation',
 				params: { id: candidate.id },
 			} );
-			if ( details.meta[ '_customer-venmo-username' ] === DONOR_VENMO_USERNAME ) {
+			if ( details.meta[ '_customer-venmo-username' ] === donorVenmoUsername ) {
 				donationId = candidate.id;
 				break;
 			}
@@ -65,8 +69,8 @@ test.describe( 'Donor Venmo profile name', () => {
 			path: '/e2e-test-helper/v1/give/donation',
 			params: { id: donationId },
 		} );
-		expect( donation.meta[ '_customer-venmo-username' ] ).toBe( DONOR_VENMO_USERNAME );
+		expect( donation.meta[ '_customer-venmo-username' ] ).toBe( donorVenmoUsername );
 		expect( donation.meta[ '_customer-venmo-display-name' ] ).toBe( DONOR_VENMO_DISPLAY_NAME );
-		expect( donation.notes ).toContain( `Venmo profile @${ DONOR_VENMO_USERNAME } is ${ DONOR_VENMO_DISPLAY_NAME }.` );
+		expect( donation.notes ).toContain( `Venmo profile @${ donorVenmoUsername } is ${ DONOR_VENMO_DISPLAY_NAME }.` );
 	} );
 } );
