@@ -78,9 +78,11 @@
         "szepeviktor/phpstan-wordpress": "*",
         "wp-cli/dist-archive-command": "dev-main",
         "wp-coding-standards/wpcs": "*",
+        "wpackagist-plugin/bh-wp-autologin-urls": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^3",
         "wpackagist-plugin/give": "^4",
         "wpackagist-plugin/query-monitor": "*",
+        "wpackagist-plugin/user-switching": "*",
         "wpackagist-plugin/woocommerce": ">=10.5",
         "wpackagist-plugin/wp-mail-debugger": "^1.1",
         "wpackagist-theme/twentytwenty": "*"
