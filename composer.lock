@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bde33c05950c85d56f55ff9cf133d4c2",
+    "content-hash": "4a33aebaf33339532078880442e4bf5e",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -10158,15 +10158,15 @@
         },
         {
             "name": "wpackagist-plugin/woocommerce",
-            "version": "11.1.2",
+            "version": "11.2.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/woocommerce/",
-                "reference": "tags/11.1.2"
+                "reference": "tags/11.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce.11.1.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/woocommerce.11.2.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
