@@ -64,7 +64,7 @@ jobs:
         run: npm run build
 
       - name: Fix auto-fixable PHP coding standards errors
-        run: phpcbf
+        run: vendor/bin/phpcbf
 
       # The development plugin has no build step or dependencies of its own: it autoloads via the
       # main plugin's `vendor-prefixed` autoloader. Zip the directory itself so it installs as
