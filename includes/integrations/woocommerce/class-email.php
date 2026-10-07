@@ -87,7 +87,7 @@ class Email {
 
 		// TODO: escape output.
 		if ( ! $sent_to_admin && $order->has_status( 'on-hold' ) ) {
-			echo wptexturize( $instructions ) . PHP_EOL;
+			echo wp_kses( wptexturize( $instructions ), wp_kses_allowed_html() ) . PHP_EOL;
 		}
 	}
 }

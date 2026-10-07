@@ -26,7 +26,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 	/**
 	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::set_locale
 	 */
-	public function test_set_locale_hooked() {
+	public function test_set_locale_hooked(): void {
 
 		\WP_Mock::expectActionAdded(
 			'plugins_loaded',
@@ -47,7 +47,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 	/**
 	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_admin_hooks
 	 */
-	public function test_admin_hooks() {
+	public function test_admin_hooks(): void {
 
 		\WP_Mock::expectFilterAdded(
 			'plugin_action_links_bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
@@ -83,7 +83,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 	/**
 	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_woocommerce_hooks
 	 */
-	public function test_woocommerce_hooks() {
+	public function test_woocommerce_hooks(): void {
 
 		\WP_Mock::expectFilterAdded(
 			'woocommerce_order_get_payment_method_title',

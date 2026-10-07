@@ -78,10 +78,12 @@
         "roots/wordpress-no-content": "*",
         "szepeviktor/phpstan-wordpress": "*",
         "wp-cli/dist-archive-command": "dev-main",
+        "wp-cli/i18n-command": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/bh-wp-autologin-urls": "*",
         "wpackagist-plugin/checkout-fees-for-woocommerce": "^3",
         "wpackagist-plugin/give": "^4",
+        "wpackagist-plugin/plugin-check": "^2.1",
         "wpackagist-plugin/query-monitor": "*",
         "wpackagist-plugin/user-switching": "*",
         "wpackagist-plugin/woocommerce": ">=10.5",
@@ -204,6 +206,7 @@
             "updated_files=$(echo $(git diff --name-only `git merge-base origin/master HEAD` | grep \\.php | tr '\\n' '\\0' | xargs -0 ls -1df 2>/dev/null)); if [ -n \"$updated_files\" ]; then phpcbf $(echo $updated_files); phpcs $(echo $updated_files); phpstan analyse $(echo $updated_files) --level max --memory-limit 1G; else echo \"No modified php files for phpstan.\"; fi;"
         ],
         "create-plugin-archive": [
+            "wp i18n make-pot includes languages/$(basename \"$PWD\").pot --domain=$(basename \"$PWD\")",
             "wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
         ],
         "github-actions": [

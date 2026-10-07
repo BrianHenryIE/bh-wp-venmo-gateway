@@ -9,7 +9,7 @@ use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
 
 class API_Integration_Test extends WPUnit_Testcase {
 
-	public function test_live() {
+	public function test_live(): void {
 
 		$this->markTestIncomplete();
 
