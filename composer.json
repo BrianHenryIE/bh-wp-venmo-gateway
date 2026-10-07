@@ -15,9 +15,9 @@
         "allow-plugins": {
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "johnpbloch/wordpress-core-installer": true,
             "phpstan/extension-installer": true,
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "roots/wordpress-core-installer": true
         },
         "platform": {
             "php": "8.4"
@@ -68,13 +68,14 @@
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
         "brianhenryie/strauss": "0.30.0",
-        "johnpbloch/wordpress": "*",
         "kamazee/pr-filter": "^1.1",
         "lucatume/wp-browser": "^4.5",
         "php-stubs/woocommerce-stubs": "*",
         "phpstan/extension-installer": "*",
         "phpunit/phpcov": "*",
         "rector/rector": "^2.3",
+        "roots/wordpress-core-installer": "*",
+        "roots/wordpress-no-content": "*",
         "szepeviktor/phpstan-wordpress": "*",
         "wp-cli/dist-archive-command": "dev-main",
         "wp-coding-standards/wpcs": "*",

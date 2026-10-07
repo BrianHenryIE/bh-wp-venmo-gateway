@@ -6,7 +6,7 @@ name: Update "Tested up to" headers
 #  - `Requires at least` in readme.txt and README.txt is set to match the `Requires at least` header in bh-wp-venmo-gateway.php.
 # Only major.minor is used, never the patch version.
 #
-# Versions are read from composer.lock (`johnpbloch/wordpress` and `wpackagist-plugin/woocommerce`), so no `composer install` is needed.
+# Versions are read from composer.lock (`roots/wordpress-no-content` and `wpackagist-plugin/woocommerce`), so no `composer install` is needed.
 #
 # @author BrianHenryIE
 
@@ -56,7 +56,7 @@ jobs:
             jq -r --arg name "$1" '(.packages + .["packages-dev"])[] | select(.name == $name) | .version' composer.lock | grep -oE '[0-9]+(\.[0-9]+)*' | head -n 1
           }
 
-          WP_VERSION=$(major_minor "$(lock_version johnpbloch/wordpress)")
+          WP_VERSION=$(major_minor "$(lock_version roots/wordpress-no-content)")
           WC_VERSION=$(major_minor "$(lock_version wpackagist-plugin/woocommerce)")
 
           CURRENT_WP=$(major_minor "$(grep -oE '^ \* Tested up to: *[0-9]+(\.[0-9]+)*' "$PLUGIN_FILE" | grep -oE '[0-9]+(\.[0-9]+)*')")
