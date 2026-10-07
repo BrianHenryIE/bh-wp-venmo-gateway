@@ -10104,15 +10104,15 @@
         },
         {
             "name": "wpackagist-plugin/give",
-            "version": "4.18.0",
+            "version": "4.18.0.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/give/",
-                "reference": "tags/4.18.0"
+                "reference": "tags/4.18.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/give.4.18.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/give.4.18.0.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
