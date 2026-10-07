@@ -36,9 +36,9 @@
             "type": "package",
             "package": {
                 "name": "brianhenryie/strauss",
-                "version": "0.30.0",
+                "version": "0.31.0",
                 "dist": {
-                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.30.0/strauss.phar",
+                    "url": "https://github.com/BrianHenryIE/strauss/releases/download/0.31.0/strauss.phar",
                     "type": "phar"
                 },
                 "installation-source": "dist",
@@ -67,7 +67,7 @@
         "10up/wp_mock": "^1.1",
         "antecedent/patchwork": "^2.2",
         "brianhenryie/color-logger": "*",
-        "brianhenryie/strauss": "0.30.0",
+        "brianhenryie/strauss": "0.31.0",
         "kamazee/pr-filter": "^1.1",
         "lucatume/wp-browser": "^4.5",
         "php-stubs/woocommerce-stubs": "*",
@@ -163,7 +163,7 @@
     },
     "scripts": {
         "prefix-namespaces": [
-            "php -d memory_limit=1G vendor/bin/strauss --info"
+            "php -d memory_limit=1G vendor/bin/strauss"
         ],
         "post-install-cmd": [
             "@prefix-namespaces"
