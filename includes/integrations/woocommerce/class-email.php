@@ -79,34 +79,34 @@ class Email {
 		}
 
 		printf(
-			'<p>Please send payment of $%s via Venmo to <a href="%s">@%s</a></p>"',
+			'<p>Please send payment of $%s via Venmo to <a href="%s">@%s</a></p>"' . PHP_EOL . PHP_EOL,
 			esc_html( $order->get_total() ),
 			esc_url_raw( $venmo_payment_url ),
 			esc_html( $store_venmo_username )
 		);
 
 		printf(
-			'<p>Please pay the precise amount – <b> $%s</b> and include the order number – <b>%d</b> in the note.</p>',
+			'<p>Please pay the precise amount – <b>$%s</b> and include the order number – <b>%d</b> in the note.</p>' . PHP_EOL . PHP_EOL,
 			esc_html( $order->get_total() ),
 			absint( $order->get_id() )
 		);
 
 		// Venmo logo image.
 		printf(
-			'<p><a href="%s"><img src="%s" /></a></p>',
+			'<p><a href="%s"><img src="%s" /></a></p>' . PHP_EOL . PHP_EOL,
 			esc_url_raw( $venmo_payment_url ),
 			esc_url_raw( $venmo_image_url )
 		);
 
 		// QR Code.
 		printf(
-			'<p><a href="%s"><img style="display:block; max-width: 90vw; max-height: 500px;" src="%s" alt="Payment QR code" /></a></p>',
-			esc_url_raw( $venmo_payment_qr_url ),
-			esc_url_raw( $qr_code_data_base64 )
+			'<p><a href="%s"><img style="display:block; max-width: 90vw; max-height: 500px;" src="%s" alt="Payment QR code" /></a></p>' . PHP_EOL . PHP_EOL,
+			esc_url( $venmo_payment_qr_url, array( 'venmo' ) ),
+			esc_html( $qr_code_data_base64 )
 		);
 
 		printf(
-			'<p><a href="%s">Open Venmo</a></p>',
+			'<p><a href="%s">Open Venmo</a></p>' . PHP_EOL . PHP_EOL,
 			esc_url_raw( $venmo_payment_url )
 		);
 	}
