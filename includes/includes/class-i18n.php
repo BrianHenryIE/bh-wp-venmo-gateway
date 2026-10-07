@@ -17,6 +17,7 @@ class I18n {
 	 */
 	public function load_plugin_textdomain(): void {
 
+		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 		load_plugin_textdomain(
 			'bh-wp-venmo-gateway',
 			false,

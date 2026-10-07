@@ -429,7 +429,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	public function admin_options(): void {
 		echo '<h2>' . esc_html( $this->get_method_title() );
-		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch – why provide our own translation when a correct one exists?!
+		// No need to provide our own translation when a correct one exists.
+		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 		wc_back_link( __( 'Return to payments', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
