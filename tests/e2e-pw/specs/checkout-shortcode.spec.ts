@@ -20,12 +20,12 @@ const STORE_VENMO_USERNAME = 'sackavs';
 test.describe( 'Venmo checkout (shortcode)', () => {
 	test.describe.configure( { mode: 'serial' } );
 
-	test.beforeEach( async ( { page } ) => {
+	test.beforeEach( async ( { page, requestUtils } ) => {
 		// Delete all cookies so user is logged out and cart is empty
 		await page.context().clearCookies();
 
 		// Set the store's Venmo username.
-		await setVenmoUsername( STORE_VENMO_USERNAME );
+		await setVenmoUsername( requestUtils, STORE_VENMO_USERNAME );
 
 		// Set the billing+shipping details via API.
 		await setDefaultCustomerAddresses(page);
