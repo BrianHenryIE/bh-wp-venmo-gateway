@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e764743a00b43b2eef53451afc53d3b7",
+    "content-hash": "bde33c05950c85d56f55ff9cf133d4c2",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -10067,6 +10067,24 @@
             "time": "2026-07-27T11:53:23+00:00"
         },
         {
+            "name": "wpackagist-plugin/bh-wp-autologin-urls",
+            "version": "2.7.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/bh-wp-autologin-urls/",
+                "reference": "tags/2.7.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/bh-wp-autologin-urls.2.7.0.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/bh-wp-autologin-urls/"
+        },
+        {
             "name": "wpackagist-plugin/checkout-fees-for-woocommerce",
             "version": "3.3.0",
             "source": {
@@ -10119,6 +10137,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/query-monitor/"
+        },
+        {
+            "name": "wpackagist-plugin/user-switching",
+            "version": "1.12.2",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/user-switching/",
+                "reference": "tags/1.12.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/user-switching.1.12.2.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/user-switching/"
         },
         {
             "name": "wpackagist-plugin/woocommerce",

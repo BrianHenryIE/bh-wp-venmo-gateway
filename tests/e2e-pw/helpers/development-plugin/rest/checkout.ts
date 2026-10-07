@@ -4,7 +4,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { Page } from '@playwright/test';
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
 /**
  * Internal dependencies
@@ -22,39 +22,39 @@ export type CheckoutType = 'blocks' | 'shortcode';
 export const SHORTCODE_CHECKOUT_PATH = '/checkout-shortcode/';
 export const BLOCKS_CHECKOUT_PATH = '/checkout-blocks/';
 
-async function getCheckoutPostId(): Promise< number > {
+async function getCheckoutPostId( requestUtils: RequestUtils ): Promise< number > {
 	// woocommerce_checkout_page_id
-	const postId = await getSetting( 'woocommerce_checkout_page_id' );
+	const postId = await getSetting( requestUtils, 'woocommerce_checkout_page_id' );
 	return parseInt( postId );
 }
 
-async function getCheckoutPageContent(): Promise< string > {
-	const pageId = await getCheckoutPostId();
+async function getCheckoutPageContent( requestUtils: RequestUtils ): Promise< string > {
+	const pageId = await getCheckoutPostId( requestUtils );
 	return await getPostContentRendered( 'page', pageId );
 }
 
-async function setCheckoutPageContent( postContent: string ) {
-	const page_id = await getCheckoutPostId();
-	await setPageContent( page_id, postContent );
+async function setCheckoutPageContent( requestUtils: RequestUtils, postContent: string ) {
+	const page_id = await getCheckoutPostId( requestUtils );
+	await setPageContent( requestUtils, page_id, postContent );
 }
 
-export async function useBlocksCheckout() {
+export async function useBlocksCheckout( requestUtils: RequestUtils ) {
 	const contentPath = path.join(
 		__dirname,
 		'../../../../_wp-env/blocks-checkout-post-content.txt'
 	);
 	const postContent = fs.readFileSync( contentPath, 'utf8' );
-	await setCheckoutPageContent( postContent );
+	await setCheckoutPageContent( requestUtils, postContent );
 }
 
-export async function useShortcodeCheckout() {
+export async function useShortcodeCheckout( requestUtils: RequestUtils ) {
 	const postContent =
 		'<!-- wp:shortcode -->[woocommerce_checkout]<!-- /wp:shortcode -->';
-	await setCheckoutPageContent( postContent );
+	await setCheckoutPageContent( requestUtils, postContent );
 }
 
-export async function detectCheckoutType(): Promise< CheckoutType > {
-	const postContent = await getCheckoutPageContent();
+export async function detectCheckoutType( requestUtils: RequestUtils ): Promise< CheckoutType > {
+	const postContent = await getCheckoutPageContent( requestUtils );
 
 	// Check for blocks checkout indicators
 	const blocksCheckoutStrings = [
@@ -90,10 +90,10 @@ export async function detectCheckoutType(): Promise< CheckoutType > {
 	return 'shortcode';
 }
 
-export async function isBlocksCheckout(): Promise< boolean > {
-	return ( await detectCheckoutType() ) === 'blocks';
+export async function isBlocksCheckout( requestUtils: RequestUtils ): Promise< boolean > {
+	return ( await detectCheckoutType( requestUtils ) ) === 'blocks';
 }
 
-export async function isShortcodeCheckout(): Promise< boolean > {
-	return ( await detectCheckoutType() ) === 'shortcode';
+export async function isShortcodeCheckout( requestUtils: RequestUtils ): Promise< boolean > {
+	return ( await detectCheckoutType( requestUtils ) ) === 'shortcode';
 }
