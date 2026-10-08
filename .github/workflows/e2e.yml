@@ -214,6 +214,8 @@ jobs:
         run: npx playwright test --reporter=github,html
         env:
           CI: true
+          # Specs that run WP-CLI via `wp-env run` must target the environment started above.
+          WP_ENV_CONFIG: .wp-env.ci.json
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v7

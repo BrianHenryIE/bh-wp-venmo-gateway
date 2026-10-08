@@ -1,10 +1,15 @@
 /**
  * Run WP-CLI in the wp-env development site (the one the E2E tests run against).
+ *
+ * Set `WP_ENV_CONFIG` to the config file the environment was started with (CI uses `.wp-env.ci.json`);
+ * wp-env identifies the environment by its config, so `wp-env run` against `.wp-env.json` would fail with
+ * "Environment not initialized".
  */
 import { execFileSync } from 'child_process';
 
 export function wpCli( args: string[] ): string {
-	return execFileSync( 'npx', [ 'wp-env', 'run', 'cli', 'wp', ...args ], {
+	const config = process.env.WP_ENV_CONFIG ? [ '--config', process.env.WP_ENV_CONFIG ] : [];
+	return execFileSync( 'npx', [ 'wp-env', 'run', ...config, 'cli', 'wp', ...args ], {
 		encoding: 'utf8',
 		stdio: [ 'ignore', 'pipe', 'pipe' ],
 	} );
