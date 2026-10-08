@@ -10,6 +10,7 @@ parameters:
     excludePaths:
 #        - build (?)
         - vendor-prefixed
+        - tests/_support/_generated/
     bootstrapFiles:
         - phpstanbootstrap.php
         - autoload.php

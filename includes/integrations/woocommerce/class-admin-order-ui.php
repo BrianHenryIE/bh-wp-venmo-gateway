@@ -134,7 +134,8 @@ class Admin_Order_UI {
 			<p>
 				<a href="<?php echo esc_url( $venmo_payment_url ); ?>">
 					<?php
-					echo $venmo_payment_url_display;
+					// This is the URL with breaking spaces so when it is wrapped it is readable.
+					echo wp_kses( $venmo_payment_url_display, wp_kses_allowed_html() );
 					?>
 				</a>
 			</p>

@@ -103,6 +103,7 @@ class Thank_You {
 
 		$order_total = " \${$order->get_total()}";
 
+		// phpcs:ignore PluginCheck.CodeAnalysis.Heredoc.NotAllowed -- TODO: move this to a template.
 		$instructions = <<<EOD
 <br/>
 

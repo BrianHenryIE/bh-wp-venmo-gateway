@@ -77,6 +77,7 @@ class Venmo_Gateway_Blocks_Checkout_Support extends AbstractPaymentMethodType {
 				'version'      => '1.0.0',
 			);
 
+		/** @var non-empty-string $script_url */
 		$script_url = plugins_url( 'build/checkout/index.js', WP_PLUGIN_DIR . '/bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 
 		wp_register_script(

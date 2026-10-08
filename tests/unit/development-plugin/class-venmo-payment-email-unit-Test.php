@@ -24,14 +24,6 @@ class Venmo_Payment_Email_Unit_Test extends Unit_Testcase {
 	protected function setup(): void {
 		parent::setup();
 
-		// The template path is built from these, as it would be in the running plugin.
-		if ( ! defined( 'WP_PLUGIN_DIR' ) ) {
-			define( 'WP_PLUGIN_DIR', dirname( codecept_root_dir() ) );
-		}
-		if ( ! defined( 'BH_WP_VENMO_GATEWAY_BASENAME' ) ) {
-			define( 'BH_WP_VENMO_GATEWAY_BASENAME', basename( codecept_root_dir() ) . '/bh-wp-venmo-gateway.php' );
-		}
-
 		\WP_Mock::userFunction( 'site_url' )->andReturn( 'https://example.org' );
 		\WP_Mock::userFunction( 'wp_parse_url' )->andReturnUsing( fn( string $url, int $component ) => parse_url( $url, $component ) );
 	}

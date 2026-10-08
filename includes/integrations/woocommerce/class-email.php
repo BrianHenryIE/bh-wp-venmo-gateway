@@ -57,6 +57,12 @@ class Email {
 			return;
 		}
 
+		if ( $sent_to_admin || ! $order->has_status( 'on-hold' ) ) {
+			return;
+		}
+
+		// Your order has been received.
+
 		$payment_url_helper   = new Venmo_Payment_Url( $order );
 		$venmo_payment_url    = $payment_url_helper->get_browser_url();
 		$venmo_payment_qr_url = $payment_url_helper->get_qr_url();
@@ -64,30 +70,45 @@ class Email {
 		$venmo_image_url     = plugins_url( 'assets/woocommerce/images/venmo-logo-25.png', 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' );
 		$qr_code_data_base64 = ( new QR_Code() )->get_data_uri( $venmo_payment_qr_url, QROutputInterface::GDIMAGE_PNG );
 
-		// Your order has been received.
-
-		$instructions = '';
-
-		// Show from/to usernames if customer username is available
+		// Show from/to usernames if customer username is available.
 		if ( ! empty( $customer_venmo_username ) ) {
-			$instructions .= "<p><strong>Payment from @{$customer_venmo_username} to @{$store_venmo_username}</strong></p>";
+			printf(
+				'<p><strong>Payment from @%s to @%s</strong></p>' . PHP_EOL,
+				esc_html( $customer_venmo_username ),
+				esc_html( $store_venmo_username )
+			);
 		}
 
-		$instructions .= "<p>Please send payment of \${$order->get_total()} via Venmo to <a href=\"{$venmo_payment_url}\">@{$store_venmo_username}</a></p>";
+		printf(
+			'<p>Please send payment of %s via Venmo to <a href="%s">@%s</a></p>' . PHP_EOL . PHP_EOL,
+			esc_html( wc_price( (float) $order->get_total() ) ),
+			esc_url_raw( $venmo_payment_url ),
+			esc_html( $store_venmo_username )
+		);
 
-		$instructions .= "<p>Please pay the precise amount – <b> \${$order->get_total()}</b> and include the order number – <b>{$order->get_id()}</b> in the note.</p>";
+		printf(
+			'<p>Please pay the precise amount – <b>%s</b> and include the order number – <b>%d</b> in the note.</p>' . PHP_EOL . PHP_EOL,
+			esc_html( wc_price( (float) $order->get_total() ) ),
+			absint( $order->get_id() )
+		);
 
 		// Venmo logo image.
-		$instructions .= "<p><a href=\"{$venmo_payment_url}\"><img src=\"{$venmo_image_url}\" /></a></p>";
+		printf(
+			'<p><a href="%s"><img src="%s" /></a></p>' . PHP_EOL . PHP_EOL,
+			esc_url_raw( $venmo_payment_url ),
+			esc_url_raw( $venmo_image_url )
+		);
 
 		// QR Code.
-		$instructions .= "<p><a href=\"{$venmo_payment_qr_url}\"><img style=\"display:block; max-width: 90vw; max-height: 500px;\" src=\"{$qr_code_data_base64}\" alt=\"Payment QR code\" /></a></p>";
+		printf(
+			'<p><a href="%s"><img style="display:block; max-width: 90vw; max-height: 500px;" src="%s" alt="Payment QR code" /></a></p>' . PHP_EOL . PHP_EOL,
+			esc_url_raw( $venmo_payment_qr_url, array( 'venmo' ) ),
+			esc_url_raw( $qr_code_data_base64, array( 'data' ) )
+		);
 
-		$instructions .= "<p><a href=\"{$venmo_payment_url}\">Open Venmo</a></p>";
-
-		// TODO: escape output.
-		if ( ! $sent_to_admin && $order->has_status( 'on-hold' ) ) {
-			echo wptexturize( $instructions ) . PHP_EOL;
-		}
+		printf(
+			'<p><a href="%s">Open Venmo</a></p>' . PHP_EOL . PHP_EOL,
+			esc_url_raw( $venmo_payment_url )
+		);
 	}
 }

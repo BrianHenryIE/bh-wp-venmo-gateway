@@ -14,7 +14,7 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 	/**
 	 * Verifies the plugin initialization.
 	 */
-	public function test_plugin_include() {
+	public function test_plugin_include(): void {
 
 		/**
 		 * @runInSeparateProcess
@@ -52,7 +52,7 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 	/**
 	 * Verifies the plugin does not output anything to screen.
 	 */
-	public function test_plugin_include_no_output() {
+	public function test_plugin_include_no_output(): void {
 		/**
 		 * @runInSeparateProcess
 		 * @see https://github.com/lucatume/wp-browser/issues/410

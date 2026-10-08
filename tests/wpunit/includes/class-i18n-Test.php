@@ -21,7 +21,7 @@ class I18n_Test extends WPUnit_Testcase {
 	 *
 	 * @see load_plugin_textdomain()
 	 */
-	public function test_load_plugin_textdomain_function() {
+	public function test_load_plugin_textdomain_function(): void {
 
 		$this->markTestSkipped( 'outdated' );
 
