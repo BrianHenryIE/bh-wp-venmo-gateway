@@ -6,7 +6,7 @@ class First_Run_Wizards {
 
 	public function register_hooks() {
 
-		add_action( 'plugins_loaded', array( $this, 'givewp' ), 0 );
+		add_action( 'plugins_loaded', array( $this, 'give_wp' ), 0 );
 		add_action( 'plugins_loaded', array( $this, 'woocommerce' ), 0 );
 	}
 
