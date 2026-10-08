@@ -10,7 +10,7 @@ use Codeception\Stub\Expected;
  */
 class API_Unit_Test extends Unit_Testcase {
 
-	public function test_happy_simple_api() {
+	public function test_happy_simple_api(): void {
 
 		$this->markTestSkipped( 'IMAP reconcile has been updated' );
 

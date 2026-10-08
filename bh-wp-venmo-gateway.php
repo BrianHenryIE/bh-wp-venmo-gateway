@@ -23,11 +23,11 @@
  * Author URI:        http://BrianHenryIE.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       bh-wc-venmo-gateway
+ * Text Domain:       bh-wp-venmo-gateway
  * Domain Path:       /languages
  *
  * WC requires at least:   10.1
- * WC tested up to:        11.1
+ * WC tested up to:        11.2
  */
 
 namespace BrianHenryIE\WP_Venmo_Gateway;

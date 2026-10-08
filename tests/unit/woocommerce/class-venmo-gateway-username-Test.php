@@ -70,11 +70,6 @@ class Venmo_Gateway_Username_Test extends Unit_TestCase {
 			->with( 123, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, true )
 			->andReturn( '' );
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
-			->once()
-			->with( 'cookie-username' )
-			->andReturn( 'cookie-username' );
-
 		$_COOKIE['venmo_username'] = 'cookie-username';
 
 		$result = $gateway->get_saved_venmo_username( 123 );

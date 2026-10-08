@@ -1,20 +1,15 @@
-// returns json object of settings
 /**
- * Internal dependencies
+ * External dependencies
  */
-import config from '../../../../../playwright.config';
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
-async function getSettings(): Promise< object > {
-	const baseURL: string = config.use.baseURL!;
-	const fullUrl = `${ baseURL }/wp-json/wp/v2/settings`;
-
-	const response: Response = await fetch( fullUrl );
-
-	return await response.json();
+// returns json object of settings
+async function getSettings( requestUtils: RequestUtils ): Promise< object > {
+	return await requestUtils.rest( { path: '/wp/v2/settings' } );
 }
 
-export async function getSetting( name: string ): Promise< any > {
-	const settings = await getSettings();
+export async function getSetting( requestUtils: RequestUtils, name: string ): Promise< any > {
+	const settings = await getSettings( requestUtils );
 
 	return settings[ name ];
 }

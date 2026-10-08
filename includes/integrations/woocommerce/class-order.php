@@ -174,7 +174,7 @@ class Order {
 
 		$payment_method = $order->get_payment_method();
 
-		if ( ! in_array( $payment_method, $this->settings->get_payment_method_ids() ) ) {
+		if ( ! in_array( $payment_method, $this->settings->get_payment_method_ids(), true ) ) {
 			return;
 		}
 

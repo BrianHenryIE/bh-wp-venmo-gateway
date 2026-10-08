@@ -14,7 +14,7 @@ class I18n_Unit_Test extends Unit_Testcase {
 	 *
 	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\I18n::load_plugin_textdomain
 	 */
-	public function test_load_plugin_textdomain() {
+	public function test_load_plugin_textdomain(): void {
 
 		global $plugin_root_dir;
 

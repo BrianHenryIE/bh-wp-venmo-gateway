@@ -15,6 +15,9 @@ class Unit_Testcase extends Unit {
 	protected function setup(): void {
 		WP_Mock::setUp();
 
+		WP_Mock::userFunction( 'wp_unslash' )->andReturnArg( 0 );
+		WP_Mock::userFunction( 'sanitize_text_field' )->andReturnArg( 0 );
+
 		// Use the Strauss-prefixed logger interface for this project.
 		$this->logger = new class() extends ColorLogger implements LoggerInterface {
 		};

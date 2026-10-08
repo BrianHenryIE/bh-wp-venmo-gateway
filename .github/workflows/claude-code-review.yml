@@ -2,7 +2,9 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    # Run once, when the PR is opened. Mention @claude (claude.yml) for a re-review.
+    # TODO: Also, if we're on the 2nd+ invocation for this PR, run after E2E tests succeed.
+    types: [opened]
     # Optional: Only run on specific file changes
     # paths:
     #   - "src/**/*.ts"

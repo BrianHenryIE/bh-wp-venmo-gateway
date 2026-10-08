@@ -75,10 +75,10 @@ async function deleteCustomer( requestUtils, userId: number ) {
 test.describe( 'Venmo username features (shortcode)', () => {
 	test.describe.configure( { mode: 'serial' } );
 
-	test.beforeEach( async ( { page } ) => {
+	test.beforeEach( async ( { page, requestUtils } ) => {
 		await page.context().clearCookies();
 		await page.goto( 'about:blank' );
-		await setVenmoUsername( STORE_VENMO_USERNAME );
+		await setVenmoUsername( requestUtils, STORE_VENMO_USERNAME );
 	} );
 
 	// ─── TODO 1: Save username to customer usermeta ────────
@@ -332,9 +332,9 @@ test.describe( 'Venmo username features (shortcode)', () => {
 test.describe( 'Venmo username features (blocks)', () => {
 	test.describe.configure( { mode: 'serial' } );
 
-	test.beforeEach( async ( { page } ) => {
+	test.beforeEach( async ( { page, requestUtils } ) => {
 		await page.context().clearCookies();
-		await setVenmoUsername( STORE_VENMO_USERNAME );
+		await setVenmoUsername( requestUtils, STORE_VENMO_USERNAME );
 	} );
 
 	// ─── TODO 3: Auto-fill in blocks checkout ────────

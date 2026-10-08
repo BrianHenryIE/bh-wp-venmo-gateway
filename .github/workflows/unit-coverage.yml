@@ -88,14 +88,7 @@ jobs:
 #          ' composer.json > composer.json.tmp
 #          mv composer.json.tmp composer.json
 
-      # TODO: on merge to main, the workflow should commit the updated composer.json.
-
-      - name: Install PHP dependencies
-        if: ${{ github.event_name == 'pull_request' }}
-        run: composer update --verbose
-
       - name: Install PHP dependencies (using update)
-        if: ${{ github.event_name != 'pull_request' }}
         run: composer install --verbose
 
       - name: Install php-codecoverage-markdown for markdown report generation

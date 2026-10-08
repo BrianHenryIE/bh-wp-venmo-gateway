@@ -18,7 +18,7 @@ class Cron_Unit_Test extends Unit_Testcase {
 	 * Check when the cron's check_for_payment_emails function is called, i.e.
 	 * by Cron, that it calls API's check_for_payment_emails function.
 	 */
-	public function test_check_for_payment_emails_calls_api() {
+	public function test_check_for_payment_emails_calls_api(): void {
 
 		$settings_mock = $this->makeEmpty(
 			Settings_Interface::class,

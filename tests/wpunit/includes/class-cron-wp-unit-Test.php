@@ -21,7 +21,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 *
 	 * @throws \Exception
 	 */
-	public function test_schedule_cron() {
+	public function test_schedule_cron(): void {
 
 		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
 
@@ -51,7 +51,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 *
 	 * @throws \Exception
 	 */
-	public function test_does_not_schedule_cron() {
+	public function test_does_not_schedule_cron(): void {
 
 		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
 
@@ -82,7 +82,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 *
 	 * @throws \Exception
 	 */
-	public function test_delete_existing_cron() {
+	public function test_delete_existing_cron(): void {
 
 		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
 
