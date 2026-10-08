@@ -9,8 +9,8 @@ name: E2E Tests
 # WP_ENV_PHP_VERSION=8.4 npx wp-env start --config .wp-env.ci.json
 # npx playwright test
 #
-# The zips are also consumed by the Playground Preview workflow (`playground-preview.yml`), which
-# runs after this one and should not have to rebuild them.
+# On pull requests, the `playground-preview` job passes the zips to the reusable
+# `playground-preview.yml` workflow as soon as they are built, in parallel with the tests.
 #
 # @author BrianHenryIE
 
@@ -78,6 +78,23 @@ jobs:
           path: dist-archive/*.zip
           retention-days: 1
           if-no-files-found: error
+
+  # Publishes the zips and comments on the pull request with a WordPress Playground link, in
+  # parallel with the tests. Skipped for pull requests from forks, whose token is read-only and
+  # so cannot push to gh-pages or comment.
+  playground-preview:
+    name: Playground preview
+    needs: build
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: write # To commit the zips to gh-pages.
+      pull-requests: write # To add the comment.
+    uses: ./.github/workflows/playground-preview.yml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+      head-sha: ${{ github.event.pull_request.head.sha }}
 
   # Validates the distributed bytes, in parallel with the e2e matrix.
   # TODO: remove continue-on-error once the findings of the first runs are fixed or ignored. Until

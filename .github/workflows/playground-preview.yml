@@ -1,108 +1,71 @@
 name: Playground Preview
 
-# After an E2E run on a pull request whose "Build plugin archive" job succeeded, whether or not the
-# tests then passed, take the plugin zip and development-plugin zip that job uploaded as an artifact, publish both to the gh-pages branch, and post (or update) a sticky comment
-# linking to WordPress Playground with the plugins installed and activated, alongside every
-# wpackagist plugin and theme listed in composer.json (WooCommerce, GiveWP, etc.).
+# Reusable workflow, called from e2e.yml as soon as its "Build plugin archive" job succeeds, without
+# waiting for the E2E test matrix. Takes the plugin zip and development-plugin zip that job uploaded
+# as an artifact, publishes both to the gh-pages branch, and posts (or updates) a sticky comment on
+# the pull request linking to WordPress Playground with the plugins installed and activated,
+# alongside every wpackagist plugin and theme listed in composer.json (WooCommerce, GiveWP, etc.).
 #
-# NB: `workflow_run` workflows only run from the copy of this file on the *default* branch, so
-# this will not run on the pull request that introduces it. `workflow_run` also only fires when the
-# whole E2E workflow completes, not when its build job does, so the preview is posted once the test
-# matrix has finished.
+# The caller must grant `contents: write` and `pull-requests: write`. On `pull_request` events from
+# forks the token is read-only, so the caller should not call this for them.
 #
 # @author BrianHenryIE
 
 on:
-  workflow_run:
-    workflows: ["E2E Tests"]
-    types: [completed]
+  workflow_call:
+    inputs:
+      pr-number:
+        description: The pull request to comment on.
+        required: true
+        type: number
+      head-sha:
+        description: The pull request's head commit; the zips are published under this path on gh-pages.
+        required: true
+        type: string
+      artifact-name:
+        description: The artifact holding the plugin zip and development-plugin.zip.
+        required: false
+        type: string
+        default: plugin-archives
 
 jobs:
 
   playground-preview:
     runs-on: ubuntu-latest
 
-    # Only for pull requests. Whether the build job succeeded is checked in the first step, since
-    # the run's overall conclusion also reflects the test results.
-    if: github.event.workflow_run.event == 'pull_request'
-
     permissions:
-      actions: read # To download the artifact from the E2E run.
       contents: write # To commit the zips to gh-pages.
       pull-requests: write # To add the comment.
 
     env:
       PLUGIN_SLUG: ${{ github.event.repository.name }}
       DEV_PLUGIN_SLUG: development-plugin
-      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      HEAD_SHA: ${{ inputs.head-sha }}
 
     steps:
 
-      # Every later step depends on this one, through the pull request lookup below.
-      - name: Check the build job succeeded
-        id: build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
-        run: |
-          CONCLUSION=$(gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs" \
-            --jq '.jobs[] | select(.name == "Build plugin archive") | .conclusion')
-          echo "Build plugin archive: ${CONCLUSION:-not found}"
-          if [ "$CONCLUSION" = "success" ]; then
-            echo "succeeded=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "succeeded=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      # `workflow_run` runs against the default branch, so check out the commit that was tested.
+      # composer.json is read to list the wpackagist plugins for the blueprint.
       - name: Git checkout
-        if: ${{ steps.build.outputs.succeeded == 'true' }}
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          persist-credentials: true
+          ref: ${{ inputs.head-sha }}
 
       - name: Checkout GitHub Pages branch
-        if: ${{ steps.build.outputs.succeeded == 'true' }}
         uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: gh-pages
 
-      # `github.event.workflow_run.pull_requests` is empty for pull requests from forks, so look
-      # the number up from the head SHA instead.
-      # When this is skipped, `found` is empty, so every step gated on it is skipped too.
-      - name: Find the pull request number
-        if: ${{ steps.build.outputs.succeeded == 'true' }}
-        id: pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR_NUMBER=$(gh api "repos/${{ github.repository }}/commits/${HEAD_SHA}/pulls" \
-            --jq '[.[] | select(.state == "open")][0].number // empty')
-          if [ -z "$PR_NUMBER" ]; then
-            echo "No open pull request found for ${HEAD_SHA}; nothing to comment on."
-            echo "found=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "Found pull request #${PR_NUMBER}"
-            echo "found=true" >> "$GITHUB_OUTPUT"
-            echo "number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
-          fi
-
-      # The E2E workflow builds the plugin zip and the development-plugin zip (the same ones it
-      # tested against) and uploads them as an artifact, so there is no need to install PHP, Composer
-      # or Node here and rebuild them.
-      - name: Download the plugin archives built by the E2E run
-        if: ${{ steps.pr.outputs.found == 'true' }}
+      # The calling workflow's build job uploaded the plugin zip and the development-plugin zip (the
+      # same ones its tests run against), so there is no need to install PHP, Composer or Node here
+      # and rebuild them. Same workflow run, so no run id or token is needed.
+      - name: Download the plugin archives
         uses: actions/download-artifact@v7
         with:
-          name: plugin-archives
+          name: ${{ inputs.artifact-name }}
           path: dist-archive
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Locate the plugin archives
-        if: ${{ steps.pr.outputs.found == 'true' }}
         id: archive
         run: |
           ls -l dist-archive
@@ -116,7 +79,6 @@ jobs:
       # Published to gh-pages because Playground fetches the zips from the browser: GitHub Pages
       # serves `access-control-allow-origin: *`, whereas Actions artifacts require authentication.
       - name: Publish the zips to gh-pages
-        if: ${{ steps.pr.outputs.found == 'true' }}
         id: publish
         run: |
           DEST="gh-pages/${HEAD_SHA}/playground"
@@ -128,7 +90,6 @@ jobs:
           echo "dev_url=${BASE_URL}/${DEV_PLUGIN_SLUG}.zip" >> "$GITHUB_OUTPUT"
 
       - name: Pre-commit `git pull gh-pages`
-        if: ${{ steps.pr.outputs.found == 'true' }}
         run: |
           cd gh-pages
           # Re-fetch: the coverage job pushes to gh-pages too, so this ref may already be stale.
@@ -137,7 +98,6 @@ jobs:
           (git ls-remote --heads --exit-code origin gh-pages &>/dev/null) && (git checkout --progress --force -B gh-pages refs/remotes/origin/gh-pages)
 
       - name: Commit the zips to gh-pages
-        if: ${{ steps.pr.outputs.found == 'true' }}
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           repository: gh-pages
@@ -145,7 +105,6 @@ jobs:
           commit_message: "🤖 Commit Playground preview build"
 
       - name: Build the Playground URL
-        if: ${{ steps.pr.outputs.found == 'true' }}
         id: playground
         env:
           ZIP_URL: ${{ steps.publish.outputs.url }}
@@ -212,11 +171,10 @@ jobs:
           echo "url=https://playground.wordpress.net/#${ENCODED}" >> "$GITHUB_OUTPUT"
 
       - name: Comment on the pull request
-        if: ${{ steps.pr.outputs.found == 'true' }}
         uses: mshick/add-pr-comment@v3
         continue-on-error: true # Pull requests opened by non-members have no write permissions.
         with:
-          issue: ${{ steps.pr.outputs.number }}
+          issue: ${{ inputs.pr-number }}
           message-id: playground-preview
           message: |
             ### ▶️ [Try this branch in WordPress Playground](${{ steps.playground.outputs.url }})
@@ -228,9 +186,9 @@ jobs:
 
             | | |
             |---|---|
-            | Commit | [`${{ github.event.workflow_run.head_sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.event.workflow_run.head_sha }}) |
+            | Commit | [`${{ inputs.head-sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ inputs.head-sha }}) |
             | Plugin zip | [`${{ github.event.repository.name }}.zip`](${{ steps.publish.outputs.url }}) |
             | Development plugin zip | [`development-plugin.zip`](${{ steps.publish.outputs.dev_url }}) |
-            | E2E run | [#${{ github.event.workflow_run.run_number }}](${{ github.event.workflow_run.html_url }}): `${{ github.event.workflow_run.conclusion }}` |
+            | Workflow run | [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
 
-            <sub>Rebuilt after each E2E run whose plugin archive builds, whether or not the tests pass.</sub>
+            <sub>Rebuilt each time the plugin archive builds, without waiting for the E2E tests.</sub>
