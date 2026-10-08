@@ -43,11 +43,6 @@ jobs:
           extensions: zip
 
       - name: Install PHP dependencies
-        if: ${{ github.event_name == 'pull_request' }}
-        run: composer update --verbose
-
-      - name: Install PHP dependencies
-        if: ${{ github.event_name != 'pull_request' }}
         run: composer install --verbose
 
       - name: Setup Node.js
@@ -155,11 +150,6 @@ jobs:
       # Still needed although the zip is prebuilt: wp-env's mappings point at the WordPress plugins
       # composer installs into wp-content/plugins (WooCommerce, GiveWP, etc.).
       - name: Install PHP dependencies
-        if: ${{ github.event_name == 'pull_request' }}
-        run: composer update --verbose
-
-      - name: Install PHP dependencies
-        if: ${{ github.event_name != 'pull_request' }}
         run: composer install --verbose
 
       - name: Install dependencies
