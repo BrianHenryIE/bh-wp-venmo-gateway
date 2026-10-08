@@ -12,11 +12,16 @@ namespace BrianHenryIE\WP_Venmo_Gateway\API;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use Closure;
+use WP_Error;
 
 /**
  * `https://venmo.com/u/{username}` is a Next.js page whose `__NEXT_DATA__` JSON contains the profile.
  *
  * An unknown username returns HTTP 404.
+ *
+ * HTTP 429 and 5xx responses are retried, honouring `Retry-After` when present. Profiles are fetched in
+ * background cron jobs, so blocking briefly between attempts is acceptable.
  */
 class Venmo_Profile_Fetcher {
 	use LoggerAwareTrait;
@@ -24,12 +29,33 @@ class Venmo_Profile_Fetcher {
 	const PROFILE_URL_TEMPLATE = 'https://venmo.com/u/%s';
 
 	/**
+	 * Total number of requests made before giving up on a 429/5xx response.
+	 */
+	const MAX_ATTEMPTS = 3;
+
+	/**
+	 * Upper bound on any single wait, so a large `Retry-After` cannot stall the cron job.
+	 */
+	const MAX_RETRY_DELAY_SECONDS = 10;
+
+	/**
+	 * Waits the given number of seconds between attempts.
+	 *
+	 * @var Closure(int):void
+	 */
+	protected Closure $sleep;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param LoggerInterface $logger PSR logger.
+	 * @param ?Closure        $sleep  Waits between retries; defaults to {@see sleep()}. Replaced in tests.
 	 */
-	public function __construct( LoggerInterface $logger ) {
+	public function __construct( LoggerInterface $logger, ?Closure $sleep = null ) {
 		$this->setLogger( $logger );
+		$this->sleep = $sleep ?? static function ( int $seconds ): void {
+			sleep( $seconds );
+		};
 	}
 
 	/**
@@ -56,12 +82,7 @@ class Venmo_Profile_Fetcher {
 
 		$url = $this->get_profile_url( $username );
 
-		$response = wp_safe_remote_get(
-			$url,
-			array(
-				'timeout' => 15,
-			)
-		);
+		$response = $this->request_with_retries( $url, $username );
 
 		if ( is_wp_error( $response ) ) {
 			$this->logger->warning(
@@ -113,6 +134,83 @@ class Venmo_Profile_Fetcher {
 		}
 
 		return $profile;
+	}
+
+	/**
+	 * GET the URL, retrying HTTP 429 and 5xx responses up to {@see self::MAX_ATTEMPTS} times in total.
+	 *
+	 * The last response is returned whether or not it succeeded, for {@see self::fetch()} to handle.
+	 *
+	 * @param string $url      The profile page URL.
+	 * @param string $username The sanitized username, for logging.
+	 *
+	 * @return array<string,mixed>|WP_Error
+	 */
+	protected function request_with_retries( string $url, string $username ): array|WP_Error {
+
+		for ( $attempt = 1; ; $attempt++ ) {
+
+			$response = wp_safe_remote_get(
+				$url,
+				array(
+					'timeout' => 15,
+				)
+			);
+
+			if ( is_wp_error( $response ) || $attempt >= self::MAX_ATTEMPTS ) {
+				return $response;
+			}
+
+			$response_code = wp_remote_retrieve_response_code( $response );
+
+			if ( ! $this->is_retryable_response_code( $response_code ) ) {
+				return $response;
+			}
+
+			$delay = $this->get_retry_delay( $response, $attempt );
+
+			$this->logger->debug(
+				'HTTP ' . $response_code . ' fetching Venmo profile for @' . $username . ', retrying in ' . $delay . 's (attempt ' . $attempt . ' of ' . self::MAX_ATTEMPTS . ').',
+				array(
+					'username'      => $username,
+					'url'           => $url,
+					'response_code' => $response_code,
+					'attempt'       => $attempt,
+					'delay'         => $delay,
+				)
+			);
+
+			( $this->sleep )( $delay );
+		}
+	}
+
+	/**
+	 * Rate limited or a server error, i.e. a response that may succeed if tried again.
+	 *
+	 * @param int|string $response_code The HTTP status code, or '' when the response had none.
+	 */
+	protected function is_retryable_response_code( int|string $response_code ): bool {
+		return 429 === $response_code || ( is_int( $response_code ) && $response_code >= 500 && $response_code <= 599 );
+	}
+
+	/**
+	 * Seconds to wait before the next attempt: the response's `Retry-After` (in seconds) if given, otherwise
+	 * exponential backoff (1s, 2s, 4s…), capped at {@see self::MAX_RETRY_DELAY_SECONDS}.
+	 *
+	 * An HTTP-date `Retry-After` is ignored in favour of the backoff.
+	 *
+	 * @param array<string,mixed> $response The HTTP response.
+	 * @param int                 $attempt  The attempt that just failed, starting at 1.
+	 */
+	protected function get_retry_delay( array $response, int $attempt ): int {
+
+		$retry_after = wp_remote_retrieve_header( $response, 'retry-after' );
+
+		$delay = is_string( $retry_after ) && ctype_digit( trim( $retry_after ) )
+			? (int) trim( $retry_after )
+			: 1 << ( $attempt - 1 );
+
+		return min( $delay, self::MAX_RETRY_DELAY_SECONDS );
 	}
 
 	/**
