@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e764743a00b43b2eef53451afc53d3b7",
+    "content-hash": "c449262c19447d9ed458e72d913de63b",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -3070,7 +3070,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericmann/secrets-api",
-                "reference": "a9a621536afef2dd6768c30db0e72f884b85c62d"
+                "reference": "eac860bab9b3600cc8371179c1e01e6058a63c8c"
             },
             "require": {
                 "php": ">=7.4"
@@ -10562,6 +10562,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "brianhenryie/bh-wp-order-email-reconcile": 20,
+        "wordpress/secrets-api": 20,
         "wp-cli/dist-archive-command": 20
     },
     "prefer-stable": true,
