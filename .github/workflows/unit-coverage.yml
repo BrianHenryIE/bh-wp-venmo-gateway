@@ -187,13 +187,14 @@ jobs:
         with:
           repository: gh-pages
           branch: gh-pages
-          before_commit_hook: 'git pull'
+          before_add_hook: 'git pull'
           commit_message: "🤖 Commit code coverage to gh-pages"
 
       - name: Commit code coverage badge to master/main
         if: ${{ matrix.php == env.COVERAGE_PHP_VERSION && github.ref == 'refs/heads/master' }}
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
+          before_add_hook: 'git pull'
           file_pattern: .github/coverage.svg
           commit_message: "🤖 Commit code coverage badge"
 
