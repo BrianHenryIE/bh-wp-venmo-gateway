@@ -9,7 +9,7 @@
  * @see \WC_Abstract_Order::get_total()
  */
 
-abstract class WC_Abstract_Order extends \WC_Abstract_Legacy_Order
+abstract class WC_Abstract_Order
 {
     /**
      * @param string $context View or edit context.

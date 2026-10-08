@@ -6,6 +6,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
 
+use BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
@@ -67,6 +68,13 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 		\WP_Mock::expectActionAdded(
 			'admin_menu',
 			array( new AnyInstance( Unreconciled_Orders_Menu::class ), 'register_submenu' )
+		);
+
+		\WP_Mock::expectFilterAdded(
+			'bh_wp_mailboxes_required_capability',
+			array( new AnyInstance( Capabilities::class ), 'filter_required_capability' ),
+			10,
+			3
 		);
 
 		$api      = $this->makeEmpty( API_Interface::class );

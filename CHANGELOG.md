@@ -5,6 +5,8 @@
 * Add: when a Venmo order is placed, the customer's full name is fetched from their public Venmo profile (`venmo.com/u/{username}`) in a background task and saved to the order meta (`_customer-venmo-display-name`), with an order note, for matching against payment emails.
 * Add: the transaction id on the WooCommerce admin order screen links to the transaction on venmo.com.
 * Fix: a reconciled order's meta is prefixed with the gateway id (`venmo_note`, `venmo_transaction_id`, `venmo_transaction_url`), and the transaction url is recorded once rather than as `transaction_id_href` twice and `transaction_url`.
+* Add: WooCommerce shop managers and GiveWP managers can add, edit, check and remove the email accounts checked for payment emails; the logs page remains administrator-only.
+* Add: WooCommerce shop managers and GiveWP managers can view and process payment emails and view unreconciled orders; email accounts and logs remain administrator-only.
 * Add: shared log level setting, configurable on the WooCommerce and GiveWP gateway settings pages, with a link to the logs page.
 
 ### 4.2.1 September 2026

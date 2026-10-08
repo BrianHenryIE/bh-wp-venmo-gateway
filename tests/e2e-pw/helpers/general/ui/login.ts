@@ -19,14 +19,14 @@ export async function login( user: { username: string; password: string }, page:
 	await page.goto( '/wp-login.php', { waitUntil: 'domcontentloaded' } );
 	await page.fill( 'input[name="log"]', user.username );
 	await page.fill( 'input[name="pwd"]', user.password );
-	// The submit triggers a navigation; wait for that rather than 'networkidle',
-	// which never settles on the WooCommerce my-account page (persistent requests).
-	await Promise.all( [
-		page.waitForLoadState( 'domcontentloaded' ),
-		page.locator( '#loginform' ).getByRole( 'button', { name: 'Log In' } ).click(),
-	] );
+	// The submit triggers a navigation away from wp-login.php; wait for that URL change only. 'networkidle'
+	// never settles on pages with persistent requests (WooCommerce my-account, wc-admin), 'load' can take
+	// longer than the test timeout on the WooCommerce admin, and 'domcontentloaded' resolves immediately for
+	// the already-loaded login page.
+	await page.locator( '#loginform' ).getByRole( 'button', { name: 'Log In' } ).click();
+	await page.waitForURL( ( url ) => ! url.pathname.endsWith( '/wp-login.php' ), { waitUntil: 'commit' } );
 
-	expect( await isLoggedIn( page ) );
+	expect( await isLoggedIn( page ) ).toBe( true );
 }
 
 export async function logout( page: Page ): Promise< void > {

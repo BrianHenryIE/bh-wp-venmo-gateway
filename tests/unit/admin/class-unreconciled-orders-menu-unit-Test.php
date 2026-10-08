@@ -34,7 +34,9 @@ class Unreconciled_Orders_Menu_Unit_Test extends Unit_Testcase {
 			array( 'get_unpaid_orders_provider' => $this->makeEmpty( Unpaid_Orders_Provider_Interface::class ) )
 		);
 
-		$sut = new Unreconciled_Orders_Menu( $api, $this->makeEmpty( Settings_Interface::class ), $this->logger );
+		$capabilities = $this->makeEmpty( Capabilities::class, array( 'get_payment_emails_capability' => 'manage_woocommerce' ) );
+
+		$sut = new Unreconciled_Orders_Menu( $api, $this->makeEmpty( Settings_Interface::class ), $capabilities, $this->logger );
 
 		$sut->register_submenu();
 	}
@@ -50,7 +52,9 @@ class Unreconciled_Orders_Menu_Unit_Test extends Unit_Testcase {
 			array( 'get_unpaid_orders_provider' => $this->makeEmpty( Unpaid_Orders_Provider_Interface::class ) )
 		);
 
-		$sut = new Unreconciled_Orders_Menu( $api, $this->makeEmpty( Settings_Interface::class ), $this->logger );
+		$capabilities = $this->makeEmpty( Capabilities::class, array( 'get_payment_emails_capability' => 'manage_woocommerce' ) );
+
+		$sut = new Unreconciled_Orders_Menu( $api, $this->makeEmpty( Settings_Interface::class ), $capabilities, $this->logger );
 
 		$this->assertSame( 'https://example.org/wp-admin/admin.php?page=bh-wp-oer-unreconciled-orders', $sut->get_url() );
 	}
