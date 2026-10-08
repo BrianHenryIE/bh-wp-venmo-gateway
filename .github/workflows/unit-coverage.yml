@@ -187,6 +187,7 @@ jobs:
         with:
           repository: gh-pages
           branch: gh-pages
+          before_commit_hook: 'git pull'
           commit_message: "🤖 Commit code coverage to gh-pages"
 
       - name: Commit code coverage badge to master/main
