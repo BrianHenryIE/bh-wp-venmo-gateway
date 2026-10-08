@@ -27,7 +27,7 @@
  * Domain Path:       /languages
  *
  * WC requires at least:   10.1
- * WC tested up to:        11.1
+ * WC tested up to:        11.2
  */
 
 namespace BrianHenryIE\WP_Venmo_Gateway;
