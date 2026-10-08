@@ -33,7 +33,7 @@ const INGRESS = '/wp-json/bh-wp-venmo-gateway/v2/venmo-payment-emails/new';
 async function createEmail( page: Page ): Promise< number > {
 	const nonce = await ( await page.request.get( '/wp-admin/admin-ajax.php?action=rest-nonce' ) ).text();
 	const eml = fs
-		.readFileSync( path.resolve( __dirname, '../../_data/John Doe paid you $46.00.eml' ), 'utf8' )
+		.readFileSync( path.resolve( __dirname, '../../../development-plugin/data/John Doe paid you $46.00.eml' ), 'utf8' )
 		.replace( /^Message-ID: .*$/m, `Message-ID: <roles-spec-${ Date.now() }-${ Math.random().toString( 36 ).slice( 2 ) }@example.org>` );
 	const response = await page.request.post( INGRESS, {
 		headers: { 'Content-Type': 'message/rfc822', 'X-WP-Nonce': nonce },
