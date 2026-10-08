@@ -1,12 +1,14 @@
 name: Playground Preview
 
-# After the E2E tests pass on a pull request, take the plugin zip and development-plugin zip that
-# run built and uploaded as an artifact, publish both to the gh-pages branch, and post (or update) a sticky comment
+# After an E2E run on a pull request whose "Build plugin archive" job succeeded, whether or not the
+# tests then passed, take the plugin zip and development-plugin zip that job uploaded as an artifact, publish both to the gh-pages branch, and post (or update) a sticky comment
 # linking to WordPress Playground with the plugins installed and activated, alongside every
 # wpackagist plugin and theme listed in composer.json (WooCommerce, GiveWP, etc.).
 #
 # NB: `workflow_run` workflows only run from the copy of this file on the *default* branch, so
-# this will not run on the pull request that introduces it.
+# this will not run on the pull request that introduces it. `workflow_run` also only fires when the
+# whole E2E workflow completes, not when its build job does, so the preview is posted once the test
+# matrix has finished.
 #
 # @author BrianHenryIE
 
@@ -20,10 +22,9 @@ jobs:
   playground-preview:
     runs-on: ubuntu-latest
 
-    # Only for pull requests whose E2E run passed.
-    if: >-
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success'
+    # Only for pull requests. Whether the build job succeeded is checked in the first step, since
+    # the run's overall conclusion also reflects the test results.
+    if: github.event.workflow_run.event == 'pull_request'
 
     permissions:
       actions: read # To download the artifact from the E2E run.
@@ -37,14 +38,32 @@ jobs:
 
     steps:
 
+      # Every later step depends on this one, through the pull request lookup below.
+      - name: Check the build job succeeded
+        id: build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          CONCLUSION=$(gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs" \
+            --jq '.jobs[] | select(.name == "Build plugin archive") | .conclusion')
+          echo "Build plugin archive: ${CONCLUSION:-not found}"
+          if [ "$CONCLUSION" = "success" ]; then
+            echo "succeeded=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "succeeded=false" >> "$GITHUB_OUTPUT"
+          fi
+
       # `workflow_run` runs against the default branch, so check out the commit that was tested.
       - name: Git checkout
+        if: ${{ steps.build.outputs.succeeded == 'true' }}
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: true
 
       - name: Checkout GitHub Pages branch
+        if: ${{ steps.build.outputs.succeeded == 'true' }}
         uses: actions/checkout@v7
         with:
           ref: gh-pages
@@ -52,7 +71,9 @@ jobs:
 
       # `github.event.workflow_run.pull_requests` is empty for pull requests from forks, so look
       # the number up from the head SHA instead.
+      # When this is skipped, `found` is empty, so every step gated on it is skipped too.
       - name: Find the pull request number
+        if: ${{ steps.build.outputs.succeeded == 'true' }}
         id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -210,6 +231,6 @@ jobs:
             | Commit | [`${{ github.event.workflow_run.head_sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.event.workflow_run.head_sha }}) |
             | Plugin zip | [`${{ github.event.repository.name }}.zip`](${{ steps.publish.outputs.url }}) |
             | Development plugin zip | [`development-plugin.zip`](${{ steps.publish.outputs.dev_url }}) |
-            | E2E run | [#${{ github.event.workflow_run.run_number }}](${{ github.event.workflow_run.html_url }}) |
+            | E2E run | [#${{ github.event.workflow_run.run_number }}](${{ github.event.workflow_run.html_url }}): `${{ github.event.workflow_run.conclusion }}` |
 
-            <sub>Rebuilt each time the E2E tests pass.</sub>
+            <sub>Rebuilt after each E2E run whose plugin archive builds, whether or not the tests pass.</sub>
