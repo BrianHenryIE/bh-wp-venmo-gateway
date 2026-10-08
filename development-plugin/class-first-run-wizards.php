@@ -21,7 +21,7 @@ class First_Run_Wizards {
 	 * @see Hooks::addAction()
 	 */
 	public function give_wp(): void {
-		add_action(
+		add_filter(
 			sprintf(
 				'give_disable_hook-%s:%s@%s',
 				'admin_init',
