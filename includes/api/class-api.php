@@ -47,4 +47,15 @@ class API implements API_Interface {
 	public function get_unpaid_orders_provider(): Unpaid_Orders_Provider_Interface {
 		return $this->reconciler->get_unpaid_orders_provider();
 	}
+
+	/**
+	 * Fetch a customer's public Venmo profile from `https://venmo.com/u/{username}`.
+	 *
+	 * @see Venmo_Profile_Fetcher
+	 *
+	 * @param string $username The Venmo username, with or without a leading `@`.
+	 */
+	public function get_venmo_profile( string $username ): ?Venmo_Profile {
+		return ( new Venmo_Profile_Fetcher( $this->logger ) )->fetch( $username );
+	}
 }

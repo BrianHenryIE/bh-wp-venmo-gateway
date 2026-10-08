@@ -25,6 +25,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile as GiveWP_Donor_Venmo_Profile;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List as GiveWP_Donations_List;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
@@ -114,10 +115,13 @@ class Register_Hooks {
 		add_filter( 'woocommerce_order_list_table_prepare_items_query_args', array( $orders_list_filter, 'filter_hpos_list_table_query_args' ) );
 		add_filter( 'request', array( $orders_list_filter, 'filter_legacy_list_table_query_vars' ) );
 
-		$admin_order_page = new Order( $this->settings, $this->logger );
+		$admin_order_page = new Order( $this->api, $this->settings, $this->logger );
 		// On admin order screen, show the Venmo username in place of the billing address.
 		add_filter( 'woocommerce_order_get_formatted_billing_address', array( $admin_order_page, 'admin_view_billing_address' ), 10, 3 );
 		add_action( 'woocommerce_order_status_changed', array( $admin_order_page, 'schedule_email_check' ), 10, 3 );
+		// When a Venmo order is placed, look up the customer's name from their public Venmo profile in the background.
+		add_action( 'woocommerce_order_status_changed', array( $admin_order_page, 'schedule_fetch_customer_venmo_profile' ), 10, 3 );
+		add_action( Cron::FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK, array( $admin_order_page, 'fetch_customer_venmo_profile' ) );
 
 		$thank_you = new Thank_You();
 		// Display payment instructions on thank you page.
@@ -163,6 +167,10 @@ class Register_Hooks {
 
 		$givewp = new GiveWP();
 		add_action( 'givewp_register_payment_gateway', array( $givewp, 'register_gateway' ) );
+
+		// When a Venmo donation is created, look up the donor's name from their public Venmo profile in the background.
+		$donor_venmo_profile = new GiveWP_Donor_Venmo_Profile( $this->api, $this->logger );
+		add_action( Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, array( $donor_venmo_profile, 'fetch_donor_venmo_profile' ) );
 
 		$gateway_settings = new GiveWP_Gateway_Settings();
 		add_filter( 'give_get_sections_gateways', array( $gateway_settings, 'register_sections' ) );
