@@ -81,14 +81,14 @@ class Email {
 
 		printf(
 			'<p>Please send payment of %s via Venmo to <a href="%s">@%s</a></p>' . PHP_EOL . PHP_EOL,
-			esc_html( (float) wc_price( $order->get_total() ) ),
+			esc_html( wc_price( (float) $order->get_total() ) ),
 			esc_url_raw( $venmo_payment_url ),
 			esc_html( $store_venmo_username )
 		);
 
 		printf(
 			'<p>Please pay the precise amount – <b>%s</b> and include the order number – <b>%d</b> in the note.</p>' . PHP_EOL . PHP_EOL,
-			esc_html( (float) wc_price( $order->get_total() ) ),
+			esc_html( wc_price( (float) $order->get_total() ) ),
 			absint( $order->get_id() )
 		);
 
