@@ -16,6 +16,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
 use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features;
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
@@ -25,12 +26,16 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
+use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile as GiveWP_Donor_Venmo_Profile;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List as GiveWP_Donations_List;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
 use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
+/**
+ * `add_action()` and `add_filter()` for the plugin.
+ */
 class Register_Hooks {
 
 	/**
@@ -40,14 +45,14 @@ class Register_Hooks {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the frontend-facing side of the site.
 	 *
-	 * @param API_Interface      $api
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
+	 * @param API_Interface      $api The core functions (service) of the plugin.
+	 * @param Settings_Interface $settings User configurable options for the plugin.
+	 * @param LoggerInterface    $logger PSR logger used constucting all objects.
 	 */
 	public function __construct(
 		protected API_Interface $api,
 		protected Settings_Interface $settings,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -115,10 +120,13 @@ class Register_Hooks {
 		add_filter( 'woocommerce_order_list_table_prepare_items_query_args', array( $orders_list_filter, 'filter_hpos_list_table_query_args' ) );
 		add_filter( 'request', array( $orders_list_filter, 'filter_legacy_list_table_query_vars' ) );
 
-		$admin_order_page = new Order( $this->settings, $this->logger );
+		$admin_order_page = new Order( $this->api, $this->settings, $this->logger );
 		// On admin order screen, show the Venmo username in place of the billing address.
 		add_filter( 'woocommerce_order_get_formatted_billing_address', array( $admin_order_page, 'admin_view_billing_address' ), 10, 3 );
 		add_action( 'woocommerce_order_status_changed', array( $admin_order_page, 'schedule_email_check' ), 10, 3 );
+		// When a Venmo order is placed, look up the customer's name from their public Venmo profile in the background.
+		add_action( 'woocommerce_order_status_changed', array( $admin_order_page, 'schedule_fetch_customer_venmo_profile' ), 10, 3 );
+		add_action( Cron::FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK, array( $admin_order_page, 'fetch_customer_venmo_profile' ) );
 
 		$thank_you = new Thank_You();
 		// Display payment instructions on thank you page.
@@ -140,6 +148,21 @@ class Register_Hooks {
 		$email = new Email();
 		// Add payment link and instructions to the customer emails.
 		add_action( 'woocommerce_email_before_order_table', array( $email, 'email_instructions' ), 10, 2 );
+
+		/**
+		 * @see wp-admin/plugins.php?plugin_status=incompatible_with_feature
+		 */
+		$features = new Features( $this->settings );
+
+		/**
+		 * Declare compatibility with WooCommerce High Performance Order Storage.
+		 */
+		add_action( 'before_woocommerce_init', array( $features, 'declare_custom_order_tables_compatibility' ) );
+
+		/**
+		 * Declare compatibility with WooCommerce Blocks cart and checkout.
+		 */
+		add_action( 'before_woocommerce_init', array( $features, 'declare_cart_checkout_blocks_compatibility' ) );
 	}
 
 	/**
@@ -149,6 +172,10 @@ class Register_Hooks {
 
 		$givewp = new GiveWP();
 		add_action( 'givewp_register_payment_gateway', array( $givewp, 'register_gateway' ) );
+
+		// When a Venmo donation is created, look up the donor's name from their public Venmo profile in the background.
+		$donor_venmo_profile = new GiveWP_Donor_Venmo_Profile( $this->api, $this->logger );
+		add_action( Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, array( $donor_venmo_profile, 'fetch_donor_venmo_profile' ) );
 
 		$gateway_settings = new GiveWP_Gateway_Settings();
 		add_filter( 'give_get_sections_gateways', array( $gateway_settings, 'register_sections' ) );

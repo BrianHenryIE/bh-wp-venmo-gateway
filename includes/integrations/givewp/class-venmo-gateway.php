@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
 use Give\Donations\Models\Donation;
 use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\PaymentGateway;
@@ -27,6 +28,14 @@ class Venmo_Gateway extends PaymentGateway {
 	const STORE_VENMO_USERNAME_META_KEY    = '_destination-account-venmo-username';
 	const VENMO_TRANSACTION_ID_META_KEY    = '_venmo-transaction-id';
 	const VENMO_PAYMENT_DATE_META_KEY      = '_venmo-payment-date';
+
+	/**
+	 * Donation meta key for the donor's full name as shown on their public Venmo profile, fetched in the
+	 * background after the donation is created. Venmo's payment emails name the payer, not their username.
+	 *
+	 * @see Donor_Venmo_Profile::fetch_donor_venmo_profile()
+	 */
+	const CUSTOMER_VENMO_DISPLAY_NAME_META_KEY = '_customer-venmo-display-name';
 
 	/**
 	 * @see PaymentGateway::id()
@@ -169,6 +178,12 @@ class Venmo_Gateway extends PaymentGateway {
 
 		if ( ! empty( $venmo_username ) ) {
 			give_update_meta( $donation->id, self::CUSTOMER_VENMO_USERNAME_META_KEY, $venmo_username );
+
+			// Look up the donor's full name from their public Venmo profile in the background.
+			$cron_args = array( (int) $donation->id );
+			if ( false === wp_next_scheduled( Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, $cron_args ) ) {
+				wp_schedule_single_event( time(), Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, $cron_args );
+			}
 		}
 
 		$store_username = Venmo_Username::sanitize( give_get_option( 'venmo_store_username', '' ) );

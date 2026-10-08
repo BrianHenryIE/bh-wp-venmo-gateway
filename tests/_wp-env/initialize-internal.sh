@@ -1,8 +1,25 @@
 #!/bin/bash
 
 PLUGIN_SLUG=$1;
+MODE=$2;
 # Print the script name.
 echo "Running " $(basename "$0") " for " $PLUGIN_SLUG;
+
+# The scripts are mapped one level above the webroot so they are not web-servable.
+SCRIPT_DIR="$(dirname "$0")"
+
+# In CI the plugin is not mounted from the working directory; install the zip
+# initialize-external.sh copied into the mapped setup directory. The filename carries the version,
+# so echoing it records exactly which build the tests ran against.
+if [ "$MODE" = "ci" ]; then
+  PLUGIN_ZIP=$(ls -t "$SCRIPT_DIR/$PLUGIN_SLUG".*.zip 2>/dev/null | head -n 1)
+  if [ -z "$PLUGIN_ZIP" ]; then
+    echo "No $PLUGIN_SLUG zip found in $SCRIPT_DIR" >&2
+    exit 1
+  fi
+  echo "Installing $PLUGIN_SLUG from $(basename "$PLUGIN_ZIP")"
+  wp plugin install "$PLUGIN_ZIP" --force --activate
+fi
 
 if [ ! -d /var/www/html/wp-content/uploads ]; then
   echo "mkdir /var/www/html/wp-content/uploads"
@@ -34,7 +51,6 @@ fi
 # Dedicated checkout pages — one per checkout style — so the shortcode and blocks
 # E2E specs never mutate a shared page and can run in parallel. The default
 # /checkout/ page (woocommerce_checkout_page_id) is left untouched.
-SCRIPT_DIR="$(dirname "$0")"
 if ! wp post list --post_type=page --field=post_name 2>/dev/null | grep -qx "checkout-shortcode"; then
   echo "Creating /checkout-shortcode/ page..."
   wp post create --post_type=page --post_title="Checkout (Shortcode)" --post_name="checkout-shortcode" \

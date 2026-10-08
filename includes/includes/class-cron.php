@@ -19,6 +19,24 @@ class Cron {
 	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'bh_wp_venmo_gateway_check_for_payment_emails';
 
 	/**
+	 * Single event, scheduled when a Venmo order is placed, to fetch the customer's name from their public
+	 * Venmo profile. Takes the order id as its argument.
+	 *
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::schedule_fetch_customer_venmo_profile()
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::fetch_customer_venmo_profile()
+	 */
+	const FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK = 'bh_wp_venmo_gateway_fetch_customer_venmo_profile';
+
+	/**
+	 * Single event, scheduled when a Venmo donation is created, to fetch the donor's name from their public
+	 * Venmo profile. Takes the donation id as its argument.
+	 *
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::createPayment()
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile::fetch_donor_venmo_profile()
+	 */
+	const FETCH_DONOR_VENMO_PROFILE_CRON_HOOK = 'bh_wp_venmo_gateway_fetch_donor_venmo_profile';
+
+	/**
 	 * Cron_Jobs constructor.
 	 *
 	 * @param API_Interface      $api

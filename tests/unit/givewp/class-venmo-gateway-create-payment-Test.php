@@ -9,6 +9,7 @@
 
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
 
+use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
 use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 use Give\Donations\Models\Donation;
 use Give\Framework\PaymentGateways\Commands\PaymentPending;
@@ -43,6 +44,19 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	}
 
 	/**
+	 * With a donor username, a single cron event is scheduled to fetch their Venmo profile name.
+	 *
+	 * @param int $times How many times the event should be scheduled.
+	 */
+	private function expect_profile_fetch_scheduled( int $times = 1 ): void {
+		\WP_Mock::userFunction( 'wp_next_scheduled' )->with( Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, array( 42 ) )->andReturn( false );
+		\WP_Mock::userFunction( 'wp_schedule_single_event' )
+			->times( $times )
+			->with( \WP_Mock\Functions::type( 'int' ), Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK, array( 42 ) )
+			->andReturn( true );
+	}
+
+	/**
 	 * @covers ::id
 	 */
 	public function test_id_is_venmo(): void {
@@ -57,6 +71,7 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	 */
 	public function test_v3_username_stored_bare_and_returns_pending(): void {
 		\WP_Mock::userFunction( 'sanitize_text_field' )->andReturnArg( 0 );
+		$this->expect_profile_fetch_scheduled();
 		\WP_Mock::userFunction( 'give_get_option' )->with( 'venmo_store_username', '' )->andReturn( 'storevendor' );
 
 		\WP_Mock::userFunction( 'give_update_meta' )
@@ -78,6 +93,7 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	 */
 	public function test_v2_username_read_from_post(): void {
 		\WP_Mock::userFunction( 'sanitize_text_field' )->andReturnArg( 0 );
+		$this->expect_profile_fetch_scheduled();
 		\WP_Mock::passthruFunction( 'wp_unslash' );
 		\WP_Mock::userFunction( 'give_get_option' )->with( 'venmo_store_username', '' )->andReturn( 'storevendor' );
 
@@ -102,6 +118,7 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	 */
 	public function test_gateway_data_takes_precedence_over_post(): void {
 		\WP_Mock::userFunction( 'sanitize_text_field' )->andReturnArg( 0 );
+		$this->expect_profile_fetch_scheduled();
 		\WP_Mock::passthruFunction( 'wp_unslash' );
 		\WP_Mock::userFunction( 'give_get_option' )->with( 'venmo_store_username', '' )->andReturn( 'storevendor' );
 
@@ -126,6 +143,7 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	 */
 	public function test_empty_username_does_not_write_customer_meta(): void {
 		\WP_Mock::userFunction( 'give_get_option' )->with( 'venmo_store_username', '' )->andReturn( 'storevendor' );
+		\WP_Mock::userFunction( 'wp_schedule_single_event' )->never();
 
 		\WP_Mock::userFunction( 'give_update_meta' )
 			->with( 42, Venmo_Gateway::CUSTOMER_VENMO_USERNAME_META_KEY, Mockery::any() )
@@ -146,6 +164,7 @@ class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 	 */
 	public function test_empty_store_username_does_not_write_store_meta(): void {
 		\WP_Mock::userFunction( 'sanitize_text_field' )->andReturnArg( 0 );
+		$this->expect_profile_fetch_scheduled();
 		\WP_Mock::userFunction( 'give_get_option' )->with( 'venmo_store_username', '' )->andReturn( '' );
 
 		\WP_Mock::userFunction( 'give_update_meta' )

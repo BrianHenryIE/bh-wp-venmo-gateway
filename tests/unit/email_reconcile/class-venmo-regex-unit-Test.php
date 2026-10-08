@@ -6,7 +6,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
 
 class Venmo_Regex_Unit_Test extends Unit_Testcase {
 
-	public function test_amount_1() {
+	public function test_amount_1(): void {
 
 		$str = <<<'EOD'
         <!-- date, audience, and amount -->
@@ -36,7 +36,7 @@ EOD;
 		$this->assertEquals( 71.24, $output[1] );
 	}
 
-	public function test_amount_2() {
+	public function test_amount_2(): void {
 
 		$str = <<<'EOD'
 <!-- date, audience, and amount -->
@@ -63,7 +63,7 @@ EOD;
 
 
 
-	public function test_amount_3() {
+	public function test_amount_3(): void {
 
 		$str = <<<'EOD'
 <!-- date, audience, and amount -->

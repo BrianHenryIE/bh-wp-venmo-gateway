@@ -22,7 +22,8 @@ class Pattern_3_Unit_Test extends Unit_Testcase {
 	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Parser::parse_email_with_pattern_set()
 	 */
 	private function get_fixture_html(): string {
-		$raw = file_get_contents( codecept_data_dir( 'John Doe paid you $46.00.eml' ) );
+		// The development plugin's template email doubles as the fixture.
+		$raw = file_get_contents( codecept_root_dir( 'development-plugin/data/John Doe paid you $46.00.eml' ) );
 		$this->assertNotFalse( $raw );
 
 		$raw = str_replace( "\r\n", "\n", $raw );

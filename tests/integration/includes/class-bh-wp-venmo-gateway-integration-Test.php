@@ -19,7 +19,7 @@ class BH_WP_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 	/**
 	 * Verify action to call load textdomain is added.
 	 */
-	public function test_action_plugins_loaded_load_plugin_textdomain() {
+	public function test_action_plugins_loaded_load_plugin_textdomain(): void {
 
 		$action_name       = 'plugins_loaded';
 		$expected_priority = 10;
@@ -54,7 +54,7 @@ class BH_WP_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 	/**
 	 * Verify filter is added to register gateway.
 	 */
-	public function test_filter_woocommerce_payment_gateways_add_to_woocommerce() {
+	public function test_filter_woocommerce_payment_gateways_add_to_woocommerce(): void {
 
 		$action_name       = 'woocommerce_payment_gateways';
 		$expected_priority = 10;
@@ -90,7 +90,7 @@ class BH_WP_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 	/**
 	 * Verify schedule/delete cron is hooked to plugins_loaded
 	 */
-	public function test_cron_action_enabled_disable() {
+	public function test_cron_action_enabled_disable(): void {
 
 		$action_name       = 'plugins_loaded';
 		$expected_priority = 10;
@@ -125,7 +125,7 @@ class BH_WP_Venmo_Gateway_Integration_Test extends WPUnit_Testcase {
 	/**
 	 * Verify cron action is added
 	 */
-	public function test_cron_action_check_for_payment_emails() {
+	public function test_cron_action_check_for_payment_emails(): void {
 
 		$action_name       = 'bh_wp_venmo_gateway_check_for_payment_emails';
 		$expected_priority = 10;

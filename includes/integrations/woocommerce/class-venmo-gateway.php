@@ -7,11 +7,11 @@
 namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
 
 use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
+use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler;
 use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Integrations\WooCommerce\Credentials_Settings_Fields;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
 use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
 use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
-use ReflectionClass;
 use WC_Order;
 use WC_Payment_Gateway;
 
@@ -31,8 +31,19 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	// TODO: use all underscores. Requires an upgrade routine.
 	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
 
-	// The meta key to save to individual orders.
+	/**
+	 * The settings.store_venmo_username is saved to this order meta to know where we told the customer to pay.
+	 */
 	const STORE_VENMO_USERNAME_META_KEY = '_destination-account-venmo-username';
+
+	/**
+	 * Order meta key for the customer's full name as shown on their public Venmo profile, fetched in the
+	 * background after checkout. Venmo's payment emails name the payer, not their username, so this is
+	 * what a payment email can be matched against.
+	 *
+	 * @see Order::fetch_customer_venmo_profile()
+	 */
+	const CUSTOMER_VENMO_DISPLAY_NAME_META_KEY = '_customer-venmo-display-name';
 
 	/**
 	 * @var Settings_Interface
@@ -60,7 +71,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$this->description = $this->get_option( 'description' );
 
-		// Save the wp-admin configuration form options. /** @phpstan-ignore return.void  */
+		// Save the wp-admin configuration form options.
+		/** @phpstan-ignore return.void  */
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Save the customer Venmo username to the order meta as the order is created (shortcode checkout).
@@ -208,7 +220,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		// This just prints the description.
 		parent::payment_fields();
 
-		// Pre-populate with saved Venmo username
+		// Pre-populate with saved Venmo username.
 		$customer_id = get_current_user_id();
 		$value       = $this->get_saved_venmo_username( $customer_id );
 
@@ -223,7 +235,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			$value
 		);
 
-		// Add JavaScript for focusing the field when Venmo is selected
+		// Add JavaScript for focusing the field when Venmo is selected.
 		$this->add_checkout_focus_script();
 	}
 
@@ -251,16 +263,20 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 * @see WC_Checkout::create_order()
 	 * @see WC_Checkout::get_posted_data()
 	 *
-	 * @param WC_Order $order The newly created WooCommerce order
+	 * @param WC_Order $order The newly created WooCommerce order.
 	 * @param string[] $data
 	 */
 	public function save_order_payment_type_meta_data( WC_Order $order, array $data ): void {
 
+		// Ignore-because: we're not processing data here.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $data['payment_method'] !== $this->id || ! isset( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) ) {
 			return;
 		}
 
-		$customer_venmo_username = Venmo_Username::sanitize( esc_attr( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) );
+		// Ignore-because: this seems safe.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$customer_venmo_username = Venmo_Username::sanitize( sanitize_text_field( wp_unslash( $_POST[ self::CUSTOMER_VENMO_USERNAME_META_KEY ] ) ) );
 
 		// Save Venmo username to order meta.
 		$order->add_meta_data( self::CUSTOMER_VENMO_USERNAME_META_KEY, $customer_venmo_username, true );
@@ -359,8 +375,9 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 * On-Hold – Awaiting payment – stock is reduced, but you need to confirm payment.
 	 *
 	 * @see https://docs.woocommerce.com/document/managing-orders/
+	 * @see Legacy::process_legacy_payment()
 	 *
-	 * @param int $order_id
+	 * @param int $order_id The (newly?) created order object whose payment status is about to be determined.
 	 * @return string[]
 	 */
 	public function process_payment( $order_id ): array {
@@ -396,7 +413,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 
 		$order->update_status( 'on-hold', $note );
 
-		// Reduce stock levels
+		// Reduce stock levels.
 		wc_reduce_stock_levels( $order_id );
 
 		// Empty cart.
@@ -412,6 +429,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Output the gateway settings screen.
 	 *
+	 * TODO: verify this is used or even doing anything different to the parent.
+	 *
 	 * Overrides the parents.
 	 *
 	 * @see WC_Payment_Gateway::admin_options()
@@ -419,11 +438,15 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 */
 	public function admin_options(): void {
 		echo '<h2>' . esc_html( $this->get_method_title() );
+		// No need to provide our own translation when a correct one exists.
+		// phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 		wc_back_link( __( 'Return to payments', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
 
-		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>'; // WPCS: XSS ok.
+		echo '<table class="form-table">';
+		$this->generate_settings_html( $this->get_form_fields(), true );
+		echo '</table>';
 	}
 
 	/**
@@ -489,6 +512,8 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		}
 
 		// Don't format it on the gateway's page itself.
+		// Ignore-because: we're not actually processing data.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['tab'] ) && 'checkout' === $_GET['tab'] && ! isset( $_GET['section'] ) ) {
 			$method_title = "{$method_title} – <i>{$store_venmo_username}</i>";
 		} else {
@@ -507,7 +532,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Return the description for admin screens.
 	 *
-	 * e.g. Description column of WooCommerce/Settings/Payments.
+	 * E.g. Description column of WooCommerce/Settings/Payments.
 	 *
 	 * Overrides:
 	 *
@@ -547,7 +572,7 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 	 * @return string The saved Venmo username or empty string.
 	 */
 	public function get_saved_venmo_username( ?int $customer_id = null ): string {
-		// Try user meta if logged in
+		// Try user meta if logged in.
 		if ( $customer_id > 0 ) {
 			$username = get_user_meta( $customer_id, self::CUSTOMER_VENMO_USERNAME_META_KEY, true );
 			if ( ! empty( $username ) ) {
@@ -555,12 +580,12 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 			}
 		}
 
-		// Try cookie for guests
-		if ( isset( $_COOKIE['venmo_username'] ) && ! empty( $_COOKIE['venmo_username'] ) ) {
-			return sanitize_text_field( $_COOKIE['venmo_username'] );
+		// Try cookie for guests.
+		if ( isset( $_COOKIE['venmo_username'] ) && is_string( $_COOKIE['venmo_username'] ) && '' !== $_COOKIE['venmo_username'] ) {
+			return sanitize_text_field( wp_unslash( $_COOKIE['venmo_username'] ) );
 		}
 
-		// Fallback to previous order meta (if logged in)
+		// Fallback to previous order meta (if logged in).
 		if ( $customer_id > 0 ) {
 			/** @var WC_Order[] $orders */
 			$orders = wc_get_orders(
@@ -617,5 +642,42 @@ class Venmo_Gateway extends WC_Payment_Gateway {
 		});
 		</script>
 		<?php
+	}
+
+	/**
+	 * Link the transaction id shown on the admin order screen ("Payment via Venmo (123)") to the transaction on venmo.com.
+	 *
+	 * The url is recorded on the order as `{prefix}transaction_url` by bh-wp-order-email-reconcile when the payment
+	 * email is matched to the order; there is no url pattern to build one from the transaction id alone.
+	 *
+	 * @see WC_Payment_Gateway::get_transaction_url()
+	 * @see \WC_Meta_Box_Order_Data::output()
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler::match_email_to_order()
+	 *
+	 * @param WC_Order $order The order.
+	 * @return string The transaction url, or empty string.
+	 */
+	public function get_transaction_url( $order ) {
+		$transaction_url = $order->get_meta( $this->get_order_meta_key( 'transaction_url' ) );
+
+		return is_string( $transaction_url ) && '' !== $transaction_url
+			? $transaction_url
+			: parent::get_transaction_url( $order );
+	}
+
+	/**
+	 * Prefix meta/option keys related to the gateway with the gateway id.
+	 *
+	 * Matches the keys bh-wp-order-email-reconcile records on the order when its payment email is matched.
+	 *
+	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Reconciler::get_order_meta_key()
+	 * @see Venmo_Gateway::get_transaction_url()
+	 *
+	 * Accidentally identical to {@see Email_Reconciler::get_order_meta_key()}.
+	 *
+	 * @param string $unprefixed The local meta key name.
+	 */
+	protected function get_order_meta_key( string $unprefixed ): string {
+		return str_replace( '-', '_', sprintf( '%s_%s', $this->id, $unprefixed ) );
 	}
 }

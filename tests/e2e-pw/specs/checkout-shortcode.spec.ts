@@ -20,12 +20,12 @@ const STORE_VENMO_USERNAME = 'sackavs';
 test.describe( 'Venmo checkout (shortcode)', () => {
 	test.describe.configure( { mode: 'serial' } );
 
-	test.beforeEach( async ( { page } ) => {
+	test.beforeEach( async ( { page, requestUtils } ) => {
 		// Delete all cookies so user is logged out and cart is empty
 		await page.context().clearCookies();
 
 		// Set the store's Venmo username.
-		await setVenmoUsername( STORE_VENMO_USERNAME );
+		await setVenmoUsername( requestUtils, STORE_VENMO_USERNAME );
 
 		// Set the billing+shipping details via API.
 		await setDefaultCustomerAddresses(page);
@@ -102,6 +102,17 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		// Should show a QR code linking to the Venmo profile.
 		const qrImage = page.locator( 'img[alt="Payment QR code"]' );
 		await expect( qrImage ).toBeVisible();
+
+		// The inline SVG data URI must not be stripped by kses (which would leave a broken image).
+		await expect( qrImage ).toHaveAttribute( 'src', /^data:image\/svg\+xml;base64,/ );
+		expect( await qrImage.evaluate( ( img: HTMLImageElement ) => img.complete && img.naturalWidth > 0 ) ).toBe( true );
+
+		// The QR code should fill 75% of the viewport height (75vh) so it is easy to scan.
+		const viewportHeight = page.viewportSize()!.height;
+		const qrBox = ( await qrImage.boundingBox() )!;
+		expect( qrBox.height ).toBeCloseTo( viewportHeight * 0.75, 0 );
+		// It is square.
+		expect( qrBox.width ).toBeCloseTo( qrBox.height, 0 );
 
 	} );
 

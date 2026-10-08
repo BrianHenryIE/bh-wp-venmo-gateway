@@ -4,7 +4,8 @@
  *
  * An unpaid Venmo order is arranged via the WooCommerce REST API, the button is clicked
  * in the UI, and the result is asserted via REST: the order gets a note linking to the
- * created email post.
+ * created email post, is marked paid, and has the reconciliation meta recorded once each
+ * under the `venmo_` prefix. The admin order screen then links the transaction id to venmo.com.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { loginAsAdmin } from '../../helpers/general/ui/login';
@@ -65,6 +66,29 @@ test.describe( 'Development plugin – send reconciliation email', () => {
 			// And the notice links to the same screen.
 			const noticeLink = page.locator( '#bh-wp-venmo-gateway-reconciliation-email-notice a' );
 			await expect( noticeLink ).toHaveAttribute( 'href', `http://localhost:8888/wp-admin/post.php?post=${ emailPostId }&action=edit` );
+
+			// Assert (REST): the email was reconciled to the order, which is now paid, with the transaction meta
+			// recorded once each and prefixed with the gateway id.
+			const reconciledOrder = await requestUtils.rest( { path: `/wc/v3/orders/${ order.id }` } );
+			expect( reconciledOrder.status ).toBe( 'processing' );
+			expect( reconciledOrder.transaction_id ).toMatch( /^\d+$/ );
+
+			const metaKeys = reconciledOrder.meta_data.map( ( meta: { key: string } ) => meta.key );
+			const venmoTransactionUrls = reconciledOrder.meta_data.filter( ( meta: { key: string } ) => 'venmo_transaction_url' === meta.key );
+			expect( venmoTransactionUrls ).toHaveLength( 1 );
+			// The development plugin's template email links to a fixed story; only the transaction id is substituted.
+			const transactionUrl: string = venmoTransactionUrls[ 0 ].value;
+			expect( transactionUrl ).toMatch( /^https:\/\/venmo\.com\/story\/\d+/ );
+			expect( metaKeys.filter( ( key: string ) => 'venmo_note' === key ) ).toHaveLength( 1 );
+			expect( metaKeys.filter( ( key: string ) => 'venmo_transaction_id' === key ) ).toHaveLength( 1 );
+			expect( metaKeys ).not.toContain( 'transaction_id_href' );
+			expect( metaKeys ).not.toContain( 'transaction_url' );
+
+			// Assert (UI): "Payment via Venmo (<transaction id>)" links to the transaction on venmo.com.
+			await page.reload( { waitUntil: 'domcontentloaded' } );
+			const transactionLink = page.locator( '.woocommerce-order-data__meta.order_number a[href^="https://venmo.com/story/"]' );
+			await expect( transactionLink ).toHaveText( reconciledOrder.transaction_id );
+			await expect( transactionLink ).toHaveAttribute( 'href', transactionUrl );
 		} finally {
 			await requestUtils.rest( {
 				method: 'DELETE',

@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { Page } from '@playwright/test';
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
 /**
  * Internal dependencies
@@ -12,9 +13,9 @@ import { Page } from '@playwright/test';
 import { testConfig } from '../../../test-config';
 import {detectCheckoutType} from "../rest/checkout";
 
-export async function fillBilling( page: Page ): Promise< void > {
+export async function fillBilling( page: Page, requestUtils: RequestUtils ): Promise< void > {
 	const billing = testConfig.addresses.customer.billing;
-	const checkoutType = await detectCheckoutType();
+	const checkoutType = await detectCheckoutType( requestUtils );
 
 	if ( checkoutType === 'blocks' ) {
 		// Blocks checkout field selectors
@@ -67,9 +68,10 @@ export async function fillBilling( page: Page ): Promise< void > {
 
 export async function selectPaymentGateway(
 	page: Page,
+	requestUtils: RequestUtils,
 	gatewayId: string
 ): Promise< void > {
-	const checkoutType = await detectCheckoutType();
+	const checkoutType = await detectCheckoutType( requestUtils );
 	if ( checkoutType === 'blocks' ) {
 		// await page.click('#radio-control-wc-payment-method-options-bh_bitcoin');
 		await page.click(

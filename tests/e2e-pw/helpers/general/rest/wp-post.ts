@@ -1,19 +1,18 @@
 /**
+ * External dependencies
+ */
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
+
+/**
  * Internal dependencies
  */
 import config from '../../../../../playwright.config';
 
-export async function setPageContent( postId: number, postContent: string ) {
-	const baseURL: string = config.use.baseURL;
-	const fullUrl = baseURL + '/wp-json/wp/v2/pages/' + postId;
-	const response = await fetch( fullUrl, {
+export async function setPageContent( requestUtils: RequestUtils, postId: number, postContent: string ) {
+	await requestUtils.rest( {
 		method: 'POST',
-		body: JSON.stringify( {
-			content: postContent,
-		} ),
-		headers: {
-			'Content-Type': 'application/json',
-		},
+		path: `/wp/v2/pages/${ postId }`,
+		data: { content: postContent },
 	} );
 }
 

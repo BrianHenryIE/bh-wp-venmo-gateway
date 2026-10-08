@@ -20,7 +20,7 @@ class Activator_Unit_Test extends Unit_Testcase {
 	/**
 	 * Confirm the activation time is saved.
 	 */
-	public function test_update_option_is_called() {
+	public function test_update_option_is_called(): void {
 		WP_Mock::userFunction(
 			'get_option'
 		);

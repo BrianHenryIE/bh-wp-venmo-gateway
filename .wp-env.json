@@ -3,15 +3,17 @@
     "WP_DEBUG_LOG": "/var/www/html/wp-content/debug.log",
     "WP_DEBUG_DISPLAY": false
   },
-  "core": "WordPress/WordPress#7.1.1",
+  "core": "WordPress/WordPress#7.1.3",
   "lifecycleScripts": {
     "afterStart": "bash 'tests/_wp-env/initialize-external.sh'"
   },
   "mappings": {
     "../setup": "./tests/_wp-env",
+    "wp-content/plugins/bh-wp-autologin-urls": "./wp-content/plugins/bh-wp-autologin-urls",
     "wp-content/plugins/checkout-fees-for-woocommerce": "./wp-content/plugins/checkout-fees-for-woocommerce",
     "wp-content/plugins/development-plugin": "./development-plugin",
     "wp-content/plugins/give": "./wp-content/plugins/give",
+    "wp-content/plugins/plugin-check": "./wp-content/plugins/plugin-check",
     "wp-content/plugins/query-monitor": "./wp-content/plugins/query-monitor",
     "wp-content/plugins/user-switching": "./wp-content/plugins/user-switching",
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
@@ -22,5 +24,6 @@
   "plugins": [
     "."
   ],
+  "port": 8888,
   "testsEnvironment": false
 }

@@ -16,8 +16,12 @@ use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin\WooCommerce_Order;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Action_Scheduler;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Give_Donations;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Themes;
+use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\Venmo_Profiles;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Ajax\WooCommerce_Customer;
 use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest\WooCommerce_Settings;
+use Give\Helpers\Hooks;
+use Give\Onboarding\Wizard\Page;
+use Give\Onboarding\Wizard\Page as WizardPage;
 
 if ( ! defined( 'WPINC' ) ) {
 	return;
@@ -35,6 +39,9 @@ Autoloader::generate(
 // `wp-env` symlink mappings fixes.
 new Mappings()->register_hooks();
 
+// Disable first-run wizards.
+new First_Run_Wizards()->register_hooks();
+
 // Authentication helpers.
 ( new Authentication() )->register_hooks();
 
@@ -47,5 +54,6 @@ new Mappings()->register_hooks();
 ( new Action_Scheduler() )->register_hooks();
 ( new Give_Donations() )->register_hooks();
 ( new Themes() )->register_hooks();
+( new Venmo_Profiles() )->register_hooks();
 ( new WooCommerce_Customer() )->register_hooks();
 ( new WooCommerce_Settings() )->register_hooks();

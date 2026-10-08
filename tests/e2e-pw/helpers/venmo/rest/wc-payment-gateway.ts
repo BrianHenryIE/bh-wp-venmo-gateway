@@ -1,25 +1,19 @@
 /**
  * External dependencies
  */
-import config from '../../../../../playwright.config';
+import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
-const gatewayUrl = () => `${ config.use.baseURL }/wp-json/wc/v3/payment_gateways/venmo`;
+const GATEWAY_PATH = '/wc/v3/payment_gateways/venmo';
 
-export async function getVenmoUsername(): Promise< string > {
-	const response = await fetch( gatewayUrl() );
-	const gateway = await response.json();
+export async function getVenmoUsername( requestUtils: RequestUtils ): Promise< string > {
+	const gateway = await requestUtils.rest( { path: GATEWAY_PATH } );
 	return gateway.settings.store_venmo_username.value as string;
 }
 
-export async function setVenmoUsername( username: string ): Promise< void > {
-	const response = await fetch( gatewayUrl(), {
+export async function setVenmoUsername( requestUtils: RequestUtils, username: string ): Promise< void > {
+	await requestUtils.rest( {
 		method: 'PUT',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify( { settings: { store_venmo_username: username } } ),
+		path: GATEWAY_PATH,
+		data: { settings: { store_venmo_username: username } },
 	} );
-
-	if ( ! response.ok ) {
-		const body = await response.text();
-		throw new Error( `Failed to set Venmo username: ${ response.status } ${ body }` );
-	}
 }
