@@ -208,8 +208,8 @@
             "updated_files=$(echo $(git diff --name-only `git merge-base origin/master HEAD` | grep \\.php | tr '\\n' '\\0' | xargs -0 ls -1df 2>/dev/null)); if [ -n \"$updated_files\" ]; then phpcbf $(echo $updated_files); phpcs $(echo $updated_files); phpstan analyse $(echo $updated_files) --level max --memory-limit 1G; else echo \"No modified php files for phpstan.\"; fi;"
         ],
         "create-plugin-archive": [
-            "wp i18n make-pot includes languages/$(basename \"$PWD\").pot --domain=$(basename \"$PWD\")",
-            "wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
+            "wp i18n make-pot includes languages/juiced-venmo-gateway-pro.pot --domain=juiced-venmo-gateway-pro",
+            "wp dist-archive . ./dist-archive --plugin-dirname=juiced-venmo-gateway-pro --create-target-dir"
         ],
         "github-actions": [
             "act -P ubuntu-latest=shivammathur/node:latest"
