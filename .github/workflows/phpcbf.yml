@@ -89,7 +89,7 @@ jobs:
           DIFF_FILENAME: ${{ steps.pr_diff.outputs.diff_filename }}
           CHECKSTYLE_FILENAME: "phpcs-checkstyle.xml"
 
-      - name: Fail on error in modified files (pr)
+      - name: Fail on error in modified lines (pr)
         if: ${{ github.event_name == 'pull_request' }}
         run: cat filtered-checkstyle.xml | cs2pr
 
