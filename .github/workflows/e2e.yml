@@ -117,14 +117,14 @@ jobs:
           path: dist-archive
 
       - name: Unzip plugin archive
-        run: unzip -q dist-archive/${{ github.event.repository.name }}.*.zip -d plugin-check-build
+        run: unzip -q dist-archive/juiced-venmo-gateway-pro.*.zip -d plugin-check-build
 
       # The action starts its own wp-env (PHP 8.3 by default), which cannot activate a plugin whose
       # `Requires PHP` is 8.4. The action has no PHP input, but wp-env reads this variable.
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: ./plugin-check-build/${{ github.event.repository.name }}
+          build-dir: ./plugin-check-build/juiced-venmo-gateway-pro
           # `trademarks`: "juiced-venmo-gateway-pro" - contains the restricted term "wp".
           exclude-checks: |
             trademarks
