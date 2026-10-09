@@ -12,7 +12,7 @@ MODE=$1
 echo $(basename "$0")
 
 # This presumes the current working directory is the project root and the directory name matches the plugin slug.
-PLUGIN_SLUG=$(basename $PWD)
+PLUGIN_SLUG="juiced-venmo-gateway-pro"
 
 # tests/_wp-env is mapped to /var/www/setup inside the container, one level above the webroot, so
 # copying the zip here is how it is handed to initialize-internal.sh.

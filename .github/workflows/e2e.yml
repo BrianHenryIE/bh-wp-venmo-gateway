@@ -187,7 +187,7 @@ jobs:
       # the WooCommerce and GiveWP fixtures. The development plugin is mounted from the working
       # directory by .wp-env.ci.json's mappings, as in .wp-env.json.
       - name: Start wp-env
-        run: npx wp-env start --config .wp-env.ci.json
+        run: npx wp-env start --config .wp-env.ci.json --debug
 
       - name: Wait for WordPress to be ready
         run: |
