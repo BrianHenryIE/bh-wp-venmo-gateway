@@ -18,6 +18,7 @@ use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
 use JuicedPlugins\Venmo_Gateway_Pro\Admin\Admin;
 use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Features;
 use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Upgrade\Upgrader;
 use JuicedPlugins\Venmo_Gateway_Pro\Upgrade\V430;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Admin_Order_UI;
@@ -67,6 +68,7 @@ class Register_Hooks {
 	 * Run upgrade routines and handle reads of renamed options.
 	 */
 	protected function define_upgrade_hooks(): void {
+		( new Upgrader( $this->settings->get_plugin_version() ) )->register_hooks();
 		( new V430() )->register_hooks();
 	}
 

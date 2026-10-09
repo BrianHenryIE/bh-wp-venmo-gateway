@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace JuicedPlugins\Venmo_Gateway_Pro\Upgrade;
 
-use DateTimeInterface;
 use JuicedPlugins\Venmo_Gateway_Pro\Includes\Activator;
 
 /**
@@ -109,7 +108,7 @@ class V430 {
 	protected static bool $is_accessing_stored_values = false;
 
 	/**
-	 * Add the filters redirecting the old option names to the new, and check whether the upgrade has run.
+	 * Add the filters redirecting the old option names to the new.
 	 */
 	public function register_hooks(): void {
 		foreach ( array_keys( self::OPTION_RENAMES ) as $old_option_name ) {
@@ -117,48 +116,12 @@ class V430 {
 			add_filter( "pre_update_option_{$old_option_name}", array( $this, 'redirect_update_option' ), 10, 3 );
 			add_action( "add_option_{$old_option_name}", array( $this, 'redirect_add_option' ), 10, 2 );
 		}
-
-		add_action( 'plugins_loaded', array( $this, 'do_upgrade' ) );
-	}
-
-	/**
-	 * Run the upgrade if the installed version, as recorded in the activation times, is older than 4.3.0.
-	 *
-	 * Also called directly by the activator, before it records the new version, because renaming the plugin's
-	 * main file means sites are always re-activated when they update to 4.3.0.
-	 *
-	 * @hooked plugins_loaded
-	 * @see V430::register_hooks()
-	 * @see Activator::activate()
-	 */
-	public function do_upgrade(): void {
-		if ( version_compare( $this->get_installed_version(), self::VERSION, '>=' ) ) {
-			return;
-		}
-
-		$this->rename_options_once();
-	}
-
-	/**
-	 * The most recent version recorded in the activation times, or `0.0.0` when there are none.
-	 */
-	protected function get_installed_version(): string {
-		$activated_times = get_option( self::ACTIVATED_TIME_OPTION_NAME, array() );
-
-		$installed_version = '0.0.0';
-		foreach ( is_array( $activated_times ) ? $activated_times : array() as $version ) {
-			if ( is_string( $version ) && version_compare( $version, $installed_version, '>' ) ) {
-				$installed_version = $version;
-			}
-		}
-		return $installed_version;
 	}
 
 	/**
 	 * Runs once so old options, cron events and meta are written to their new names.
 	 *
-	 * Once done, 4.3.0 is recorded in the activation times so this does not run again, e.g. on multisite subsites
-	 * where the activation hook does not run.
+	 * @see Upgrader::do_upgrades()
 	 */
 	public function rename_options_once(): void {
 		self::$is_accessing_stored_values = true;
@@ -169,12 +132,6 @@ class V430 {
 		} finally {
 			self::$is_accessing_stored_values = false;
 		}
-
-		$activated_times = get_option( self::ACTIVATED_TIME_OPTION_NAME, array() );
-		$activated_times = is_array( $activated_times ) ? $activated_times : array();
-
-		$activated_times[ wp_date( DateTimeInterface::ATOM ) ] = self::VERSION;
-		update_option( self::ACTIVATED_TIME_OPTION_NAME, $activated_times );
 	}
 
 	/**

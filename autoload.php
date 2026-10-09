@@ -24,4 +24,5 @@ Autoloader::generate(
 )->register();
 
 // The upgrade classes' file names do not follow the Alley_Interactive autoloader's convention.
-require_once __DIR__ . '/upgrades/class-v4-3-0.php';
+require_once __DIR__ . '/upgrades/class-upgrader.php';
+require_once __DIR__ . '/upgrades/class-v430.php';

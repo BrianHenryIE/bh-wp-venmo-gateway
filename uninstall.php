@@ -31,3 +31,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 
 delete_option( 'juiced_venmo_gateway_pro_activated_time' );
+delete_option( 'juiced_venmo_gateway_pro_installed_version' );

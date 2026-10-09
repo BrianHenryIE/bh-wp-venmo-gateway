@@ -8,7 +8,8 @@ All option, meta and transient keys the plugin stores. The plugin slug is `juice
 
 | Key | Where it's set |
 |---|---|
-| `juiced_venmo_gateway_pro_activated_time` | `includes/includes/class-activator.php`: a list of activation times mapped to the plugin version. Its last entry times the setup notice, and the highest version decides whether upgrades run. Deleted on uninstall. |
+| `juiced_venmo_gateway_pro_activated_time` | `includes/includes/class-activator.php`: a list of activation times mapped to the plugin version. Its last entry times the setup notice. Deleted on uninstall. |
+| `juiced_venmo_gateway_pro_installed_version` | `upgrades/class-upgrader.php`: the version whose upgrades have last run. It's checked on every `plugins_loaded` and on activation. When it's absent, the highest version in the activation times is used instead. Deleted on uninstall. |
 | `juiced_venmo_gateway_pro_log_level` | Written when the WooCommerce gateway settings or the GiveWP settings are saved (`includes/integrations/woocommerce/class-venmo-gateway.php:211`, `includes/integrations/givewp/class-gateway-settings.php:126`) |
 | `woocommerce_venmo_settings` | WooCommerce's own settings array for the gateway. It holds `enabled`, `title`, `description`, `store_venmo_username` and `log_level`. |
 
@@ -114,7 +115,7 @@ Disabled: email attachments are not saved (`Settings::get_private_uploads_direct
 
 ## Renamed in 4.3.0
 
-`upgrades/class-v4-3-0.php` moves data saved under the old `bh-wp-venmo-gateway` names when a site updates. Reads and writes of the old option names are redirected to the new names.
+`upgrades/class-v430.php`, run by `upgrades/class-upgrader.php`, moves data saved under the old `bh-wp-venmo-gateway` names when a site updates. Reads and writes of the old option names are redirected to the new names.
 
 | Old | New |
 |---|---|

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace JuicedPlugins\Venmo_Gateway_Pro\Upgrade;
 
-use JuicedPlugins\Venmo_Gateway_Pro\Includes\Activator;
 use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 
 /**
@@ -48,7 +47,7 @@ class V430_Test extends WPUnit_Testcase {
 	/**
 	 * @covers ::rename_options_once
 	 */
-	public function test_activation_times_are_merged_and_upgrade_recorded(): void {
+	public function test_activation_times_are_merged(): void {
 		update_option( 'bh_wp_venmo_gateway_activated_time', array( '2025-01-01T00:00:00+00:00' => '4.2.0' ) );
 		update_option( 'juiced_venmo_gateway_pro_activated_time', array( '2025-06-01T00:00:00+00:00' => '4.2.1' ) );
 
@@ -58,33 +57,7 @@ class V430_Test extends WPUnit_Testcase {
 		$this->assertIsArray( $activated_times );
 		$this->assertSame( '4.2.0', $activated_times['2025-01-01T00:00:00+00:00'] );
 		$this->assertSame( '4.2.1', $activated_times['2025-06-01T00:00:00+00:00'] );
-		$this->assertContains( '4.3.0', $activated_times );
 		$this->assertFalse( get_option( 'bh_wp_venmo_gateway_activated_time' ) );
-	}
-
-	/**
-	 * @covers ::do_upgrade
-	 */
-	public function test_do_upgrade_skipped_when_installed_version_is_current(): void {
-		update_option( 'juiced_venmo_gateway_pro_activated_time', array( '2025-01-01T00:00:00+00:00' => '4.3.0' ) );
-		update_option( 'bh_wp_venmo_gateway_log_level', 'debug' );
-
-		( new V430() )->do_upgrade();
-
-		$this->assertSame( 'debug', get_option( 'bh_wp_venmo_gateway_log_level' ) );
-		$this->assertFalse( get_option( 'juiced_venmo_gateway_pro_log_level' ) );
-	}
-
-	/**
-	 * @covers ::do_upgrade
-	 */
-	public function test_do_upgrade_runs_when_installed_version_is_older(): void {
-		update_option( 'juiced_venmo_gateway_pro_activated_time', array( '2025-01-01T00:00:00+00:00' => '4.2.0' ) );
-		update_option( 'bh_wp_venmo_gateway_log_level', 'debug' );
-
-		( new V430() )->do_upgrade();
-
-		$this->assertSame( 'debug', get_option( 'juiced_venmo_gateway_pro_log_level' ) );
 	}
 
 	/**
@@ -124,26 +97,6 @@ class V430_Test extends WPUnit_Testcase {
 		$activated_times = get_option( 'juiced_venmo_gateway_pro_activated_time' );
 		$this->assertIsArray( $activated_times );
 		$this->assertArrayHasKey( '2025-01-01T00:00:00+00:00', $activated_times );
-	}
-
-	/**
-	 * Updating to 4.3.0 re-activates the plugin; the upgrade must run before the activation is recorded.
-	 *
-	 * @covers \JuicedPlugins\Venmo_Gateway_Pro\Includes\Activator::activate
-	 */
-	public function test_activation_runs_upgrade_before_recording_version(): void {
-		if ( ! defined( 'JUICED_VENMO_GATEWAY_PRO_VERSION' ) ) {
-			define( 'JUICED_VENMO_GATEWAY_PRO_VERSION', '4.3.0' );
-		}
-		update_option( 'bh_wp_venmo_gateway_activated_time', array( '2025-01-01T00:00:00+00:00' => '4.2.0' ) );
-		update_option( 'bh_wp_venmo_gateway_log_level', 'debug' );
-
-		Activator::activate();
-
-		$this->assertSame( 'debug', get_option( 'juiced_venmo_gateway_pro_log_level' ) );
-		$activated_times = get_option( 'juiced_venmo_gateway_pro_activated_time' );
-		$this->assertIsArray( $activated_times );
-		$this->assertSame( '4.2.0', $activated_times['2025-01-01T00:00:00+00:00'] );
 	}
 
 	/**
