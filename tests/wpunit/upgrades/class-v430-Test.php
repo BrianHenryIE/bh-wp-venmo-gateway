@@ -234,8 +234,8 @@ class V430_Test extends WPUnit_Testcase {
 		$this->assertSame( 'brianhenryie', get_post_meta( $post_id, '_customer_venmo_username', true ) );
 		$this->assertSame( 'store', get_post_meta( $post_id, '_destination_account_venmo_username', true ) );
 		$this->assertSame( 'brianhenryie', get_user_meta( $user_id, '_customer_venmo_username', true ) );
-		$this->assertSame( array(), get_post_meta( $post_id, '_customer-venmo-username' ) );
-		$this->assertSame( array(), get_user_meta( $user_id, '_customer-venmo-username' ) );
+		$this->assertSame( array(), get_post_meta( $post_id, '_customer-venmo-username', false ) );
+		$this->assertSame( array(), get_user_meta( $user_id, '_customer-venmo-username', false ) );
 	}
 
 	/**
@@ -256,8 +256,8 @@ class V430_Test extends WPUnit_Testcase {
 
 		( new V430() )->rename_options_once();
 
-		$this->assertSame( array( 'new-username' ), get_user_meta( $user_id, '_customer_venmo_username' ) );
-		$this->assertSame( array(), get_user_meta( $user_id, '_customer-venmo-username' ) );
+		$this->assertSame( array( 'new-username' ), get_user_meta( $user_id, '_customer_venmo_username', false ) );
+		$this->assertSame( array(), get_user_meta( $user_id, '_customer-venmo-username', false ) );
 	}
 
 	/**
@@ -276,8 +276,8 @@ class V430_Test extends WPUnit_Testcase {
 			$table,
 			array(
 				'order_id'   => 987654,
-				'meta_key'   => '_customer-venmo-display-name',
-				'meta_value' => 'Brian Henry',
+				'meta_key'   => '_customer-venmo-display-name', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Inserting a fixture row, not querying.
+				'meta_value' => 'Brian Henry', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Inserting a fixture row, not querying.
 			)
 		);
 
