@@ -93,7 +93,8 @@
     },
     "autoload": {
         "classmap": [
-            "includes"
+            "includes",
+            "upgrades"
         ]
     },
     "autoload-dev": {

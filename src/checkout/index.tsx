@@ -107,7 +107,7 @@ const VenmoContent: React.FC< PaymentMethodContentProps > = ( {
 				type: emitResponse.responseTypes.SUCCESS,
 				meta: {
 					paymentMethodData: {
-						'_customer-venmo-username': venmoUsername.trim(),
+						'_customer_venmo_username': venmoUsername.trim(),
 					},
 				},
 			};

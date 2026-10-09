@@ -62,7 +62,7 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 
 			// The date field defaults to today's date; the time field defaults to blank.
 			await expect(
-				modal.locator( '#venmo-payment-date' )
+				modal.locator( '#venmo_payment_date' )
 			).not.toHaveValue( '' );
 			await expect(
 				modal.locator( '#venmo-payment-time' )
@@ -73,7 +73,7 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 				.locator( '#venmo-username' )
 				.fill( CUSTOMER_VENMO_USERNAME );
 			await modal
-				.locator( '#venmo-transaction-id' )
+				.locator( '#venmo_transaction_id' )
 				.fill( '1234567890' );
 			await modal.locator( '#venmo-payment-time' ).fill( '14:30' );
 			await modal.getByRole( 'button', { name: 'Mark paid' } ).click();

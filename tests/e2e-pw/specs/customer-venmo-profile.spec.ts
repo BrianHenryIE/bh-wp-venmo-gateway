@@ -49,7 +49,7 @@ test.describe( 'Customer Venmo profile name', () => {
 				status: 'on-hold',
 				billing: { first_name: 'Zed', last_name: 'Tester' },
 				line_items: [ { product_id: products[ 0 ].id, quantity: 1 } ],
-				meta_data: [ { key: '_customer-venmo-username', value: customerVenmoUsername } ],
+				meta_data: [ { key: '_customer_venmo_username', value: customerVenmoUsername } ],
 			},
 		} );
 
@@ -59,7 +59,7 @@ test.describe( 'Customer Venmo profile name', () => {
 
 			// Assert (REST): the display name is on the order, once, and an order note records it.
 			const updatedOrder = await requestUtils.rest( { path: `/wc/v3/orders/${ order.id }` } );
-			const displayNames = updatedOrder.meta_data.filter( ( meta: { key: string } ) => '_customer-venmo-display-name' === meta.key );
+			const displayNames = updatedOrder.meta_data.filter( ( meta: { key: string } ) => '_customer_venmo_display_name' === meta.key );
 			const notes = await requestUtils.rest( { path: `/wc/v3/orders/${ order.id }/notes` } );
 			const debug = `order ${ order.id } notes: ${ JSON.stringify( notes.map( ( n: { note: string } ) => n.note ) ) }; cron: ${ cronOutput }`;
 			expect( displayNames, debug ).toHaveLength( 1 );

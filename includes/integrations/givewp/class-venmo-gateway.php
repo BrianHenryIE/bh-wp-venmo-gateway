@@ -24,10 +24,10 @@ class Venmo_Gateway extends PaymentGateway {
 
 	const GATEWAY_ID = 'venmo';
 
-	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer-venmo-username';
-	const STORE_VENMO_USERNAME_META_KEY    = '_destination-account-venmo-username';
-	const VENMO_TRANSACTION_ID_META_KEY    = '_venmo-transaction-id';
-	const VENMO_PAYMENT_DATE_META_KEY      = '_venmo-payment-date';
+	const CUSTOMER_VENMO_USERNAME_META_KEY = '_customer_venmo_username';
+	const STORE_VENMO_USERNAME_META_KEY    = '_destination_account_venmo_username';
+	const VENMO_TRANSACTION_ID_META_KEY    = '_venmo_transaction_id';
+	const VENMO_PAYMENT_DATE_META_KEY      = '_venmo_payment_date';
 
 	/**
 	 * Donation meta key for the donor's full name as shown on their public Venmo profile, fetched in the
@@ -35,7 +35,7 @@ class Venmo_Gateway extends PaymentGateway {
 	 *
 	 * @see Donor_Venmo_Profile::fetch_donor_venmo_profile()
 	 */
-	const CUSTOMER_VENMO_DISPLAY_NAME_META_KEY = '_customer-venmo-display-name';
+	const CUSTOMER_VENMO_DISPLAY_NAME_META_KEY = '_customer_venmo_display_name';
 
 	/**
 	 * @see PaymentGateway::id()

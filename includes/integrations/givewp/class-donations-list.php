@@ -121,12 +121,12 @@ class Donations_List {
 						<input type="text" id="venmo-username" name="venmo_username" placeholder="@username">
 					</p>
 					<p>
-						<label for="venmo-transaction-id"><?php esc_html_e( 'Transaction ID', 'juiced-venmo-gateway-pro' ); ?></label>
-						<input type="text" id="venmo-transaction-id" name="transaction_id">
+						<label for="venmo_transaction_id"><?php esc_html_e( 'Transaction ID', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="text" id="venmo_transaction_id" name="transaction_id">
 					</p>
 					<p>
-						<label for="venmo-payment-date"><?php esc_html_e( 'Payment date', 'juiced-venmo-gateway-pro' ); ?></label>
-						<input type="date" id="venmo-payment-date" name="payment_date" value="<?php echo esc_attr( $today ); ?>">
+						<label for="venmo_payment_date"><?php esc_html_e( 'Payment date', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="date" id="venmo_payment_date" name="payment_date" value="<?php echo esc_attr( $today ); ?>">
 					</p>
 					<p>
 						<label for="venmo-payment-time"><?php esc_html_e( 'Payment time', 'juiced-venmo-gateway-pro' ); ?></label>

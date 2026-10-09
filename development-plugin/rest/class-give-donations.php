@@ -74,8 +74,8 @@ class Give_Donations {
 				'status'  => get_post_status( $donation_id ),
 				'gateway' => give_get_meta( $donation_id, '_give_payment_gateway', true ),
 				'meta'    => array(
-					'_customer-venmo-username'     => give_get_meta( $donation_id, '_customer-venmo-username', true ),
-					'_customer-venmo-display-name' => give_get_meta( $donation_id, '_customer-venmo-display-name', true ),
+					'_customer_venmo_username'     => give_get_meta( $donation_id, '_customer_venmo_username', true ),
+					'_customer_venmo_display_name' => give_get_meta( $donation_id, '_customer_venmo_display_name', true ),
 				),
 				'notes'   => array_values( array_map( fn( $note ) => (string) $note->comment_content, is_array( $notes ) ? $notes : array() ) ),
 			)
