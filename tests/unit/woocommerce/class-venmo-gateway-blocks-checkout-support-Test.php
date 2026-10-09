@@ -2,16 +2,16 @@
 /**
  * Tests for Venmo Gateway Blocks Checkout Support.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use WP_Mock;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support
  */
 class Venmo_Gateway_Blocks_Checkout_Support_Test extends Unit_TestCase {
 

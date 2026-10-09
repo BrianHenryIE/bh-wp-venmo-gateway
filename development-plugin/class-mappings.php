@@ -3,10 +3,10 @@
  * Fixes issues with symlinked directories. I.e. in the project directory, vendor is a sibling of development-plugin
  * rather than a child, which is how it would be in a packaged plugin (e.g. in Playground).
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin;
 
 class Mappings {
 
@@ -23,7 +23,7 @@ class Mappings {
 		 * @see plugin_basename()
 		 */
 		global $wp_plugin_paths;
-		$plugin_path = '/var/www/html/wp-content/uploads/bh-wp-venmo-gateway/';
+		$plugin_path = '/var/www/html/wp-content/uploads/juiced-venmo-gateway-pro/';
 		$wp_plugin_paths[ WP_PLUGIN_DIR . '/development-plugin/' ] = $plugin_path;
 	}
 
@@ -35,8 +35,8 @@ class Mappings {
 	 */
 	public function plugins_url_fix( string $url, string $_path, string $_plugin ): string {
 		$url = str_replace( 'wp-content/plugins/var/www/html/', '', $url );
-		$url = str_replace( 'plugins/development-plugin/vendor', 'uploads/bh-wp-venmo-gateway/vendor', $url );
-		$url = str_replace( 'plugins/development-plugin/includes', 'uploads/bh-wp-venmo-gateway/includes', $url );
+		$url = str_replace( 'plugins/development-plugin/vendor', 'uploads/juiced-venmo-gateway-pro/vendor', $url );
+		$url = str_replace( 'plugins/development-plugin/includes', 'uploads/juiced-venmo-gateway-pro/includes', $url );
 		return $url;
 	}
 }

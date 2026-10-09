@@ -2,17 +2,17 @@
 /**
  * Registers the reconcile library's "Unreconciled orders" page as a hidden admin page.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Admin\Unreconciled_Orders_Page;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Admin\Unreconciled_Orders_Page;
 
 /**
  * The page lists the WooCommerce orders and GiveWP donations still waiting for a Venmo payment email.

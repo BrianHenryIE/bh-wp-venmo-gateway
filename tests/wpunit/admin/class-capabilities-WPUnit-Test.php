@@ -6,23 +6,23 @@
  * Uses the real Settings (post type names), the real bh-wp-mailboxes post types and its `map_meta_cap`
  * filter, and WooCommerce's real `shop_manager` role.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_Email_Account_CPT;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\WP_Includes\BH_Email_CPT;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\WP_Includes\Mailbox_Capabilities;
-use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\BH_Email_Account_CPT;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\WP_Includes\BH_Email_CPT;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\WP_Includes\Mailbox_Capabilities;
+use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 use WP_Post_Type;
 use WP_User;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Admin\Capabilities
  */
 class Capabilities_WPUnit_Test extends WPUnit_Testcase {
 
@@ -31,8 +31,8 @@ class Capabilities_WPUnit_Test extends WPUnit_Testcase {
 	/**
 	 * The mailbox capabilities the "Add account" button, the accounts REST routes and the accounts list screen check.
 	 *
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Admin\Email_Account_Modal::print_add_button()
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\REST\Email_Accounts_REST_Controller::manage_permissions_check()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\Admin\Email_Account_Modal::print_add_button()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\REST\Email_Accounts_REST_Controller::manage_permissions_check()
 	 *
 	 * @return string[]
 	 */

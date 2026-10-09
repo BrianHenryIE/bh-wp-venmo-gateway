@@ -5,10 +5,10 @@
  * * e2e-test-helper/v1/active_theme
  * * e2e-test-helper/v1/activate
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Rest;
 
 use JsonException;
 use WP_Error;

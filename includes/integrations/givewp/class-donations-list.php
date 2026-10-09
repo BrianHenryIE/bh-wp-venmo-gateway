@@ -4,22 +4,22 @@
  * donations list table, opening a modal to record the payment details
  * (Venmo username, transaction id, payment date) before completing them.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 
 /**
  * Adds the "Mark paid" modal workflow to the legacy donations list table.
  */
 class Donations_List {
 
-	const AJAX_ACTION  = 'bh_venmo_mark_paid';
-	const NONCE_ACTION = 'bh_venmo_mark_paid';
+	const AJAX_ACTION  = 'venmo_mark_paid';
+	const NONCE_ACTION = 'venmo_mark_paid';
 
 	/**
 	 * Append a "Mark paid" link beneath the status of pending Venmo donations
@@ -50,9 +50,9 @@ class Donations_List {
 		}
 
 		$link = sprintf(
-			'<div class="row-actions"><span class="bh-venmo-mark-paid-wrap"><a href="#" class="bh-venmo-mark-paid" data-donation-id="%1$d">%2$s</a></span></div>',
+			'<div class="row-actions"><span class="venmo-mark-paid-wrap"><a href="#" class="venmo-mark-paid" data-donation-id="%1$d">%2$s</a></span></div>',
 			$payment_id,
-			esc_html__( 'Mark paid', 'bh-wp-venmo-gateway' )
+			esc_html__( 'Mark paid', 'juiced-venmo-gateway-pro' )
 		);
 
 		return $value . $link;
@@ -72,23 +72,23 @@ class Donations_List {
 		}
 
 		wp_enqueue_style(
-			'bh-wp-venmo-gateway-donations-list',
-			plugins_url( 'assets/givewp/donations-list.css', BH_WP_VENMO_GATEWAY_FILE ),
+			'juiced-venmo-gateway-pro-donations-list',
+			plugins_url( 'assets/givewp/donations-list.css', JUICED_VENMO_GATEWAY_PRO_FILE ),
 			array(),
-			BH_WP_VENMO_GATEWAY_VERSION
+			JUICED_VENMO_GATEWAY_PRO_VERSION
 		);
 
 		wp_enqueue_script(
-			'bh-wp-venmo-gateway-donations-list',
-			plugins_url( 'assets/givewp/donations-list.js', BH_WP_VENMO_GATEWAY_FILE ),
+			'juiced-venmo-gateway-pro-donations-list',
+			plugins_url( 'assets/givewp/donations-list.js', JUICED_VENMO_GATEWAY_PRO_FILE ),
 			array(),
-			BH_WP_VENMO_GATEWAY_VERSION,
+			JUICED_VENMO_GATEWAY_PRO_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'bh-wp-venmo-gateway-donations-list',
-			'bhVenmoMarkPaid',
+			'juiced-venmo-gateway-pro-donations-list',
+			'venmomoMarkPaid',
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'action'  => self::AJAX_ACTION,
@@ -110,33 +110,33 @@ class Donations_List {
 
 		$today = current_time( 'Y-m-d' );
 		?>
-		<div id="bh-venmo-mark-paid-modal" class="bh-venmo-modal" hidden>
-			<div class="bh-venmo-modal__overlay" data-bh-venmo-close></div>
-			<div class="bh-venmo-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="bh-venmo-modal-title">
-				<h2 id="bh-venmo-modal-title"><?php esc_html_e( 'Mark Venmo donation paid', 'bh-wp-venmo-gateway' ); ?></h2>
-				<form id="bh-venmo-mark-paid-form">
+		<div id="venmo-mark-paid-modal" class="venmo-modal" hidden>
+			<div class="venmo-modal__overlay" data-venmo-close></div>
+			<div class="venmo-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="venmo-modal-title">
+				<h2 id="venmo-modal-title"><?php esc_html_e( 'Mark Venmo donation paid', 'juiced-venmo-gateway-pro' ); ?></h2>
+				<form id="venmo-mark-paid-form">
 					<input type="hidden" name="donation_id" value="">
 					<p>
-						<label for="bh-venmo-username"><?php esc_html_e( 'Venmo @username paid with', 'bh-wp-venmo-gateway' ); ?></label>
-						<input type="text" id="bh-venmo-username" name="venmo_username" placeholder="@username">
+						<label for="venmo-username"><?php esc_html_e( 'Venmo @username paid with', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="text" id="venmo-username" name="venmo_username" placeholder="@username">
 					</p>
 					<p>
-						<label for="bh-venmo-transaction-id"><?php esc_html_e( 'Transaction ID', 'bh-wp-venmo-gateway' ); ?></label>
-						<input type="text" id="bh-venmo-transaction-id" name="transaction_id">
+						<label for="venmo-transaction-id"><?php esc_html_e( 'Transaction ID', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="text" id="venmo-transaction-id" name="transaction_id">
 					</p>
 					<p>
-						<label for="bh-venmo-payment-date"><?php esc_html_e( 'Payment date', 'bh-wp-venmo-gateway' ); ?></label>
-						<input type="date" id="bh-venmo-payment-date" name="payment_date" value="<?php echo esc_attr( $today ); ?>">
+						<label for="venmo-payment-date"><?php esc_html_e( 'Payment date', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="date" id="venmo-payment-date" name="payment_date" value="<?php echo esc_attr( $today ); ?>">
 					</p>
 					<p>
-						<label for="bh-venmo-payment-time"><?php esc_html_e( 'Payment time', 'bh-wp-venmo-gateway' ); ?></label>
-						<input type="time" id="bh-venmo-payment-time" name="payment_time">
+						<label for="venmo-payment-time"><?php esc_html_e( 'Payment time', 'juiced-venmo-gateway-pro' ); ?></label>
+						<input type="time" id="venmo-payment-time" name="payment_time">
 					</p>
-					<p class="bh-venmo-modal__hint"><?php esc_html_e( 'All fields are optional.', 'bh-wp-venmo-gateway' ); ?></p>
-					<p class="bh-venmo-modal__error" role="alert" hidden></p>
-					<div class="bh-venmo-modal__actions">
-						<button type="button" class="button" data-bh-venmo-close><?php esc_html_e( 'Cancel', 'bh-wp-venmo-gateway' ); ?></button>
-						<button type="submit" class="button button-primary"><?php esc_html_e( 'Mark paid', 'bh-wp-venmo-gateway' ); ?></button>
+					<p class="venmo-modal__hint"><?php esc_html_e( 'All fields are optional.', 'juiced-venmo-gateway-pro' ); ?></p>
+					<p class="venmo-modal__error" role="alert" hidden></p>
+					<div class="venmo-modal__actions">
+						<button type="button" class="button" data-venmo-close><?php esc_html_e( 'Cancel', 'juiced-venmo-gateway-pro' ); ?></button>
+						<button type="submit" class="button button-primary"><?php esc_html_e( 'Mark paid', 'juiced-venmo-gateway-pro' ); ?></button>
 					</div>
 				</form>
 			</div>
@@ -147,15 +147,15 @@ class Donations_List {
 	/**
 	 * Record the (optional) payment details and mark the donation complete.
 	 *
-	 * @hooked wp_ajax_bh_venmo_mark_paid
-	 * @see \do_action( 'wp_ajax_bh_venmo_mark_paid' )
+	 * @hooked wp_ajax_venmo_mark_paid
+	 * @see \do_action( 'wp_ajax_venmo_mark_paid' )
 	 */
 	public function ajax_mark_paid(): void {
 		check_ajax_referer( self::NONCE_ACTION, 'security' );
 
 		if ( ! current_user_can( 'edit_give_payments' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You do not have permission to update donations.', 'bh-wp-venmo-gateway' ) ),
+				array( 'message' => __( 'You do not have permission to update donations.', 'juiced-venmo-gateway-pro' ) ),
 				403
 			);
 		}
@@ -164,14 +164,14 @@ class Donations_List {
 
 		if ( 0 === $donation_id || Venmo_Gateway::id() !== give_get_payment_gateway( $donation_id ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'Donation not found.', 'bh-wp-venmo-gateway' ) ),
+				array( 'message' => __( 'Donation not found.', 'juiced-venmo-gateway-pro' ) ),
 				404
 			);
 		}
 
 		if ( 'pending' !== give_get_payment_status( $donation_id ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'Only pending donations can be marked as paid.', 'bh-wp-venmo-gateway' ) ),
+				array( 'message' => __( 'Only pending donations can be marked as paid.', 'juiced-venmo-gateway-pro' ) ),
 				400
 			);
 		}
@@ -198,7 +198,7 @@ class Donations_List {
 
 		if ( ! give_update_payment_status( $donation_id, 'publish' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'The donation could not be marked as paid. Please try again.', 'bh-wp-venmo-gateway' ) ),
+				array( 'message' => __( 'The donation could not be marked as paid. Please try again.', 'juiced-venmo-gateway-pro' ) ),
 				500
 			);
 		}
@@ -225,7 +225,7 @@ class Donations_List {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display of an id passed on redirect.
-		$donation_id = isset( $_GET['bh-venmo-marked-paid'] ) ? absint( wp_unslash( $_GET['bh-venmo-marked-paid'] ) ) : 0;
+		$donation_id = isset( $_GET['venmo-marked-paid'] ) ? absint( wp_unslash( $_GET['venmo-marked-paid'] ) ) : 0;
 
 		if ( 0 === $donation_id || Venmo_Gateway::id() !== give_get_payment_gateway( $donation_id ) ) {
 			return;
@@ -244,15 +244,15 @@ class Donations_List {
 		$details = array();
 		if ( '' !== $username ) {
 			/* translators: %s: Venmo @username */
-			$details[] = sprintf( __( 'paid by @%s', 'bh-wp-venmo-gateway' ), $username );
+			$details[] = sprintf( __( 'paid by @%s', 'juiced-venmo-gateway-pro' ), $username );
 		}
 		if ( '' !== $transaction_id ) {
 			/* translators: %s: Venmo transaction id */
-			$details[] = sprintf( __( 'transaction ID %s', 'bh-wp-venmo-gateway' ), $transaction_id );
+			$details[] = sprintf( __( 'transaction ID %s', 'juiced-venmo-gateway-pro' ), $transaction_id );
 		}
 		if ( '' !== $payment_date ) {
 			/* translators: %s: payment date (and optional time) */
-			$details[] = sprintf( __( 'payment date %s', 'bh-wp-venmo-gateway' ), $payment_date );
+			$details[] = sprintf( __( 'payment date %s', 'juiced-venmo-gateway-pro' ), $payment_date );
 		}
 
 		$detail_text = empty( $details ) ? '' : ' — ' . implode( ', ', $details );
@@ -263,7 +263,7 @@ class Donations_List {
 				<?php
 				printf(
 					/* translators: 1: donation id, 2: donation amount, 3: extra details (may be empty), 4: opening link tag, 5: closing link tag */
-					esc_html__( 'Venmo donation #%1$d (%2$s) marked paid%3$s. %4$sView donation%5$s', 'bh-wp-venmo-gateway' ),
+					esc_html__( 'Venmo donation #%1$d (%2$s) marked paid%3$s. %4$sView donation%5$s', 'juiced-venmo-gateway-pro' ),
 					absint( $donation_id ),
 					esc_html( give_donation_amount( $donation_id, true ) ),
 					esc_html( $detail_text ),
@@ -284,19 +284,19 @@ class Donations_List {
 	 * @param string $payment_datetime The date (and optional time) the payment was made.
 	 */
 	private function build_note( string $venmo_username, string $transaction_id, string $payment_datetime ): string {
-		$note = __( 'Marked paid via Venmo.', 'bh-wp-venmo-gateway' );
+		$note = __( 'Marked paid via Venmo.', 'juiced-venmo-gateway-pro' );
 
 		if ( '' !== $venmo_username ) {
 			/* translators: %s: Venmo @username */
-			$note .= ' ' . sprintf( __( 'Paid by @%s.', 'bh-wp-venmo-gateway' ), Venmo_Username::sanitize( $venmo_username ) );
+			$note .= ' ' . sprintf( __( 'Paid by @%s.', 'juiced-venmo-gateway-pro' ), Venmo_Username::sanitize( $venmo_username ) );
 		}
 		if ( '' !== $transaction_id ) {
 			/* translators: %s: Venmo transaction id */
-			$note .= ' ' . sprintf( __( 'Transaction ID: %s.', 'bh-wp-venmo-gateway' ), $transaction_id );
+			$note .= ' ' . sprintf( __( 'Transaction ID: %s.', 'juiced-venmo-gateway-pro' ), $transaction_id );
 		}
 		if ( '' !== $payment_datetime ) {
 			/* translators: %s: payment date (and optional time) */
-			$note .= ' ' . sprintf( __( 'Payment date: %s.', 'bh-wp-venmo-gateway' ), $payment_datetime );
+			$note .= ' ' . sprintf( __( 'Payment date: %s.', 'juiced-venmo-gateway-pro' ), $payment_datetime );
 		}
 
 		return $note;

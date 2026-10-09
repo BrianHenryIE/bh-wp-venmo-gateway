@@ -2,17 +2,17 @@
 /**
  * Tests for I18n. Tests load_plugin_textdomain.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Includes\Cron
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron
  */
 class Cron_WP_Unit_Test extends WPUnit_Testcase {
 
@@ -23,7 +23,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 */
 	public function test_schedule_cron(): void {
 
-		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
+		$cron_name = 'juiced_venmo_gateway_pro_check_for_payment_emails';
 
 		$settings_mock = $this->makeEmpty(
 			Settings_Interface::class,
@@ -53,7 +53,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 */
 	public function test_does_not_schedule_cron(): void {
 
-		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
+		$cron_name = 'juiced_venmo_gateway_pro_check_for_payment_emails';
 
 		$settings_mock = $this->makeEmpty(
 			Settings_Interface::class,
@@ -84,7 +84,7 @@ class Cron_WP_Unit_Test extends WPUnit_Testcase {
 	 */
 	public function test_delete_existing_cron(): void {
 
-		$cron_name = 'bh_wp_venmo_gateway_check_for_payment_emails';
+		$cron_name = 'juiced_venmo_gateway_pro_check_for_payment_emails';
 
 		wp_schedule_event( time(), 'hourly', $cron_name );
 

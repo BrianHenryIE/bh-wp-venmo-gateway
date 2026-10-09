@@ -21,8 +21,8 @@ import { testConfig } from '../test-config';
 const EMAILS_LIST = '/wp-admin/edit.php?post_type=venmo_payment_emails';
 const ACCOUNTS_LIST = '/wp-admin/edit.php?post_type=venmo_email_accounts';
 const UNRECONCILED_ORDERS = '/wp-admin/admin.php?page=bh-wp-oer-unreconciled-orders';
-const LOGS_PAGE = '/wp-admin/admin.php?page=bh-wp-venmo-gateway-logs';
-const INGRESS = '/wp-json/bh-wp-venmo-gateway/v2/venmo-payment-emails/new';
+const LOGS_PAGE = '/wp-admin/admin.php?page=juiced-venmo-gateway-pro-logs';
+const INGRESS = '/wp-json/juiced-venmo-gateway-pro/v2/venmo-payment-emails/new';
 
 /**
  * Deliver the fixture email with a unique Message-ID as the administrator; returns the email post id.

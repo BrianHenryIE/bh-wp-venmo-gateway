@@ -2,12 +2,12 @@
 /**
  * The result of delivering a generated Venmo payment email to the mailbox.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\API;
 
 /**
  * The stored email's post id and subject.

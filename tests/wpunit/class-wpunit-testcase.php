@@ -1,9 +1,9 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
 use lucatume\WPBrowser\TestCase\WPTestCase;
 
 class WPUnit_Testcase extends WPTestCase {

@@ -4,13 +4,13 @@
  * Adds a "Settings" link
  * Adds an "Orders" link when Filter WooCommerce Orders by Payment Method plugin is installed.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Admin\Unreconciled_Orders_Page;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Admin\Unreconciled_Orders_Page;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway;
 use WC_Payment_Gateway;
 use WC_Payment_Gateways;
 
@@ -37,7 +37,7 @@ class Plugins_Page {
 
 		$setting_link   = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=venmo' );
 		$plugin_links   = array();
-		$plugin_links[] = '<a href="' . $setting_link . '">' . __( 'Settings', 'bh-wp-venmo-gateway' ) . '</a>';
+		$plugin_links[] = '<a href="' . $setting_link . '">' . __( 'Settings', 'juiced-venmo-gateway-pro' ) . '</a>';
 
 		return array_merge( $plugin_links, $links_array );
 	}
@@ -69,7 +69,7 @@ class Plugins_Page {
 			);
 
 			$orders_link    = add_query_arg( $params, admin_url( 'edit.php' ) );
-			$plugin_links[] = '<a href="' . $orders_link . '">' . __( 'Orders', 'bh-wp-venmo-gateway' ) . '</a>';
+			$plugin_links[] = '<a href="' . $orders_link . '">' . __( 'Orders', 'juiced-venmo-gateway-pro' ) . '</a>';
 		}
 
 		return array_merge( $plugin_links, $links_array );
@@ -92,7 +92,7 @@ class Plugins_Page {
 	public function add_unreconciled_orders_action_link( array $links_array ): array {
 		$url = admin_url( 'admin.php?page=' . Unreconciled_Orders_Page::PAGE_SLUG );
 
-		array_unshift( $links_array, '<a href="' . esc_url( $url ) . '">' . __( 'Unreconciled orders', 'bh-wp-venmo-gateway' ) . '</a>' );
+		array_unshift( $links_array, '<a href="' . esc_url( $url ) . '">' . __( 'Unreconciled orders', 'juiced-venmo-gateway-pro' ) . '</a>' );
 
 		return $links_array;
 	}

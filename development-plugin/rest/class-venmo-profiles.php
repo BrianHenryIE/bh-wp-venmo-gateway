@@ -7,12 +7,12 @@
  * While a username is recorded, HTTP requests for its profile page are short-circuited with a page in the shape
  * venmo.com serves, so tests do not depend on the network or on real Venmo accounts. Other usernames pass through.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Rest;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -23,7 +23,7 @@ use WP_REST_Server;
  */
 class Venmo_Profiles {
 
-	const OPTION_NAME = 'bh_wp_venmo_gateway_dev_venmo_profiles';
+	const OPTION_NAME = 'juiced_venmo_gateway_pro_dev_venmo_profiles';
 
 	/**
 	 * Add hooks to register the REST endpoints and the HTTP short-circuit.

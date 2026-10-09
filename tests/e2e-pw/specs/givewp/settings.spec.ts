@@ -11,7 +11,7 @@ import { loginAsAdmin } from '../../helpers/general/ui/login';
 
 const STORE_VENMO_USERNAME = 'testvendor'; // seeded in initialize-internal.sh
 
-const LOG_LEVEL_OPTION = 'bh_wp_venmo_gateway_log_level'; // exposed via the development plugin's /wp/v2/settings.
+const LOG_LEVEL_OPTION = 'juiced_venmo_gateway_pro_log_level'; // exposed via the development plugin's /wp/v2/settings.
 const GIVE_VENMO_SETTINGS_PATH = 'post_type=give_forms&page=give-settings&tab=gateways&section=venmo';
 
 test.describe( 'Venmo GiveWP gateway settings', () => {
@@ -52,7 +52,7 @@ test.describe( 'Venmo GiveWP gateway settings', () => {
 				'post_type=give_forms&page=give-settings&tab=gateways&section=venmo'
 			);
 
-			const summary = page.locator( '.bh-venmo-last-donations' );
+			const summary = page.locator( '.venmo-last-donations' );
 			await expect( summary ).toBeVisible();
 			await expect( summary ).toContainText( 'Most recent Venmo donation' );
 
@@ -81,7 +81,7 @@ test.describe( 'Venmo GiveWP gateway settings', () => {
 		// Scoped to the field's row: the logger's "recent error" admin notice also carries a "View Logs" link.
 		const logsLink = page.locator( 'tr', { has: select } ).getByRole( 'link', { name: 'View Logs' } );
 		await expect( logsLink ).toBeVisible();
-		await expect( logsLink ).toHaveAttribute( 'href', /admin\.php\?page=bh-wp-venmo-gateway-logs/ );
+		await expect( logsLink ).toHaveAttribute( 'href', /admin\.php\?page=juiced-venmo-gateway-pro-logs/ );
 	} );
 
 	test( 'log level is shared with the plugin-wide option in both directions', async ( {

@@ -19,7 +19,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: bh_wp_venmo_gateway_tests
+          MYSQL_DATABASE: juiced_venmo_gateway_pro_tests
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -67,7 +67,7 @@ jobs:
         env:
           PLUGIN_SLUG: ${{ github.event.repository.name }}
         run: |
-          find . -depth \( -name '.env.testing' \) -exec sed -i "s/_DB_PORT=\"33066\"/_DB_PORT=\"${{ job.services.mysql.ports['3306'] }}\"/g" {} +
+          find . -depth \( -name '.env.testing' \) -exec sed -i "s/_DB_PORT=\"33060\"/_DB_PORT=\"${{ job.services.mysql.ports['3306'] }}\"/g" {} +
 
       - name: Read .env.testing
         uses: c-py/action-dotenv-to-setenv@v5

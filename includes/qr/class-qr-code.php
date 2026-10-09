@@ -5,16 +5,16 @@
  * Shared by the WooCommerce and GiveWP integrations so the QR rendering options
  * (quiet-zone size, output type) live in one place.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\QR;
+namespace JuicedPlugins\Venmo_Gateway_Pro\QR;
 
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QRCode;
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\QROptions;
+use JuicedPlugins\Venmo_Gateway_Pro\chillerlan\QRCode\Output\QROutputInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\chillerlan\QRCode\QRCode;
+use JuicedPlugins\Venmo_Gateway_Pro\chillerlan\QRCode\QROptions;
 
 /**
  * Wraps the chillerlan/php-qrcode library with the plugin's QR rendering defaults.

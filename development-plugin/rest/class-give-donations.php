@@ -3,12 +3,12 @@
  * Test-helper REST endpoint to create and delete GiveWP donations with a
  * specific status and date, for arranging E2E tests.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Rest;
 
 use WP_REST_Request;
 use WP_REST_Response;

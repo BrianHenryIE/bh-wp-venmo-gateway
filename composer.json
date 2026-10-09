@@ -1,5 +1,5 @@
 {
-    "name": "brianhenryie/bh-wp-venmo-gateway",
+    "name": "brianhenryie/juiced-venmo-gateway-pro",
     "description": "Receive Venmo payments on your WordPress WooCommerce/Give site. Reconciles payments via email.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
@@ -98,7 +98,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "BrianHenryIE\\WP_Venmo_Gateway\\": [
+            "JuicedPlugins\\Venmo_Gateway_Pro\\": [
                 "tests/unit",
                 "tests/wpunit",
                 "tests/integration"
@@ -113,11 +113,11 @@
     },
     "extra": {
         "strauss": {
-            "namespace_prefix": "BrianHenryIE\\WP_Venmo_Gateway\\",
-            "classmap_prefix": "BH_WP_Venmo_Gateway_",
-            "constant_prefix": "BH_WP_VENMO_GATEWAY_",
+            "namespace_prefix": "JuicedPlugins\\Venmo_Gateway_Pro\\",
+            "classmap_prefix": "Juiced_Venmo_Gateway_Pro_",
+            "constant_prefix": "JUICED_VENMO_GATEWAY_PRO_",
             "namespace_replacement_patterns": {
-                "~BrianHenryIE\\\\(.*)~": "BrianHenryIE\\WP_Venmo_Gateway\\\\$1"
+                "~BrianHenryIE\\\\(.*)~": "JuicedPlugins\\Venmo_Gateway_Pro\\\\$1"
             },
             "override_autoload": {
                 "wordpress/secrets-api": {

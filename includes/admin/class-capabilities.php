@@ -2,15 +2,15 @@
 /**
  * Which WordPress capability non-administrators need to work with the plugin's payment emails and email accounts.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\WP_Includes\Mailbox_Capabilities;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\WP_Includes\Mailbox_Capabilities;
 
 /**
  * The bh-wp-mailboxes library maps every mailbox capability (`edit_{emails_cpt}`, `manage_{accounts_cpt}`, …) to a single base

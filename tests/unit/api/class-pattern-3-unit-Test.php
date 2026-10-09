@@ -2,24 +2,24 @@
 /**
  * Unit tests for Pattern_3's regexes against the real Venmo email fixture.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\API\Pattern_3
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\API\Pattern_3
  */
 class Pattern_3_Unit_Test extends Unit_Testcase {
 
 	/**
 	 * The fixture's decoded HTML body with whitespace collapsed, as the reconcile library's Email_Parser prepares it.
 	 *
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Email_Parser::parse_email_with_pattern_set()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\API\Email_Parser::parse_email_with_pattern_set()
 	 */
 	private function get_fixture_html(): string {
 		// The development plugin's template email doubles as the fixture.

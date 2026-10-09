@@ -1,15 +1,15 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\API as BH_WP_Order_Email_Reconcile;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\API\Unpaid_Orders_Provider_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\API\API as BH_WP_Order_Email_Reconcile;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\API\Unpaid_Orders_Provider_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerAwareTrait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
 
 class API implements API_Interface {
 

@@ -1,18 +1,18 @@
 <?php
 /**
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger_Settings_Trait;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\WooCommerce_Logger_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\BH_WP_Mailboxes_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Logger\Logger_Settings_Trait;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Logger\WooCommerce_Logger_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\BH_WP_Mailboxes_Settings_Defaults_Trait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LogLevel;
 use WC_Payment_Gateways;
 
 /**
@@ -30,19 +30,19 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * @see IMAP_Reconcile_Settings_Interface
 	 */
 	public function get_plugin_slug(): string {
-		return 'bh-wp-venmo-gateway';
+		return 'juiced-venmo-gateway-pro';
 	}
 
 	/**
 	 * The log level for the plugin, configured on the WooCommerce gateway settings page.
 	 *
-	 * `wp option update bh_wp_venmo_gateway_log_level`
+	 * `wp option update juiced_venmo_gateway_pro_log_level`
 	 *
 	 * @see Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
 	public function get_log_level(): string {
 		$log_levels      = array( 'none', LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL, LogLevel::ALERT );
-		$saved_log_level = get_option( 'bh_wp_venmo_gateway_log_level', LogLevel::NOTICE );
+		$saved_log_level = get_option( 'juiced_venmo_gateway_pro_log_level', LogLevel::NOTICE );
 		return in_array( $saved_log_level, $log_levels, true ) ? $saved_log_level : LogLevel::NOTICE;
 	}
 
@@ -57,8 +57,8 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	}
 
 	/**
-	 * @see bh-wp-venmo-gateway.php
-	 * @see BH_WP_VENMO_GATEWAY_VERSION
+	 * @see juiced-venmo-gateway-pro.php
+	 * @see JUICED_VENMO_GATEWAY_PRO_VERSION
 	 */
 	public function get_plugin_version(): string {
 		return '4.3.0';
@@ -163,15 +163,15 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * Used in the logs library; used for `plugins.php` links.
 	 */
 	public function get_plugin_basename(): string {
-		return defined( 'BH_WP_VENMO_GATEWAY_BASENAME' ) && is_string( constant( 'BH_WP_VENMO_GATEWAY_BASENAME' ) )
-			? constant( 'BH_WP_VENMO_GATEWAY_BASENAME' )
-			: 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php';
+		return defined( 'JUICED_VENMO_GATEWAY_PRO_BASENAME' ) && is_string( constant( 'JUICED_VENMO_GATEWAY_PRO_BASENAME' ) )
+			? constant( 'JUICED_VENMO_GATEWAY_PRO_BASENAME' )
+			: 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php';
 	}
 
 	/**
 	 * @see BH_WP_Mailboxes_Settings_Interface::get_rest_namespace()
 	 */
 	public function get_rest_namespace(): ?string {
-		return 'bh-wp-venmo-gateway';
+		return 'juiced-venmo-gateway-pro';
 	}
 }

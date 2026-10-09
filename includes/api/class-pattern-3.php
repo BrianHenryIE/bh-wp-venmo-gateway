@@ -1,14 +1,14 @@
 <?php
 /**
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Email_Extract_Settings_Helper_Trait;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Email_Extract_Settings_Interface;
 
 /**
  * Regexes for the Venmo "paid you" email format in use since 2026, which has no plain-text part and

@@ -4,12 +4,12 @@
  *
  * Uses classmap, PSR4 & Alley_Interactive autoloader
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
-use BrianHenryIE\WP_Venmo_Gateway\Alley_Interactive\Autoloader\Autoloader;
+use JuicedPlugins\Venmo_Gateway_Pro\Alley_Interactive\Autoloader\Autoloader;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
@@ -19,6 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
 Autoloader::generate(
-	'BrianHenryIE\WP_Venmo_Gateway',
+	'JuicedPlugins\Venmo_Gateway_Pro',
 	__DIR__ . '/includes',
 )->register();

@@ -2,17 +2,17 @@
 /**
  * Unit tests for the "orders awaiting Venmo payment" list filter.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Orders_List_Filter
  */
 class Orders_List_Filter_Unit_Test extends Unit_Testcase {
 
@@ -41,7 +41,7 @@ class Orders_List_Filter_Unit_Test extends Unit_Testcase {
 		};
 
 		$this->assertSame(
-			'https://example.org/wp-admin/admin.php?page=wc-orders&bh_wp_venmo_gateway_awaiting_payment=1',
+			'https://example.org/wp-admin/admin.php?page=wc-orders&juiced_venmo_gateway_pro_awaiting_payment=1',
 			$sut->get_awaiting_payment_orders_url()
 		);
 	}
@@ -57,7 +57,7 @@ class Orders_List_Filter_Unit_Test extends Unit_Testcase {
 		};
 
 		$this->assertSame(
-			'https://example.org/wp-admin/edit.php?post_type=shop_order&bh_wp_venmo_gateway_awaiting_payment=1',
+			'https://example.org/wp-admin/edit.php?post_type=shop_order&juiced_venmo_gateway_pro_awaiting_payment=1',
 			$sut->get_awaiting_payment_orders_url()
 		);
 	}

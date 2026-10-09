@@ -2,10 +2,10 @@
 /**
  * Fired during plugin activation
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
 use DateTimeInterface;
 
@@ -21,10 +21,10 @@ class Activator {
 	 */
 	public static function activate(): void {
 
-		$times = get_option( 'bh_wp_venmo_gateway_activated_time', array() );
+		$times = get_option( 'juiced_venmo_gateway_pro_activated_time', array() );
 
-		$times[ wp_date( DateTimeInterface::ATOM ) ] = constant( 'BH_WP_VENMO_GATEWAY_VERSION' );
+		$times[ wp_date( DateTimeInterface::ATOM ) ] = constant( 'JUICED_VENMO_GATEWAY_PRO_VERSION' );
 
-		update_option( 'bh_wp_venmo_gateway_activated_time', $times );
+		update_option( 'juiced_venmo_gateway_pro_activated_time', $times );
 	}
 }

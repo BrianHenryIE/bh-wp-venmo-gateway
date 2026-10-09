@@ -2,7 +2,7 @@ parameters:
     level: 8
     paths:
         - includes
-        - bh-wp-venmo-gateway.php
+        - juiced-venmo-gateway-pro.php
         - autoload.php
         - uninstall.php
         - tests

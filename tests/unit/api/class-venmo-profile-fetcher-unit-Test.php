@@ -2,20 +2,20 @@
 /**
  * Fetching and parsing a public Venmo profile page.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use WP_Error;
 use WP_Mock;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\API\Venmo_Profile_Fetcher
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\API\Venmo_Profile_Fetcher
  */
 class Venmo_Profile_Fetcher_Unit_Test extends Unit_Testcase {
 

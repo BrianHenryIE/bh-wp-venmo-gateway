@@ -44,7 +44,7 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 			// unreliable across CI's headless browsers, so reveal the row-actions
 			// with a style override and click the link directly.
 			const markPaidLink = page.locator(
-				`.bh-venmo-mark-paid[data-donation-id="${ donationId }"]`
+				`.venmo-mark-paid[data-donation-id="${ donationId }"]`
 			);
 			await markPaidLink.waitFor( {
 				state: 'attached',
@@ -57,25 +57,25 @@ test.describe( 'Venmo GiveWP donations list – mark paid', () => {
 			await markPaidLink.scrollIntoViewIfNeeded();
 			await markPaidLink.click();
 
-			const modal = page.locator( '#bh-venmo-mark-paid-modal' );
+			const modal = page.locator( '#venmo-mark-paid-modal' );
 			await expect( modal ).toBeVisible();
 
 			// The date field defaults to today's date; the time field defaults to blank.
 			await expect(
-				modal.locator( '#bh-venmo-payment-date' )
+				modal.locator( '#venmo-payment-date' )
 			).not.toHaveValue( '' );
 			await expect(
-				modal.locator( '#bh-venmo-payment-time' )
+				modal.locator( '#venmo-payment-time' )
 			).toHaveValue( '' );
 
 			// Fill the (optional) fields and submit.
 			await modal
-				.locator( '#bh-venmo-username' )
+				.locator( '#venmo-username' )
 				.fill( CUSTOMER_VENMO_USERNAME );
 			await modal
-				.locator( '#bh-venmo-transaction-id' )
+				.locator( '#venmo-transaction-id' )
 				.fill( '1234567890' );
-			await modal.locator( '#bh-venmo-payment-time' ).fill( '14:30' );
+			await modal.locator( '#venmo-payment-time' ).fill( '14:30' );
 			await modal.getByRole( 'button', { name: 'Mark paid' } ).click();
 
 			// Assert (REST): the donation is now complete ('publish'). Poll so we do

@@ -1,16 +1,16 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 /**
- * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Cron
+ * @covers \JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron
  *
  * Class Cron_Unit_Test
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 class Cron_Unit_Test extends Unit_Testcase {
 

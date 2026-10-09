@@ -26,7 +26,7 @@
 
 ### 4.0.0 – April 2026
 
-* Rename to BH WP Venmo Gateway
+* Rename to Juiced Venmo Gateway Pro
 
 ### 3.2.0 – April 2026
 

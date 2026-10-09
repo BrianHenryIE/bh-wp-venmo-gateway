@@ -125,7 +125,7 @@ jobs:
         uses: wordpress/plugin-check-action@v1
         with:
           build-dir: ./plugin-check-build/${{ github.event.repository.name }}
-          # `trademarks`: "bh-wp-venmo-gateway" - contains the restricted term "wp".
+          # `trademarks`: "juiced-venmo-gateway-pro" - contains the restricted term "wp".
           exclude-checks: |
             trademarks
         env:

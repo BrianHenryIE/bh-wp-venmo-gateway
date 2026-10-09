@@ -11,7 +11,7 @@ import { mockVenmoProfile, removeMockVenmoProfile } from '../helpers/development
 import { runDueCronHook } from '../helpers/general/cli/wp-cli';
 
 const CUSTOMER_VENMO_DISPLAY_NAME = 'Zed Profile Tester';
-const CRON_HOOK = 'bh_wp_venmo_gateway_fetch_customer_venmo_profile';
+const CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_customer_venmo_profile';
 
 test.describe( 'Customer Venmo profile name', () => {
 	// This spec uses no browser, so run it once. WP-Cron stores every event in a single option with

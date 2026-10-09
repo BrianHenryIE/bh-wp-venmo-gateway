@@ -1,14 +1,14 @@
 <?php
 /**
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron;
 use Give\Donations\Models\Donation;
 use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\PaymentGateway;
@@ -58,7 +58,7 @@ class Venmo_Gateway extends PaymentGateway {
 	 */
 	#[Override]
 	public function getName(): string {
-		return __( 'Venmo', 'bh-wp-venmo-gateway' );
+		return __( 'Venmo', 'juiced-venmo-gateway-pro' );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Venmo_Gateway extends PaymentGateway {
 	 */
 	#[Override]
 	public function getPaymentMethodLabel(): string {
-		return __( 'Venmo', 'bh-wp-venmo-gateway' );
+		return __( 'Venmo', 'juiced-venmo-gateway-pro' );
 	}
 
 	/**
@@ -93,17 +93,17 @@ class Venmo_Gateway extends PaymentGateway {
 	 */
 	#[Override]
 	public function enqueueScript( int $formId ): void {
-		$asset_file = plugin_dir_path( BH_WP_VENMO_GATEWAY_FILE ) . 'assets/givewp/venmo-gateway.asset.php';
+		$asset_file = plugin_dir_path( JUICED_VENMO_GATEWAY_PRO_FILE ) . 'assets/givewp/venmo-gateway.asset.php';
 		$asset      = file_exists( $asset_file )
 			? require $asset_file
 			: array(
 				'dependencies' => array( 'react' ),
-				'version'      => BH_WP_VENMO_GATEWAY_VERSION,
+				'version'      => JUICED_VENMO_GATEWAY_PRO_VERSION,
 			);
 
 		wp_enqueue_script(
-			'bh-wp-venmo-gateway-givewp',
-			plugins_url( 'assets/givewp/venmo-gateway.js', BH_WP_VENMO_GATEWAY_FILE ),
+			'juiced-venmo-gateway-pro-givewp',
+			plugins_url( 'assets/givewp/venmo-gateway.js', JUICED_VENMO_GATEWAY_PRO_FILE ),
 			$asset['dependencies'],
 			$asset['version'],
 			true
@@ -129,7 +129,7 @@ class Venmo_Gateway extends PaymentGateway {
 		<fieldset id="give-venmo-gateway-fields" class="give-venmo-gateway-fields">
 			<p class="form-row give-venmo-username-row">
 				<label class="give-label" for="give-venmo-username">
-					<?php esc_html_e( 'Your Venmo @username', 'bh-wp-venmo-gateway' ); ?>
+					<?php esc_html_e( 'Your Venmo @username', 'juiced-venmo-gateway-pro' ); ?>
 					<span class="give-required-indicator">*</span>
 				</label>
 				<input
@@ -137,7 +137,7 @@ class Venmo_Gateway extends PaymentGateway {
 					type="text"
 					name="venmo_username"
 					class="give-input required"
-					placeholder="<?php esc_attr_e( '@username', 'bh-wp-venmo-gateway' ); ?>"
+					placeholder="<?php esc_attr_e( '@username', 'juiced-venmo-gateway-pro' ); ?>"
 					required
 				>
 			</p>
@@ -146,7 +146,7 @@ class Venmo_Gateway extends PaymentGateway {
 					<?php
 					printf(
 						/* translators: %s: Venmo username with @ prefix */
-						esc_html__( 'After submitting, please send payment to %s on Venmo.', 'bh-wp-venmo-gateway' ),
+						esc_html__( 'After submitting, please send payment to %s on Venmo.', 'juiced-venmo-gateway-pro' ),
 						'<strong>' . esc_html( Venmo_Username::for_display( $store_username ) ) . '</strong>'
 					);
 					?>

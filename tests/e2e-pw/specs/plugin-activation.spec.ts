@@ -14,7 +14,7 @@ test.describe( 'Plugin activation', () => {
 		await admin.visitAdminPage( 'plugins.php' );
 
 		// Check the plugin row exists
-		const pluginRow = page.locator( 'tr[data-plugin="bh-wp-venmo-gateway/bh-wp-venmo-gateway.php"]' );
+		const pluginRow = page.locator( 'tr[data-plugin="juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php"]' );
 		await expect( pluginRow ).toBeVisible();
 
 		// Verify it's active (has "Deactivate" link)

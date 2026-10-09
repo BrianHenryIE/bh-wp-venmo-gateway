@@ -1,12 +1,12 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use Codeception\Stub\Expected;
 
 /**
- * @coversDefaultClass  \BrianHenryIE\WP_Venmo_Gateway\API
+ * @coversDefaultClass  \JuicedPlugins\Venmo_Gateway_Pro\API
  */
 class API_Unit_Test extends Unit_Testcase {
 

@@ -1,11 +1,11 @@
 <?php
 /**
- * Add additional settings (`woocommerce_checkout_page_id`, `bh_wp_venmo_gateway_log_level`) to  `/wp-json/wp/v2/settings`.
+ * Add additional settings (`woocommerce_checkout_page_id`, `juiced_venmo_gateway_pro_log_level`) to  `/wp-json/wp/v2/settings`.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Rest;
 
 /**
  * A bit hacky – modify `global $wp_registered_settings` before it is used.
@@ -23,7 +23,7 @@ class WooCommerce_Settings {
 	 * Expose settings through the REST API.
 	 *
 	 * `woocommerce_checkout_page_id`
-	 * `bh_wp_venmo_gateway_log_level`
+	 * `juiced_venmo_gateway_pro_log_level`
 	 *
 	 * @hooked rest_pre_dispatch
 	 *
@@ -46,8 +46,8 @@ class WooCommerce_Settings {
 			);
 		}
 
-		if ( ! array_key_exists( 'bh_wp_venmo_gateway_log_level', $wp_registered_settings ) ) {
-			$wp_registered_settings['bh_wp_venmo_gateway_log_level'] = array(
+		if ( ! array_key_exists( 'juiced_venmo_gateway_pro_log_level', $wp_registered_settings ) ) {
+			$wp_registered_settings['juiced_venmo_gateway_pro_log_level'] = array(
 				'show_in_rest'      => true,
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',

@@ -11,7 +11,7 @@ import { mockVenmoProfile, removeMockVenmoProfile } from '../../helpers/developm
 import { runDueCronHook } from '../../helpers/general/cli/wp-cli';
 
 const DONOR_VENMO_DISPLAY_NAME = 'Dana Profile Donor';
-const CRON_HOOK = 'bh_wp_venmo_gateway_fetch_donor_venmo_profile';
+const CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_donor_venmo_profile';
 
 test.describe( 'Donor Venmo profile name', () => {
 	test.setTimeout( 90_000 );

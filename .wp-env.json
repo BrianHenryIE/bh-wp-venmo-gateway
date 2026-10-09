@@ -19,11 +19,10 @@
     "wp-content/plugins/woocommerce": "./wp-content/plugins/woocommerce",
     "wp-content/plugins/wp-mail-debugger": "./wp-content/plugins/wp-mail-debugger"
   },
-  "mysqlPort": 33066,
+  "mysqlPort": 33060,
   "phpVersion": "8.4",
   "plugins": [
     "."
   ],
-  "port": 8888,
   "testsEnvironment": false
 }

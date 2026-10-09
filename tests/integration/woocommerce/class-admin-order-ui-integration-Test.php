@@ -5,16 +5,16 @@
  * These tests run with WooCommerce fully activated, verifying the full plugin
  * integration: hook registration, metabox presence, and output on a real order.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 use WC_Order;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Admin_Order_UI
  */
 class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 
@@ -32,7 +32,7 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 		do_action( 'add_meta_boxes', $post_type, $post );
 
 		$this->assertArrayHasKey( 'shop_order', $wp_meta_boxes );
-		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['shop_order']['side']['high'] );
+		$this->assertArrayHasKey( 'venmo_payment', $wp_meta_boxes['shop_order']['side']['high'] );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Admin_Order_UI_Integration_Test extends WPUnit_Testcase {
 		do_action( 'add_meta_boxes', $post_type, $post );
 
 		$this->assertArrayHasKey( 'woocommerce_page_wc-orders', $wp_meta_boxes );
-		$this->assertArrayHasKey( 'bh-wp-venmo-payment', $wp_meta_boxes['woocommerce_page_wc-orders']['side']['high'] );
+		$this->assertArrayHasKey( 'venmo_payment', $wp_meta_boxes['woocommerce_page_wc-orders']['side']['high'] );
 	}
 
 	/**

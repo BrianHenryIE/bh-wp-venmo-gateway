@@ -1,6 +1,6 @@
 <?php
 /**
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 $GLOBALS['project_root_dir']   = $project_root_dir  = dirname( __DIR__, 1 );
@@ -21,6 +21,6 @@ $is_integration_test = array_reduce(
 if ( $is_integration_test ) {
 	global $arbitrary_plugins;
 	$arbitrary_plugins = array(
-		dirname( __DIR__, 1 ) . '/bh-wp-venmo-gateway.php',
+		dirname( __DIR__, 1 ) . '/juiced-venmo-gateway-pro.php',
 	);
 }

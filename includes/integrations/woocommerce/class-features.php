@@ -6,13 +6,13 @@
  *
  * @see https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
 
 /**
  * Message FeaturesUtil that this plugin has no incompatibilities with HPOS.

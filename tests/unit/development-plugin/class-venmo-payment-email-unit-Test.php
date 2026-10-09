@@ -3,21 +3,21 @@
  * Unit tests for the development plugin's Venmo payment email builder: the MIME/quoted-printable
  * substitution of the order's details into the template email.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use WC_Order;
 
 require_once codecept_root_dir( 'development-plugin/api/class-created-email.php' );
 require_once codecept_root_dir( 'development-plugin/api/class-venmo-payment-email.php' );
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\API\Venmo_Payment_Email
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\API\Venmo_Payment_Email
  */
 class Venmo_Payment_Email_Unit_Test extends Unit_Testcase {
 

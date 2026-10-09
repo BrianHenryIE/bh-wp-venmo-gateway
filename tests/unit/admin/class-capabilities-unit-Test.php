@@ -2,18 +2,18 @@
 /**
  * Unit tests for the capability mapping that lets shop managers and GiveWP managers process payment emails and manage email accounts.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Admin\Capabilities
  */
 class Capabilities_Unit_Test extends Unit_Testcase {
 

@@ -2,12 +2,12 @@
 /**
  * A Venmo user's public profile, as shown at `https://venmo.com/u/{username}`.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
 /**
  * The subset of the public profile the plugin uses.

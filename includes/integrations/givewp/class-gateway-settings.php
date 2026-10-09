@@ -2,17 +2,17 @@
 /**
  * Registers Venmo gateway settings in GiveWP admin.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway as WooCommerce_Venmo_Gateway;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LogLevel;
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway as WooCommerce_Venmo_Gateway;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LogLevel;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 
 /**
  * Registers the Venmo section and its fields on GiveWP's gateway settings tab.
@@ -25,7 +25,7 @@ class Gateway_Settings {
 	 * @see Settings::get_log_level()
 	 * @see WooCommerce_Venmo_Gateway::update_plugin_log_level_on_settings_save()
 	 */
-	const LOG_LEVEL_OPTION_NAME = 'bh_wp_venmo_gateway_log_level';
+	const LOG_LEVEL_OPTION_NAME = 'juiced_venmo_gateway_pro_log_level';
 
 	/**
 	 * The GiveWP settings field id for the log level, stored inside the `give_settings` option.
@@ -42,7 +42,7 @@ class Gateway_Settings {
 	 * @return string[]
 	 */
 	public function register_sections( array $sections ): array {
-		$sections['venmo'] = __( 'Venmo', 'bh-wp-venmo-gateway' );
+		$sections['venmo'] = __( 'Venmo', 'juiced-venmo-gateway-pro' );
 		return $sections;
 	}
 
@@ -67,8 +67,8 @@ class Gateway_Settings {
 		);
 
 		$settings[] = array(
-			'name'        => __( 'Venmo @username', 'bh-wp-venmo-gateway' ),
-			'desc'        => __( 'The Venmo @username that donors will be instructed to send payment to.', 'bh-wp-venmo-gateway' ),
+			'name'        => __( 'Venmo @username', 'juiced-venmo-gateway-pro' ),
+			'desc'        => __( 'The Venmo @username that donors will be instructed to send payment to.', 'juiced-venmo-gateway-pro' ),
 			'id'          => 'venmo_store_username',
 			'type'        => 'text',
 			'placeholder' => '@username',
@@ -76,8 +76,8 @@ class Gateway_Settings {
 
 		/**
 		 * The log level is shared with the entire plugin – the WooCommerce gateway settings page edits the same value.
-		 * When this section's settings are saved, the value is synced to `bh_wp_venmo_gateway_log_level`.
-		 * When this section is displayed, the stored GiveWP value is overwritten by `bh_wp_venmo_gateway_log_level`,
+		 * When this section's settings are saved, the value is synced to `juiced_venmo_gateway_pro_log_level`.
+		 * When this section is displayed, the stored GiveWP value is overwritten by `juiced_venmo_gateway_pro_log_level`,
 		 * so a change made on the WooCommerce settings page is reflected here.
 		 *
 		 * @see self::sanitize_log_level()
@@ -89,8 +89,8 @@ class Gateway_Settings {
 		}
 
 		$settings[] = array(
-			'name'    => __( 'Log Level', 'bh-wp-venmo-gateway' ),
-			'desc'    => __( 'Increasingly detailed levels of logs. Shared with the WooCommerce Venmo gateway. ', 'bh-wp-venmo-gateway' ) . '<a href="' . esc_url( $this->get_logs_page_url() ) . '">' . __( 'View Logs', 'bh-wp-venmo-gateway' ) . '</a>',
+			'name'    => __( 'Log Level', 'juiced-venmo-gateway-pro' ),
+			'desc'    => __( 'Increasingly detailed levels of logs. Shared with the WooCommerce Venmo gateway. ', 'juiced-venmo-gateway-pro' ) . '<a href="' . esc_url( $this->get_logs_page_url() ) . '">' . __( 'View Logs', 'juiced-venmo-gateway-pro' ) . '</a>',
 			'id'      => self::LOG_LEVEL_FIELD_ID,
 			'type'    => 'select',
 			'options' => $this->get_log_level_options(),
@@ -162,7 +162,7 @@ class Gateway_Settings {
 	 * @see WooCommerce_Venmo_Gateway::init_form_fields()
 	 */
 	private function get_logs_page_url(): string {
-		return admin_url( 'admin.php?page=bh-wp-venmo-gateway-logs' );
+		return admin_url( 'admin.php?page=juiced-venmo-gateway-pro-logs' );
 	}
 
 	/**
@@ -184,9 +184,9 @@ class Gateway_Settings {
 	 */
 	private function get_last_donations_summary(): string {
 		$statuses = array(
-			'publish'   => __( 'Completed', 'bh-wp-venmo-gateway' ),
-			'pending'   => __( 'Pending', 'bh-wp-venmo-gateway' ),
-			'abandoned' => __( 'Abandoned', 'bh-wp-venmo-gateway' ),
+			'publish'   => __( 'Completed', 'juiced-venmo-gateway-pro' ),
+			'pending'   => __( 'Pending', 'juiced-venmo-gateway-pro' ),
+			'abandoned' => __( 'Abandoned', 'juiced-venmo-gateway-pro' ),
 		);
 
 		$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
@@ -205,7 +205,7 @@ class Gateway_Settings {
 
 			// Default to "Never"; only overwrite when there is a payment with a parseable date
 			// (an empty/corrupt post_date would otherwise render as the "1 January 1970" epoch).
-			$when = __( 'Never', 'bh-wp-venmo-gateway' );
+			$when = __( 'Never', 'juiced-venmo-gateway-pro' );
 			if ( ! empty( $payments ) ) {
 				// give_get_payments() returns WP_Post objects; the date is post_date.
 				$post_date = get_post_field( 'post_date', $payments[0]->ID );
@@ -219,8 +219,8 @@ class Gateway_Settings {
 		}
 
 		return sprintf(
-			'<div class="bh-venmo-last-donations"><strong>%1$s</strong><ul>%2$s</ul></div>',
-			esc_html__( 'Most recent Venmo donation', 'bh-wp-venmo-gateway' ),
+			'<div class="venmo-last-donations"><strong>%1$s</strong><ul>%2$s</ul></div>',
+			esc_html__( 'Most recent Venmo donation', 'juiced-venmo-gateway-pro' ),
 			$items
 		);
 	}

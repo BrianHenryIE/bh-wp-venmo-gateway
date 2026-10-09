@@ -2,12 +2,12 @@
 /**
  * Generate URLs/HREFs releveant to the order's payment username.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 use WC_Order;
 
 /**

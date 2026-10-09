@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c449262c19447d9ed458e72d913de63b",
+    "content-hash": "95bd49b77c4f99a1968315052595db1b",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-autoloader",
@@ -234,12 +234,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrianHenryIE/bh-wp-mailboxes.git",
-                "reference": "db4a53fe07653e3672800ed047a2973f6c8c08f0"
+                "reference": "d4d455ac536bdb939df52ce004c5706d1100a688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/db4a53fe07653e3672800ed047a2973f6c8c08f0",
-                "reference": "db4a53fe07653e3672800ed047a2973f6c8c08f0",
+                "url": "https://api.github.com/repos/BrianHenryIE/bh-wp-mailboxes/zipball/d4d455ac536bdb939df52ce004c5706d1100a688",
+                "reference": "d4d455ac536bdb939df52ce004c5706d1100a688",
                 "shasum": ""
             },
             "require": {
@@ -255,7 +255,7 @@
                 "10up/wp_mock": "*",
                 "alleyinteractive/wordpress-autoloader": "^1.2",
                 "antecedent/patchwork": "^2.2",
-                "brianhenryie/bh-wp-logger": ">=0.4",
+                "brianhenryie/bh-wp-logger": ">=0.5.0",
                 "brianhenryie/bh-wp-private-uploads": ">=0.5.1",
                 "brianhenryie/color-logger": "*",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
@@ -313,7 +313,7 @@
                 "issues": "https://github.com/BrianHenryIE/bh-wp-mailboxes/issues",
                 "source": "https://github.com/BrianHenryIE/bh-wp-mailboxes/tree/master"
             },
-            "time": "2026-09-25T09:00:00+00:00"
+            "time": "2026-10-08T21:38:32+00:00"
         },
         {
             "name": "brianhenryie/bh-wp-order-email-reconcile",
@@ -6569,11 +6569,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b1f9890d9af53a25c58129e78f0aadd31f90d7f4",
-                "reference": "b1f9890d9af53a25c58129e78f0aadd31f90d7f4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6155239b488e95d26d1ebd95c6b4bb294d7f09db",
+                "reference": "6155239b488e95d26d1ebd95c6b4bb294d7f09db",
                 "shasum": ""
             },
             "require": {
@@ -6629,7 +6629,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-06T06:15:36+00:00"
+            "time": "2026-10-08T21:09:11+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10001,12 +10001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/dist-archive-command.git",
-                "reference": "db1ef09a7fe38d7a995f6b277eefff3876549262"
+                "reference": "253007688218fc2ae60f8aea84b70179d3a2010f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/dist-archive-command/zipball/db1ef09a7fe38d7a995f6b277eefff3876549262",
-                "reference": "db1ef09a7fe38d7a995f6b277eefff3876549262",
+                "url": "https://api.github.com/repos/wp-cli/dist-archive-command/zipball/253007688218fc2ae60f8aea84b70179d3a2010f",
+                "reference": "253007688218fc2ae60f8aea84b70179d3a2010f",
                 "shasum": ""
             },
             "require": {
@@ -10057,7 +10057,7 @@
                 "issues": "https://github.com/wp-cli/dist-archive-command/issues",
                 "source": "https://github.com/wp-cli/dist-archive-command/tree/main"
             },
-            "time": "2026-10-07T11:30:29+00:00"
+            "time": "2026-10-08T05:47:01+00:00"
         },
         {
             "name": "wp-cli/i18n-command",
@@ -10249,12 +10249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "29cb44206e982b572cfa7957dce6ce0aa399995d"
+                "reference": "d22846ef3af1a3a5c9d5d0fb450c59715d433036"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/29cb44206e982b572cfa7957dce6ce0aa399995d",
-                "reference": "29cb44206e982b572cfa7957dce6ce0aa399995d",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/d22846ef3af1a3a5c9d5d0fb450c59715d433036",
+                "reference": "d22846ef3af1a3a5c9d5d0fb450c59715d433036",
                 "shasum": ""
             },
             "require": {
@@ -10327,7 +10327,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2026-10-07T14:05:01+00:00"
+            "time": "2026-10-08T05:47:46+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
