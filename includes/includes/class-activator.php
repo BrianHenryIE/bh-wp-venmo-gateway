@@ -8,6 +8,7 @@
 namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
 use DateTimeInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Upgrade\V430;
 
 /**
  * Fired during plugin activation.
@@ -17,9 +18,13 @@ use DateTimeInterface;
 class Activator {
 
 	/**
-	 * Record each time the plugin is activated.
+	 * Run upgrades, then record each time the plugin is activated.
+	 *
+	 * Upgrades run first because they use the recorded activations to determine the previously installed version.
 	 */
 	public static function activate(): void {
+
+		( new V430() )->do_upgrade();
 
 		$times = get_option( 'juiced_venmo_gateway_pro_activated_time', array() );
 

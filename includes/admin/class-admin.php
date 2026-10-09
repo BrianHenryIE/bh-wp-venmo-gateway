@@ -59,10 +59,11 @@ class Admin {
 			return;
 		}
 
-		/**
-		 * TODO: update with underscored option name.
-		 */
-		$last_activated = get_option( 'juiced_venmo_gateway_pro_last_activated_time', time() );
+		// Each activation is recorded as `[ ATOM datetime => plugin version ]`; the last entry is the most recent.
+		$activated_times = get_option( 'juiced_venmo_gateway_pro_activated_time', array() );
+		$last_activated  = is_array( $activated_times ) && ! empty( $activated_times )
+			? (int) strtotime( (string) array_key_last( $activated_times ) )
+			: time();
 
 		// If last activation was longer than a week ago, return.
 		if ( $last_activated < time() - WEEK_IN_SECONDS ) {

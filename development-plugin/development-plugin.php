@@ -31,6 +31,9 @@ if ( ! is_plugin_active( 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php'
 	return;
 }
 
+// Plugins load alphabetically, so the main plugin's autoloader has not run yet.
+require_once WP_PLUGIN_DIR . '/juiced-venmo-gateway-pro/autoload.php';
+
 Autoloader::generate(
 	'JuicedPlugins\\Venmo_Gateway_Pro\\Development_Plugin',
 	__DIR__,

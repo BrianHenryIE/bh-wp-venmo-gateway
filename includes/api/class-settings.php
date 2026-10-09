@@ -169,6 +169,17 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	}
 
 	/**
+	 * Email attachments are not saved. The payment emails' text is all that is needed for reconciling.
+	 *
+	 * Null disables bh-wp-private-uploads in bh-wp-mailboxes.
+	 *
+	 * @see BH_WP_Mailboxes_Settings_Interface::get_private_uploads_directory_name()
+	 */
+	public function get_private_uploads_directory_name(): ?string {
+		return null;
+	}
+
+	/**
 	 * @see BH_WP_Mailboxes_Settings_Interface::get_rest_namespace()
 	 */
 	public function get_rest_namespace(): ?string {

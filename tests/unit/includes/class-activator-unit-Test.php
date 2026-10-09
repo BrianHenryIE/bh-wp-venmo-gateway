@@ -21,9 +21,8 @@ class Activator_Unit_Test extends Unit_Testcase {
 	 * Confirm the activation time is saved.
 	 */
 	public function test_update_option_is_called(): void {
-		WP_Mock::userFunction(
-			'get_option'
-		);
+		// Already at 4.3.0, so the upgrade does not run.
+		WP_Mock::userFunction( 'get_option' )->andReturn( array( '2026-01-01T00:00:00+00:00' => '4.3.0' ) );
 
 		WP_Mock::userFunction( 'wp_date' )->andReturn( '2026-07-09 21:55:00-08:00' );
 
