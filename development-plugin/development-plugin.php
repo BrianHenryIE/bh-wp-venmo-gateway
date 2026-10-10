@@ -48,6 +48,9 @@ new First_Run_Wizards()->register_hooks();
 // Authentication helpers.
 ( new Authentication() )->register_hooks();
 
+// `?add-to-cart-sku=` links, e.g. the Playground preview's landing page.
+( new Add_To_Cart_By_Sku() )->register_hooks();
+
 // Admin UI changes.
 ( new WooCommerce() )->register_hooks();
 ( new WooCommerce_Order() )->register_hooks();
