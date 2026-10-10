@@ -133,10 +133,12 @@ jobs:
 
           # The blueprint is passed in the URL fragment so it does not need hosting itself.
           # The development plugin returns early unless the main plugin is active, so it is
-          # installed last.
+          # installed last. WooCommerce's sample products are imported, and the landing page uses
+          # the development plugin's `?add-to-cart-sku=` to open the checkout with one in the cart:
+          # their product IDs vary, so WooCommerce's own `?add-to-cart=<id>` cannot be used.
           BLUEPRINT=$(jq -cn --arg url "$ZIP_URL" --arg dev_url "$DEV_ZIP_URL" --argjson wporg "$WPORG_STEPS" '{
             "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-            "landingPage": "/wp-admin/admin.php?page=wc-settings&tab=checkout&section=venmo",
+            "landingPage": "/checkout/?add-to-cart-sku=woo-beanie",
             "preferredVersions": { "php": "8.4", "wp": "latest" },
             "steps": (
               [ { "step": "login", "username": "admin", "password": "password" } ]
@@ -164,6 +166,13 @@ jobs:
                       "store_venmo_username": "testvendor"
                     }
                   }
+                },
+                {
+                  "step": "importWxr",
+                  "file": {
+                    "resource": "vfs",
+                    "path": "/wordpress/wp-content/plugins/woocommerce/sample-data/sample_products.xml"
+                  }
                 }
               ]
             )
@@ -181,9 +190,9 @@ jobs:
             ### ▶️ [Try this branch in WordPress Playground](${{ steps.playground.outputs.url }})
 
             A one-click sandbox with the plugin, the development plugin, WooCommerce, GiveWP and the
-            other wp-env plugins installed and activated, opened on the Venmo gateway settings page
-            and logged in as `admin`. Nothing is installed on your machine and the site is discarded
-            when you close the tab.
+            other wp-env plugins installed and activated, and WooCommerce's sample products imported.
+            It opens at the checkout with a Beanie in the cart, logged in as `admin`. Nothing is
+            installed on your machine and the site is discarded when you close the tab.
 
             | | |
             |---|---|
