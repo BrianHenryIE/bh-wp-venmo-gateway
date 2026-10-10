@@ -87,7 +87,7 @@
         "wpackagist-plugin/plugin-check": "^2.1",
         "wpackagist-plugin/query-monitor": "*",
         "wpackagist-plugin/user-switching": "*",
-        "wpackagist-plugin/woocommerce": ">=10.5",
+        "wpackagist-plugin/woocommerce": ">=11.2.1",
         "wpackagist-plugin/wp-mail-debugger": "^1.1",
         "wpackagist-theme/twentytwenty": "*"
     },
