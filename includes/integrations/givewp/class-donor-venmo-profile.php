@@ -2,17 +2,17 @@
 /**
  * Background task: record the donor's full name from their public Venmo profile on the donation.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerAwareTrait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
 
 /**
  * The donor enters only their Venmo username on the form, but Venmo's payment emails name the payer, so the
@@ -39,7 +39,7 @@ class Donor_Venmo_Profile {
 	/**
 	 * Fetch the donor's public Venmo profile and record their full name in the donation meta, with a note.
 	 *
-	 * @hooked bh_wp_venmo_gateway_fetch_donor_venmo_profile
+	 * @hooked juiced_venmo_gateway_pro_fetch_donor_venmo_profile
 	 * @see Cron::FETCH_DONOR_VENMO_PROFILE_CRON_HOOK
 	 *
 	 * @param int $donation_id The donation (give_payment post) id.
@@ -60,7 +60,7 @@ class Donor_Venmo_Profile {
 				$donation_id,
 				sprintf(
 					/* translators: %s: the donor's Venmo username. */
-					__( 'Could not find a Venmo profile for @%s.', 'bh-wp-venmo-gateway' ),
+					__( 'Could not find a Venmo profile for @%s.', 'juiced-venmo-gateway-pro' ),
 					$username
 				)
 			);
@@ -79,7 +79,7 @@ class Donor_Venmo_Profile {
 			$donation_id,
 			sprintf(
 				/* translators: 1: the donor's Venmo username, 2: the donor's name on their Venmo profile. */
-				__( 'Venmo profile @%1$s is %2$s.', 'bh-wp-venmo-gateway' ),
+				__( 'Venmo profile @%1$s is %2$s.', 'juiced-venmo-gateway-pro' ),
 				$username,
 				$profile->display_name
 			)

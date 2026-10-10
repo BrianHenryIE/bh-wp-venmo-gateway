@@ -28,8 +28,8 @@ async function placeVenmoOrder( page, customerUsername: string ) {
 	await page.goto( SHORTCODE_CHECKOUT_PATH );
 	await page.waitForLoadState( 'domcontentloaded' );
 	await page.click( 'label[for="payment_method_venmo"]' );
-	await expect( page.locator( '#_customer-venmo-username' ) ).toBeVisible();
-	await page.fill( '#_customer-venmo-username', customerUsername );
+	await expect( page.locator( '#_customer_venmo_username' ) ).toBeVisible();
+	await page.fill( '#_customer_venmo_username', customerUsername );
 	await page.click( '#place_order' );
 	await page.waitForURL( /order-received/, { timeout: 30000 } );
 }
@@ -106,7 +106,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 			await page.waitForLoadState( 'domcontentloaded' );
 			await page.click( 'label[for="payment_method_venmo"]' );
 
-			const usernameField = page.locator( '#_customer-venmo-username' );
+			const usernameField = page.locator( '#_customer_venmo_username' );
 			await expect( usernameField ).toBeVisible();
 			await expect( usernameField ).toHaveValue( CUSTOMER_VENMO_USERNAME );
 		} finally {
@@ -155,7 +155,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 			await page.waitForLoadState( 'domcontentloaded' );
 			await page.click( 'label[for="payment_method_venmo"]' );
 
-			const usernameField = page.locator( '#_customer-venmo-username' );
+			const usernameField = page.locator( '#_customer_venmo_username' );
 			await expect( usernameField ).toBeVisible();
 			await expect( usernameField ).toHaveValue( CUSTOMER_VENMO_USERNAME );
 		} finally {
@@ -186,7 +186,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 		await page.waitForLoadState( 'domcontentloaded' );
 		await page.click( 'label[for="payment_method_venmo"]' );
 
-		const usernameField = page.locator( '#_customer-venmo-username' );
+		const usernameField = page.locator( '#_customer_venmo_username' );
 		await expect( usernameField ).toBeVisible();
 		await expect( usernameField ).toHaveValue( CUSTOMER_VENMO_USERNAME );
 	} );
@@ -216,7 +216,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 		// Verify the username field has focus.
 		const focusedId = await page.evaluate( () => document.activeElement?.id );
-		expect( focusedId ).toBe( '_customer-venmo-username' );
+		expect( focusedId ).toBe( '_customer_venmo_username' );
 	} );
 
 	// ─── TODO 5: Focus on validation error ────────
@@ -233,7 +233,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 		// Select Venmo but leave username empty.
 		await page.click( 'label[for="payment_method_venmo"]' );
-		await page.fill( '#_customer-venmo-username', '' );
+		await page.fill( '#_customer_venmo_username', '' );
 
 		// Click Place Order.
 		await page.click( '#place_order' );
@@ -250,7 +250,7 @@ test.describe( 'Venmo username features (shortcode)', () => {
 
 		// Username field should be focused (if the focus JS is working).
 		const focusedId = await page.evaluate( () => document.activeElement?.id );
-		expect( focusedId ).toBe( '_customer-venmo-username' );
+		expect( focusedId ).toBe( '_customer_venmo_username' );
 	} );
 
 	// ─── TODO 6: From/to on thank you page ────────

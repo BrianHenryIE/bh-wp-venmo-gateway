@@ -3,14 +3,14 @@
  * Adds a "Send reconciliation email" button to the admin order screen which creates a Venmo
  * payment email for the order in the plugin's mailbox.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\API\Venmo_Payment_Email;
+use JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\API\Venmo_Payment_Email;
 use Throwable;
 use WC_Order;
 use WP_Post;
@@ -20,17 +20,17 @@ use WP_Post;
  */
 class Reconciliation_Email_Metabox {
 
-	const ACTION = 'bh_wp_venmo_gateway_send_reconciliation_email';
+	const ACTION = 'juiced_venmo_gateway_pro_send_reconciliation_email';
 
 	/**
 	 * Query arg carrying the result back to the order screen after the redirect.
 	 */
-	const RESULT_QUERY_ARG = 'bh_wp_venmo_gateway_reconciliation_email';
+	const RESULT_QUERY_ARG = 'juiced_venmo_gateway_pro_reconciliation_email';
 
 	/**
 	 * Transient key prefix for the error message, keyed by user id.
 	 */
-	const ERROR_TRANSIENT_PREFIX = 'bh_wp_venmo_gateway_reconciliation_email_error_';
+	const ERROR_TRANSIENT_PREFIX = 'juiced_venmo_gateway_pro_reconciliation_email_error_';
 
 	/**
 	 * Add the metabox, the form handler, and the result notice.
@@ -50,7 +50,7 @@ class Reconciliation_Email_Metabox {
 	public function add_metabox(): void {
 		foreach ( array( 'shop_order', 'woocommerce_page_wc-orders' ) as $screen ) {
 			add_meta_box(
-				'bh-wp-venmo-gateway-development-reconciliation-email',
+				'juiced-venmo-gateway-pro-development-reconciliation-email',
 				'Venmo Development',
 				array( $this, 'render_metabox' ),
 				$screen,
@@ -87,7 +87,7 @@ class Reconciliation_Email_Metabox {
 		);
 
 		echo '<p>Creates a Venmo "paid you" email in the mailbox for this order\'s customer name and total, and runs the email reconciliation.</p>';
-		echo '<p><a class="button button-secondary" id="bh-wp-venmo-gateway-send-reconciliation-email" href="' . esc_url( $url ) . '">Send reconciliation email</a></p>';
+		echo '<p><a class="button button-secondary" id="juiced-venmo-gateway-pro-send-reconciliation-email" href="' . esc_url( $url ) . '">Send reconciliation email</a></p>';
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Reconciliation_Email_Metabox {
 	 *
 	 * Reached by the link in the metabox: `admin-post.php?action=...&order_id=...&_wpnonce=...`.
 	 *
-	 * @hooked admin_post_bh_wp_venmo_gateway_send_reconciliation_email
+	 * @hooked admin_post_juiced_venmo_gateway_pro_send_reconciliation_email
 	 * @see wp-admin/admin-post.php
 	 */
 	public function handle_send(): void {
@@ -154,14 +154,14 @@ class Reconciliation_Email_Metabox {
 			$message = get_transient( self::ERROR_TRANSIENT_PREFIX . get_current_user_id() );
 			delete_transient( self::ERROR_TRANSIENT_PREFIX . get_current_user_id() );
 			printf(
-				'<div class="notice notice-error is-dismissible" id="bh-wp-venmo-gateway-reconciliation-email-notice"><p>Failed to create the reconciliation email: %s</p></div>',
+				'<div class="notice notice-error is-dismissible" id="juiced-venmo-gateway-pro-reconciliation-email-notice"><p>Failed to create the reconciliation email: %s</p></div>',
 				esc_html( is_string( $message ) ? $message : 'unknown error' )
 			);
 			return;
 		}
 
 		printf(
-			'<div class="notice notice-success is-dismissible" id="bh-wp-venmo-gateway-reconciliation-email-notice"><p>Created Venmo reconciliation email <a href="%s">post #%d</a> and ran reconciliation. Reload to see any status change.</p></div>',
+			'<div class="notice notice-success is-dismissible" id="juiced-venmo-gateway-pro-reconciliation-email-notice"><p>Created Venmo reconciliation email <a href="%s">post #%d</a> and ran reconciliation. Reload to see any status change.</p></div>',
 			esc_url( $this->get_email_edit_url( absint( $result ) ) ),
 			absint( $result )
 		);
@@ -170,7 +170,7 @@ class Reconciliation_Email_Metabox {
 	/**
 	 * The email's single view: the emails post type's edit screen, where bh-wp-mailboxes adds its metaboxes.
 	 *
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Admin\Single_Email_View::add_meta_boxes()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\Admin\Single_Email_View::add_meta_boxes()
 	 *
 	 * @param int $post_id The email's wp_posts id.
 	 */

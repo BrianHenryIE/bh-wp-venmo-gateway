@@ -8,17 +8,17 @@
  * production (they call wp_die()); here they are mocked to throw so the branch
  * that was taken can be asserted and execution stops as it would live.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 require_once __DIR__ . '/class-json-response-exception.php';
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donations_List
  */
 class Donations_List_Ajax_Test extends Unit_TestCase {
 

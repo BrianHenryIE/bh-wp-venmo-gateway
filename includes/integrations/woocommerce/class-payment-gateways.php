@@ -2,10 +2,10 @@
 /**
  * Add the payment gateway to WooCommerce's list of gateways.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
 use WC_Order;
 use WC_Payment_Gateway;
@@ -64,10 +64,10 @@ class Payment_Gateways {
 	/**
 	 * When linking to WooCommerce/Settings/Payments from plugins.php, filter to only instances of this gateway.
 	 *
-	 * The plugins.php code checks for multiple instances of the gateway, then uses the `class=bh-wp-venmo-gateway`
+	 * The plugins.php code checks for multiple instances of the gateway, then uses the `class=juiced-venmo-gateway-pro`
 	 * parameter on the Settings link to invoke this function.
 	 *
-	 * i.e. `wp-admin/admin.php?page=wc-settings&tab=checkout&class=bh-wp-venmo-gateway`.
+	 * i.e. `wp-admin/admin.php?page=wc-settings&tab=checkout&class=juiced-venmo-gateway-pro`.
 	 *
 	 * @hooked woocommerce_payment_gateways
 	 * @see WC_Payment_Gateways::init()

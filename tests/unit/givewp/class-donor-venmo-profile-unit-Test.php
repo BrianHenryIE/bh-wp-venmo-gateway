@@ -2,22 +2,22 @@
 /**
  * Recording the donor's Venmo profile name on a donation.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Venmo_Profile;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Venmo_Profile;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use Mockery;
 use Mockery\MockInterface;
 use WP_Mock;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donor_Venmo_Profile
  */
 class Donor_Venmo_Profile_Unit_Test extends Unit_Testcase {
 

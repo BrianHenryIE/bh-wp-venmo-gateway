@@ -54,11 +54,11 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 
 		// Wait for the Venmo payment fields to appear.
 		await expect(
-			page.locator( '#_customer-venmo-username' )
+			page.locator( '#_customer_venmo_username' )
 		).toBeVisible();
 
 		// Enter customer Venmo username.
-		await page.fill( '#_customer-venmo-username', CUSTOMER_VENMO_USERNAME );
+		await page.fill( '#_customer_venmo_username', CUSTOMER_VENMO_USERNAME );
 
 		// Place order.
 		await page.click( '#place_order' );
@@ -81,7 +81,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 
 		// Select Venmo and fill username.
 		await page.click( 'label[for="payment_method_venmo"]' );
-		await page.fill( '#_customer-venmo-username', CUSTOMER_VENMO_USERNAME );
+		await page.fill( '#_customer_venmo_username', CUSTOMER_VENMO_USERNAME );
 
 		// Place order.
 		await page.click( '#place_order' );
@@ -140,7 +140,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		await page.goto( SHORTCODE_CHECKOUT_PATH );
 
 		await page.click( 'label[for="payment_method_venmo"]' );
-		await page.fill( '#_customer-venmo-username', CUSTOMER_VENMO_USERNAME );
+		await page.fill( '#_customer_venmo_username', CUSTOMER_VENMO_USERNAME );
 		await page.click( '#place_order' );
 		await page.waitForURL( /order-received/, { timeout: 30000 } );
 
@@ -172,7 +172,7 @@ test.describe( 'Venmo checkout (shortcode)', () => {
 		// Go to checkout and enter the username WITH a leading "@".
 		await page.goto( SHORTCODE_CHECKOUT_PATH );
 		await page.click( 'label[for="payment_method_venmo"]' );
-		await page.fill( '#_customer-venmo-username', '@' + CUSTOMER_VENMO_USERNAME );
+		await page.fill( '#_customer_venmo_username', '@' + CUSTOMER_VENMO_USERNAME );
 		await page.click( '#place_order' );
 		await page.waitForURL( /order-received/, { timeout: 30000 } );
 

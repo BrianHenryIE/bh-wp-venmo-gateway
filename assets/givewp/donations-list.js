@@ -2,22 +2,22 @@
  * Opens the "Mark paid" modal for pending Venmo donations and submits the
  * (optional) payment details, marking the donation complete on success.
  *
- * Config is provided via the localized `bhVenmoMarkPaid` object.
+ * Config is provided via the localized `venmomoMarkPaid` object.
  */
 ( function () {
 	'use strict';
 
-	const config = window.bhVenmoMarkPaid || {};
+	const config = window.venmomoMarkPaid || {};
 
-	const modal = document.getElementById( 'bh-venmo-mark-paid-modal' );
-	const form = document.getElementById( 'bh-venmo-mark-paid-form' );
+	const modal = document.getElementById( 'venmo-mark-paid-modal' );
+	const form = document.getElementById( 'venmo-mark-paid-form' );
 
 	if ( ! modal || ! form ) {
 		return;
 	}
 
 	const donationIdField = form.querySelector( 'input[name="donation_id"]' );
-	const errorEl = modal.querySelector( '.bh-venmo-modal__error' );
+	const errorEl = modal.querySelector( '.venmo-modal__error' );
 	const submitButton = form.querySelector( 'button[type="submit"]' );
 
 	function openModal( donationId ) {
@@ -48,7 +48,7 @@
 	// Open the modal from any "Mark paid" link (event-delegated so it works
 	// for every row without per-row listeners).
 	document.addEventListener( 'click', function ( event ) {
-		const trigger = event.target.closest( '.bh-venmo-mark-paid' );
+		const trigger = event.target.closest( '.venmo-mark-paid' );
 		if ( ! trigger ) {
 			return;
 		}
@@ -58,7 +58,7 @@
 
 	// Close on overlay / cancel / Escape.
 	modal.addEventListener( 'click', function ( event ) {
-		if ( event.target.closest( '[data-bh-venmo-close]' ) ) {
+		if ( event.target.closest( '[data-venmo-close]' ) ) {
 			event.preventDefault();
 			closeModal();
 		}
@@ -99,7 +99,7 @@
 					// pass the id so the page shows a "marked paid" admin notice.
 					const url = new URL( window.location.href );
 					url.searchParams.set(
-						'bh-venmo-marked-paid',
+						'venmo-marked-paid',
 						result.data.donationId
 					);
 					window.location.assign( url.toString() );

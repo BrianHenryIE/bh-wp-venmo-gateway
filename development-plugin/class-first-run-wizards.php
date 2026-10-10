@@ -1,6 +1,6 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin;
 
 class First_Run_Wizards {
 

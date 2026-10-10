@@ -3,12 +3,12 @@
  * Filters the WooCommerce admin orders list to Venmo orders awaiting payment, via a query arg the
  * gateway settings page links to.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
 
@@ -21,9 +21,9 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
 class Orders_List_Filter {
 
 	/**
-	 * The query arg that switches the filter on: `?bh_wp_venmo_gateway_awaiting_payment=1`.
+	 * The query arg that switches the filter on: `?juiced_venmo_gateway_pro_awaiting_payment=1`.
 	 */
-	const QUERY_ARG = 'bh_wp_venmo_gateway_awaiting_payment';
+	const QUERY_ARG = 'juiced_venmo_gateway_pro_awaiting_payment';
 
 	/**
 	 * The WooCommerce payment method id of the Venmo gateway.

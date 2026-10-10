@@ -2,12 +2,12 @@
 /**
  * Registers hooks for the GiveWP integration.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
 use Give\Framework\PaymentGateways\PaymentGatewayRegister;
 use Give\PaymentGateways\Actions\RegisterPaymentGateways;

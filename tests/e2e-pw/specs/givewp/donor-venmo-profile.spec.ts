@@ -11,7 +11,7 @@ import { mockVenmoProfile, removeMockVenmoProfile } from '../../helpers/developm
 import { runDueCronHook } from '../../helpers/general/cli/wp-cli';
 
 const DONOR_VENMO_DISPLAY_NAME = 'Dana Profile Donor';
-const CRON_HOOK = 'bh_wp_venmo_gateway_fetch_donor_venmo_profile';
+const CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_donor_venmo_profile';
 
 test.describe( 'Donor Venmo profile name', () => {
 	test.setTimeout( 90_000 );
@@ -54,7 +54,7 @@ test.describe( 'Donor Venmo profile name', () => {
 				path: '/e2e-test-helper/v1/give/donation',
 				params: { id: candidate.id },
 			} );
-			if ( details.meta[ '_customer-venmo-username' ] === donorVenmoUsername ) {
+			if ( details.meta[ '_customer_venmo_username' ] === donorVenmoUsername ) {
 				donationId = candidate.id;
 				break;
 			}
@@ -69,8 +69,8 @@ test.describe( 'Donor Venmo profile name', () => {
 			path: '/e2e-test-helper/v1/give/donation',
 			params: { id: donationId },
 		} );
-		expect( donation.meta[ '_customer-venmo-username' ] ).toBe( donorVenmoUsername );
-		expect( donation.meta[ '_customer-venmo-display-name' ] ).toBe( DONOR_VENMO_DISPLAY_NAME );
+		expect( donation.meta[ '_customer_venmo_username' ] ).toBe( donorVenmoUsername );
+		expect( donation.meta[ '_customer_venmo_display_name' ] ).toBe( DONOR_VENMO_DISPLAY_NAME );
 		expect( donation.notes ).toContain( `Venmo profile @${ donorVenmoUsername } is ${ DONOR_VENMO_DISPLAY_NAME }.` );
 	} );
 } );

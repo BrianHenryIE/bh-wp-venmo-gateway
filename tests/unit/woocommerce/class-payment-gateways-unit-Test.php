@@ -1,8 +1,8 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 class Payment_Gateways_Unit_Test extends Unit_Testcase {
 
@@ -15,6 +15,6 @@ class Payment_Gateways_Unit_Test extends Unit_Testcase {
 
 		$result = $sut->add_to_woocommerce( array() );
 
-		$this->assertContains( \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway::class, $result );
+		$this->assertContains( \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway::class, $result );
 	}
 }

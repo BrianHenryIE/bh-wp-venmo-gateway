@@ -2,13 +2,13 @@
 /**
  * Display an admin notice inviting the user to configure the plugin. Stops displaying after a week.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Admin;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Admin;
 
-use BrianHenryIE\WP_Venmo_Gateway\WPTRT\AdminNotices\Notices;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
+use JuicedPlugins\Venmo_Gateway_Pro\WPTRT\AdminNotices\Notices;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway;
 
 /**
  * Checks that:
@@ -18,7 +18,7 @@ use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
  *
  * Class Admin
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 class Admin {
 
@@ -59,10 +59,11 @@ class Admin {
 			return;
 		}
 
-		/**
-		 * TODO: update with underscored option name.
-		 */
-		$last_activated = get_option( 'bh-wp-venmo-gateway-last-activated-time', time() );
+		// Each activation is recorded as `[ ATOM datetime => plugin version ]`; the last entry is the most recent.
+		$activated_times = get_option( 'juiced_venmo_gateway_pro_activated_time', array() );
+		$last_activated  = is_array( $activated_times ) && ! empty( $activated_times )
+			? (int) strtotime( (string) array_key_last( $activated_times ) )
+			: time();
 
 		// If last activation was longer than a week ago, return.
 		if ( $last_activated < time() - WEEK_IN_SECONDS ) {
@@ -92,12 +93,12 @@ class Admin {
 			$section = '&section=' . $venmo_gateways[0]->id;
 		} else {
 			// If there is more than one, link to the WooCommerce / Settings / Payments page filtered to the class type.
-			$section = '&class=bh-wp-venmo-gateway';
+			$section = '&class=juiced-venmo-gateway-pro';
 		}
 
 		$setting_link = admin_url( "admin.php?page=wc-settings&tab=checkout{$section}" );
 
-		$id      = 'bh-wp-venmo-gateway-activation-configuration';
+		$id      = 'juiced-venmo-gateway-pro-activation-configuration';
 		$title   = '';
 		$message = "Venmo Gateway needs to be configured. Please <a href=\"{$setting_link}\">visit the settings page</a> to enter the destination Venmo @username for payments to be sent.";
 

@@ -2,16 +2,16 @@
 /**
  * When WooCommerce's FeaturesUtil class is unavailable, the compatibility declarations should return early.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use Mockery;
 use Mockery\MockInterface;
 
@@ -19,7 +19,7 @@ use function Patchwork\redefine;
 use function Patchwork\relay;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Features
  */
 class Features_Unit_Test extends Unit_Testcase {
 

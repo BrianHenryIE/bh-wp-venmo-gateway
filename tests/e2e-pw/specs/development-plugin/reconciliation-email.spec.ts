@@ -43,12 +43,12 @@ test.describe( 'Development plugin – send reconciliation email', () => {
 			await loginAsAdmin( page );
 			await page.goto( `/wp-admin/post.php?post=${ order.id }&action=edit`, { waitUntil: 'domcontentloaded' } );
 
-			const button = page.locator( '#bh-wp-venmo-gateway-send-reconciliation-email' );
+			const button = page.locator( '#juiced-venmo-gateway-pro-send-reconciliation-email' );
 			await expect( button ).toBeVisible();
 			await button.click();
-			await page.waitForURL( /bh_wp_venmo_gateway_reconciliation_email=\d+/ );
+			await page.waitForURL( /juiced_venmo_gateway_pro_reconciliation_email=\d+/ );
 
-			await expect( page.locator( '#bh-wp-venmo-gateway-reconciliation-email-notice' ) ).toContainText(
+			await expect( page.locator( '#juiced-venmo-gateway-pro-reconciliation-email-notice' ) ).toContainText(
 				'Created Venmo reconciliation email post #'
 			);
 
@@ -64,7 +64,7 @@ test.describe( 'Development plugin – send reconciliation email', () => {
 			expect( devNote.note ).toMatch( new RegExp( `href="http://localhost:8888/wp-admin/post\\.php\\?post=${ emailPostId }(&amp;|&#038;)action=edit"` ) );
 
 			// And the notice links to the same screen.
-			const noticeLink = page.locator( '#bh-wp-venmo-gateway-reconciliation-email-notice a' );
+			const noticeLink = page.locator( '#juiced-venmo-gateway-pro-reconciliation-email-notice a' );
 			await expect( noticeLink ).toHaveAttribute( 'href', `http://localhost:8888/wp-admin/post.php?post=${ emailPostId }&action=edit` );
 
 			// Assert (REST): the email was reconciled to the order, which is now paid, with the transaction meta

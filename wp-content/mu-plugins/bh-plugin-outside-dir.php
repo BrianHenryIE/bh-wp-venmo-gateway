@@ -6,7 +6,7 @@
  *
  * I'm currently setting `$arbitrary_plugins` in `/tests/bootstrap.php`.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 /**

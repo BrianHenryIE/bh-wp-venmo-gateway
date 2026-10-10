@@ -5,33 +5,35 @@
  * A class definition that includes attributes and functions used across both the
  * frontend-facing side of the site and the admin area.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities;
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Admin;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Capabilities;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Plugins_Page;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Unreconciled_Orders_Menu;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Admin;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Features;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Upgrade\Upgrader;
+use JuicedPlugins\Venmo_Gateway_Pro\Upgrade\V430;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Admin_Order_UI;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Email;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Thank_You;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile as GiveWP_Donor_Venmo_Profile;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donations_List as GiveWP_Donations_List;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\GiveWP;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Admin_Order_UI;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Email;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Order;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Orders_List_Filter;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Payment_Gateways;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Thank_You;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donation_Receipt as GiveWP_Donation_Receipt;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donor_Venmo_Profile as GiveWP_Donor_Venmo_Profile;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donations_List as GiveWP_Donations_List;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Gateway_Settings as GiveWP_Gateway_Settings;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\GiveWP;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Venmo_Gateway_Blocks_Checkout_Support;
 
 /**
  * `add_action()` and `add_filter()` for the plugin.
@@ -54,11 +56,20 @@ class Register_Hooks {
 		protected Settings_Interface $settings,
 		protected LoggerInterface $logger,
 	) {
+		$this->define_upgrade_hooks();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_woocommerce_hooks();
 		$this->define_givewp_hooks();
 		$this->define_cron_hooks();
+	}
+
+	/**
+	 * Run upgrade routines and handle reads of renamed options.
+	 */
+	protected function define_upgrade_hooks(): void {
+		( new Upgrader( $this->settings->get_plugin_version() ) )->register_hooks();
+		( new V430() )->register_hooks();
 	}
 
 	/**

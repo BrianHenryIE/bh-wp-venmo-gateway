@@ -1,17 +1,17 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerAwareTrait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 use WC_Order;
 use WC_Payment_Gateways;
 
@@ -88,7 +88,7 @@ class Order {
 	/**
 	 * Background task: fetch the customer's public Venmo profile and record their full name in the order meta.
 	 *
-	 * @hooked bh_wp_venmo_gateway_fetch_customer_venmo_profile
+	 * @hooked juiced_venmo_gateway_pro_fetch_customer_venmo_profile
 	 * @see Cron::FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK
 	 * @see self::schedule_fetch_customer_venmo_profile()
 	 *
@@ -116,7 +116,7 @@ class Order {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s: the customer's Venmo username. */
-					__( 'Could not find a Venmo profile for @%s.', 'bh-wp-venmo-gateway' ),
+					__( 'Could not find a Venmo profile for @%s.', 'juiced-venmo-gateway-pro' ),
 					$username
 				)
 			);
@@ -134,7 +134,7 @@ class Order {
 		$order->add_order_note(
 			sprintf(
 				/* translators: 1: the customer's Venmo username, 2: the customer's name on their Venmo profile. */
-				__( 'Venmo profile @%1$s is %2$s.', 'bh-wp-venmo-gateway' ),
+				__( 'Venmo profile @%1$s is %2$s.', 'juiced-venmo-gateway-pro' ),
 				$username,
 				$profile->display_name
 			)

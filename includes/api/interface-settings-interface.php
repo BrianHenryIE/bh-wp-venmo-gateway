@@ -1,11 +1,11 @@
 <?php
 /**
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\Email_Reconcile_Settings_Interface;
 
 interface Settings_Interface extends Email_Reconcile_Settings_Interface {
 

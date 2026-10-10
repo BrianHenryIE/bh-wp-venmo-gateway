@@ -3,12 +3,12 @@
  * Test-helper REST endpoint to create and delete GiveWP donations with a
  * specific status and date, for arranging E2E tests.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Rest;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Rest;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -74,8 +74,8 @@ class Give_Donations {
 				'status'  => get_post_status( $donation_id ),
 				'gateway' => give_get_meta( $donation_id, '_give_payment_gateway', true ),
 				'meta'    => array(
-					'_customer-venmo-username'     => give_get_meta( $donation_id, '_customer-venmo-username', true ),
-					'_customer-venmo-display-name' => give_get_meta( $donation_id, '_customer-venmo-display-name', true ),
+					'_customer_venmo_username'     => give_get_meta( $donation_id, '_customer_venmo_username', true ),
+					'_customer_venmo_display_name' => give_get_meta( $donation_id, '_customer_venmo_display_name', true ),
 				),
 				'notes'   => array_values( array_map( fn( $note ) => (string) $note->comment_content, is_array( $notes ) ? $notes : array() ) ),
 			)

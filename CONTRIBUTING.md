@@ -9,7 +9,7 @@ BASEURL=http://localhost:8888 npx playwright test --ui &;
 ```
 
 ```
-wp option delete bh-wp-venmo-gateway-last-imap-reconcile-run-time
+wp option delete juiced-venmo-gateway-pro-last-imap-reconcile-run-time
 ```
 
 ### WordPress Coding Standards

@@ -2,13 +2,13 @@
 /**
  * Tests for the Venmo_Username helper.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Venmo_Username
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username
  */
 class Venmo_Username_Test extends Unit_Testcase {
 

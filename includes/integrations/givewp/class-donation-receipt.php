@@ -7,16 +7,16 @@
  * "Payment Pending: Your donation is currently processing.") shows the QR code
  * the donor scans to pay.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\chillerlan\QRCode\Output\QROutputInterface;
-use BrianHenryIE\WP_Venmo_Gateway\QR\QR_Code;
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\chillerlan\QRCode\Output\QROutputInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\QR\QR_Code;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 use Give\Donations\Models\Donation;
 use Give\Framework\Receipts\DonationReceipt;
 use Give\Framework\Receipts\Properties\ReceiptDetail;
@@ -67,7 +67,7 @@ class Donation_Receipt {
 
 		$message = sprintf(
 			/* translators: %s: the linked "$25 via Venmo to @username" call to action */
-			__( 'Payment Pending: Please send your donation of %s.', 'bh-wp-venmo-gateway' ),
+			__( 'Payment Pending: Please send your donation of %s.', 'juiced-venmo-gateway-pro' ),
 			$placeholder
 		);
 
@@ -75,7 +75,7 @@ class Donation_Receipt {
 
 		$link_text = sprintf(
 			/* translators: 1: donation amount, 2: store Venmo username */
-			__( '$%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+			__( '$%1$s via Venmo to @%2$s', 'juiced-venmo-gateway-pro' ),
 			$amount,
 			$store_username
 		);
@@ -145,7 +145,7 @@ class Donation_Receipt {
 				esc_html(
 					sprintf(
 						/* translators: 1: donation amount, 2: store Venmo username */
-						__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+						__( 'Please pay $%1$s via Venmo to @%2$s', 'juiced-venmo-gateway-pro' ),
 						$amount,
 						$store_username
 					)
@@ -156,7 +156,7 @@ class Donation_Receipt {
 				'<a target="_blank" href="%1$s"><img src="%2$s" alt="%3$s" /></a>',
 				esc_url( $browser_url ),
 				esc_attr( $qr_code_data_uri ),
-				esc_attr__( 'Payment QR code', 'bh-wp-venmo-gateway' )
+				esc_attr__( 'Payment QR code', 'juiced-venmo-gateway-pro' )
 			);
 		}
 
@@ -168,7 +168,7 @@ class Donation_Receipt {
 			esc_html(
 				sprintf(
 					/* translators: 1: donation amount, 2: store Venmo username */
-					__( '$%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+					__( '$%1$s via Venmo to @%2$s', 'juiced-venmo-gateway-pro' ),
 					$amount,
 					$store_username
 				)
@@ -177,7 +177,7 @@ class Donation_Receipt {
 
 		$receipt->donationDetails->addDetail(
 			new ReceiptDetail(
-				__( 'Pending', 'bh-wp-venmo-gateway' ),
+				__( 'Pending', 'juiced-venmo-gateway-pro' ),
 				$link
 			)
 		);
@@ -218,14 +218,14 @@ class Donation_Receipt {
 			'url'   => $this->get_browser_url( $store_username, $amount, $donation->id ),
 			'label' => sprintf(
 				/* translators: 1: donation amount, 2: store Venmo username */
-				__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+				__( 'Please pay $%1$s via Venmo to @%2$s', 'juiced-venmo-gateway-pro' ),
 				$amount,
 				$store_username
 			),
 		);
 
-		$handle = 'bh-wp-venmo-gateway-givewp-receipt';
-		wp_register_script( $handle, false, array(), BH_WP_VENMO_GATEWAY_VERSION, true );
+		$handle = 'juiced-venmo-gateway-pro-givewp-receipt';
+		wp_register_script( $handle, false, array(), JUICED_VENMO_GATEWAY_PRO_VERSION, true );
 		wp_enqueue_script( $handle );
 		wp_add_inline_script(
 			$handle,
@@ -244,12 +244,12 @@ class Donation_Receipt {
 				var data = window.bhWpVenmoReceipt || {};
 				function apply() {
 					var badge = document.querySelector( '.givewp-form-secure-badge' );
-					if ( ! badge || badge.querySelector( 'a[data-bh-venmo]' ) ) {
+					if ( ! badge || badge.querySelector( 'a[data-venmo]' ) ) {
 						return;
 					}
 					badge.textContent = '';
 					var link = document.createElement( 'a' );
-					link.setAttribute( 'data-bh-venmo', '1' );
+					link.setAttribute( 'data-venmo', '1' );
 					link.setAttribute( 'target', '_blank' );
 					link.href = data.url;
 					link.textContent = data.label;
@@ -357,12 +357,12 @@ class Donation_Receipt {
 
 		$link_text = sprintf(
 			/* translators: 1: donation amount, 2: store Venmo username */
-			__( 'Please pay $%1$s via Venmo to @%2$s', 'bh-wp-venmo-gateway' ),
+			__( 'Please pay $%1$s via Venmo to @%2$s', 'juiced-venmo-gateway-pro' ),
 			$amount,
 			$store_username
 		);
 		?>
-		<div class="bh-wp-venmo-gateway-donation-instructions" style="text-align: center;">
+		<div class="juiced-venmo-gateway-pro-donation-instructions" style="text-align: center;">
 
 			<p>
 				<a target="_blank" href="<?php echo esc_url( $venmo_browser_url ); ?>">
@@ -370,7 +370,7 @@ class Donation_Receipt {
 						<img
 							style="display:block; margin: 0 auto; max-width: 90vw; max-height: 500px;"
 							src="<?php echo esc_attr( $qr_code_data_uri ); ?>"
-							alt="<?php esc_attr_e( 'Payment QR code', 'bh-wp-venmo-gateway' ); ?>"
+							alt="<?php esc_attr_e( 'Payment QR code', 'juiced-venmo-gateway-pro' ); ?>"
 						/>
 					<?php else : ?>
 						<?php echo esc_html( $link_text ); ?>

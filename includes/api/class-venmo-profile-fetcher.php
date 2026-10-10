@@ -2,16 +2,16 @@
 /**
  * Fetch a Venmo user's public profile from venmo.com.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
-use BrianHenryIE\WP_Venmo_Gateway\Venmo_Username;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerAwareTrait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\Venmo_Username;
 use Closure;
 use WP_Error;
 

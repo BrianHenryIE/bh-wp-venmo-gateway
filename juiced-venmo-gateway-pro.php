@@ -9,36 +9,36 @@
  *
  * @link              http://BrianHenryIE.com
  * @since             1.0.0
- * @package           BrianHenryIE\WP_Venmo_Gateway
+ * @package           JuicedPlugins\Venmo_Gateway_Pro
  *
  * @wordpress-plugin
  * Plugin Name:       Venmo Gateway
- * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-venmo-gateway/
+ * Plugin URI:        http://github.com/JuicedPlugins/venmo-gateway-pro/
  * Description:       Accepts payments via Venmo and reconciles WooCommerce orders through email receipts.
  * Version:           4.3.0
  * Requires PHP:      8.4
  * Requires at least: 6.9
  * Tested up to:      7.1
- * Author:            BrianHenryIE
- * Author URI:        http://BrianHenryIE.com/
+ * Author:            Juiced Plugins
+ * Author URI:        https://JuicedPlugins.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       bh-wp-venmo-gateway
+ * Text Domain:       juiced-venmo-gateway-pro
  * Domain Path:       /languages
  *
  * WC requires at least:   10.1
  * WC tested up to:        11.2
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
-use BrianHenryIE\WP_Venmo_Gateway\WP_Order_Email_Reconcile\BH_WP_Order_Email_Reconcile;
-use BrianHenryIE\WP_Venmo_Gateway\API\API;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Activator;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Deactivator;
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Order_Email_Reconcile\BH_WP_Order_Email_Reconcile;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Logger\Logger;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Activator;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Deactivator;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Register_Hooks;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -52,9 +52,9 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BH_WP_VENMO_GATEWAY_VERSION', '4.3.0' );
-define( 'BH_WP_VENMO_GATEWAY_BASENAME', plugin_basename( __FILE__ ) );
-define( 'BH_WP_VENMO_GATEWAY_FILE', __FILE__ );
+define( 'JUICED_VENMO_GATEWAY_PRO_VERSION', '4.3.0' );
+define( 'JUICED_VENMO_GATEWAY_PRO_BASENAME', plugin_basename( __FILE__ ) );
+define( 'JUICED_VENMO_GATEWAY_PRO_FILE', __FILE__ );
 
 register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
@@ -69,7 +69,7 @@ register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) 
  *
  * @since    1.0.0
  */
-function instantiate_bh_wp_venmo_gateway(): API {
+function instantiate_juiced_venmo_gateway_pro(): API {
 
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
@@ -83,4 +83,4 @@ function instantiate_bh_wp_venmo_gateway(): API {
 	return $api;
 }
 
-$GLOBALS['bh_wp_venmo_gateway'] = instantiate_bh_wp_venmo_gateway();
+$GLOBALS['juiced_venmo_gateway_pro'] = instantiate_juiced_venmo_gateway_pro();

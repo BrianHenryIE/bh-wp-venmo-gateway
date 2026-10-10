@@ -8,6 +8,7 @@
 * Add: WooCommerce shop managers and GiveWP managers can add, edit, check and remove the email accounts checked for payment emails; the logs page remains administrator-only.
 * Add: WooCommerce shop managers and GiveWP managers can view and process payment emails and view unreconciled orders; email accounts and logs remain administrator-only.
 * Add: shared log level setting, configurable on the WooCommerce and GiveWP gateway settings pages, with a link to the logs page.
+* Deprecation: all options use underscores rather than hyphens
 
 ### 4.2.1 September 2026
 

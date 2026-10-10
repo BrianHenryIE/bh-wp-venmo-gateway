@@ -5,12 +5,12 @@
  * Venmo usernames and `venmo.com/{username}` URLs use the bare handle, so the
  * value is always stored WITHOUT a leading "@" and formatted WITH one for display.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
 /**
  * Static helpers to strip the leading "@" when saving and add it when displaying.

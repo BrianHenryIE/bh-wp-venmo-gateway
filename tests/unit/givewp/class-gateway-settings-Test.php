@@ -1,19 +1,19 @@
 <?php
 /**
  * Unit tests for the log level field on the GiveWP gateway settings page, which is
- * shared with the WooCommerce gateway via the `bh_wp_venmo_gateway_log_level` option.
+ * shared with the WooCommerce gateway via the `juiced_venmo_gateway_pro_log_level` option.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Gateway_Settings
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Gateway_Settings
  */
 class Gateway_Settings_Test extends Unit_Testcase {
 
@@ -37,12 +37,12 @@ class Gateway_Settings_Test extends Unit_Testcase {
 	/**
 	 * Mock `get_option()` so the shared log level option returns the given value.
 	 *
-	 * @param string $log_level The value `bh_wp_venmo_gateway_log_level` should return.
+	 * @param string $log_level The value `juiced_venmo_gateway_pro_log_level` should return.
 	 */
 	private function mock_shared_log_level( string $log_level ): void {
 		\WP_Mock::userFunction( 'get_option' )->andReturnUsing(
 			function ( string $option, $default_value = false ) use ( $log_level ) {
-				return 'bh_wp_venmo_gateway_log_level' === $option ? $log_level : $default_value;
+				return 'juiced_venmo_gateway_pro_log_level' === $option ? $log_level : $default_value;
 			}
 		);
 	}
@@ -78,7 +78,7 @@ class Gateway_Settings_Test extends Unit_Testcase {
 		$this->assertSame( 'select', $field['type'] );
 		$this->assertSame( 'debug', $field['default'] );
 		$this->assertSame( array( 'none', 'error', 'warning', 'notice', 'info', 'debug' ), array_keys( $field['options'] ) );
-		$this->assertStringContainsString( 'admin.php?page=bh-wp-venmo-gateway-logs', $field['desc'] );
+		$this->assertStringContainsString( 'admin.php?page=juiced-venmo-gateway-pro-logs', $field['desc'] );
 		$this->assertStringContainsString( 'View Logs', $field['desc'] );
 	}
 
@@ -116,7 +116,7 @@ class Gateway_Settings_Test extends Unit_Testcase {
 	 */
 	public function test_sanitize_log_level_updates_shared_option(): void {
 		$this->mock_shared_log_level( 'notice' );
-		\WP_Mock::userFunction( 'update_option' )->once()->with( 'bh_wp_venmo_gateway_log_level', 'debug' )->andReturn( true );
+		\WP_Mock::userFunction( 'update_option' )->once()->with( 'juiced_venmo_gateway_pro_log_level', 'debug' )->andReturn( true );
 
 		$result = ( new Gateway_Settings() )->sanitize_log_level( 'debug' );
 

@@ -2,10 +2,10 @@
 /**
  * AJAX endpoint to set WooCommerce customer billing and shipping data in the session.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\Ajax;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\Ajax;
 
 use WC_Customer;
 

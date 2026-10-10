@@ -45,7 +45,7 @@ test.describe( 'Orders awaiting Venmo payment link', () => {
 			const link = page.getByRole( 'link', { name: 'View orders awaiting Venmo payment' } );
 			await expect( link ).toBeVisible();
 			await link.click();
-			await page.waitForURL( /bh_wp_venmo_gateway_awaiting_payment=1/ );
+			await page.waitForURL( /juiced_venmo_gateway_pro_awaiting_payment=1/ );
 
 			// The orders list (HPOS `page=wc-orders` or legacy `post_type=shop_order`).
 			await expect( page ).toHaveURL( /(page=wc-orders|post_type=shop_order)/ );

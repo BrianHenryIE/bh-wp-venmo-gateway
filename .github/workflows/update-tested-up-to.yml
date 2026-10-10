@@ -1,9 +1,9 @@
 name: Update "Tested up to" headers
 
 # Updates the plugin headers:
-#  - `Tested up to` in bh-wp-venmo-gateway.php, readme.txt and README.txt is set to the higher of the existing header or the WordPress version in composer.lock.
-#  - `WC tested up to` in bh-wp-venmo-gateway.php is set to the higher of the existing header or the WooCommerce version in composer.lock.
-#  - `Requires at least` in readme.txt and README.txt is set to match the `Requires at least` header in bh-wp-venmo-gateway.php.
+#  - `Tested up to` in juiced-venmo-gateway-pro.php, readme.txt and README.txt is set to the higher of the existing header or the WordPress version in composer.lock.
+#  - `WC tested up to` in juiced-venmo-gateway-pro.php is set to the higher of the existing header or the WooCommerce version in composer.lock.
+#  - `Requires at least` in readme.txt and README.txt is set to match the `Requires at least` header in juiced-venmo-gateway-pro.php.
 # Only major.minor is used, never the patch version.
 #
 # Versions are read from composer.lock (`roots/wordpress-no-content` and `wpackagist-plugin/woocommerce`), so no `composer install` is needed.
@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          PLUGIN_FILE="bh-wp-venmo-gateway.php"
+          PLUGIN_FILE="juiced-venmo-gateway-pro.php"
           README_FILES="readme.txt README.txt"
 
           # Reduce a version string to major.minor.
@@ -133,4 +133,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: ${{ steps.commit_message.outputs.message }}
-          file_pattern: bh-wp-venmo-gateway.php README.txt
+          file_pattern: juiced-venmo-gateway-pro.php README.txt

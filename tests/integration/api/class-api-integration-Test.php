@@ -1,11 +1,11 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\WC_IMAP_Reconcile\API\IMAP_Mailbox_Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WC_IMAP_Reconcile\IMAP_Reconcile;
-use BrianHenryIE\WP_Venmo_Gateway\WP_Logger\Logger;
-use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\WC_IMAP_Reconcile\API\IMAP_Mailbox_Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WC_IMAP_Reconcile\IMAP_Reconcile;
+use JuicedPlugins\Venmo_Gateway_Pro\WP_Logger\Logger;
+use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 
 class API_Integration_Test extends WPUnit_Testcase {
 
@@ -62,7 +62,7 @@ class API_Integration_Test extends WPUnit_Testcase {
 		$logger   = Logger::instance( $settings );
 
 		$time = time() - ( DAY_IN_SECONDS * 2 );
-		update_option( 'bh-wp-venmo-gateway-last-imap-reconcile-run-time', $time );
+		update_option( 'juiced-venmo-gateway-pro-last-imap-reconcile-run-time', $time );
 
 		$imap = new IMAP_Reconcile( $settings, $logger );
 		$api  = new API( $imap, $settings, $logger );

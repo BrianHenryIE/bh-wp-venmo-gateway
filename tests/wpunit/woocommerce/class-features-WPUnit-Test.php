@@ -1,14 +1,14 @@
 <?php
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\WPUnit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\WPUnit_Testcase;
 use Codeception\Stub\Expected;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Features
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Features
  */
 class Features_WPUnit_Test extends WPUnit_Testcase {
 
@@ -43,7 +43,7 @@ class Features_WPUnit_Test extends WPUnit_Testcase {
 		$settings = $this->makeEmpty(
 			Settings_Interface::class,
 			array(
-				'get_plugin_basename' => Expected::once( 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' ),
+				'get_plugin_basename' => Expected::once( 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php' ),
 			)
 		);
 
@@ -60,7 +60,7 @@ class Features_WPUnit_Test extends WPUnit_Testcase {
 		// because the plugin is not in the wp-content/plugins/ directory, we need to mock the plugins cache.
 		$cache_plugins = array(
 			'' => array(
-				'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php' =>
+				'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php' =>
 					array(
 						'Name' => 'Venmo Gateway',
 					),
@@ -75,6 +75,6 @@ class Features_WPUnit_Test extends WPUnit_Testcase {
 		/** @var array{compatible:array<string>, incompatible:array<string>} $result */
 		$result = FeaturesUtil::get_compatible_plugins_for_feature( $feature );
 
-		$this->assertContains( 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php', $result['compatible'], wp_json_encode( $result['compatible'] ) ?: '' );
+		$this->assertContains( 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php', $result['compatible'], wp_json_encode( $result['compatible'] ) ?: '' );
 	}
 }

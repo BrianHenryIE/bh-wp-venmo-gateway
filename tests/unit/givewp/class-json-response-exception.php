@@ -4,10 +4,10 @@
  * which terminate the request in production. Kept in its own (non-*Test.php)
  * file so Codeception's test loader does not scan it as a test case.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
 /**
  * Carries the wp_send_json_* outcome so a test can assert which branch ran.

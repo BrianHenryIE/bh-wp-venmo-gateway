@@ -21,7 +21,7 @@
 			// Strip any leading "@"; the username is stored and used as the bare handle.
 			var username = currentVenmoUsername.trim().replace( /^@+/, '' );
 			if ( ! username ) {
-				throw new Error( __( 'Please enter your Venmo username.', 'bh-wp-venmo-gateway' ) );
+				throw new Error( __( 'Please enter your Venmo username.', 'juiced-venmo-gateway-pro' ) );
 			}
 			return { venmoUsername: username };
 		},
@@ -47,7 +47,7 @@
 					React.createElement(
 						'label',
 						{ className: 'give-label', htmlFor: 'give-venmo-username' },
-						__( 'Your Venmo @username', 'bh-wp-venmo-gateway' ),
+						__( 'Your Venmo @username', 'juiced-venmo-gateway-pro' ),
 						React.createElement( 'span', { className: 'give-required-indicator' }, '*' )
 					),
 					React.createElement( 'input', {
@@ -64,11 +64,11 @@
 					? React.createElement(
 						'p',
 						{ className: 'give-venmo-instructions' },
-						__( 'After submitting, please send payment to', 'bh-wp-venmo-gateway' ),
+						__( 'After submitting, please send payment to', 'juiced-venmo-gateway-pro' ),
 						' ',
 						React.createElement( 'strong', null, '@' + storeUsername ),
 						' ',
-						__( 'on Venmo.', 'bh-wp-venmo-gateway' )
+						__( 'on Venmo.', 'juiced-venmo-gateway-pro' )
 					  )
 					: null
 			);

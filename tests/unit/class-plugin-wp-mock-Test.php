@@ -2,10 +2,10 @@
 /**
  * Tests for the root plugin file.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway;
+namespace JuicedPlugins\Venmo_Gateway_Pro;
 
 /**
  * Class Plugin_WP_Mock_Test
@@ -41,11 +41,11 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 			'register_deactivation_hook'
 		);
 
-		require_once $plugin_root_dir . '/bh-wp-venmo-gateway.php';
+		require_once $plugin_root_dir . '/juiced-venmo-gateway-pro.php';
 
-		$this->assertArrayHasKey( 'bh_wp_venmo_gateway', $GLOBALS );
+		$this->assertArrayHasKey( 'juiced_venmo_gateway_pro', $GLOBALS );
 
-		$this->assertInstanceOf( BrianHenryIE\WP_Venmo_Gateway::class, $GLOBALS['bh_wp_venmo_gateway'] );
+		$this->assertInstanceOf( JuicedPlugins\Venmo_Gateway_Pro::class, $GLOBALS['juiced_venmo_gateway_pro'] );
 	}
 
 
@@ -79,7 +79,7 @@ class Plugin_WP_Mock_Test extends Unit_Testcase {
 
 		ob_start();
 
-		require_once $plugin_root_dir . '/bh-wp-venmo-gateway.php';
+		require_once $plugin_root_dir . '/juiced-venmo-gateway-pro.php';
 
 		$printed_output = ob_get_contents();
 

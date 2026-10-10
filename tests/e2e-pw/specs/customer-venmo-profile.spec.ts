@@ -11,7 +11,7 @@ import { mockVenmoProfile, removeMockVenmoProfile } from '../helpers/development
 import { runDueCronHook } from '../helpers/general/cli/wp-cli';
 
 const CUSTOMER_VENMO_DISPLAY_NAME = 'Zed Profile Tester';
-const CRON_HOOK = 'bh_wp_venmo_gateway_fetch_customer_venmo_profile';
+const CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_customer_venmo_profile';
 
 test.describe( 'Customer Venmo profile name', () => {
 	// This spec uses no browser, so run it once. WP-Cron stores every event in a single option with
@@ -49,7 +49,7 @@ test.describe( 'Customer Venmo profile name', () => {
 				status: 'on-hold',
 				billing: { first_name: 'Zed', last_name: 'Tester' },
 				line_items: [ { product_id: products[ 0 ].id, quantity: 1 } ],
-				meta_data: [ { key: '_customer-venmo-username', value: customerVenmoUsername } ],
+				meta_data: [ { key: '_customer_venmo_username', value: customerVenmoUsername } ],
 			},
 		} );
 
@@ -59,7 +59,7 @@ test.describe( 'Customer Venmo profile name', () => {
 
 			// Assert (REST): the display name is on the order, once, and an order note records it.
 			const updatedOrder = await requestUtils.rest( { path: `/wc/v3/orders/${ order.id }` } );
-			const displayNames = updatedOrder.meta_data.filter( ( meta: { key: string } ) => '_customer-venmo-display-name' === meta.key );
+			const displayNames = updatedOrder.meta_data.filter( ( meta: { key: string } ) => '_customer_venmo_display_name' === meta.key );
 			const notes = await requestUtils.rest( { path: `/wc/v3/orders/${ order.id }/notes` } );
 			const debug = `order ${ order.id } notes: ${ JSON.stringify( notes.map( ( n: { note: string } ) => n.note ) ) }; cron: ${ cronOutput }`;
 			expect( displayNames, debug ).toHaveLength( 1 );

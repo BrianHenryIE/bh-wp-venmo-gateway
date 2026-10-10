@@ -4,19 +4,19 @@
  * the "@"-stripping on store, and the empty-username guard that the browser's
  * client-side `required` attribute prevents E2E tests from reaching.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP;
 
-use BrianHenryIE\WP_Venmo_Gateway\Includes\Cron;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Includes\Cron;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
 use Give\Donations\Models\Donation;
 use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Mockery;
 
 /**
- * @coversDefaultClass \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway
+ * @coversDefaultClass \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Venmo_Gateway
  */
 class Venmo_Gateway_Create_Payment_Test extends Unit_TestCase {
 

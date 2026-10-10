@@ -3,14 +3,14 @@
  * Builds a realistic Venmo "paid you" email for an order and stores it in the plugin's mailbox,
  * as though it had been received via the REST ingress endpoint.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
 declare(strict_types=1);
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Development_Plugin\API;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Development_Plugin\API;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings;
 use Exception;
 use WC_Order;
 use WP_REST_Request;
@@ -20,7 +20,7 @@ use WP_REST_Request;
  * total and order number, then POSTs it to the mailbox library's REST ingress endpoint, exactly as the
  * Cloudflare Email Routing worker does for real emails.
  *
- * @see \BrianHenryIE\WP_Venmo_Gateway\WP_Mailboxes\Connections\Rest\REST_Ingress_Connection::create_new_email()
+ * @see \JuicedPlugins\Venmo_Gateway_Pro\WP_Mailboxes\Connections\Rest\REST_Ingress_Connection::create_new_email()
  */
 class Venmo_Payment_Email {
 

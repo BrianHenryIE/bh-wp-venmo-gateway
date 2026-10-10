@@ -2,39 +2,39 @@
 /**
  *
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerAwareTrait;
-use BrianHenryIE\WP_Venmo_Gateway\Psr\Log\LoggerInterface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerAwareTrait;
+use JuicedPlugins\Venmo_Gateway_Pro\Psr\Log\LoggerInterface;
 
 
 class Cron {
 	use LoggerAwareTrait;
 
-	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'bh_wp_venmo_gateway_check_for_payment_emails';
+	const CHECK_FOR_PAYMENT_EMAILS_CRON_HOOK = 'juiced_venmo_gateway_pro_check_for_payment_emails';
 
 	/**
 	 * Single event, scheduled when a Venmo order is placed, to fetch the customer's name from their public
 	 * Venmo profile. Takes the order id as its argument.
 	 *
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::schedule_fetch_customer_venmo_profile()
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Order::fetch_customer_venmo_profile()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Order::schedule_fetch_customer_venmo_profile()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Order::fetch_customer_venmo_profile()
 	 */
-	const FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK = 'bh_wp_venmo_gateway_fetch_customer_venmo_profile';
+	const FETCH_CUSTOMER_VENMO_PROFILE_CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_customer_venmo_profile';
 
 	/**
 	 * Single event, scheduled when a Venmo donation is created, to fetch the donor's name from their public
 	 * Venmo profile. Takes the donation id as its argument.
 	 *
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Venmo_Gateway::createPayment()
-	 * @see \BrianHenryIE\WP_Venmo_Gateway\Integrations\GiveWP\Donor_Venmo_Profile::fetch_donor_venmo_profile()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Venmo_Gateway::createPayment()
+	 * @see \JuicedPlugins\Venmo_Gateway_Pro\Integrations\GiveWP\Donor_Venmo_Profile::fetch_donor_venmo_profile()
 	 */
-	const FETCH_DONOR_VENMO_PROFILE_CRON_HOOK = 'bh_wp_venmo_gateway_fetch_donor_venmo_profile';
+	const FETCH_DONOR_VENMO_PROFILE_CRON_HOOK = 'juiced_venmo_gateway_pro_fetch_donor_venmo_profile';
 
 	/**
 	 * Cron_Jobs constructor.

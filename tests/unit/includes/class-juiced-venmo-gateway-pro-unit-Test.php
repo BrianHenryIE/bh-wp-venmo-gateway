@@ -1,31 +1,31 @@
 <?php
 /**
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Capabilities;
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Plugins_Page;
-use BrianHenryIE\WP_Venmo_Gateway\Admin\Unreconciled_Orders_Menu;
-use BrianHenryIE\WP_Venmo_Gateway\API\API_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\API\Settings_Interface;
-use BrianHenryIE\WP_Venmo_Gateway\Unit_Testcase;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Orders_List_Filter;
-use BrianHenryIE\WP_Venmo_Gateway\Integrations\WooCommerce\Payment_Gateways;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Capabilities;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Plugins_Page;
+use JuicedPlugins\Venmo_Gateway_Pro\Admin\Unreconciled_Orders_Menu;
+use JuicedPlugins\Venmo_Gateway_Pro\API\API_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\API\Settings_Interface;
+use JuicedPlugins\Venmo_Gateway_Pro\Unit_Testcase;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Orders_List_Filter;
+use JuicedPlugins\Venmo_Gateway_Pro\Integrations\WooCommerce\Payment_Gateways;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
- * @coversDefaultClass  \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks
+ * @coversDefaultClass  \JuicedPlugins\Venmo_Gateway_Pro\Includes\Register_Hooks
  *
- * Class BH_WP_Venmo_Gateway_Unit_Test
- * @package brianhenryie/bh-wp-venmo-gateway
+ * Class Juiced_Venmo_Gateway_Pro_Unit_Test
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
-class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
+class Juiced_Venmo_Gateway_Pro_Unit_Test extends Unit_Testcase {
 
 	/**
-	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::set_locale
+	 * @covers \JuicedPlugins\Venmo_Gateway_Pro\Includes\Register_Hooks::set_locale
 	 */
 	public function test_set_locale_hooked(): void {
 
@@ -38,7 +38,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 		$settings = $this->makeEmpty(
 			Settings_Interface::class,
 			array(
-				'get_plugin_basename' => 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+				'get_plugin_basename' => 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			)
 		);
 
@@ -46,22 +46,22 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 	}
 
 	/**
-	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_admin_hooks
+	 * @covers \JuicedPlugins\Venmo_Gateway_Pro\Includes\Register_Hooks::define_admin_hooks
 	 */
 	public function test_admin_hooks(): void {
 
 		\WP_Mock::expectFilterAdded(
-			'plugin_action_links_bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+			'plugin_action_links_juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			array( new AnyInstance( Plugins_Page::class ), 'add_settings_action_link' )
 		);
 
 		\WP_Mock::expectFilterAdded(
-			'plugin_action_links_bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+			'plugin_action_links_juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			array( new AnyInstance( Plugins_Page::class ), 'add_orders_action_link' )
 		);
 
 		\WP_Mock::expectFilterAdded(
-			'plugin_action_links_bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+			'plugin_action_links_juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			array( new AnyInstance( Plugins_Page::class ), 'add_unreconciled_orders_action_link' )
 		);
 
@@ -81,7 +81,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 		$settings = $this->makeEmpty(
 			Settings_Interface::class,
 			array(
-				'get_plugin_basename' => 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+				'get_plugin_basename' => 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			)
 		);
 
@@ -89,7 +89,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 	}
 
 	/**
-	 * @covers \BrianHenryIE\WP_Venmo_Gateway\Includes\Register_Hooks::define_woocommerce_hooks
+	 * @covers \JuicedPlugins\Venmo_Gateway_Pro\Includes\Register_Hooks::define_woocommerce_hooks
 	 */
 	public function test_woocommerce_hooks(): void {
 
@@ -114,7 +114,7 @@ class BH_WP_Venmo_Gateway_Unit_Test extends Unit_Testcase {
 		$settings = $this->makeEmpty(
 			Settings_Interface::class,
 			array(
-				'get_plugin_basename' => 'bh-wp-venmo-gateway/bh-wp-venmo-gateway.php',
+				'get_plugin_basename' => 'juiced-venmo-gateway-pro/juiced-venmo-gateway-pro.php',
 			)
 		);
 

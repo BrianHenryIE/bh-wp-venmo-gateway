@@ -5,10 +5,10 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @package brianhenryie/bh-wp-venmo-gateway
+ * @package brianhenryie/juiced-venmo-gateway-pro
  */
 
-namespace BrianHenryIE\WP_Venmo_Gateway\Includes;
+namespace JuicedPlugins\Venmo_Gateway_Pro\Includes;
 
 class I18n {
 
@@ -19,7 +19,7 @@ class I18n {
 
 		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 		load_plugin_textdomain(
-			'bh-wp-venmo-gateway',
+			'juiced-venmo-gateway-pro',
 			false,
 			dirname( plugin_basename( __FILE__ ), 2 ) . '/Languages/'
 		);
