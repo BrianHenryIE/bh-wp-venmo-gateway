@@ -82,7 +82,7 @@ jobs:
         id: publish
         run: |
           DEST="gh-pages/${HEAD_SHA}/playground"
-          BASE_URL="https://${{ github.repository_owner }}.github.io/${PLUGIN_SLUG}/${HEAD_SHA}/playground"
+          BASE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${HEAD_SHA}/playground"
           mkdir -p "$DEST"
           cp "${{ steps.archive.outputs.path }}" "${DEST}/${PLUGIN_SLUG}.zip"
           cp "${{ steps.archive.outputs.dev_path }}" "${DEST}/${DEV_PLUGIN_SLUG}.zip"
@@ -188,7 +188,7 @@ jobs:
             | | |
             |---|---|
             | Commit | [`${{ inputs.head-sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ inputs.head-sha }}) |
-            | Plugin zip | [juiced-venmo-gateway-pro.zip`](${{ steps.publish.outputs.url }}) |
+            | Plugin zip | [`juiced-venmo-gateway-pro.zip`](${{ steps.publish.outputs.url }}) |
             | Development plugin zip | [`development-plugin.zip`](${{ steps.publish.outputs.dev_url }}) |
             | Workflow run | [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
 
