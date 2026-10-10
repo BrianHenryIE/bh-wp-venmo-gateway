@@ -61,7 +61,7 @@
         "alleyinteractive/wordpress-autoloader": "*",
         "brianhenryie/bh-wp-logger": ">0.4",
         "brianhenryie/bh-wp-order-email-reconcile": "dev-master",
-        "chillerlan/php-qrcode": "^5.0",
+        "chillerlan/php-qrcode": "^6.0",
         "wordpress/secrets-api": "dev-main#eac860bab9b3600cc8371179c1e01e6058a63c8c"
     },
     "require-dev": {
