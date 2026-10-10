@@ -60,7 +60,7 @@ jobs:
       # same ones its tests run against), so there is no need to install PHP, Composer or Node here
       # and rebuild them. Same workflow run, so no run id or token is needed.
       - name: Download the plugin archives
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: ${{ inputs.artifact-name }}
           path: dist-archive
